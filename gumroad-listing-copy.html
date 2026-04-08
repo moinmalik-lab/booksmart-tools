@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gumroad Listing Copy — BookSmartTools</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#111210; --paper:#fafaf7; --cream:#f2efe6;
+  --red:#c03a20; --red-light:#fdf0ec;
+  --green:#1e5c33; --green-light:#eaf4ee;
+  --border:#dddbd2; --muted:#6b6960;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Instrument Sans',sans-serif; background:var(--paper); color:var(--ink); }
+
+header {
+  background:var(--ink); padding:18px 32px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo { font-family:'Playfair Display',serif; font-size:20px; color:white; }
+.logo em { color:#f0a070; font-style:normal; }
+.subtitle { font-size:12px; color:rgba(255,255,255,0.4); font-family:'JetBrains Mono',monospace; }
+
+.container { max-width:820px; margin:0 auto; padding:48px 32px 80px; }
+
+.page-title {
+  font-family:'Playfair Display',serif; font-size:36px;
+  margin-bottom:10px; letter-spacing:-0.5px;
+}
+.page-sub { font-size:16px; color:var(--muted); margin-bottom:48px; line-height:1.6; }
+
+/* Listing block */
+.listing {
+  background:white; border:1px solid var(--border);
+  border-radius:4px; margin-bottom:36px; overflow:hidden;
+}
+
+.listing-header {
+  background:var(--ink); color:white;
+  padding:20px 28px; display:flex; align-items:center; justify-content:space-between;
+}
+.listing-num { font-family:'JetBrains Mono',monospace; font-size:11px; opacity:.4; margin-bottom:4px; }
+.listing-title-main { font-family:'Playfair Display',serif; font-size:20px; }
+.listing-price {
+  font-family:'JetBrains Mono',monospace; font-size:22px;
+  background:var(--red); padding:8px 16px; border-radius:3px;
+}
+
+.listing-body { padding:28px; }
+
+.field-group { margin-bottom:28px; }
+.field-label {
+  font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+  color:var(--muted); margin-bottom:10px; display:flex; align-items:center; gap:8px;
+}
+.field-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.copy-box {
+  background:var(--cream); border:1px solid var(--border); border-radius:3px;
+  padding:20px; font-size:15px; line-height:1.8; white-space:pre-wrap;
+  position:relative;
+}
+
+.copy-btn {
+  position:absolute; top:12px; right:12px;
+  background:var(--ink); color:white;
+  border:none; border-radius:2px; padding:6px 12px;
+  font-size:11px; font-family:'JetBrains Mono',monospace;
+  cursor:pointer; letter-spacing:0.5px; transition:background .15s;
+}
+.copy-btn:hover { background:var(--red); }
+
+.bullets-list { list-style:none; }
+.bullets-list li {
+  padding:8px 0; border-bottom:1px solid var(--border);
+  font-size:14px; line-height:1.6; display:flex; gap:10px;
+}
+.bullets-list li:last-child { border-bottom:none; }
+.bullets-list li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
+
+.tag-group { display:flex; flex-wrap:wrap; gap:8px; }
+.tag {
+  background:var(--cream); border:1px solid var(--border);
+  padding:5px 12px; border-radius:2px;
+  font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted);
+}
+
+.note-box {
+  background:var(--green-light); border-left:3px solid var(--green);
+  padding:16px 20px; border-radius:0 3px 3px 0;
+  font-size:14px; line-height:1.7; margin-top:16px;
+}
+.note-box strong { color:var(--green); }
+
+/* Pricing strategy */
+.pricing-section {
+  background:var(--ink); color:white; border-radius:4px;
+  padding:32px; margin-bottom:36px;
+}
+.pricing-section h2 { font-family:'Playfair Display',serif; font-size:24px; margin-bottom:20px; }
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media(max-width:600px){ .pricing-grid{grid-template-columns:1fr;} }
+.pricing-card {
+  border:1px solid rgba(255,255,255,0.12); border-radius:3px; padding:20px;
+}
+.pricing-card.recommended { border-color:var(--red); position:relative; }
+.pricing-rec-badge {
+  position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+  background:var(--red); color:white; font-size:10px; font-weight:600;
+  letter-spacing:0.8px; text-transform:uppercase; padding:3px 10px; border-radius:2px;
+  white-space:nowrap;
+}
+.pricing-card h3 { font-size:14px; font-weight:600; margin-bottom:8px; color:rgba(255,255,255,0.7); }
+.pricing-card .price { font-family:'Playfair Display',serif; font-size:32px; margin-bottom:8px; }
+.pricing-card p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6; }
+
+/* Platform guide */
+.platform-section { margin-bottom:36px; }
+.platform-section h2 { font-family:'Playfair Display',serif; font-size:24px; margin-bottom:20px; }
+.steps-list { list-style:none; }
+.steps-list li {
+  display:flex; gap:16px; padding:16px 0;
+  border-bottom:1px solid var(--border); font-size:15px; line-height:1.6;
+}
+.steps-list li:last-child { border-bottom:none; }
+.step-num {
+  background:var(--ink); color:white; font-family:'JetBrains Mono',monospace;
+  font-size:12px; width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;
+}
+
+/* Email sequence */
+.email-section { margin-bottom:36px; }
+.email-section h2 { font-family:'Playfair Display',serif; font-size:24px; margin-bottom:6px; }
+.email-section .sub { font-size:14px; color:var(--muted); margin-bottom:24px; }
+.email-card { background:white; border:1px solid var(--border); border-radius:4px; margin-bottom:16px; overflow:hidden; }
+.email-card-header { background:var(--cream); padding:14px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.email-card-header .when { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--red); font-weight:500; }
+.email-card-header .subject { font-weight:600; font-size:14px; }
+.email-card-body { padding:20px; font-size:14px; line-height:1.8; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Book<em>Smart</em>Tools</div>
+  <div class="subtitle">GUMROAD LISTING COPY + LAUNCH GUIDE</div>
+</header>
+
+<div class="container">
+  <div class="page-title">Gumroad Product Listings</div>
+  <p class="page-sub">Complete copy for two products ready to paste into Gumroad, plus a pricing strategy, launch checklist, and 3-email welcome sequence for new buyers.</p>
+
+  <!-- ═══ PRODUCT 1 ═══ -->
+  <div class="listing">
+    <div class="listing-header">
+      <div>
+        <div class="listing-num">PRODUCT 01</div>
+        <div class="listing-title-main">Invoice Late Fee Calculator</div>
+      </div>
+      <div class="listing-price">$0 (Free)</div>
+    </div>
+    <div class="listing-body">
+
+      <div class="field-group">
+        <div class="field-label">Product Name (Gumroad title field)</div>
+        <div class="copy-box" id="p1-name">Invoice Late Fee Calculator — Free for US Small Businesses
+<button class="copy-btn" onclick="copyBox('p1-name')">COPY</button></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Product Description (paste into Gumroad description editor)</div>
+        <div class="copy-box" id="p1-desc">Stop guessing on late fees. This free calculator gives you the exact amount to charge — with a full month-by-month breakdown you can send directly to clients.
+
+Built by a professional bookkeeper with 6+ years working with US small business clients.
+
+✓ WHAT IT DOES
+• Calculates late fees at any monthly rate (standard is 1.5%)
+• Handles grace periods, compounding interest, and flat fees
+• Generates a month-by-month breakdown of fees accrued
+• One-click copy to paste into your invoice or email
+
+✓ WHO IT'S FOR
+• Bookkeepers and accountants managing client invoices
+• Small business owners chasing overdue payments
+• Freelancers who need professional-looking payment terms
+
+✓ HOW IT WORKS
+Download the single HTML file. Open it in any browser (Chrome, Firefox, Safari). No installation, no account, no internet required after download. Works on Mac, Windows, and mobile.
+
+✓ WHAT YOU GET
+• invoice-late-fee-calculator.html (one file, works offline)
+• Instant download — no waiting, no signup
+
+This tool is free. If it saves you time, share it with a colleague or subscribe to BookSmartTools for more free tools and bookkeeping guides.
+<button class="copy-btn" onclick="copyBox('p1-desc')">COPY</button></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Summary Line (short description, 1 sentence)</div>
+        <div class="copy-box" id="p1-sum">Free HTML tool that calculates invoice late fees with monthly breakdown — for US bookkeepers and small business owners.
+<button class="copy-btn" onclick="copyBox('p1-sum')">COPY</button></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Tags (paste as comma-separated)</div>
+        <div class="tag-group">
+          <div class="tag">invoice</div>
+          <div class="tag">late fee</div>
+          <div class="tag">bookkeeping</div>
+          <div class="tag">small business</div>
+          <div class="tag">accounting</div>
+          <div class="tag">finance</div>
+          <div class="tag">freelance</div>
+          <div class="tag">calculator</div>
+          <div class="tag">free tool</div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <strong>Strategy note:</strong> Make this free to collect email addresses. In Gumroad, set the price to $0 but make it "pay what you want" with a $0 minimum. You'll get buyer emails you can market to later. Set a suggested price of $5 to get voluntary donations.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PRODUCT 2 ═══ -->
+  <div class="listing">
+    <div class="listing-header">
+      <div>
+        <div class="listing-num">PRODUCT 02</div>
+        <div class="listing-title-main">Bookkeeper's Tool Bundle — 2 Professional Calculators</div>
+      </div>
+      <div class="listing-price">$19</div>
+    </div>
+    <div class="listing-body">
+
+      <div class="field-group">
+        <div class="field-label">Product Name</div>
+        <div class="copy-box" id="p2-name">The Bookkeeper's Tool Bundle — Invoice Late Fee Calculator + Payroll Tax Estimator
+<button class="copy-btn" onclick="copyBox('p2-name')">COPY</button></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Product Description</div>
+        <div class="copy-box" id="p2-desc">Two professional-grade bookkeeping calculators in one download. Built by a working bookkeeper for real US client work — not a generic template you have to adapt.
+
+─────────────────────────────────────
+TOOL 1: Invoice Late Fee Calculator
+─────────────────────────────────────
+Calculate the exact late fee to charge on any overdue invoice.
+
+• Supports monthly % rate or flat fee structures
+• Grace period configuration
+• Simple and compounding interest options
+• Month-by-month fee breakdown — paste directly into client emails
+• One-click copy of full payment summary
+
+─────────────────────────────────────
+TOOL 2: Payroll Tax Estimator (2025 Rates)
+─────────────────────────────────────
+Estimate full federal and state payroll taxes for any W-2 employee.
+
+• Social Security, Medicare, FUTA, and SUTA calculations
+• Employer and employee portions shown separately
+• Per pay period breakdown (weekly, bi-weekly, semi-monthly, monthly)
+• 2025 wage base limits and rates built in
+• Copy-ready summary for client reports
+
+─────────────────────────────────────
+WHAT YOU GET
+─────────────────────────────────────
+• 2 standalone HTML files — open in any browser, no install needed
+• Work 100% offline after download
+• Lifetime access — re-download any time
+• Future updates included
+
+─────────────────────────────────────
+WHO THIS IS FOR
+─────────────────────────────────────
+✓ Bookkeepers and accountants who want to look more professional
+✓ Small business owners managing their own books
+✓ HR managers handling payroll estimates
+✓ Accountants preparing client proposals
+
+─────────────────────────────────────
+TECHNICAL DETAILS
+─────────────────────────────────────
+• Format: HTML files (2 files total)
+• Works on: Windows, Mac, Linux, iOS, Android
+• Internet required: No (after download)
+• Software required: Any web browser
+
+─────────────────────────────────────
+SATISFACTION GUARANTEE
+─────────────────────────────────────
+If these tools don't work as described on your device, message me and I'll refund you. No questions asked.
+<button class="copy-btn" onclick="copyBox('p2-desc')">COPY</button></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Summary Line</div>
+        <div class="copy-box" id="p2-sum">Two professional bookkeeping calculators (invoice late fees + payroll taxes) — offline HTML tools built for US small business bookkeepers.
+<button class="copy-btn" onclick="copyBox('p2-sum')">COPY</button></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">What's Included bullets (Gumroad "What's included" field)</div>
+        <ul class="bullets-list">
+          <li>Invoice Late Fee Calculator (HTML file, works offline)</li>
+          <li>Payroll Tax Estimator with 2025 rates (HTML file, works offline)</li>
+          <li>Lifetime updates — re-download for free when rates change</li>
+          <li>30-day money-back guarantee</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <strong>Pricing strategy:</strong> Start at $19. This price point is low enough that no one hesitates, and high enough to signal real value. After your first 10 sales, test $24. After 25 sales and some reviews, try $29. The tools themselves don't change — your confidence and social proof is what justifies the increase.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PRICING STRATEGY ═══ -->
+  <div class="pricing-section">
+    <h2>Pricing Strategy — 3 Options</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Option A — Freemium</h3>
+        <div class="price">$0</div>
+        <p>Give both tools free. Build email list fast. Monetize through your blog (AdSense + affiliates) and future paid products. Good if you're focused on traffic first.</p>
+      </div>
+      <div class="pricing-card recommended">
+        <div class="pricing-rec-badge">Recommended</div>
+        <h3>Option B — Free + Paid Bundle</h3>
+        <div class="price">$19</div>
+        <p>Give Tool 1 free (collect emails), sell the bundle at $19. This is the standard SaaS freemium playbook. Most effective for income + list building simultaneously.</p>
+      </div>
+      <div class="pricing-card">
+        <h3>Option C — Pay What You Want</h3>
+        <div class="price">$0+</div>
+        <p>Free with a suggested price of $9–19. Great for early social proof. Reduces friction to download. Some buyers will pay $25+ voluntarily if the tool is great.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ GUMROAD SETUP STEPS ═══ -->
+  <div class="platform-section">
+    <h2>How to Set Up on Gumroad — Step by Step</h2>
+    <ol class="steps-list">
+      <li><div class="step-num">1</div><div>Go to <strong>gumroad.com</strong> and create a free seller account. Use your professional email. Add a simple profile photo (or your logo) and a short bio: "Bookkeeper working with US small businesses. Building free tools to save you time."</div></li>
+      <li><div class="step-num">2</div><div>Click <strong>New Product → Digital Product</strong>. Upload your HTML file(s) as a ZIP archive. Give the product the name and description from the listing copy above.</div></li>
+      <li><div class="step-num">3</div><div>Set your price. For the free tool: set to $0 with "pay what you want" enabled, suggested price $5. For the bundle: set to $19 flat.</div></li>
+      <li><div class="step-num">4</div><div>Add a cover image. Use Canva (free) — create a simple 1280×720px image with the tool name, your brand colors, and a short tagline. Dark background, white text looks professional.</div></li>
+      <li><div class="step-num">5</div><div>Enable the <strong>email collection</strong> checkbox. This is essential — it lets you email buyers later when you launch new tools.</div></li>
+      <li><div class="step-num">6</div><div>Publish the product and copy the Gumroad link. Add it to your landing page, blog posts, and social media.</div></li>
+      <li><div class="step-num">7</div><div>Set up a <strong>thank-you email</strong> in Gumroad (Product → Emails → Receipt email). Personalize it — don't use the default. See the email template below.</div></li>
+    </ol>
+  </div>
+
+  <!-- ═══ EMAIL SEQUENCE ═══ -->
+  <div class="email-section">
+    <h2>3-Email Welcome Sequence</h2>
+    <p class="sub">Set these up in Gumroad or your email provider (ConvertKit, MailerLite). Send to all buyers and newsletter subscribers.</p>
+
+    <div class="email-card">
+      <div class="email-card-header">
+        <span class="when">Email 1 — Immediately on signup/purchase</span>
+        <span class="subject">Subject: Your free tool is attached + one thing to do first</span>
+      </div>
+      <div class="email-card-body">
+Hi [First Name],
+
+Your download is attached (or click the link below to access your tool).
+
+One thing before you open it: if you're using the Invoice Late Fee Calculator for the first time, check your invoice template. Make sure this exact language is on every invoice you send:
+
+"A finance charge of 1.5% per month will be applied to all overdue balances."
+
+That single sentence is what makes the fee legally enforceable. Without it, you're charging fees that clients can legitimately dispute.
+
+I'll send you a short guide on invoice payment terms tomorrow — the ones that actually get invoices paid faster.
+
+— [Your Name]
+BookSmartTools.com
+
+P.S. If you find the tool useful, sharing it with one other bookkeeper or business owner would genuinely mean a lot. Word of mouth is how independent tools like this survive.</div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-card-header">
+        <span class="when">Email 2 — Day 3</span>
+        <span class="subject">Subject: The 3 invoice mistakes that cost small businesses thousands</span>
+      </div>
+      <div class="email-card-body">
+Hi [First Name],
+
+Quick one today. After years of working with US small business clients, these are the three invoice mistakes I see most often:
+
+1. No late fee policy on the invoice.
+Most businesses only think about late fees when an invoice is already 60 days overdue. By then, adding a fee is awkward. Put your terms on every invoice from day one — even if you never need to charge the fee.
+
+2. Net 30 when the client's payable cycle is Net 45.
+If your client only processes vendor payments twice a month, sending Net 30 invoices just means they'll pay you one cycle late, every time. Ask new clients how they process invoices before you set your terms.
+
+3. Not following up at day 7.
+Most late payments aren't intentional — they're forgotten. A polite email at 7 days overdue ("Just checking in on invoice #1234") resolves the majority of late payments before they become a problem.
+
+More soon.
+
+— [Your Name]
+
+P.S. We also just published a full guide: "How to Calculate Invoice Late Fees." Read it here: [link to your blog article]</div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-card-header">
+        <span class="when">Email 3 — Day 7</span>
+        <span class="subject">Subject: New tool: Payroll Tax Estimator (2025 rates)</span>
+      </div>
+      <div class="email-card-body">
+Hi [First Name],
+
+We just launched our second tool: the Payroll Tax Estimator.
+
+If you (or your clients) are thinking about hiring a W-2 employee, this calculator shows the full payroll tax cost in seconds:
+• Social Security and Medicare (employer + employee split)
+• FUTA and SUTA (federal and state unemployment)
+• Per-pay-period breakdown for any pay frequency
+
+The most common surprise for small business owners: a $60,000 salary actually costs around $65,000+ when you add employer payroll taxes. Most people don't know this number until they get their first 941 filing.
+
+The tool is free here: [Gumroad link]
+
+Or pick up the full 2-tool bundle at a discount: [bundle link]
+
+Thanks for being an early subscriber. New tools and guides coming monthly.
+
+— [Your Name]
+BookSmartTools.com</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyBox(id) {
+  const box = document.getElementById(id);
+  const btn = box.querySelector('.copy-btn');
+  const text = box.innerText.replace('COPY','').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.style.background = '#1e5c33';
+    setTimeout(() => { btn.textContent = 'COPY'; btn.style.background = ''; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
