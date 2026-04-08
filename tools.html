@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Bookkeeping Tools | BookSmartTools</title>
+<meta name="description" content="Free professional bookkeeping calculators for US small businesses — invoice late fee calculator, payroll tax estimator with all 50 states, and more.">
+<link rel="canonical" href="https://booksmartools.com/tools.html">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.tools-hero { background:var(--green); color:white; padding:64px 0 56px; }
+.tools-hero h1 { color:white; margin-bottom:14px; }
+.tools-hero p  { color:rgba(255,255,255,.75); font-size:18px; max-width:520px; }
+.tools-hero .eyebrow { color:rgba(255,255,255,.65); background:rgba(255,255,255,.12); }
+.tools-hero .eyebrow::before { background:rgba(255,255,255,.65); }
+
+.filter-bar {
+  background:var(--cream); border-bottom:1px solid var(--border);
+  padding:16px 0; position:sticky; top:64px; z-index:50;
+}
+.filter-inner { display:flex; gap:10px; flex-wrap:wrap; }
+.filter-btn {
+  padding:8px 18px; border-radius:2px;
+  font-family:'DM Mono',monospace; font-size:12px;
+  border:1px solid var(--border); background:white;
+  cursor:pointer; color:var(--muted); transition:all .15s;
+}
+.filter-btn.active, .filter-btn:hover { background:var(--ink); color:white; border-color:var(--ink); }
+
+.tool-full-card {
+  background:white; border:1px solid var(--border); border-radius:4px;
+  overflow:hidden; transition:box-shadow .2s;
+}
+.tool-full-card:hover { box-shadow:0 8px 32px rgba(0,0,0,.08); }
+.tool-full-top {
+  display:grid; grid-template-columns:1fr auto;
+  gap:20px; padding:28px; border-bottom:1px solid var(--border);
+  align-items:start;
+}
+.tool-full-meta { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.tool-full-name { font-family:'Playfair Display',serif; font-size:24px; margin-bottom:10px; }
+.tool-full-desc { font-size:15px; color:var(--muted); line-height:1.7; }
+.tool-full-actions { display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
+@media(max-width:600px) { .tool-full-top { grid-template-columns:1fr; } .tool-full-actions { flex-direction:row; align-items:flex-start; } }
+.tool-full-features { padding:20px 28px; display:flex; flex-wrap:wrap; gap:8px; }
+.tool-feature { font-size:12px; color:var(--muted); background:var(--cream); padding:5px 12px; border-radius:2px; border:1px solid var(--border); }
+
+.coming-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+@media(max-width:720px) { .coming-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:480px) { .coming-grid { grid-template-columns:1fr; } }
+.coming-card {
+  background:var(--cream); border:1px dashed var(--border);
+  border-radius:4px; padding:24px;
+}
+.coming-card h3 { font-size:17px; margin-bottom:8px; }
+.coming-card p { font-size:13px; color:var(--muted); line-height:1.6; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Book<em>Smart</em>Tools</a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="tools.html" class="active">Tools</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#newsletter" class="nav-cta">Free Tools →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="tools-hero">
+  <div class="wrap">
+    <div class="eyebrow">Free Tools</div>
+    <h1>Bookkeeping tools that work</h1>
+    <p>Professional-grade calculators built for real US bookkeeping work. No account, no software, no installation — open in any browser.</p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="wrap">
+    <div class="filter-inner">
+      <button class="filter-btn active">All Tools</button>
+      <button class="filter-btn">Invoicing</button>
+      <button class="filter-btn">Payroll & Taxes</button>
+      <button class="filter-btn">Coming Soon</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE TOOLS -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Available Now</div>
+    <h2 style="margin-bottom:36px">Free to use — no sign-up</h2>
+
+    <div style="display:flex;flex-direction:column;gap:24px">
+
+      <!-- Tool 1 -->
+      <div class="tool-full-card reveal">
+        <div class="tool-full-top">
+          <div>
+            <div class="tool-full-meta">
+              <span class="tool-badge free">Free</span>
+              <span class="tag">Invoicing</span>
+            </div>
+            <div class="tool-full-name">Invoice Late Fee Calculator</div>
+            <p class="tool-full-desc">Calculate the exact late fee to charge on any overdue invoice. Supports monthly percentage rates or flat fees, configurable grace periods, and simple or compounding interest. Generates a month-by-month breakdown you can paste directly into a client email or new invoice.</p>
+          </div>
+          <div class="tool-full-actions">
+            <a href="invoice-late-fee-calculator.html" class="btn btn-primary">Open Tool →</a>
+            <a href="blog/how-to-calculate-invoice-late-fees.html" class="btn btn-ghost btn-sm">Learn More</a>
+          </div>
+        </div>
+        <div class="tool-full-features">
+          <span class="tool-feature">Monthly % rate or flat fee</span>
+          <span class="tool-feature">Grace period support</span>
+          <span class="tool-feature">Simple & compounding interest</span>
+          <span class="tool-feature">Month-by-month breakdown</span>
+          <span class="tool-feature">Copy-ready summary</span>
+          <span class="tool-feature">Works offline</span>
+        </div>
+      </div>
+
+      <!-- Tool 2 -->
+      <div class="tool-full-card reveal">
+        <div class="tool-full-top">
+          <div>
+            <div class="tool-full-meta">
+              <span class="tool-badge free">Free</span>
+              <span class="tool-badge new">2025 & 2026</span>
+              <span class="tag">Payroll & Taxes</span>
+            </div>
+            <div class="tool-full-name">Payroll Tax Estimator</div>
+            <p class="tool-full-desc">Calculate complete federal and state payroll taxes for any W-2 employee. Switch between 2025 and 2026 tax years instantly. Covers Social Security (updated to $184,500 for 2026), Medicare, FUTA, and SUTA for all 50 states. Shows employer cost and employee withholding separately, with a per-pay-period breakdown.</p>
+          </div>
+          <div class="tool-full-actions">
+            <a href="payroll-tax-estimator.html" class="btn btn-primary">Open Tool →</a>
+            <a href="blog/1099-vs-w2.html" class="btn btn-ghost btn-sm">1099 vs W-2 Guide</a>
+          </div>
+        </div>
+        <div class="tool-full-features">
+          <span class="tool-feature">2025 & 2026 rates</span>
+          <span class="tool-feature">All 50 states + D.C.</span>
+          <span class="tool-feature">IRS-verified FICA rates</span>
+          <span class="tool-feature">FUTA / SUTA breakdown</span>
+          <span class="tool-feature">W-4 filing status guide</span>
+          <span class="tool-feature">Year-over-year comparison</span>
+          <span class="tool-feature">Copy-ready summary</span>
+          <span class="tool-feature">Works offline</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMING SOON -->
+    <div style="margin-top:64px">
+      <div class="eyebrow">Coming Soon</div>
+      <h2 style="margin-bottom:8px">More tools in development</h2>
+      <p style="margin-bottom:36px;max-width:480px">Subscribe to the newsletter to be notified when new tools launch — usually before they're listed here.</p>
+
+      <div class="coming-grid">
+        <div class="coming-card reveal">
+          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
+          <h3>Quarterly Tax Calculator</h3>
+          <p>Estimate quarterly estimated payments for self-employed individuals and freelancers based on projected income and deductions.</p>
+        </div>
+        <div class="coming-card reveal delay-1">
+          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
+          <h3>Mileage Deduction Tracker</h3>
+          <p>Track business miles at the IRS standard mileage rate. Calculate deductions and export a log for tax preparation.</p>
+        </div>
+        <div class="coming-card reveal delay-2">
+          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
+          <h3>Expense Category Checker</h3>
+          <p>Enter any business expense description and get the correct QuickBooks category and IRS tax treatment instantly.</p>
+        </div>
+        <div class="coming-card reveal">
+          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
+          <h3>Cash Flow Forecast Builder</h3>
+          <p>Build a 12-month cash flow projection. Enter expected income and expenses, spot shortfalls before they happen.</p>
+        </div>
+        <div class="coming-card reveal delay-1">
+          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
+          <h3>Break-Even Calculator</h3>
+          <p>Calculate the revenue needed to cover fixed and variable costs. Useful for pricing decisions and financial planning.</p>
+        </div>
+        <div class="coming-card reveal delay-2">
+          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
+          <h3>1099 Threshold Tracker</h3>
+          <p>Track payments to contractors throughout the year and get alerts when any vendor crosses the $600 1099-NEC threshold.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL CAPTURE -->
+<section class="capture-section">
+  <div class="capture-inner">
+    <div class="eyebrow" style="justify-content:center;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)">Get Notified</div>
+    <h2>New tools straight to your inbox</h2>
+    <p>Subscribe and be the first to know when a new tool launches — plus monthly bookkeeping tips from a working US bookkeeper.</p>
+    <form class="email-form" novalidate>
+      <input type="email" placeholder="your@email.com" aria-label="Email address">
+      <button type="submit">Subscribe Free →</button>
+    </form>
+    <div class="capture-success">✓ You're subscribed! Watch your inbox.</div>
+    <div class="capture-small">No spam. Unsubscribe any time.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Book<em>Smart</em>Tools</div>
+        <p class="footer-tagline">Free professional bookkeeping tools and guides for US small business owners.</p>
+      </div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="invoice-late-fee-calculator.html">Invoice Late Fee Calculator</a></li>
+        <li><a href="payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Blog</h4><ul>
+        <li><a href="blog/how-to-calculate-invoice-late-fees.html">Invoice Late Fees</a></li>
+        <li><a href="blog/quickbooks-bank-reconciliation.html">QuickBooks Reconciliation</a></li>
+        <li><a href="blog/1099-vs-w2.html">1099 vs W-2</a></li>
+        <li><a href="blog/index.html">All Articles</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="sitemap.xml">Sitemap</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 BookSmartTools — Free bookkeeping tools for US small businesses</div>
+      <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Disclaimer</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
