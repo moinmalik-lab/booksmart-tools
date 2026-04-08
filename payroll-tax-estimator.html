@@ -144,6 +144,7 @@ input:focus,select:focus{border-color:var(--accent);background:white;}
 footer{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
 footer a{color:rgba(255,255,255,.6);}
 </style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -274,10 +275,17 @@ footer a{color:rgba(255,255,255,.6);}
           <div class="tr" id="add-mc-row" style="display:none"><span class="tl">Additional Medicare (&gt;$200K)</span><span class="tr-rate">0.9%</span><span class="ta ee" id="r-add-mc">—</span></div>
         </div>
 
+        <div class="tb">
+          <div class="tb-title">State Income Tax — Employee withholding (estimated)</div>
+          <div class="tr"><span class="tl">State income tax withheld</span><span class="tr-rate" id="r-sit-rate">—</span><span class="ta ee" id="r-sit">—</span></div>
+          <div class="tr" id="r-sit-none-row" style="display:none"><span class="tl" style="color:rgba(255,255,255,.4);font-size:12px">✓ No state income tax applies to wages in this state</span><span class="ta" style="color:rgba(255,255,255,.4)">$0.00</span></div>
+        </div>
+
         <div>
           <div class="total-box"><span class="tb-label">Employer annual cost</span><span class="tb-amount" style="color:#7dd4a0" id="r-er-total">—</span></div>
-          <div class="total-box"><span class="tb-label">Employee annual withheld</span><span class="tb-amount" style="color:#f0a070" id="r-ee-total">—</span></div>
-          <div class="total-box grand"><span class="tb-label">Total payroll tax burden</span><span class="tb-amount" id="r-grand">—</span></div>
+          <div class="total-box"><span class="tb-label">Employee FICA withheld (annual)</span><span class="tb-amount" style="color:#f0a070" id="r-ee-total">—</span></div>
+          <div class="total-box"><span class="tb-label">State income tax withheld (est.)</span><span class="tb-amount" style="color:#c8a0f0" id="r-sit-total">—</span></div>
+          <div class="total-box grand"><span class="tb-label">Total tax burden (all taxes)</span><span class="tb-amount" id="r-grand">—</span></div>
         </div>
 
         <div class="compare-row" id="compare-row" style="display:none">
@@ -289,13 +297,15 @@ footer a{color:rgba(255,255,255,.6);}
           <div class="tb-title">Per pay period — <span id="r-period-label">Monthly</span></div>
           <div class="tr"><span class="tl">Gross wages</span><span class="ta" id="r-period-gross">—</span></div>
           <div class="tr"><span class="tl">Employee FICA withheld</span><span class="ta ee" id="r-period-ee">—</span></div>
+          <div class="tr"><span class="tl">State income tax withheld (est.)</span><span class="ta" style="color:#c8a0f0" id="r-period-sit">—</span></div>
           <div class="tr"><span class="tl">Employer tax cost</span><span class="ta er" id="r-period-er">—</span></div>
           <div class="tr"><span class="tl">True employer cost per period</span><span class="ta" id="r-period-true">—</span></div>
         </div>
 
         <div class="legend">
           <div class="li"><div class="ld" style="background:#7dd4a0"></div>Employer cost</div>
-          <div class="li"><div class="ld" style="background:#f0a070"></div>Employee withheld</div>
+          <div class="li"><div class="ld" style="background:#f0a070"></div>Employee FICA</div>
+          <div class="li"><div class="ld" style="background:#c8a0f0"></div>State income tax</div>
         </div>
         <div class="actions">
           <button class="action-btn" onclick="copyResults()">📋 Copy Summary</button>
@@ -446,13 +456,75 @@ footer a{color:rgba(255,255,255,.6);}
       </div>
 
       <div class="info-card">
-        <h3>SUTA — Key Facts</h3>
-        <p>New employer rates range from <strong>0.35%</strong> (South Carolina) to <strong>4.00%</strong> (Hawaii). States set their own wage bases independently.</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--muted);">Biggest 2026 wage base jumps: Colorado (+$6,800), Alaska (+$4,500), Washington (+$5,400). Only Alaska, New Jersey, and Pennsylvania require employee SUTA contributions. California's FUTA credit reduction adds extra cost for 2025 filings.</p>
-        <div class="vbadge">✓ DOL / Patriot Software / FirstNonprofit · 2026</div>
+        <h3>State Income Tax — All 50 States</h3>
+        <p>8 states have <strong>no wage income tax</strong>: Alaska, Florida, Nevada, New Hampshire (2025), South Dakota, Tennessee, Texas, Wyoming, Washington (wages only).</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--muted);">The remaining 42 states + D.C. tax wages. 14 use a flat rate (AZ 2.5% — GA 5.39%). 28 use graduated brackets (CA tops at 13.3%, HI at 11%, NY at 10.9%, NJ at 10.75%). State income tax is an <strong>employee-only</strong> cost — employers do not match it.</p>
+        <div class="vbadge">✓ Tax Foundation 2025 State Income Tax Rates</div>
       </div>
     </div>
   </div>
+
+  <!-- STATE INCOME TAX RATES TABLE -->
+  <div class="compare-table-section" style="margin-top:28px;">
+    <div class="compare-title">State Income Tax Rates — All 50 States (2025)</div>
+    <div class="compare-sub">Top marginal rates sourced from Tax Foundation. No-tax states shown in green. High-tax states (top rate &gt;8%) shown in yellow. Actual withholding depends on filing status, brackets, deductions, and local taxes.</div>
+    <table class="ct">
+      <thead><tr><th>State</th><th>Type</th><th>Top Rate</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Alabama</td><td>Graduated</td><td>5.0%</td><td>3 brackets: 2%–5%</td></tr>
+        <tr style="background:var(--green-lt)"><td>Alaska</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr><td>Arizona</td><td>Flat</td><td>2.5%</td><td>Lowest flat rate in US</td></tr>
+        <tr><td>Arkansas</td><td>Graduated</td><td>4.4%</td><td>Two-bracket system</td></tr>
+        <tr class="changed-row"><td>California</td><td>Graduated</td><td>13.3%</td><td>Highest in US; 10 brackets</td></tr>
+        <tr><td>Colorado</td><td>Flat</td><td>4.4%</td><td></td></tr>
+        <tr><td>Connecticut</td><td>Graduated</td><td>6.99%</td><td>7 brackets</td></tr>
+        <tr><td>Delaware</td><td>Graduated</td><td>6.6%</td><td>7 brackets; first $2K exempt</td></tr>
+        <tr><td>Washington D.C.</td><td>Graduated</td><td>10.75%</td><td>6 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>Florida</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr><td>Georgia</td><td>Flat</td><td>5.39%</td><td>Transitioning to lower flat rate</td></tr>
+        <tr class="changed-row"><td>Hawaii</td><td>Graduated</td><td>11.0%</td><td>10 brackets; 2nd highest in US</td></tr>
+        <tr><td>Idaho</td><td>Graduated</td><td>5.8%</td><td>4 brackets</td></tr>
+        <tr><td>Illinois</td><td>Flat</td><td>4.95%</td><td>No standard deduction</td></tr>
+        <tr><td>Indiana</td><td>Flat</td><td>3.05%</td><td>+ county tax varies</td></tr>
+        <tr><td>Iowa</td><td>Flat</td><td>3.8%</td><td>Reduced to flat rate 2025</td></tr>
+        <tr><td>Kansas</td><td>Graduated</td><td>5.7%</td><td>Two-bracket system</td></tr>
+        <tr><td>Kentucky</td><td>Flat</td><td>4.0%</td><td></td></tr>
+        <tr><td>Louisiana</td><td>Graduated</td><td>4.3%</td><td>Reduced rates effective 2025</td></tr>
+        <tr><td>Maine</td><td>Graduated</td><td>7.15%</td><td>3 brackets</td></tr>
+        <tr><td>Maryland</td><td>Graduated</td><td>5.75%</td><td>+ local/county tax 2.25%–3.2%</td></tr>
+        <tr><td>Massachusetts</td><td>Flat</td><td>5.0%</td><td>+4% surtax on income over $1M</td></tr>
+        <tr><td>Michigan</td><td>Flat</td><td>4.05%</td><td></td></tr>
+        <tr class="changed-row"><td>Minnesota</td><td>Graduated</td><td>9.85%</td><td>4 brackets</td></tr>
+        <tr><td>Mississippi</td><td>Flat</td><td>4.7%</td><td>First $10K exempt</td></tr>
+        <tr><td>Missouri</td><td>Graduated</td><td>4.8%</td><td>8 brackets</td></tr>
+        <tr><td>Montana</td><td>Graduated</td><td>5.9%</td><td>6 brackets</td></tr>
+        <tr><td>Nebraska</td><td>Graduated</td><td>5.2%</td><td>3 brackets; declining to 3.99%</td></tr>
+        <tr style="background:var(--green-lt)"><td>Nevada</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr style="background:var(--green-lt)"><td>New Hampshire</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>Repealed interest/dividends tax 2025</td></tr>
+        <tr class="changed-row"><td>New Jersey</td><td>Graduated</td><td>10.75%</td><td>7 brackets</td></tr>
+        <tr><td>New Mexico</td><td>Graduated</td><td>5.9%</td><td>5 brackets</td></tr>
+        <tr class="changed-row"><td>New York</td><td>Graduated</td><td>10.9%</td><td>9 brackets; + NYC local tax</td></tr>
+        <tr><td>North Carolina</td><td>Flat</td><td>4.25%</td><td>Declining to 3.99% by 2026</td></tr>
+        <tr><td>North Dakota</td><td>Flat</td><td>2.5%</td><td>Reduced to flat rate</td></tr>
+        <tr><td>Ohio</td><td>Graduated</td><td>3.5%</td><td>First $26K exempt; + city tax</td></tr>
+        <tr><td>Oklahoma</td><td>Graduated</td><td>4.75%</td><td>6 brackets</td></tr>
+        <tr class="changed-row"><td>Oregon</td><td>Graduated</td><td>9.9%</td><td>3 brackets; high earner surcharge</td></tr>
+        <tr><td>Pennsylvania</td><td>Flat</td><td>3.07%</td><td>No standard deduction; + local EIT</td></tr>
+        <tr><td>Rhode Island</td><td>Graduated</td><td>5.99%</td><td>3 brackets</td></tr>
+        <tr><td>South Carolina</td><td>Graduated</td><td>6.2%</td><td>3 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>South Dakota</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr style="background:var(--green-lt)"><td>Tennessee</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr style="background:var(--green-lt)"><td>Texas</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr><td>Utah</td><td>Flat</td><td>4.55%</td><td>No std deduction; uses personal exemption credit</td></tr>
+        <tr class="changed-row"><td>Vermont</td><td>Graduated</td><td>8.75%</td><td>4 brackets</td></tr>
+        <tr><td>Virginia</td><td>Graduated</td><td>5.75%</td><td>4 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>Washington</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No wage tax (capital gains only)</td></tr>
+        <tr><td>West Virginia</td><td>Graduated</td><td>5.12%</td><td>5 brackets; rate cuts in progress</td></tr>
+        <tr><td>Wisconsin</td><td>Graduated</td><td>7.65%</td><td>4 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>Wyoming</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">⚠ Yellow = top rate above 8%. Green = no wage income tax. State income tax rates change annually — this table reflects 2025 enacted rates from Tax Foundation. Some states also levy local income taxes (NYC, PA municipalities, OH cities) not included in this estimate. Always verify current rates with your state revenue department or a licensed CPA.</p>
 </div>
 
 <footer>
@@ -466,6 +538,86 @@ const FED = {
   2025: { SS_RATE:.062, SS_BASE:176100, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000 },
   2026: { SS_RATE:.062, SS_BASE:184500, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000 }
 };
+
+// ── STATE INCOME TAX DATA (Tax Foundation 2025) ───────
+// type:'none'=no wage tax, 'flat'=single rate, 'grad'=graduated brackets (single filer)
+// Brackets: [[threshold, rate], ...] — income above threshold taxed at rate
+// stdDed: simplified state standard deduction for estimation
+const STATE_TAX = {
+  "Alabama":        {type:'grad',brackets:[[0,.02],[500,.04],[3000,.05]],stdDed:3000,note:'Top 5.0%'},
+  "Alaska":         {type:'none',note:'No state income tax'},
+  "Arizona":        {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
+  "Arkansas":       {type:'grad',brackets:[[0,.02],[5000,.04],[8701,.044]],stdDed:2200,note:'Top 4.4%'},
+  "California":     {type:'grad',brackets:[[0,.01],[10412,.02],[24684,.04],[38959,.06],[54081,.08],[68350,.093],[349137,.103],[418961,.113],[698274,.123],[1000000,.133]],stdDed:5202,note:'Top 13.3%'},
+  "Colorado":       {type:'flat',rate:.044,stdDed:14600,note:'Flat 4.4%'},
+  "Connecticut":    {type:'grad',brackets:[[0,.03],[10000,.05],[50000,.055],[100000,.06],[200000,.065],[250000,.069],[500000,.0699]],stdDed:15000,note:'Top 6.99%'},
+  "Delaware":       {type:'grad',brackets:[[0,0],[2000,.022],[5000,.039],[10000,.048],[20000,.052],[25000,.055],[60000,.066]],stdDed:3250,note:'Top 6.6%'},
+  "Washington D.C.":{type:'grad',brackets:[[0,.04],[10000,.06],[40000,.065],[60000,.085],[350000,.0925],[1000000,.1075]],stdDed:14600,note:'Top 10.75%'},
+  "Florida":        {type:'none',note:'No state income tax'},
+  "Georgia":        {type:'flat',rate:.0539,stdDed:12000,note:'Flat 5.39%'},
+  "Hawaii":         {type:'grad',brackets:[[0,.014],[2400,.032],[4800,.055],[9600,.064],[14400,.068],[19200,.072],[24000,.076],[36000,.079],[48000,.083],[150000,.11]],stdDed:2200,note:'Top 11.0%'},
+  "Idaho":          {type:'grad',brackets:[[0,.01],[1662,.03],[4987,.045],[8309,.058]],stdDed:14600,note:'Top 5.8%'},
+  "Illinois":       {type:'flat',rate:.0495,stdDed:0,note:'Flat 4.95% (no std deduction)'},
+  "Indiana":        {type:'flat',rate:.0305,stdDed:1000,note:'Flat 3.05%'},
+  "Iowa":           {type:'flat',rate:.038,stdDed:14600,note:'Flat 3.8% (2025)'},
+  "Kansas":         {type:'grad',brackets:[[0,.031],[15000,.057]],stdDed:3500,note:'Top 5.7%'},
+  "Kentucky":       {type:'flat',rate:.04,stdDed:3160,note:'Flat 4.0%'},
+  "Louisiana":      {type:'grad',brackets:[[0,.0185],[12500,.035],[50000,.043]],stdDed:4500,note:'Top 4.3% (2025 reduced)'},
+  "Maine":          {type:'grad',brackets:[[0,.058],[24500,.0675],[58050,.0715]],stdDed:14600,note:'Top 7.15%'},
+  "Maryland":       {type:'grad',brackets:[[0,.02],[1000,.03],[2000,.04],[3000,.0475],[100000,.05],[125000,.0525],[150000,.055],[250000,.0575]],stdDed:2400,note:'Top 5.75% + local tax'},
+  "Massachusetts":  {type:'flat',rate:.05,stdDed:0,note:'Flat 5.0% (+4% surtax >$1M)'},
+  "Michigan":       {type:'flat',rate:.0405,stdDed:5600,note:'Flat 4.05%'},
+  "Minnesota":      {type:'grad',brackets:[[0,.0535],[30070,.068],[98760,.0785],[183340,.0985]],stdDed:14575,note:'Top 9.85%'},
+  "Mississippi":    {type:'flat',rate:.047,stdDed:2300,note:'Flat 4.7%'},
+  "Missouri":       {type:'grad',brackets:[[0,.015],[1121,.02],[2242,.025],[3363,.03],[4484,.035],[5605,.04],[6726,.045],[7847,.048]],stdDed:14600,note:'Top 4.8%'},
+  "Montana":        {type:'grad',brackets:[[0,.01],[3300,.02],[5800,.03],[8900,.04],[12100,.05],[15600,.059]],stdDed:14600,note:'Top 5.9%'},
+  "Nebraska":       {type:'grad',brackets:[[0,.0246],[3700,.0351],[22170,.052]],stdDed:7900,note:'Top 5.2%'},
+  "Nevada":         {type:'none',note:'No state income tax'},
+  "New Hampshire":  {type:'none',note:'No wage income tax (2025)'},
+  "New Jersey":     {type:'grad',brackets:[[0,.014],[20000,.0175],[35000,.035],[40000,.05526],[75000,.0637],[500000,.0897],[1000000,.1075]],stdDed:0,note:'Top 10.75%'},
+  "New Mexico":     {type:'grad',brackets:[[0,.017],[5500,.032],[11000,.047],[16000,.049],[210000,.059]],stdDed:14600,note:'Top 5.9%'},
+  "New York":       {type:'grad',brackets:[[0,.04],[17150,.045],[23600,.0525],[27900,.0585],[161550,.0625],[323200,.0685],[2155350,.0965],[5000000,.103],[25000000,.109]],stdDed:8000,note:'Top 10.9%'},
+  "North Carolina": {type:'flat',rate:.0425,stdDed:12750,note:'Flat 4.25%'},
+  "North Dakota":   {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
+  "Ohio":           {type:'grad',brackets:[[0,0],[26050,.0275],[100000,.035]],stdDed:0,note:'Top 3.5%'},
+  "Oklahoma":       {type:'grad',brackets:[[0,.0025],[1000,.005],[2500,.0075],[3750,.01],[4900,.02],[7200,.0475]],stdDed:6350,note:'Top 4.75%'},
+  "Oregon":         {type:'grad',brackets:[[0,.0475],[17400,.0675],[250000,.099]],stdDed:2745,note:'Top 9.9%'},
+  "Pennsylvania":   {type:'flat',rate:.0307,stdDed:0,note:'Flat 3.07% (no std deduction)'},
+  "Rhode Island":   {type:'grad',brackets:[[0,.0375],[77450,.0475],[176050,.0599]],stdDed:10550,note:'Top 5.99%'},
+  "South Carolina": {type:'grad',brackets:[[0,0],[3460,.03],[17330,.062]],stdDed:14600,note:'Top 6.2%'},
+  "South Dakota":   {type:'none',note:'No state income tax'},
+  "Tennessee":      {type:'none',note:'No state income tax'},
+  "Texas":          {type:'none',note:'No state income tax'},
+  "Utah":           {type:'flat',rate:.0455,stdDed:0,note:'Flat 4.55%'},
+  "Vermont":        {type:'grad',brackets:[[0,.0335],[45400,.066],[110050,.076],[229550,.0875]],stdDed:14600,note:'Top 8.75%'},
+  "Virginia":       {type:'grad',brackets:[[0,.02],[3000,.03],[5000,.05],[17000,.0575]],stdDed:8000,note:'Top 5.75%'},
+  "Washington":     {type:'none',note:'No wage income tax'},
+  "West Virginia":  {type:'grad',brackets:[[0,.03],[10000,.04],[25000,.045],[40000,.05],[60000,.0512]],stdDed:0,note:'Top 5.12%'},
+  "Wisconsin":      {type:'grad',brackets:[[0,.035],[13810,.044],[27630,.053],[304170,.0765]],stdDed:12070,note:'Top 7.65%'},
+  "Wyoming":        {type:'none',note:'No state income tax'}
+};
+
+function calcStateTax(stateName, salary) {
+  const st = STATE_TAX[stateName];
+  if (!st || st.type === 'none') return {tax:0, rate:0, note: st ? st.note : 'No state income tax'};
+  const taxable = Math.max(0, salary - (st.stdDed || 0));
+  let tax = 0;
+  if (st.type === 'flat') {
+    tax = taxable * st.rate;
+    return {tax, rate:(st.rate*100).toFixed(2), note:st.note};
+  }
+  const brackets = st.brackets;
+  for (let i = 0; i < brackets.length; i++) {
+    const lo = brackets[i][0], rate = brackets[i][1];
+    const hi = i+1 < brackets.length ? brackets[i+1][0] : Infinity;
+    if (taxable <= lo) break;
+    tax += (Math.min(taxable,hi) - lo) * rate;
+  }
+  const effRate = taxable > 0 ? (tax/taxable*100).toFixed(2) : '0.00';
+  return {tax, rate:effRate, topRate:(brackets[brackets.length-1][1]*100).toFixed(1), note:st.note};
+}
+
+
 
 // [state label, rate, base2025, base2026]
 const STATES = [
@@ -619,6 +771,7 @@ function calculate() {
   const salary = parseFloat(document.getElementById('salary').value);
   const freq = parseInt(document.getElementById('frequency').value);
   const idx = parseInt(document.getElementById('state').value);
+  const stateName = STATES[idx][0];
   const sutaRate = STATES[idx][1] / 100;
   const sutaBase = parseFloat(document.getElementById('sutaBase').value);
   if (!salary || salary <= 0) { alert('Please enter a valid salary.'); return; }
@@ -630,13 +783,17 @@ function calculate() {
   const addMC = salary > f.ADD_MC_THRESH ? (salary - f.ADD_MC_THRESH) * f.ADD_MC : 0;
   const futa = Math.min(salary, f.FUTA_BASE) * f.FUTA;
   const suta = Math.min(salary, sutaBase) * sutaRate;
+
+  // State income tax (employee only)
+  const sitResult = calcStateTax(stateName, salary);
+  const sit = sitResult.tax;
+
   const erTotal = erSS + erMC + futa + suta;
   const eeTotal = eeSS + eeMC + addMC;
-  const grand = erTotal + eeTotal;
+  const grand = erTotal + eeTotal + sit;
 
   const pl = {52:'Weekly', 26:'Bi-Weekly', 24:'Semi-Monthly', 12:'Monthly'};
 
-  // Show compare if we have previous calc from other year
   if (lastGrand !== null) {
     const diff = grand - lastGrand;
     const sign = diff >= 0 ? '+' : '';
@@ -657,9 +814,25 @@ function calculate() {
   document.getElementById('r-ee-mc').textContent = fmt(eeMC);
   document.getElementById('r-er-total').textContent = fmt(erTotal);
   document.getElementById('r-ee-total').textContent = fmt(eeTotal);
+  document.getElementById('r-sit-total').textContent = fmt(sit);
   document.getElementById('r-grand').textContent = fmt(grand);
+
+  // State income tax display
+  const sitNone = sit === 0;
+  document.getElementById('r-sit').textContent = fmt(sit);
+  document.getElementById('r-sit-none-row').style.display = sitNone ? 'flex' : 'none';
+  if (!sitNone) {
+    const rateLabel = sitResult.topRate
+      ? `eff. ${sitResult.rate}% (top ${sitResult.topRate}%)`
+      : `${sitResult.rate}% flat`;
+    document.getElementById('r-sit-rate').textContent = rateLabel;
+  } else {
+    document.getElementById('r-sit-rate').textContent = sitResult.note || '0%';
+  }
+
   document.getElementById('r-period-gross').textContent = fmt(salary/freq);
   document.getElementById('r-period-ee').textContent = fmt(eeTotal/freq);
+  document.getElementById('r-period-sit').textContent = fmt(sit/freq);
   document.getElementById('r-period-er').textContent = fmt(erTotal/freq);
   document.getElementById('r-period-true').textContent = fmt((salary+erTotal)/freq);
   document.getElementById('r-period-label').textContent = pl[freq]||'Per Period';
@@ -674,8 +847,9 @@ function copyResults() {
   const state = STATES[parseInt(document.getElementById('state').value)][0];
   const erTotal = document.getElementById('r-er-total').textContent;
   const eeTotal = document.getElementById('r-ee-total').textContent;
+  const sit = document.getElementById('r-sit-total').textContent;
   const grand = document.getElementById('r-grand').textContent;
-  const text = `${currentYear} Payroll Tax Summary\n─────────────────────\nSalary: $${salary}\nState: ${state}\nEmployer cost (annual): ${erTotal}\nEmployee withheld (annual): ${eeTotal}\nTotal payroll tax: ${grand}\n\nRates: IRS Publication 15 (${currentYear})\nTool: BookSmartTools.com`;
+  const text = `${currentYear} Payroll Tax Summary\n─────────────────────\nSalary: $${salary}\nState: ${state}\nEmployer cost (FICA+FUTA+SUTA): ${erTotal}\nEmployee FICA withheld: ${eeTotal}\nState income tax withheld (est.): ${sit}\nTotal tax burden: ${grand}\n\nFICA: IRS Pub. 15 (${currentYear}) | SUTA: DOL data | State income tax: Tax Foundation 2025\nTool: BookSmartTools.com — Note: State income tax is an estimate based on single filer brackets.`;
   navigator.clipboard.writeText(text).then(() => alert('Copied!'));
 }
 
