@@ -148,10 +148,18 @@ footer a{color:rgba(255,255,255,.6);}
 </head>
 <body>
 
-<header>
-  <div class="brand">Book<span>Smart</span>Tools</div>
-  <div class="tagline">PROFESSIONAL BOOKKEEPING UTILITIES</div>
-</header>
+<nav class="site-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Book<em>Smart</em>Tools</a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="tools.html" class="nav-cta">All Tools →</a></li>
+    </ul>
+  </div>
+</nav>
 
 <div class="hero">
   <h1>Payroll Tax Estimator</h1>
@@ -460,6 +468,12 @@ footer a{color:rgba(255,255,255,.6);}
         <p>8 states have <strong>no wage income tax</strong>: Alaska, Florida, Nevada, New Hampshire (2025), South Dakota, Tennessee, Texas, Wyoming, Washington (wages only).</p>
         <p style="margin-top:8px;font-size:12px;color:var(--muted);">The remaining 42 states + D.C. tax wages. 14 use a flat rate (AZ 2.5% — GA 5.39%). 28 use graduated brackets (CA tops at 13.3%, HI at 11%, NY at 10.9%, NJ at 10.75%). State income tax is an <strong>employee-only</strong> cost — employers do not match it.</p>
         <div class="vbadge">✓ Tax Foundation 2025 State Income Tax Rates</div>
+      </div>
+      <div class="info-card">
+        <h3>SUTA — Key Facts (2025 & 2026)</h3>
+        <p>New employer rates range from <strong>0.35%</strong> (South Carolina) to <strong>4.00%</strong> (Hawaii). Wage bases range from $7,000 (AR, CA, FL, TN) to $78,200 (Washington in 2026).</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--muted);">Biggest 2026 wage base jumps: Colorado (+$6,800), Alaska (+$4,500), Washington (+$5,400). Only Alaska, New Jersey, and Pennsylvania require employee SUTA contributions. California's FUTA credit reduction adds extra cost on 2025 Form 940 filings.</p>
+        <div class="vbadge">✓ DOL / Patriot Software / First Nonprofit · 2025–2026</div>
       </div>
     </div>
   </div>
@@ -856,5 +870,6 @@ function copyResults() {
 // ── STARTUP ───────────────────────────────────────────
 setYear(2025);
 </script>
+<script src="js/main.js"></script>
 </body>
 </html>
