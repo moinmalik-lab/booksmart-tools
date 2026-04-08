@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Articles — BookSmartTools</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#111210; --paper:#fafaf7; --cream:#f2efe6;
+  --red:#c03a20; --red-light:#fdf0ec;
+  --green:#1e5c33; --border:#dddbd2; --muted:#6b6960;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Instrument Sans',sans-serif; background:var(--paper); color:var(--ink); }
+
+nav {
+  background:var(--ink); padding:16px 32px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo { font-family:'Playfair Display',serif; font-size:20px; color:white; text-decoration:none; }
+.logo em { color:#f0a070; font-style:normal; }
+.back { font-size:13px; color:rgba(255,255,255,0.5); text-decoration:none; }
+.back:hover { color:white; }
+
+/* Article switcher */
+.tab-bar {
+  background:var(--cream); border-bottom:1px solid var(--border);
+  padding:0 32px; display:flex; gap:0; overflow-x:auto;
+}
+.tab-btn {
+  padding:16px 24px; border:none; background:transparent;
+  font-family:'Instrument Sans',sans-serif; font-size:14px;
+  color:var(--muted); cursor:pointer; border-bottom:2px solid transparent;
+  white-space:nowrap; transition:all 0.15s;
+}
+.tab-btn.active { color:var(--ink); border-bottom-color:var(--red); font-weight:600; }
+
+/* Article layout */
+.article { display:none; max-width:720px; margin:0 auto; padding:60px 32px 80px; }
+.article.active { display:block; }
+
+/* Article meta */
+.article-meta {
+  font-family:'JetBrains Mono',monospace; font-size:11px;
+  color:var(--muted); letter-spacing:0.5px; margin-bottom:20px;
+  display:flex; align-items:center; gap:12px;
+}
+.article-cat {
+  background:var(--red-light); color:var(--red);
+  padding:3px 9px; border-radius:2px; font-weight:500;
+}
+
+.article h1 {
+  font-family:'Playfair Display',serif; font-size:clamp(28px,4vw,42px);
+  line-height:1.15; margin-bottom:16px; letter-spacing:-0.5px;
+}
+
+.article-intro {
+  font-size:18px; color:var(--muted); line-height:1.7;
+  border-left:3px solid var(--red); padding-left:20px;
+  margin-bottom:40px;
+}
+
+.article h2 {
+  font-family:'Playfair Display',serif; font-size:24px;
+  margin:40px 0 16px; color:var(--ink);
+}
+
+.article h3 {
+  font-size:17px; font-weight:600; margin:28px 0 12px; color:var(--ink);
+}
+
+.article p { font-size:16px; line-height:1.8; color:#333; margin-bottom:16px; }
+
+.article ul, .article ol { margin:0 0 20px 24px; }
+.article li { font-size:16px; line-height:1.8; color:#333; margin-bottom:6px; }
+
+.callout {
+  background:var(--cream); border-left:4px solid var(--red);
+  padding:20px 24px; border-radius:0 4px 4px 0; margin:28px 0;
+}
+.callout strong { display:block; margin-bottom:6px; font-size:14px; letter-spacing:0.3px; }
+.callout p { margin:0; font-size:15px; }
+
+.callout.tip { border-left-color:var(--green); }
+.callout.tip strong { color:var(--green); }
+
+.example-box {
+  background:var(--ink); color:white; border-radius:4px;
+  padding:24px; margin:28px 0; font-family:'JetBrains Mono',monospace; font-size:14px; line-height:1.8;
+}
+.example-box .label { font-size:10px; letter-spacing:1px; text-transform:uppercase; opacity:.4; margin-bottom:12px; }
+.example-box .row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.08); }
+.example-box .row:last-child { border-bottom:none; }
+.example-box .highlight { color:#f0a070; }
+.example-box .total { color:white; font-weight:500; margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.2); }
+
+.article table {
+  width:100%; border-collapse:collapse; margin:24px 0; font-size:14px;
+}
+.article th {
+  text-align:left; font-size:11px; letter-spacing:.7px; text-transform:uppercase;
+  color:var(--muted); padding:8px 12px; border-bottom:2px solid var(--border);
+}
+.article td { padding:12px 12px; border-bottom:1px solid var(--border); line-height:1.5; }
+.article tr:last-child td { border-bottom:none; }
+.article tr:nth-child(even) td { background:var(--cream); }
+
+.cta-box {
+  background:var(--ink); color:white;
+  border-radius:4px; padding:32px; margin-top:48px; text-align:center;
+}
+.cta-box h3 { font-family:'Playfair Display',serif; font-size:22px; margin-bottom:10px; }
+.cta-box p { font-size:14px; color:rgba(255,255,255,0.6); margin-bottom:20px; }
+.cta-box a {
+  display:inline-block; background:var(--red); color:white;
+  padding:12px 24px; border-radius:3px; text-decoration:none;
+  font-weight:600; font-size:14px; transition:background .15s;
+}
+.cta-box a:hover { background:#a02e18; }
+
+.article-footer {
+  margin-top:48px; padding-top:32px; border-top:1px solid var(--border);
+  font-size:13px; color:var(--muted); line-height:1.7;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="landing-page.html" class="logo">Book<em>Smart</em>Tools</a>
+  <a href="landing-page.html" class="back">← Back to all tools</a>
+</nav>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showArticle(0)">Article 1: Invoice Late Fees</button>
+  <button class="tab-btn" onclick="showArticle(1)">Article 2: QuickBooks Reconciliation</button>
+  <button class="tab-btn" onclick="showArticle(2)">Article 3: 1099 vs W-2</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ARTICLE 1: INVOICE LATE FEES
+═══════════════════════════════════════════════ -->
+<div class="article active" id="article-0">
+
+  <div class="article-meta">
+    <span class="article-cat">Invoicing</span>
+    <span>5 min read</span>
+    <span>Updated January 2025</span>
+  </div>
+
+  <h1>How to Calculate Invoice Late Fees (With the Right Rate)</h1>
+
+  <div class="article-intro">
+    Most US small businesses are owed money right now that they're too polite to chase. Here's how to calculate late fees correctly, state your terms on invoices, and actually collect.
+  </div>
+
+  <h2>What is a late fee on an invoice?</h2>
+  <p>A late fee — also called a finance charge or interest penalty — is an additional amount charged to a client when they fail to pay your invoice by the agreed due date. It's a standard business practice, perfectly legal in all 50 US states, and one of the most effective tools for getting paid on time.</p>
+  <p>The problem is that most small business owners either don't charge late fees at all, or charge them inconsistently. As a bookkeeper who works with US clients daily, I see this constantly — and it costs them real money.</p>
+
+  <h2>What late fee rate should you charge?</h2>
+  <p>The US standard is <strong>1.5% per month</strong>, which equals 18% APR. This is the rate you'll see on most professional service invoices — accountants, consultants, attorneys, and contractors all commonly use it.</p>
+
+  <div class="callout tip">
+    <strong>TIP — Check your state's usury laws</strong>
+    <p>Most states allow up to 18% APR (1.5%/month) for commercial transactions. Some allow higher. A few have lower limits for consumer transactions. If you're billing businesses, 1.5%/month is safe in virtually every state.</p>
+  </div>
+
+  <h3>Alternative approaches</h3>
+  <ul>
+    <li><strong>Flat fee:</strong> A fixed dollar amount (e.g., $50 per month). Simpler to explain to clients.</li>
+    <li><strong>Lower rate:</strong> Some service providers use 1% per month to be more lenient with long-term clients.</li>
+    <li><strong>Tiered:</strong> 1.5% for 1–30 days late, 2% for 31–60 days, and so on.</li>
+  </ul>
+
+  <h2>How to calculate invoice late fees — step by step</h2>
+  <p>Here's the exact formula used by professional bookkeepers for simple (non-compounding) late fees:</p>
+
+  <div class="example-box">
+    <div class="label">Example Calculation</div>
+    <div class="row"><span>Original invoice amount</span><span>$5,000.00</span></div>
+    <div class="row"><span>Due date</span><span>January 1, 2025</span></div>
+    <div class="row"><span>Payment received</span><span>February 20, 2025</span></div>
+    <div class="row"><span>Days overdue</span><span>50 days</span></div>
+    <div class="row"><span>Monthly rate</span><span>1.5% per month</span></div>
+    <div class="row"><span>Months overdue (50 ÷ 30)</span><span>1.67 months</span></div>
+    <div class="row highlight"><span>Late fee (1.67 × 1.5% × $5,000)</span><span>$125.00</span></div>
+    <div class="row total"><span>Total amount due</span><span>$5,125.00</span></div>
+  </div>
+
+  <h2>How to state late fees on your invoice</h2>
+  <p>The most important rule: your late fee policy must appear on the invoice before the work is done, not after the invoice is overdue. The standard language to use on every invoice:</p>
+
+  <div class="callout">
+    <strong>Invoice language to copy-paste:</strong>
+    <p>"Payment due within 30 days. A finance charge of 1.5% per month (18% APR) will be applied to all overdue balances after the due date. Overdue amounts are subject to collection fees."</p>
+  </div>
+
+  <p>Also put this language in your client agreement or contract before you start work. If a client disputes the fee later and you never told them about it, a court is unlikely to enforce it.</p>
+
+  <h2>When and how to actually charge a late fee</h2>
+
+  <h3>Step 1: Set a grace period (optional)</h3>
+  <p>Many bookkeepers allow 5–10 days of grace before charging fees. This is courteous and reduces disputes with good clients who just had a slow payment run. You don't have to, but it's common.</p>
+
+  <h3>Step 2: Send a reminder first</h3>
+  <p>Before adding fees, always send a polite reminder email at 7, 14, and 30 days overdue. Most late payments are forgetfulness, not bad faith. A friendly nudge resolves the majority.</p>
+
+  <h3>Step 3: Issue a new invoice with the fee added</h3>
+  <p>Don't modify the original invoice. Issue a new invoice that shows the original amount, the finance charge, and the new total. Reference the original invoice number. This creates a clean paper trail.</p>
+
+  <h3>Step 4: Be consistent</h3>
+  <p>If you waive fees for one client, do it consciously — not as a default. Inconsistent enforcement makes your terms meaningless and trains clients that they can ignore due dates.</p>
+
+  <h2>What if a client refuses to pay the late fee?</h2>
+  <p>In most cases, you'll choose to negotiate rather than pursue the fee. The relationship matters more than $50. But here's what you need to know:</p>
+  <ul>
+    <li>If your terms were clearly stated and the client agreed (signed a contract), the fee is legally enforceable</li>
+    <li>For amounts under $5,000–$10,000, small claims court is an option in most US states</li>
+    <li>For larger amounts or repeat offenders, a collections agency or attorney letter is often enough to resolve it</li>
+  </ul>
+
+  <div class="cta-box">
+    <h3>Calculate the exact late fee right now</h3>
+    <p>Use our free Invoice Late Fee Calculator to get the precise amount with a month-by-month breakdown you can send to clients.</p>
+    <a href="invoice-late-fee-calculator.html">Open Free Calculator →</a>
+  </div>
+
+  <div class="article-footer">
+    <strong>Disclaimer:</strong> This article provides general bookkeeping information and is not legal or financial advice. Late fee laws vary by state and transaction type. For significant amounts, consult a licensed attorney.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ARTICLE 2: QUICKBOOKS RECONCILIATION
+═══════════════════════════════════════════════ -->
+<div class="article" id="article-1">
+
+  <div class="article-meta">
+    <span class="article-cat">QuickBooks</span>
+    <span>7 min read</span>
+    <span>Updated January 2025</span>
+  </div>
+
+  <h1>How to Reconcile a Bank Account in QuickBooks Online — Step by Step</h1>
+
+  <div class="article-intro">
+    Bank reconciliation is the most important routine in bookkeeping. This walkthrough covers the entire process in QuickBooks Online, including how to fix the most common errors that throw off your balance.
+  </div>
+
+  <h2>What is bank reconciliation and why does it matter?</h2>
+  <p>Bank reconciliation is the process of matching your QuickBooks records to your actual bank statement to confirm they agree. If they don't match, there's an error somewhere — either in QuickBooks, in the bank, or both.</p>
+  <p>For small businesses, reconciling monthly serves three critical purposes:</p>
+  <ul>
+    <li>Catches bank errors (they happen more often than you think)</li>
+    <li>Catches data entry errors and duplicate transactions in QuickBooks</li>
+    <li>Ensures your financial reports are accurate and trustworthy</li>
+  </ul>
+  <p>If you're using QuickBooks for tax prep or applying for a loan, unreconciled books are a red flag. Most banks and CPAs will ask for reconciled statements.</p>
+
+  <h2>Before you start: what you need</h2>
+  <ul>
+    <li>Your bank statement for the period (PDF or paper)</li>
+    <li>Access to QuickBooks Online</li>
+    <li>The ending balance and date from your bank statement</li>
+  </ul>
+
+  <div class="callout tip">
+    <strong>TIP — Reconcile every month, not every quarter</strong>
+    <p>Monthly reconciliation takes 10–20 minutes. Quarterly reconciliation can take hours when you find a problem from three months ago. Monthly is always worth it.</p>
+  </div>
+
+  <h2>Step-by-step: reconciling in QuickBooks Online</h2>
+
+  <h3>Step 1: Go to the Reconcile screen</h3>
+  <p>In QuickBooks Online, go to <strong>Accounting → Reconcile</strong> in the left menu. Select the bank account you want to reconcile from the dropdown.</p>
+
+  <h3>Step 2: Enter your statement details</h3>
+  <p>Enter the <strong>Ending Balance</strong> from your bank statement — this is the closing balance on the last day of the period. Enter the <strong>Statement Ending Date</strong> to match. Click <em>Start Reconciling</em>.</p>
+
+  <h3>Step 3: Match transactions one by one</h3>
+  <p>QuickBooks will show you two columns: deposits/credits on the right, payments/debits on the left. Your job is to check off every transaction that appears on your bank statement. A transaction appears in QBO because you either:</p>
+  <ul>
+    <li>Manually entered it</li>
+    <li>Connected your bank feed and downloaded it</li>
+    <li>Imported it</li>
+  </ul>
+  <p>Work top-to-bottom through your paper statement, checking off each transaction in QBO. The <strong>Difference</strong> at the bottom of the screen should move toward $0 as you match transactions.</p>
+
+  <h3>Step 4: Aim for $0 difference</h3>
+  <p>When the Difference field shows exactly <strong>$0.00</strong>, you're reconciled. Click <em>Finish Now</em> to complete the reconciliation. QuickBooks will mark all checked transactions as reconciled (shown with an "R" in transaction lists).</p>
+
+  <h2>What to do when the difference isn't zero</h2>
+  <p>This is where most people get stuck. A non-zero difference means something doesn't match. Here's how to troubleshoot:</p>
+
+  <h3>Case 1: Small difference (under $10)</h3>
+  <p>Often a rounding error or a bank fee you forgot to enter. Check for any small transactions on your bank statement that aren't in QBO. Common culprits: monthly service fees, ATM fees, interest.</p>
+
+  <h3>Case 2: The difference matches a specific transaction</h3>
+  <p>Search QBO for that exact amount. Either it's missing from QBO (needs to be added), or it's in QBO but dated to the wrong period (shows up in the wrong month's reconciliation).</p>
+
+  <h3>Case 3: The difference is exactly double a transaction</h3>
+  <p>This almost always means a duplicate entry. Search QBO for that amount and look for two identical transactions. Delete the duplicate.</p>
+
+  <h3>Case 4: The difference carries over from last month</h3>
+  <p>If you've never reconciled this account before, or a previous reconciliation was done incorrectly, the difference may be a carryover. You'll need to go back and fix the prior period's reconciliation first.</p>
+
+  <div class="callout">
+    <strong>Common mistake to avoid</strong>
+    <p>Never use the "Reconcile" adjustment feature to force a $0 balance unless you've exhausted all troubleshooting options. Forcing a balance creates a journal entry that hides the real problem — and will cause issues in your financial reports.</p>
+  </div>
+
+  <h2>Using the bank feed to speed up reconciliation</h2>
+  <p>QuickBooks Online's bank feed feature auto-downloads transactions from your bank daily. This dramatically speeds up reconciliation because most transactions are already in QBO — you just need to match and categorize them.</p>
+  <p>If you're not already using the bank feed, go to <strong>Banking → Connect Account</strong> and link your business bank. Most major US banks are supported.</p>
+
+  <h2>How often should you reconcile?</h2>
+  <table>
+    <thead><tr><th>Business Size</th><th>Recommended Frequency</th><th>Time Required</th></tr></thead>
+    <tbody>
+      <tr><td>Freelancer / sole proprietor</td><td>Monthly</td><td>10–20 min</td></tr>
+      <tr><td>Small business (1–10 employees)</td><td>Monthly</td><td>20–45 min</td></tr>
+      <tr><td>Medium business (high transaction volume)</td><td>Weekly</td><td>15–30 min/week</td></tr>
+      <tr><td>Business with payroll</td><td>After every payroll run</td><td>10 min</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cta-box">
+    <h3>More QuickBooks tips in your inbox</h3>
+    <p>Get step-by-step guides, tax tips and free tools — written by a real bookkeeper working with US clients.</p>
+    <a href="landing-page.html#signup">Subscribe Free →</a>
+  </div>
+
+  <div class="article-footer">
+    <strong>Note:</strong> Screenshots and menu paths are based on QuickBooks Online as of early 2025. Intuit updates the interface periodically — if a menu has moved, use the search bar (Ctrl+Alt+F) to find any feature.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ARTICLE 3: 1099 VS W-2
+═══════════════════════════════════════════════ -->
+<div class="article" id="article-2">
+
+  <div class="article-meta">
+    <span class="article-cat">Taxes</span>
+    <span>6 min read</span>
+    <span>Updated January 2025</span>
+  </div>
+
+  <h1>1099-NEC vs W-2: What Every Small Business Owner Needs to Know</h1>
+
+  <div class="article-intro">
+    Misclassifying a worker as a contractor when they should be an employee is one of the most expensive mistakes a small business can make. Here's a plain-English guide to getting it right.
+  </div>
+
+  <h2>The core difference in one sentence</h2>
+  <p>A <strong>W-2 employee</strong> is on your payroll — you control how they work, withhold taxes, and pay employer taxes on their behalf. A <strong>1099 contractor</strong> runs their own business, controls their own work, and handles their own taxes.</p>
+
+  <h2>Why does it matter so much?</h2>
+  <p>The difference isn't just administrative — it's financial and legal. When you hire someone as a W-2 employee, you owe:</p>
+  <ul>
+    <li>Social Security tax (6.2% of wages, up to $176,100 in 2025)</li>
+    <li>Medicare tax (1.45% of all wages)</li>
+    <li>Federal Unemployment Tax — FUTA (0.6% of first $7,000)</li>
+    <li>State Unemployment Tax — SUTA (varies by state)</li>
+    <li>Workers' compensation insurance</li>
+    <li>Potential benefits (health insurance, 401k match, PTO)</li>
+  </ul>
+  <p>For a 1099 contractor, you pay none of the above. You just pay their invoice and file a 1099-NEC at year end if you paid them $600 or more during the year.</p>
+
+  <div class="callout">
+    <strong>The real-world cost difference</strong>
+    <p>Hiring a W-2 employee at $60,000/year costs you approximately $64,500–$67,000 all-in, after payroll taxes alone (before benefits). A 1099 contractor at $60,000 costs you exactly $60,000. That's why misclassification happens — and why the IRS looks for it.</p>
+  </div>
+
+  <h2>How do you determine which one applies?</h2>
+  <p>The IRS uses a multi-factor test focused on three areas: behavioral control, financial control, and type of relationship. You don't need to pass all of them — it's a totality-of-circumstances test.</p>
+
+  <table>
+    <thead><tr><th>Factor</th><th>Points to W-2 Employee</th><th>Points to 1099 Contractor</th></tr></thead>
+    <tbody>
+      <tr><td>Who controls HOW work is done</td><td>You control the method</td><td>They control the method</td></tr>
+      <tr><td>Work hours</td><td>You set hours</td><td>They set their own hours</td></tr>
+      <tr><td>Where work is done</td><td>Your location, your equipment</td><td>Their location, their tools</td></tr>
+      <tr><td>Who else do they work for</td><td>Only you (exclusivity)</td><td>Multiple clients</td></tr>
+      <tr><td>How are they paid</td><td>Regular salary/hourly</td><td>Per project or per invoice</td></tr>
+      <tr><td>Training</td><td>You train them your way</td><td>They use their own expertise</td></tr>
+      <tr><td>Written agreement</td><td>Employment contract</td><td>Independent contractor agreement</td></tr>
+      <tr><td>Benefits</td><td>Health insurance, PTO, 401k</td><td>No benefits provided</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <strong>TIP — When in doubt, lean toward W-2</strong>
+    <p>If a worker looks like an employee by most of these factors but you're calling them a contractor to save money, the IRS has seen this before. Misclassification audits are increasing. The back taxes, penalties and interest if caught are far worse than the cost of doing it right from day one.</p>
+  </div>
+
+  <h2>What forms do you need to file?</h2>
+
+  <h3>For W-2 employees:</h3>
+  <ul>
+    <li>Set up payroll and withhold taxes from each paycheck</li>
+    <li>File 941 quarterly (payroll tax returns)</li>
+    <li>Issue a W-2 to each employee by January 31</li>
+    <li>File W-2 copies with the Social Security Administration</li>
+  </ul>
+
+  <h3>For 1099 contractors:</h3>
+  <ul>
+    <li>Have them complete a W-9 before you make any payments</li>
+    <li>If you pay them $600 or more in a calendar year, issue a 1099-NEC by January 31</li>
+    <li>File 1099 copies with the IRS (electronically if filing 10 or more)</li>
+    <li>No payroll tax withholding — they pay their own self-employment tax</li>
+  </ul>
+
+  <h2>What happens if you misclassify?</h2>
+  <p>If the IRS determines that workers you treated as 1099 contractors should have been W-2 employees, the penalties include:</p>
+  <ul>
+    <li>Back payroll taxes (both employer and employee portions) for all affected years</li>
+    <li>Interest on unpaid taxes</li>
+    <li>Failure-to-file penalties (up to 25% of unpaid taxes)</li>
+    <li>In serious cases, Section 3509 rates — higher penalties for intentional misclassification</li>
+  </ul>
+  <p>The IRS has a voluntary correction program called the <strong>Voluntary Classification Settlement Program (VCSP)</strong> that lets businesses correct past misclassification with reduced penalties. If you think you may have a problem, talk to a CPA or employment attorney before the IRS finds you first.</p>
+
+  <h2>Quick reference: which form, when</h2>
+  <table>
+    <thead><tr><th>Situation</th><th>Form</th><th>Deadline</th></tr></thead>
+    <tbody>
+      <tr><td>Paid a contractor $600+ in the year</td><td>1099-NEC</td><td>January 31</td></tr>
+      <tr><td>Report wages to an employee</td><td>W-2</td><td>January 31</td></tr>
+      <tr><td>Quarterly payroll tax return</td><td>Form 941</td><td>Quarterly</td></tr>
+      <tr><td>Annual federal unemployment tax</td><td>Form 940</td><td>January 31</td></tr>
+      <tr><td>Get contractor's tax ID before paying</td><td>W-9</td><td>Before first payment</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cta-box">
+    <h3>Estimate payroll taxes for a new hire</h3>
+    <p>Use our free Payroll Tax Estimator to see exactly what a W-2 employee at any salary will cost you in payroll taxes before you make the hire.</p>
+    <a href="payroll-tax-estimator.html">Open Free Estimator →</a>
+  </div>
+
+  <div class="article-footer">
+    <strong>Disclaimer:</strong> This article is general educational information and is not tax or legal advice. Worker classification rules are complex and fact-specific. Consult a CPA or employment attorney for your specific situation.
+  </div>
+</div>
+
+<script>
+function showArticle(index) {
+  document.querySelectorAll('.article').forEach((a,i) => {
+    a.classList.toggle('active', i === index);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', i === index);
+  });
+}
+</script>
+
+</body>
+</html>
