@@ -3,117 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payroll Tax Estimator | BookSmartTools</title>
+<title>Payroll Tax Estimator 2025 & 2026 | BookSmartTools</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink: #1a1a18;
-  --paper: #faf8f3;
-  --cream: #f3efe4;
-  --accent: #1e5c33;
-  --accent-light: #eaf4ee;
-  --red: #c8472a;
-  --border: #d8d3c5;
-  --muted: #7a7568;
-  --gold: #b8860b;
+:root{--ink:#1a1a18;--paper:#faf8f3;--cream:#f3efe4;--accent:#1e5c33;--accent-light:#eaf4ee;--red:#c8472a;--border:#d8d3c5;--muted:#7a7568;--gold:#b8860b;--gold-light:#fdf8ec;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+
+header{background:var(--ink);color:var(--paper);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:'DM Serif Display',serif;font-size:20px;}.brand span{color:#6db88a;}
+.tagline{font-size:12px;color:#aaa;font-family:'DM Mono',monospace;letter-spacing:.5px;}
+
+.hero{background:var(--accent);color:white;text-align:center;padding:44px 24px 38px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border:40px solid rgba(255,255,255,.06);border-radius:50%;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin-bottom:10px;position:relative;}
+.hero p{font-size:15px;opacity:.88;max-width:560px;margin:0 auto;line-height:1.6;position:relative;}
+
+/* YEAR SWITCHER */
+.year-switcher{background:var(--ink);display:flex;justify-content:center;padding:16px 24px;gap:12px;}
+.year-btn{
+  font-family:'DM Mono',monospace;font-size:14px;font-weight:500;
+  padding:10px 32px;border-radius:3px;border:1.5px solid rgba(255,255,255,.2);
+  cursor:pointer;background:transparent;color:rgba(255,255,255,.55);
+  transition:all .2s;letter-spacing:.5px;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'DM Sans',sans-serif; background:var(--paper); color:var(--ink); min-height:100vh; }
+.year-btn.active{background:white;color:var(--ink);border-color:white;}
+.year-btn.active.y2026{background:#f0c040;color:var(--ink);border-color:#f0c040;}
 
-header {
-  background:var(--ink); color:var(--paper);
-  padding:18px 32px; display:flex; align-items:center; justify-content:space-between;
-}
-.brand { font-family:'DM Serif Display',serif; font-size:20px; }
-.brand span { color:#6db88a; }
-.tagline { font-size:12px; color:#aaa; font-family:'DM Mono',monospace; letter-spacing:0.5px; }
+/* Rate strip */
+.rates-strip{background:#2a2a26;display:flex;justify-content:center;gap:20px;padding:10px 24px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.06);}
+.rate-pill{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px;}
+.rate-pill .val{font-weight:500;}
+.rate-pill .val.changed{color:#f0c040;}
+.rate-pill .val.same{color:#6db88a;}
+.rate-div{color:rgba(255,255,255,.15);}
 
-.hero {
-  background:var(--accent); color:white;
-  text-align:center; padding:44px 24px 38px; position:relative; overflow:hidden;
-}
-.hero::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border:40px solid rgba(255,255,255,0.06); border-radius:50%; }
-.hero h1 { font-family:'DM Serif Display',serif; font-size:32px; font-weight:400; margin-bottom:10px; position:relative; }
-.hero p { font-size:15px; opacity:.88; max-width:500px; margin:0 auto; line-height:1.6; position:relative; }
+.container{max-width:980px;margin:0 auto;padding:36px 24px 60px;}
 
-.year-badge {
-  display:inline-block; background:rgba(255,255,255,0.15);
-  color:white; font-size:11px; font-family:'DM Mono',monospace;
-  padding:4px 10px; border-radius:2px; margin-bottom:14px; letter-spacing:0.5px;
-}
+/* Year banner */
+.year-banner{border-radius:4px;padding:12px 18px;margin-bottom:24px;font-size:13px;display:flex;align-items:center;gap:10px;font-weight:500;}
+.year-banner.y2025{background:var(--accent-light);color:var(--accent);border:1px solid #b5d9c0;}
+.year-banner.y2026{background:var(--gold-light);color:var(--gold);border:1px solid #e8d090;}
+.year-banner .icon{font-size:16px;}
 
-.container { max-width:900px; margin:0 auto; padding:36px 24px 60px; }
+.layout{display:grid;grid-template-columns:1fr 1.15fr;gap:28px;align-items:start;}
+@media(max-width:700px){.layout{grid-template-columns:1fr;}}
 
-.layout { display:grid; grid-template-columns:1fr 1.1fr; gap:28px; align-items:start; }
-@media(max-width:620px){ .layout{grid-template-columns:1fr;} }
+.card{background:white;border:1px solid var(--border);border-radius:4px;padding:28px;}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.card-title .num{background:var(--ink);color:white;font-family:'DM Mono',monospace;font-size:12px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:20px 0;}
 
-.card { background:white; border:1px solid var(--border); border-radius:4px; padding:28px; }
-.card-title { font-family:'DM Serif Display',serif; font-size:18px; margin-bottom:22px; display:flex; align-items:center; gap:10px; }
-.card-title .num { background:var(--ink); color:white; font-family:'DM Mono',monospace; font-size:12px; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.field{margin-bottom:16px;}
+label{display:block;font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+input,select{width:100%;height:44px;border:1px solid var(--border);border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:var(--ink);background:var(--paper);outline:none;transition:border-color .15s;}
+input:focus,select:focus{border-color:var(--accent);background:white;}
+.input-prefix{position:relative;}
+.input-prefix::before{content:attr(data-prefix);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);pointer-events:none;}
+.input-prefix input{padding-left:26px;}
+.hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5;}
+.hint.changed{color:var(--gold);font-weight:500;}
 
-.field { margin-bottom:18px; }
-label { display:block; font-size:12px; font-weight:600; letter-spacing:.7px; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
-input, select { width:100%; height:44px; border:1px solid var(--border); border-radius:3px; padding:0 14px; font-family:'DM Mono',monospace; font-size:15px; color:var(--ink); background:var(--paper); outline:none; transition:border-color 0.15s; }
-input:focus, select:focus { border-color:var(--accent); background:white; }
-.input-prefix { position:relative; }
-.input-prefix::before { content:attr(data-prefix); position:absolute; left:12px; top:50%; transform:translateY(-50%); font-family:'DM Mono',monospace; font-size:14px; color:var(--muted); pointer-events:none; }
-.input-prefix input { padding-left:26px; }
-.hint { font-size:11px; color:var(--muted); margin-top:5px; }
+/* Filing status cards */
+.filing-cards{display:flex;flex-direction:column;gap:8px;}
+.filing-card{border:1.5px solid var(--border);border-radius:4px;padding:12px 14px;cursor:pointer;transition:all .15s;}
+.filing-card:hover{border-color:var(--accent);}
+.filing-card.selected{border-color:var(--accent);background:var(--accent-light);}
+.filing-card input[type=radio]{position:absolute;opacity:0;width:0;height:0;}
+.fc-title{font-size:13px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px;}
+.fc-radio{width:14px;height:14px;border:1.5px solid var(--border);border-radius:50%;flex-shrink:0;transition:all .15s;display:inline-block;}
+.filing-card.selected .fc-radio{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px white;}
+.fc-desc{font-size:11px;color:var(--muted);line-height:1.5;padding-left:22px;}
+.fc-std{font-size:10px;font-family:'DM Mono',monospace;color:var(--accent);padding-left:22px;margin-top:3px;font-weight:600;}
 
-.divider { height:1px; background:var(--border); margin:20px 0; }
-
-.calc-btn { width:100%; height:52px; background:var(--accent); color:white; border:none; border-radius:3px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; cursor:pointer; transition:background .15s, transform .1s; }
-.calc-btn:hover { background:#164a28; }
-.calc-btn:active { transform:scale(0.99); }
+.calc-btn{width:100%;height:52px;background:var(--accent);color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;margin-top:8px;}
+.calc-btn:hover{background:#164a28;}
+.calc-btn:active{transform:scale(.99);}
+.calc-btn.y2026{background:var(--gold);}
+.calc-btn.y2026:hover{background:#9a6e00;}
 
 /* Results */
-.results-card { background:var(--ink); color:var(--paper); border:none; }
-.results-card .card-title { color:var(--paper); border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:16px; margin-bottom:18px; }
-.results-card .num { background:var(--accent); }
+.results-card{background:var(--ink);color:var(--paper);border:none;}
+.results-card .card-title{color:var(--paper);border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:16px;margin-bottom:18px;}
+.results-card .num{background:var(--accent);}
+.placeholder-msg{text-align:center;padding:40px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:1.9;}
 
-.placeholder-msg { text-align:center; padding:40px 20px; color:rgba(255,255,255,0.35); font-size:14px; line-height:1.8; }
+.tb{margin-bottom:18px;}
+.tb-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:'DM Mono',monospace;}
+.tr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;}
+.tr:last-child{border-bottom:none;}
+.tl{color:rgba(255,255,255,.65);}
+.tr-rate{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.3);}
+.ta{font-family:'DM Mono',monospace;font-weight:500;}
+.ta.er{color:#7dd4a0;}.ta.ee{color:#f0a070;}
+.total-box{background:rgba(255,255,255,.06);border-radius:3px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.tb-label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.tb-amount{font-family:'DM Mono',monospace;font-size:17px;}
+.total-box.grand{background:rgba(255,255,255,.1);}
+.total-box.grand .tb-amount{font-family:'DM Serif Display',serif;font-size:26px;color:white;}
 
-.tax-block { margin-bottom:16px; }
-.tax-block-title { font-size:11px; letter-spacing:.8px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:10px; font-family:'DM Mono',monospace; }
+/* Year comparison row */
+.compare-row{background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.2);border-radius:3px;padding:10px 14px;margin-top:12px;font-size:12px;color:rgba(255,255,255,.7);display:flex;justify-content:space-between;align-items:center;}
+.compare-row .diff{font-family:'DM Mono',monospace;color:#f0c040;font-weight:500;}
 
-.tax-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:13px; }
-.tax-row:last-child { border-bottom:none; }
-.tax-label { color:rgba(255,255,255,0.65); }
-.tax-rate { font-family:'DM Mono',monospace; font-size:11px; color:rgba(255,255,255,0.35); }
-.tax-amount { font-family:'DM Mono',monospace; font-weight:500; }
-.tax-amount.employer { color:#7dd4a0; }
-.tax-amount.employee { color:#f0a070; }
+.legend{display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);}
+.li{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.45);}
+.ld{width:8px;height:8px;border-radius:50%;}
+.actions{display:flex;gap:10px;margin-top:14px;}
+.action-btn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
+.action-btn:hover{background:rgba(255,255,255,.08);color:white;}
 
-.totals-block { margin-top:16px; }
+/* Comparison table */
+.compare-table-section{margin-top:36px;}
+.compare-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;}
+.compare-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.ct{width:100%;border-collapse:collapse;font-size:13px;}
+.ct th{text-align:left;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--cream);}
+.ct td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.ct tr:hover td{background:#f8f6f0;}
+.ct .changed-row td{background:#fdf8ec;}
+.ct .badge{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;padding:2px 7px;border-radius:2px;font-weight:600;}
+.ct .badge.up{background:#fef3cd;color:#8a6200;}
+.ct .badge.same{background:var(--accent-light);color:var(--accent);}
+.ct .badge.down{background:#fde8e8;color:#a02020;}
 
-.total-box { background:rgba(255,255,255,0.06); border-radius:3px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
-.total-box-label { font-size:12px; font-weight:600; letter-spacing:.5px; text-transform:uppercase; color:rgba(255,255,255,0.55); }
-.total-box-amount { font-family:'DM Mono',monospace; font-size:18px; }
-.total-box.grand { background:rgba(255,255,255,0.1); }
-.total-box.grand .total-box-amount { font-family:'DM Serif Display',serif; font-size:26px; color:white; }
+/* Info */
+.info-section{margin-top:36px;}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:540px){.info-grid{grid-template-columns:1fr;}}
+.info-card{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:20px;}
+.info-card h3{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:10px;}
+.info-card p{font-size:13px;color:var(--muted);line-height:1.65;}
+.rt{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;}
+.rt th{text-align:left;font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);padding:0 0 8px;border-bottom:1px solid var(--border);}
+.rt td{padding:6px 0;border-bottom:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;}
+.rt td:last-child{text-align:right;font-weight:500;color:var(--ink);}
+.rt .highlight{color:var(--gold);font-weight:700;}
+.vbadge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-family:'DM Mono',monospace;background:var(--accent-light);color:var(--accent);padding:3px 8px;border-radius:2px;margin-top:8px;}
 
-.legend { display:flex; gap:16px; margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); }
-.legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:rgba(255,255,255,0.45); }
-.legend-dot { width:8px; height:8px; border-radius:50%; }
-
-.action-btn { flex:1; padding:10px; border:1px solid rgba(255,255,255,0.2); border-radius:3px; background:transparent; color:rgba(255,255,255,0.7); font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; transition:all .15s; }
-.action-btn:hover { background:rgba(255,255,255,0.08); color:white; }
-.actions { display:flex; gap:10px; margin-top:16px; }
-
-/* Info section */
-.info-section { margin-top:40px; }
-.info-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
-@media(max-width:500px){ .info-grid{grid-template-columns:1fr;} }
-.info-card { background:var(--cream); border:1px solid var(--border); border-radius:4px; padding:20px; }
-.info-card h3 { font-family:'DM Serif Display',serif; font-size:16px; margin-bottom:8px; }
-.info-card p { font-size:13px; color:var(--muted); line-height:1.65; }
-.rate-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
-.rate-table th { text-align:left; font-size:10px; letter-spacing:.7px; text-transform:uppercase; color:var(--muted); padding:0 0 8px 0; border-bottom:1px solid var(--border); }
-.rate-table td { padding:7px 0; border-bottom:1px solid var(--border); color:var(--muted); font-family:'DM Mono',monospace; }
-.rate-table td:last-child { text-align:right; font-weight:500; color:var(--ink); }
-
-footer { background:var(--ink); color:rgba(255,255,255,0.4); text-align:center; padding:24px; font-size:12px; font-family:'DM Mono',monospace; }
-footer a { color:rgba(255,255,255,0.6); }
+footer{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
+footer a{color:rgba(255,255,255,.6);}
 </style>
 </head>
 <body>
@@ -124,17 +153,33 @@ footer a { color:rgba(255,255,255,0.6); }
 </header>
 
 <div class="hero">
-  <div class="year-badge">2025 TAX RATES</div>
   <h1>Payroll Tax Estimator</h1>
-  <p>Calculate federal payroll taxes for W-2 employees — Social Security, Medicare, FUTA &amp; SUTA. Instant employer and employee breakdown.</p>
+  <p>2025 &amp; 2026 rates — all 50 states. Switch tax years instantly. Federal rates sourced from IRS Publication 15 &amp; SSA. SUTA from Department of Labor data.</p>
+</div>
+
+<!-- YEAR SWITCHER -->
+<div class="year-switcher">
+  <button class="year-btn active" id="btn2025" onclick="setYear(2025)">◀ 2025</button>
+  <button class="year-btn" id="btn2026" onclick="setYear(2026)">2026 ▶</button>
+</div>
+
+<div class="rates-strip" id="rates-strip">
+  <!-- filled by JS -->
 </div>
 
 <div class="container">
+
+  <!-- Year banner -->
+  <div class="year-banner y2025" id="year-banner">
+    <span class="icon">📋</span>
+    <span id="banner-text">Showing <strong>2025</strong> rates — IRS Publication 15 (Circular E) · SS Wage Base $176,100 · FUTA $7,000</span>
+  </div>
+
   <div class="layout">
 
     <!-- INPUT -->
     <div class="card">
-      <div class="card-title"><div class="num">1</div>Employee Details</div>
+      <div class="card-title"><div class="num">1</div>Employee &amp; Pay Info</div>
 
       <div class="field">
         <label>Annual Gross Salary</label>
@@ -146,139 +191,112 @@ footer a { color:rgba(255,255,255,0.6); }
       <div class="field">
         <label>Pay Frequency</label>
         <select id="frequency">
-          <option value="52">Weekly (52 pays/yr)</option>
-          <option value="26">Bi-weekly (26 pays/yr)</option>
-          <option value="24">Semi-monthly (24 pays/yr)</option>
-          <option value="12" selected>Monthly (12 pays/yr)</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>W-4 Filing Status</label>
-        <select id="filing">
-          <option value="single">Single / Married filing separately</option>
-          <option value="married">Married filing jointly</option>
-          <option value="head">Head of household</option>
+          <option value="52">Weekly — 52 pay periods/year</option>
+          <option value="26">Bi-weekly — 26 pay periods/year</option>
+          <option value="24">Semi-monthly — 24 pay periods/year</option>
+          <option value="12" selected>Monthly — 12 pay periods/year</option>
         </select>
       </div>
 
       <div class="divider"></div>
 
-      <div class="card-title" style="margin-top:0"><div class="num">2</div>State Settings</div>
+      <div class="card-title" style="margin-bottom:10px;"><div class="num">2</div>W-4 Filing Status (Step 1)</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">Select the employee's W-4 Step 1 filing status. The 2020 W-4 redesign removed allowances — employees now choose one of three statuses which determines the standard deduction applied per IRS Pub. 15-T.</p>
+
+      <div class="filing-cards">
+        <label class="filing-card selected" onclick="selectFiling(this,'single')">
+          <input type="radio" name="filing" value="single" checked>
+          <div class="fc-title"><span class="fc-radio"></span>Single / Married Filing Separately</div>
+          <div class="fc-desc">Unmarried employees, or married employees filing separately. Also use when employee checks Step 2 "higher withholding" box for multiple jobs.</div>
+          <div class="fc-std">2025 Std. Deduction: $15,000 &nbsp;·&nbsp; 2026: $15,000 &nbsp;·&nbsp; IRS Table Column A</div>
+        </label>
+        <label class="filing-card" onclick="selectFiling(this,'married')">
+          <input type="radio" name="filing" value="married">
+          <div class="fc-title"><span class="fc-radio"></span>Married Filing Jointly</div>
+          <div class="fc-desc">Married employees filing a joint return. Uses the higher deduction = lower withholding. If both spouses work, employee should complete W-4 Step 2 to prevent under-withholding.</div>
+          <div class="fc-std">2025 Std. Deduction: $30,000 &nbsp;·&nbsp; 2026: $30,000 &nbsp;·&nbsp; IRS Table Column B</div>
+        </label>
+        <label class="filing-card" onclick="selectFiling(this,'hoh')">
+          <input type="radio" name="filing" value="hoh">
+          <div class="fc-title"><span class="fc-radio"></span>Head of Household</div>
+          <div class="fc-desc">Unmarried employees who paid more than half the cost of maintaining a home with a qualifying dependent. Lower withholding than Single but more than MFJ.</div>
+          <div class="fc-std">2025 Std. Deduction: $22,500 &nbsp;·&nbsp; 2026: $22,500 &nbsp;·&nbsp; IRS Table Column C</div>
+        </label>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="card-title" style="margin-bottom:14px;"><div class="num">3</div>State SUTA — <span id="suta-year-label">2025</span></div>
 
       <div class="field">
-        <label>State (for SUTA rate)</label>
-        <select id="state">
-          <option value="2.7">Most states (avg 2.7%)</option>
-          <option value="1.2">California — 3.4% new employer</option>
-          <option value="2.7">Texas — 2.7% new employer</option>
-          <option value="3.1">New York — 3.1% new employer</option>
-          <option value="2.0">Florida — 2.0% new employer</option>
-          <option value="2.7">Other (avg 2.7%)</option>
+        <label>State — New Employer Rate</label>
+        <select id="state" onchange="updateSutaBase()">
+          <!-- generated by JS -->
         </select>
-        <div class="hint">SUTA rate varies by state &amp; experience. New employer rates shown.</div>
+        <div class="hint" id="suta-hint">New employer rates. Auto-fills wage base below.</div>
       </div>
 
       <div class="field">
-        <label>SUTA Wage Base ($)</label>
+        <label>SUTA Wage Base — auto-filled</label>
         <div class="input-prefix" data-prefix="$">
-          <input type="number" id="sutaBase" value="7000" min="1000" max="50000">
+          <input type="number" id="sutaBase" value="8000">
         </div>
-        <div class="hint">Most states: $7,000–$40,000. Check your state.</div>
+        <div class="hint" id="wage-base-hint">Edit if your state issued a mid-year update.</div>
       </div>
 
-      <button class="calc-btn" onclick="calculate()">Calculate Payroll Taxes →</button>
+      <button class="calc-btn" id="calc-btn" onclick="calculate()">Calculate 2025 Payroll Taxes →</button>
     </div>
 
     <!-- RESULTS -->
-    <div class="card results-card" id="results-panel">
-      <div class="card-title"><div class="num">3</div>Tax Breakdown</div>
+    <div class="card results-card">
+      <div class="card-title"><div class="num">4</div>Tax Breakdown — <span id="results-year-label">2025</span></div>
 
       <div id="placeholder" class="placeholder-msg">
-        Enter employee salary details and click <strong style="color:rgba(255,255,255,0.7)">Calculate</strong> to see the full payroll tax breakdown.
+        Complete the fields on the left and click<br>
+        <strong style="color:rgba(255,255,255,.8)">Calculate Payroll Taxes →</strong><br>
+        to see the full year breakdown.
       </div>
 
       <div id="results-content" style="display:none">
 
-        <div class="tax-block">
-          <div class="tax-block-title">FICA — Employer Portion</div>
-          <div class="tax-row">
-            <span class="tax-label">Social Security</span>
-            <span class="tax-rate">6.2%</span>
-            <span class="tax-amount employer" id="r-er-ss">—</span>
-          </div>
-          <div class="tax-row">
-            <span class="tax-label">Medicare</span>
-            <span class="tax-rate">1.45%</span>
-            <span class="tax-amount employer" id="r-er-mc">—</span>
-          </div>
-          <div class="tax-row">
-            <span class="tax-label">FUTA (Federal Unemployment)</span>
-            <span class="tax-rate">0.6%</span>
-            <span class="tax-amount employer" id="r-futa">—</span>
-          </div>
-          <div class="tax-row">
-            <span class="tax-label">SUTA (State Unemployment)</span>
-            <span class="tax-rate" id="r-suta-rate">—%</span>
-            <span class="tax-amount employer" id="r-suta">—</span>
-          </div>
+        <div class="tb">
+          <div class="tb-title">FICA — Employer share</div>
+          <div class="tr"><span class="tl">Social Security</span><span class="tr-rate" id="r-ss-rate">6.2% / $176,100</span><span class="ta er" id="r-er-ss">—</span></div>
+          <div class="tr"><span class="tl">Medicare (no cap)</span><span class="tr-rate">1.45%</span><span class="ta er" id="r-er-mc">—</span></div>
+          <div class="tr"><span class="tl">FUTA — federal unemployment</span><span class="tr-rate">0.6% / $7,000</span><span class="ta er" id="r-futa">—</span></div>
+          <div class="tr"><span class="tl">SUTA — state unemployment</span><span class="tr-rate" id="r-suta-rate">—</span><span class="ta er" id="r-suta">—</span></div>
         </div>
 
-        <div class="tax-block">
-          <div class="tax-block-title">FICA — Employee Portion (withheld)</div>
-          <div class="tax-row">
-            <span class="tax-label">Social Security</span>
-            <span class="tax-rate">6.2%</span>
-            <span class="tax-amount employee" id="r-ee-ss">—</span>
-          </div>
-          <div class="tax-row">
-            <span class="tax-label">Medicare</span>
-            <span class="tax-rate">1.45%</span>
-            <span class="tax-amount employee" id="r-ee-mc">—</span>
-          </div>
-          <div class="tax-row" id="add-medicare-row" style="display:none">
-            <span class="tax-label">Additional Medicare (>$200K)</span>
-            <span class="tax-rate">0.9%</span>
-            <span class="tax-amount employee" id="r-add-mc">—</span>
-          </div>
+        <div class="tb">
+          <div class="tb-title">FICA — Employee share (withheld)</div>
+          <div class="tr"><span class="tl">Social Security</span><span class="tr-rate" id="r-ee-ss-rate">6.2% / $176,100</span><span class="ta ee" id="r-ee-ss">—</span></div>
+          <div class="tr"><span class="tl">Medicare (no cap)</span><span class="tr-rate">1.45%</span><span class="ta ee" id="r-ee-mc">—</span></div>
+          <div class="tr" id="add-mc-row" style="display:none"><span class="tl">Additional Medicare (&gt;$200K)</span><span class="tr-rate">0.9%</span><span class="ta ee" id="r-add-mc">—</span></div>
         </div>
 
-        <div class="totals-block">
-          <div class="total-box">
-            <span class="total-box-label">Employer pays (annual)</span>
-            <span class="total-box-amount" style="color:#7dd4a0" id="r-er-total">—</span>
-          </div>
-          <div class="total-box">
-            <span class="total-box-label">Employee withheld (annual)</span>
-            <span class="total-box-amount" style="color:#f0a070" id="r-ee-total">—</span>
-          </div>
-          <div class="total-box grand">
-            <span class="total-box-label">Total payroll tax cost</span>
-            <span class="total-box-amount" id="r-grand">—</span>
-          </div>
+        <div>
+          <div class="total-box"><span class="tb-label">Employer annual cost</span><span class="tb-amount" style="color:#7dd4a0" id="r-er-total">—</span></div>
+          <div class="total-box"><span class="tb-label">Employee annual withheld</span><span class="tb-amount" style="color:#f0a070" id="r-ee-total">—</span></div>
+          <div class="total-box grand"><span class="tb-label">Total payroll tax burden</span><span class="tb-amount" id="r-grand">—</span></div>
         </div>
 
-        <div class="tax-block" style="margin-top:16px">
-          <div class="tax-block-title">Per Pay Period — <span id="r-period-label">Monthly</span></div>
-          <div class="tax-row">
-            <span class="tax-label">Gross wages</span>
-            <span class="tax-amount" id="r-period-gross">—</span>
-          </div>
-          <div class="tax-row">
-            <span class="tax-label">Employee FICA withheld</span>
-            <span class="tax-amount employee" id="r-period-ee">—</span>
-          </div>
-          <div class="tax-row">
-            <span class="tax-label">Employer tax cost</span>
-            <span class="tax-amount employer" id="r-period-er">—</span>
-          </div>
+        <div class="compare-row" id="compare-row" style="display:none">
+          <span>vs. other year total:</span>
+          <span class="diff" id="r-diff">—</span>
+        </div>
+
+        <div class="tb" style="margin-top:16px;">
+          <div class="tb-title">Per pay period — <span id="r-period-label">Monthly</span></div>
+          <div class="tr"><span class="tl">Gross wages</span><span class="ta" id="r-period-gross">—</span></div>
+          <div class="tr"><span class="tl">Employee FICA withheld</span><span class="ta ee" id="r-period-ee">—</span></div>
+          <div class="tr"><span class="tl">Employer tax cost</span><span class="ta er" id="r-period-er">—</span></div>
+          <div class="tr"><span class="tl">True employer cost per period</span><span class="ta" id="r-period-true">—</span></div>
         </div>
 
         <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#7dd4a0"></div> Employer cost</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#f0a070"></div> Employee withheld</div>
+          <div class="li"><div class="ld" style="background:#7dd4a0"></div>Employer cost</div>
+          <div class="li"><div class="ld" style="background:#f0a070"></div>Employee withheld</div>
         </div>
-
         <div class="actions">
           <button class="action-btn" onclick="copyResults()">📋 Copy Summary</button>
           <button class="action-btn" onclick="window.print()">🖨 Print</button>
@@ -287,140 +305,382 @@ footer a { color:rgba(255,255,255,0.6); }
     </div>
   </div>
 
-  <!-- INFO SECTION -->
+  <!-- RATE COMPARISON TABLE -->
+  <div class="compare-table-section">
+    <div class="compare-title">2025 vs 2026 — Federal Rate Comparison</div>
+    <div class="compare-sub">Key changes between tax years. Yellow rows = changed for 2026.</div>
+    <table class="ct">
+      <thead>
+        <tr>
+          <th>Tax</th>
+          <th>Rate</th>
+          <th>2025 Wage Base</th>
+          <th>2026 Wage Base</th>
+          <th>Change</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="changed-row">
+          <td><strong>Social Security — employer</strong></td>
+          <td>6.2%</td>
+          <td>$176,100</td>
+          <td>$184,500</td>
+          <td><span class="badge up">+$8,400</span></td>
+          <td>IRS Topic 751 / SSA</td>
+        </tr>
+        <tr class="changed-row">
+          <td><strong>Social Security — employee</strong></td>
+          <td>6.2%</td>
+          <td>$176,100</td>
+          <td>$184,500</td>
+          <td><span class="badge up">+$8,400</span></td>
+          <td>IRS Topic 751 / SSA</td>
+        </tr>
+        <tr>
+          <td><strong>Medicare — employer</strong></td>
+          <td>1.45%</td>
+          <td>No limit</td>
+          <td>No limit</td>
+          <td><span class="badge same">No change</span></td>
+          <td>IRS Pub. 15 (2026)</td>
+        </tr>
+        <tr>
+          <td><strong>Medicare — employee</strong></td>
+          <td>1.45%</td>
+          <td>No limit</td>
+          <td>No limit</td>
+          <td><span class="badge same">No change</span></td>
+          <td>IRS Pub. 15 (2026)</td>
+        </tr>
+        <tr>
+          <td><strong>Additional Medicare (ee only)</strong></td>
+          <td>0.9%</td>
+          <td>&gt;$200,000</td>
+          <td>&gt;$200,000</td>
+          <td><span class="badge same">No change</span></td>
+          <td>IRS Pub. 15 (2026)</td>
+        </tr>
+        <tr>
+          <td><strong>FUTA (net, er only)</strong></td>
+          <td>0.6%</td>
+          <td>$7,000</td>
+          <td>$7,000</td>
+          <td><span class="badge same">No change</span></td>
+          <td>IRS Form 940 (2026)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SUTA CHANGES TABLE -->
+  <div class="compare-table-section" style="margin-top:28px;">
+    <div class="compare-title">SUTA Wage Base Changes — 2025 → 2026</div>
+    <div class="compare-sub">States with confirmed wage base changes for 2026. All other states remain at 2025 levels. Source: DOL / Patriot Software / First Nonprofit.</div>
+    <table class="ct">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>New Emp. Rate</th>
+          <th>2025 Wage Base</th>
+          <th>2026 Wage Base</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="changed-row"><td>Alaska</td><td>1.00%</td><td>$49,700</td><td>$54,200</td><td><span class="badge up">+$4,500</span></td></tr>
+        <tr class="changed-row"><td>Colorado</td><td>2.02%</td><td>$23,800</td><td>$30,600</td><td><span class="badge up">+$6,800</span></td></tr>
+        <tr class="changed-row"><td>Connecticut</td><td>3.00%</td><td>$25,000</td><td>$27,000</td><td><span class="badge up">+$2,000</span></td></tr>
+        <tr class="changed-row"><td>Idaho</td><td>1.23%</td><td>$55,300</td><td>$56,700</td><td><span class="badge up">+$1,400</span></td></tr>
+        <tr class="changed-row"><td>Minnesota</td><td>1.00%</td><td>$43,000</td><td>$44,000</td><td><span class="badge up">+$1,000</span></td></tr>
+        <tr class="changed-row"><td>New York</td><td>3.20%</td><td>$12,800</td><td>$13,000</td><td><span class="badge up">+$200</span></td></tr>
+        <tr class="changed-row"><td>Oregon</td><td>2.10%</td><td>$54,300</td><td>$56,700</td><td><span class="badge up">+$2,400</span></td></tr>
+        <tr class="changed-row"><td>South Carolina</td><td>0.35%</td><td>$14,000</td><td>$15,100</td><td><span class="badge up">+$1,100</span></td></tr>
+        <tr class="changed-row"><td>Utah</td><td>1.00%</td><td>$47,000</td><td>$50,700</td><td><span class="badge up">+$3,700</span></td></tr>
+        <tr class="changed-row"><td>Washington</td><td>1.00%</td><td>$72,800</td><td>$78,200</td><td><span class="badge up">+$5,400</span></td></tr>
+        <tr class="changed-row"><td>Wyoming</td><td>1.82%</td><td>$32,400</td><td>$33,800</td><td><span class="badge up">+$1,400</span></td></tr>
+        <tr><td><em>All other states</em></td><td>—</td><td>—</td><td>—</td><td><span class="badge same">No change</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">⚠ Note: California employers owe an additional FUTA Credit Reduction of 1.2% on 2025 wages (filed on 2025 Form 940 in Jan 2026). Always verify your state's current rate with your state unemployment agency.</p>
+  </div>
+
+  <!-- INFO CARDS -->
   <div class="info-section">
     <div class="info-grid">
       <div class="info-card">
-        <h3>2025 FICA Rates</h3>
-        <table class="rate-table">
-          <thead><tr><th>Tax</th><th>Employer</th><th>Employee</th></tr></thead>
+        <h3>Federal Rates — 2025 &amp; 2026</h3>
+        <table class="rt">
+          <thead><tr><th>Tax</th><th>2025</th><th>2026</th></tr></thead>
           <tbody>
-            <tr><td>Social Security</td><td>6.2%</td><td>6.2%</td></tr>
-            <tr><td>Medicare</td><td>1.45%</td><td>1.45%</td></tr>
-            <tr><td>Add'l Medicare</td><td>n/a</td><td>0.9%*</td></tr>
-            <tr><td>FUTA</td><td>0.6%**</td><td>—</td></tr>
+            <tr><td>SS Rate (each side)</td><td>6.2%</td><td class="highlight">6.2%</td></tr>
+            <tr><td>SS Wage Base</td><td>$176,100</td><td class="highlight">$184,500 ↑</td></tr>
+            <tr><td>Medicare (each side)</td><td>1.45%</td><td>1.45%</td></tr>
+            <tr><td>Add'l Medicare (ee)</td><td>0.9% &gt;$200K</td><td>0.9% &gt;$200K</td></tr>
+            <tr><td>FUTA rate (net)</td><td>0.6%</td><td>0.6%</td></tr>
+            <tr><td>FUTA Wage Base</td><td>$7,000</td><td>$7,000</td></tr>
           </tbody>
         </table>
-        <p style="margin-top:10px; font-size:11px; color:var(--muted)">*On wages over $200K &nbsp; **On first $7,000</p>
+        <div class="vbadge">✓ IRS Pub. 15 &amp; SSA · Jan 2026</div>
       </div>
+
       <div class="info-card">
-        <h3>Wage Base Limits (2025)</h3>
-        <table class="rate-table">
-          <thead><tr><th>Tax</th><th>Wage Base</th></tr></thead>
+        <h3>W-4 Filing Status (2025 &amp; 2026)</h3>
+        <table class="rt">
+          <thead><tr><th>Status</th><th>Std. Deduction</th><th>IRS Col.</th></tr></thead>
           <tbody>
-            <tr><td>Social Security</td><td>$176,100</td></tr>
-            <tr><td>Medicare</td><td>No limit</td></tr>
-            <tr><td>FUTA</td><td>$7,000</td></tr>
-            <tr><td>SUTA</td><td>Varies by state</td></tr>
+            <tr><td>Single / MFS</td><td>$15,000</td><td>A</td></tr>
+            <tr><td>Married Filing Jointly</td><td>$30,000</td><td>B</td></tr>
+            <tr><td>Head of Household</td><td>$22,500</td><td>C</td></tr>
           </tbody>
         </table>
-        <p style="margin-top:10px; font-size:11px; color:var(--muted)">SS stops at $176,100. Medicare has no ceiling.</p>
+        <p style="font-size:11px;margin-top:10px;color:var(--muted);">W-4 standard deductions unchanged for 2026. Steps 2–4 handle multiple jobs, dependents, and extra withholding. This tool uses Step 1 for FICA estimation only.</p>
+        <div class="vbadge">✓ IRS Form W-4 &amp; Pub. 15-T · 2026</div>
       </div>
+
       <div class="info-card">
-        <h3>What is FUTA?</h3>
-        <p>Federal Unemployment Tax Act. Employers pay 6% on the first $7,000 of each employee's wages, but receive a 5.4% credit if state unemployment taxes are paid on time — making the effective rate 0.6%.</p>
+        <h3>FUTA — How It Works (2026)</h3>
+        <p>Statutory rate is <strong>6.0%</strong> on the first $7,000 per employee. Employers who pay SUTA on time receive a 5.4% federal credit, reducing the net rate to <strong>0.6%</strong> — a maximum of <strong>$42 per employee per year</strong>.</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--muted);"><strong>2025 Credit Reduction:</strong> California employers owe an additional 1.2% on 2025 wages, filed via Form 940 in January 2026. New York resolved its federal loan and no longer faces credit reduction starting 2026.</p>
+        <div class="vbadge">✓ IRS Form 940 · 2026</div>
       </div>
+
       <div class="info-card">
-        <h3>Employer vs Employee Taxes</h3>
-        <p>FICA taxes are split equally between employer and employee. FUTA and SUTA are employer-only costs. The employee never sees these on their paycheck — they're an extra cost on top of salary.</p>
+        <h3>SUTA — Key Facts</h3>
+        <p>New employer rates range from <strong>0.35%</strong> (South Carolina) to <strong>4.00%</strong> (Hawaii). States set their own wage bases independently.</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--muted);">Biggest 2026 wage base jumps: Colorado (+$6,800), Alaska (+$4,500), Washington (+$5,400). Only Alaska, New Jersey, and Pennsylvania require employee SUTA contributions. California's FUTA credit reduction adds extra cost for 2025 filings.</p>
+        <div class="vbadge">✓ DOL / Patriot Software / FirstNonprofit · 2026</div>
       </div>
     </div>
   </div>
 </div>
 
 <footer>
-  &copy; 2025 BookSmartTools &nbsp;|&nbsp; <a href="landing-page.html">← Back to all tools</a> &nbsp;|&nbsp; Rates based on 2025 IRS publication. Verify with your CPA.
+  &copy; 2025–2026 BookSmartTools &nbsp;|&nbsp; <a href="index.html">← Back to all tools</a> &nbsp;|&nbsp;
+  Federal: IRS Pub. 15 (2025 &amp; 2026) + SSA. SUTA: DOL + Patriot Software. Always verify with your CPA.
 </footer>
 
 <script>
-function fmt(n) {
-  return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// ── DATA ──────────────────────────────────────────────
+const FED = {
+  2025: { SS_RATE:.062, SS_BASE:176100, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000 },
+  2026: { SS_RATE:.062, SS_BASE:184500, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000 }
+};
+
+// [state label, rate, base2025, base2026]
+const STATES = [
+  ["Alabama",       2.70, 8000,  8000],
+  ["Alaska",        1.00, 49700, 54200],
+  ["Arizona",       2.00, 8000,  8000],
+  ["Arkansas",      3.10, 7000,  7000],
+  ["California",    3.40, 7000,  7000],
+  ["Colorado",      2.02, 23800, 30600],
+  ["Connecticut",   3.00, 25000, 27000],
+  ["Delaware",      1.80, 14500, 14500],
+  ["Washington D.C.",2.70,9000,  9000],
+  ["Florida",       2.70, 7000,  7000],
+  ["Georgia",       2.70, 9500,  9500],
+  ["Hawaii",        4.00, 62000, 62000],
+  ["Idaho",         1.23, 55300, 56700],
+  ["Illinois",      3.53, 13916, 13916],
+  ["Indiana",       2.50, 9500,  9500],
+  ["Iowa",          1.00, 38200, 38200],
+  ["Kansas",        2.70, 14000, 14000],
+  ["Kentucky",      2.70, 11400, 11400],
+  ["Louisiana",     1.16, 7700,  7700],
+  ["Maine",         2.71, 12000, 12000],
+  ["Maryland",      2.30, 8500,  8500],
+  ["Massachusetts", 2.42, 15000, 15000],
+  ["Michigan",      2.70, 9000,  9000],
+  ["Minnesota",     1.00, 43000, 44000],
+  ["Mississippi",   1.00, 14000, 14000],
+  ["Missouri",      2.38, 9500,  9500],
+  ["Montana",       1.00, 43000, 43000],
+  ["Nebraska",      1.25, 9000,  9000],
+  ["Nevada",        2.95, 40600, 40600],
+  ["New Hampshire", 2.70, 14000, 14000],
+  ["New Jersey",    3.10, 42300, 44800],
+  ["New Mexico",    1.00, 31700, 31700],
+  ["New York",      3.20, 12800, 13000],
+  ["North Carolina",1.00, 31400, 31400],
+  ["North Dakota",  1.13, 43800, 43800],
+  ["Ohio",          2.70, 9000,  9000],
+  ["Oklahoma",      1.50, 25700, 25000],
+  ["Oregon",        2.10, 54300, 56700],
+  ["Pennsylvania",  3.69, 10000, 10000],
+  ["Rhode Island",  1.19, 29200, 30400],
+  ["South Carolina",0.35, 14000, 15100],
+  ["South Dakota",  1.20, 15000, 15000],
+  ["Tennessee",     2.70, 7000,  7000],
+  ["Texas",         2.70, 9000,  9000],
+  ["Utah",          1.00, 47000, 50700],
+  ["Vermont",       1.20, 14100, 14100],
+  ["Virginia",      2.53, 8000,  8000],
+  ["Washington",    1.00, 72800, 78200],
+  ["West Virginia", 2.70, 9000,  9000],
+  ["Wisconsin",     3.05, 14000, 14000],
+  ["Wyoming",       1.82, 32400, 33800]
+];
+
+let currentYear = 2025;
+let lastGrand = null;
+
+// ── INIT ──────────────────────────────────────────────
+function buildStateDropdown() {
+  const sel = document.getElementById('state');
+  sel.innerHTML = '';
+  STATES.forEach((s, i) => {
+    const base = currentYear === 2025 ? s[2] : s[3];
+    const changed = s[2] !== s[3];
+    const marker = changed && currentYear === 2026 ? ' ↑' : '';
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${s[0]}${marker} — ${s[1].toFixed(2)}% | Base $${base.toLocaleString()}`;
+    sel.appendChild(opt);
+  });
+  updateSutaBase();
 }
+
+function updateSutaBase() {
+  const idx = parseInt(document.getElementById('state').value);
+  const s = STATES[idx];
+  const base = currentYear === 2025 ? s[2] : s[3];
+  document.getElementById('sutaBase').value = base;
+
+  const changed = s[2] !== s[3];
+  const hint = document.getElementById('wage-base-hint');
+  if (changed && currentYear === 2026) {
+    hint.textContent = `↑ Increased from $${s[2].toLocaleString()} in 2025`;
+    hint.className = 'hint changed';
+  } else {
+    hint.textContent = 'Edit if your state issued a mid-year update.';
+    hint.className = 'hint';
+  }
+}
+
+function updateRatesStrip() {
+  const f = FED[currentYear];
+  document.getElementById('rates-strip').innerHTML = `
+    <div class="rate-pill">SS rate <span class="val same">6.2% each</span></div>
+    <div class="rate-div">|</div>
+    <div class="rate-pill">SS wage base <span class="val ${currentYear===2026?'changed':'same'}">${currentYear===2025?'$176,100':'$184,500 ↑'}</span></div>
+    <div class="rate-div">|</div>
+    <div class="rate-pill">Medicare <span class="val same">1.45% each</span></div>
+    <div class="rate-div">|</div>
+    <div class="rate-pill">FUTA net <span class="val same">0.6%</span></div>
+    <div class="rate-div">|</div>
+    <div class="rate-pill">Source <span class="val same">IRS Pub.15 · ${currentYear}</span></div>
+  `;
+}
+
+function setYear(yr) {
+  currentYear = yr;
+
+  document.getElementById('btn2025').className = 'year-btn' + (yr===2025?' active':'');
+  document.getElementById('btn2026').className = 'year-btn' + (yr===2026?' active y2026':'');
+
+  const banner = document.getElementById('year-banner');
+  const bannerText = document.getElementById('banner-text');
+  if (yr === 2025) {
+    banner.className = 'year-banner y2025';
+    bannerText.innerHTML = 'Showing <strong>2025</strong> rates — IRS Publication 15 (Circular E) · SS Wage Base $176,100 · FUTA $7,000';
+  } else {
+    banner.className = 'year-banner y2026';
+    bannerText.innerHTML = '⚡ Showing <strong>2026</strong> rates — SS Wage Base increased to <strong>$184,500</strong> (+$8,400) · FUTA $7,000 unchanged';
+  }
+
+  const calcBtn = document.getElementById('calc-btn');
+  calcBtn.className = 'calc-btn' + (yr===2026?' y2026':'');
+  calcBtn.textContent = `Calculate ${yr} Payroll Taxes →`;
+
+  document.getElementById('suta-year-label').textContent = yr;
+  document.getElementById('results-year-label').textContent = yr;
+  document.getElementById('r-ss-rate').textContent = `6.2% / $${FED[yr].SS_BASE.toLocaleString()}`;
+  document.getElementById('r-ee-ss-rate').textContent = `6.2% / $${FED[yr].SS_BASE.toLocaleString()}`;
+
+  updateRatesStrip();
+  buildStateDropdown();
+
+  // Reset compare
+  document.getElementById('compare-row').style.display = 'none';
+  lastGrand = null;
+}
+
+function selectFiling(card) {
+  document.querySelectorAll('.filing-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  card.querySelector('input[type=radio]').checked = true;
+}
+
+// ── CALCULATE ─────────────────────────────────────────
+function fmt(n) { return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 
 function calculate() {
   const salary = parseFloat(document.getElementById('salary').value);
   const freq = parseInt(document.getElementById('frequency').value);
-  const sutaRate = parseFloat(document.getElementById('state').value) / 100;
+  const idx = parseInt(document.getElementById('state').value);
+  const sutaRate = STATES[idx][1] / 100;
   const sutaBase = parseFloat(document.getElementById('sutaBase').value);
-
   if (!salary || salary <= 0) { alert('Please enter a valid salary.'); return; }
 
-  // 2025 Constants
-  const SS_RATE = 0.062;
-  const SS_WAGE_BASE = 176100;
-  const MC_RATE = 0.0145;
-  const ADD_MC_RATE = 0.009;
-  const ADD_MC_THRESHOLD = 200000;
-  const FUTA_RATE = 0.006;
-  const FUTA_BASE = 7000;
-
-  // SS — capped at wage base
-  const ssWages = Math.min(salary, SS_WAGE_BASE);
-  const erSS = ssWages * SS_RATE;
-  const eeSS = ssWages * SS_RATE;
-
-  // Medicare — no cap
-  const erMC = salary * MC_RATE;
-  const eeMC = salary * MC_RATE;
-
-  // Additional Medicare (employee only, on wages >$200K)
-  const addMC = salary > ADD_MC_THRESHOLD ? (salary - ADD_MC_THRESHOLD) * ADD_MC_RATE : 0;
-
-  // FUTA
-  const futaWages = Math.min(salary, FUTA_BASE);
-  const futa = futaWages * FUTA_RATE;
-
-  // SUTA
-  const sutaWages = Math.min(salary, sutaBase);
-  const suta = sutaWages * sutaRate;
-
+  const f = FED[currentYear];
+  const ssWages = Math.min(salary, f.SS_BASE);
+  const erSS = ssWages * f.SS_RATE, eeSS = ssWages * f.SS_RATE;
+  const erMC = salary * f.MC_RATE, eeMC = salary * f.MC_RATE;
+  const addMC = salary > f.ADD_MC_THRESH ? (salary - f.ADD_MC_THRESH) * f.ADD_MC : 0;
+  const futa = Math.min(salary, f.FUTA_BASE) * f.FUTA;
+  const suta = Math.min(salary, sutaBase) * sutaRate;
   const erTotal = erSS + erMC + futa + suta;
   const eeTotal = eeSS + eeMC + addMC;
   const grand = erTotal + eeTotal;
 
-  // Per period
-  const periodGross = salary / freq;
-  const periodEE = eeTotal / freq;
-  const periodER = erTotal / freq;
+  const pl = {52:'Weekly', 26:'Bi-Weekly', 24:'Semi-Monthly', 12:'Monthly'};
 
-  const periodLabels = { 52:'Weekly', 26:'Bi-Weekly', 24:'Semi-Monthly', 12:'Monthly' };
+  // Show compare if we have previous calc from other year
+  if (lastGrand !== null) {
+    const diff = grand - lastGrand;
+    const sign = diff >= 0 ? '+' : '';
+    const otherYear = currentYear === 2025 ? 2026 : 2025;
+    document.getElementById('compare-row').style.display = 'flex';
+    document.getElementById('r-diff').textContent = `${sign}${fmt(Math.abs(diff))} vs ${otherYear} (${diff>=0?'higher':'lower'})`;
+  }
+  lastGrand = grand;
 
-  // Update UI
+  document.getElementById('r-ss-rate').textContent = `6.2% / $${f.SS_BASE.toLocaleString()}`;
+  document.getElementById('r-ee-ss-rate').textContent = `6.2% / $${f.SS_BASE.toLocaleString()}`;
   document.getElementById('r-er-ss').textContent = fmt(erSS);
   document.getElementById('r-er-mc').textContent = fmt(erMC);
   document.getElementById('r-futa').textContent = fmt(futa);
   document.getElementById('r-suta').textContent = fmt(suta);
-  document.getElementById('r-suta-rate').textContent = (sutaRate*100).toFixed(1)+'%';
+  document.getElementById('r-suta-rate').textContent = (sutaRate*100).toFixed(2)+'% / $'+sutaBase.toLocaleString();
   document.getElementById('r-ee-ss').textContent = fmt(eeSS);
   document.getElementById('r-ee-mc').textContent = fmt(eeMC);
   document.getElementById('r-er-total').textContent = fmt(erTotal);
   document.getElementById('r-ee-total').textContent = fmt(eeTotal);
   document.getElementById('r-grand').textContent = fmt(grand);
-  document.getElementById('r-period-gross').textContent = fmt(periodGross);
-  document.getElementById('r-period-ee').textContent = fmt(periodEE);
-  document.getElementById('r-period-er').textContent = fmt(periodER);
-  document.getElementById('r-period-label').textContent = periodLabels[freq] || 'Per Period';
-
-  if (addMC > 0) {
-    document.getElementById('add-medicare-row').style.display = 'flex';
-    document.getElementById('r-add-mc').textContent = fmt(addMC);
-  } else {
-    document.getElementById('add-medicare-row').style.display = 'none';
-  }
-
+  document.getElementById('r-period-gross').textContent = fmt(salary/freq);
+  document.getElementById('r-period-ee').textContent = fmt(eeTotal/freq);
+  document.getElementById('r-period-er').textContent = fmt(erTotal/freq);
+  document.getElementById('r-period-true').textContent = fmt((salary+erTotal)/freq);
+  document.getElementById('r-period-label').textContent = pl[freq]||'Per Period';
+  document.getElementById('add-mc-row').style.display = addMC > 0 ? 'flex' : 'none';
+  if (addMC > 0) document.getElementById('r-add-mc').textContent = fmt(addMC);
   document.getElementById('placeholder').style.display = 'none';
   document.getElementById('results-content').style.display = 'block';
 }
 
 function copyResults() {
   const salary = document.getElementById('salary').value;
+  const state = STATES[parseInt(document.getElementById('state').value)][0];
   const erTotal = document.getElementById('r-er-total').textContent;
   const eeTotal = document.getElementById('r-ee-total').textContent;
   const grand = document.getElementById('r-grand').textContent;
-
-  const text = `Payroll Tax Summary\n-------------------\nAnnual Salary: $${salary}\nEmployer Tax Cost: ${erTotal}\nEmployee Withheld: ${eeTotal}\nTotal Payroll Tax: ${grand}\n\nGenerated by BookSmartTools.com`;
-  navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!'));
+  const text = `${currentYear} Payroll Tax Summary\n─────────────────────\nSalary: $${salary}\nState: ${state}\nEmployer cost (annual): ${erTotal}\nEmployee withheld (annual): ${eeTotal}\nTotal payroll tax: ${grand}\n\nRates: IRS Publication 15 (${currentYear})\nTool: BookSmartTools.com`;
+  navigator.clipboard.writeText(text).then(() => alert('Copied!'));
 }
+
+// ── STARTUP ───────────────────────────────────────────
+setYear(2025);
 </script>
 </body>
 </html>
