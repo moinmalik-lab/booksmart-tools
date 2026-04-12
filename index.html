@@ -4,190 +4,595 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BookSmartTools — Free Bookkeeping Tools for US Small Businesses</title>
-<meta name="description" content="Free professional bookkeeping calculators and guides for US small business owners. Invoice late fee calculator, payroll tax estimator, and expert bookkeeping articles.">
-<meta name="keywords" content="bookkeeping tools, invoice late fee calculator, payroll tax estimator, small business accounting, QuickBooks tips">
-<meta property="og:title" content="BookSmartTools — Free Bookkeeping Tools">
-<meta property="og:description" content="Free professional bookkeeping calculators built by a real US bookkeeper. No signup required.">
-<meta property="og:type" content="website">
-<link rel="canonical" href="https://booksmartools.com/">
-<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ── HOME-SPECIFIC ── */
-.hero-section {
-  padding:90px 0 80px;
-  background:var(--paper);
-  overflow:hidden;
-  position:relative;
+:root {
+  --ink: #111210;
+  --paper: #fafaf7;
+  --cream: #f2efe6;
+  --red: #c03a20;
+  --red-light: #fdf0ec;
+  --green: #1e5c33;
+  --green-light: #eaf4ee;
+  --gold: #a87c00;
+  --border: #dddbd2;
+  --muted: #6b6960;
+  --w: 1080px;
 }
-.hero-section::before {
-  content:'';
-  position:absolute; top:-120px; right:-80px;
-  width:500px; height:500px;
-  border:80px solid var(--green-lt);
-  border-radius:50%; opacity:.5;
-}
-.hero-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:64px; align-items:center; position:relative;
-}
-@media(max-width:800px) { .hero-grid { grid-template-columns:1fr; } .mock-browser { display:none; } }
 
-.hero-text h1 { margin-bottom:20px; }
-.hero-text h1 em { font-style:italic; color:var(--green); }
-.hero-sub { font-size:18px; color:var(--muted); margin-bottom:36px; line-height:1.7; max-width:460px; }
-.hero-actions { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 99;
+  background: rgba(250,250,247,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.logo em { color: var(--red); font-style: normal; }
+
+.nav-links {
+  display: flex; align-items: center; gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 14px; color: var(--muted); text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  background: var(--ink);
+  color: white !important;
+  padding: 9px 20px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 13px !important;
+}
+
+/* ── HERO ── */
+.hero {
+  max-width: var(--w);
+  margin: 0 auto;
+  padding: 80px 32px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width:720px) {
+  .hero { grid-template-columns: 1fr; padding-top: 48px; }
+  .hero-visual { display: none; }
+  nav .nav-links { display: none; }
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--red);
+  background: var(--red-light);
+  padding: 6px 12px; border-radius: 2px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before { content:''; width:6px; height:6px; background:var(--red); border-radius:50%; }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--red);
+}
+
+.hero-sub {
+  font-size: 17px; line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 36px;
+  max-width: 440px;
+}
+
+.cta-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+.btn-primary {
+  background: var(--red);
+  color: white;
+  padding: 15px 28px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-block;
+}
+.btn-primary:hover { background: #a02e18; }
+.btn-primary:active { transform: scale(0.99); }
+
+.btn-ghost {
+  color: var(--ink);
+  padding: 15px 24px;
+  font-size: 15px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  transition: border-color 0.15s;
+}
+.btn-ghost:hover { border-color: var(--ink); }
+
 .hero-trust {
-  display:flex; flex-wrap:wrap; gap:20px;
-  margin-top:32px; padding-top:28px;
-  border-top:1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 32px; padding-top: 28px;
+  border-top: 1px solid var(--border);
 }
 .trust-item {
-  display:flex; align-items:center; gap:7px;
-  font-size:13px; color:var(--muted);
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; color: var(--muted);
 }
-.trust-dot { width:6px; height:6px; background:var(--green); border-radius:50%; flex-shrink:0; }
+.trust-dot { width:6px; height:6px; background: var(--green); border-radius: 50%; }
 
-/* Browser mockup */
-.mock-browser {
-  background:white; border:1px solid var(--border);
-  border-radius:10px; overflow:hidden;
-  box-shadow:0 24px 60px rgba(0,0,0,.09);
-  transform:perspective(900px) rotateY(-4deg) rotateX(2deg);
-  transition:transform .5s ease;
+/* hero visual — fake browser mockup */
+.hero-visual {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.07);
+  transform: perspective(1000px) rotateY(-3deg) rotateX(1deg);
+  transition: transform 0.4s;
 }
-.mock-browser:hover { transform:perspective(900px) rotateY(0) rotateX(0); }
-.mock-bar {
-  background:var(--cream); padding:12px 16px;
-  display:flex; align-items:center; gap:6px;
-  border-bottom:1px solid var(--border);
+.hero-visual:hover {
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
 }
-.mock-dot { width:11px; height:11px; border-radius:50%; }
-.mock-url {
-  flex:1; background:white; border-radius:20px;
-  padding:5px 14px; font-family:'DM Mono',monospace;
-  font-size:11px; color:var(--muted); border:1px solid var(--border);
-  margin:0 8px;
+
+.browser-bar {
+  background: var(--cream);
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 6px;
+  border-bottom: 1px solid var(--border);
 }
-.mock-top { background:var(--ink); padding:14px 20px; }
-.mock-brand { font-family:'Playfair Display',serif; font-size:16px; color:white; }
-.mock-brand em { color:#6db88a; font-style:normal; }
-.mock-body { padding:20px; }
-.mock-field { margin-bottom:12px; }
-.mock-lbl { font-size:9px; letter-spacing:.8px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; font-weight:600; }
-.mock-inp {
-  height:34px; border:1px solid var(--border); border-radius:3px;
-  padding:0 12px; font-family:'DM Mono',monospace; font-size:12px;
-  color:var(--ink); width:100%; display:flex; align-items:center;
-  background:var(--paper);
+.browser-dot { width:10px; height:10px; border-radius:50%; }
+
+.mock-header {
+  background: var(--ink);
+  color: white;
+  padding: 12px 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
 }
+.mock-header span { color: var(--red); }
+
+.mock-body { padding: 20px; }
+
+.mock-field {
+  margin-bottom: 12px;
+}
+.mock-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+}
+.mock-input {
+  height: 34px; border: 1px solid var(--border); border-radius: 3px;
+  padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  color: var(--ink); width: 100%; display: flex; align-items: center;
+  background: var(--paper);
+}
+
 .mock-result {
-  background:var(--ink); border-radius:4px; padding:16px; margin-top:16px; color:white;
+  background: var(--ink); color: white;
+  border-radius: 4px; padding: 16px; margin-top: 16px;
 }
-.mock-r-row { display:flex; justify-content:space-between; font-size:11px; margin-bottom:7px; opacity:.7; font-family:'DM Mono',monospace; }
-.mock-r-total { display:flex; justify-content:space-between; align-items:baseline; padding-top:10px; margin-top:8px; border-top:1px solid rgba(255,255,255,.15); }
-.mock-r-lbl { font-size:10px; opacity:.5; letter-spacing:.5px; text-transform:uppercase; }
-.mock-r-amt { font-family:'Playfair Display',serif; font-size:26px; color:white; }
+.mock-result-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px; margin-bottom: 8px; opacity: 0.75;
+  font-family: 'JetBrains Mono', monospace;
+}
+.mock-total {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15);
+}
+.mock-total-label { font-size: 11px; text-transform: uppercase; opacity: 0.5; letter-spacing: 0.5px; }
+.mock-total-amount { font-family: 'Playfair Display', serif; font-size: 24px; }
 
-/* Features */
-.features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-@media(max-width:720px) { .features-grid { grid-template-columns:1fr; } }
-.feature-card { padding:28px; }
-.feature-icon {
-  width:44px; height:44px; border-radius:4px;
-  background:var(--green-lt); display:flex; align-items:center;
-  justify-content:center; margin-bottom:16px; font-size:20px;
+/* ── TICKER STRIP ── */
+.ticker {
+  background: var(--ink);
+  color: rgba(255,255,255,0.55);
+  padding: 12px 0;
+  overflow: hidden;
+  margin-top: 60px;
+  white-space: nowrap;
 }
-.feature-title { font-family:'Playfair Display',serif; font-size:18px; margin-bottom:8px; }
-.feature-desc { font-size:14px; color:var(--muted); line-height:1.65; }
+.ticker-inner {
+  display: inline-flex; gap: 48px;
+  animation: ticker 20s linear infinite;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; letter-spacing: 0.5px;
+}
+.ticker-item { display: flex; align-items: center; gap: 12px; }
+.ticker-sep { opacity: 0.25; }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
-/* Credibility strip */
-.cred-strip {
-  background:var(--cream); border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border); padding:24px 0;
+/* ── TOOLS SECTION ── */
+.section {
+  max-width: var(--w);
+  margin: 0 auto;
+  padding: 80px 32px;
 }
-.cred-inner {
-  display:flex; justify-content:center; gap:48px;
-  flex-wrap:wrap;
-}
-.cred-item { text-align:center; }
-.cred-num { font-family:'Playfair Display',serif; font-size:32px; color:var(--ink); }
-.cred-label { font-size:12px; color:var(--muted); margin-top:4px; }
 
-/* FAQ */
-.faq-item { border-bottom:1px solid var(--border); }
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700; line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.section-sub {
+  font-size: 16px; color: var(--muted); line-height: 1.7;
+  max-width: 540px; margin-bottom: 48px;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 720px) { .tools-grid { grid-template-columns: 1fr; } }
+
+.tool-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0;
+  height: 3px; background: var(--red);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.2s;
+}
+.tool-card:hover::before { transform: scaleX(1); }
+.tool-card:hover { border-color: transparent; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+
+.tool-tag {
+  display: inline-block;
+  background: var(--red-light); color: var(--red);
+  font-size: 10px; font-weight: 600; letter-spacing: 0.8px;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+.tool-tag.free { background: var(--green-light); color: var(--green); }
+.tool-tag.soon { background: var(--cream); color: var(--muted); }
+
+.tool-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; margin-bottom: 10px;
+}
+
+.tool-desc {
+  font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px;
+}
+
+.tool-link {
+  font-size: 13px; font-weight: 600;
+  color: var(--red); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+}
+.tool-link::after { content: '→'; transition: transform 0.15s; }
+.tool-link:hover::after { transform: translateX(4px); }
+
+/* ── EMAIL CAPTURE ── */
+.capture-section {
+  background: var(--ink);
+  color: white;
+  padding: 80px 32px;
+}
+
+.capture-inner {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.capture-inner .section-label { color: rgba(255,255,255,0.4); }
+
+.capture-inner .section-title {
+  color: white; margin-bottom: 14px;
+}
+
+.capture-inner p {
+  font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 36px;
+}
+
+.email-form {
+  display: flex; gap: 0;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 480px;
+  margin: 0 auto 16px;
+}
+
+.email-form input {
+  flex: 1; height: 52px;
+  background: rgba(255,255,255,0.07);
+  border: none; outline: none;
+  padding: 0 18px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15px;
+  color: white;
+}
+
+.email-form input::placeholder { color: rgba(255,255,255,0.35); }
+
+.email-form button {
+  background: var(--red);
+  color: white;
+  border: none;
+  padding: 0 24px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.email-form button:hover { background: #a02e18; }
+
+.capture-small {
+  font-size: 12px; color: rgba(255,255,255,0.3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── ABOUT / CREDIBILITY ── */
+.about-section {
+  max-width: var(--w);
+  margin: 0 auto;
+  padding: 80px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 720px) { .about-section { grid-template-columns: 1fr; gap: 40px; } }
+
+.about-text .section-title { margin-bottom: 20px; }
+
+.about-text p {
+  font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 16px;
+}
+
+.about-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+
+.stat-card {
+  background: var(--cream);
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 13px; color: var(--muted); line-height: 1.5;
+}
+
+/* ── BLOG PREVIEW ── */
+.blog-section {
+  background: var(--cream);
+  padding: 80px 32px;
+}
+
+.blog-inner { max-width: var(--w); margin: 0 auto; }
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+@media (max-width: 720px) { .blog-grid { grid-template-columns: 1fr; } }
+
+.blog-card {
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.blog-card-header {
+  background: var(--ink);
+  padding: 20px 24px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.5);
+  display: flex; justify-content: space-between;
+}
+.blog-cat { color: #f0a070; }
+
+.blog-card-body { padding: 24px; }
+
+.blog-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.blog-card-excerpt {
+  font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 20px;
+}
+
+.blog-read-more {
+  font-size: 13px; font-weight: 600; color: var(--red);
+  text-decoration: none; display: flex; align-items: center; gap: 5px;
+}
+
+/* ── FAQ ── */
+.faq-section {
+  max-width: 680px; margin: 0 auto; padding: 80px 32px;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0;
+  cursor: pointer;
+}
+
 .faq-q {
-  width:100%; text-align:left; background:none; border:none;
-  padding:20px 0; font-family:'DM Sans',sans-serif; font-size:16px;
-  font-weight:600; color:var(--ink); cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center;
+  font-size: 16px; font-weight: 600;
+  display: flex; justify-content: space-between; align-items: center;
+  user-select: none;
 }
-.faq-icon { font-size:22px; color:var(--muted); transition:transform .2s; flex-shrink:0; }
-.faq-item.open .faq-icon { transform:rotate(45deg); }
+
+.faq-icon { font-size: 20px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
 .faq-a {
-  font-size:15px; color:var(--muted); line-height:1.75;
-  max-height:0; overflow:hidden; transition:max-height .3s, padding .3s;
+  font-size: 14px; color: var(--muted); line-height: 1.7;
+  max-height: 0; overflow: hidden; transition: max-height 0.3s, margin-top 0.3s;
 }
-.faq-item.open .faq-a { max-height:200px; padding-bottom:20px; }
+.faq-item.open .faq-a { max-height: 200px; margin-top: 14px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.45);
+  padding: 48px 32px;
+}
+.footer-inner {
+  max-width: var(--w); margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; color: white;
+}
+.footer-brand em { color: var(--red); font-style: normal; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; }
+.footer-links a:hover { color: white; }
+.footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+/* Success state */
+.success-msg {
+  display: none;
+  background: var(--green-light);
+  color: var(--green);
+  border-radius: 4px;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12px;
+  text-align: center;
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="site-nav" role="navigation" aria-label="Main navigation">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">Book<em>Smart</em>Tools</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="tools.html">Tools</a></li>
-      <li><a href="blog/index.html">Blog</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="#newsletter" class="nav-cta">Free Tools →</a></li>
-    </ul>
-  </div>
+<nav>
+  <a href="#" class="logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="#tools">Free Tools</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#signup" class="nav-cta">Get Free Tools →</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
-<section class="hero-section">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <div class="eyebrow">Free for US small businesses</div>
-        <h1>Bookkeeping tools that <em>actually</em> save you time</h1>
-        <p class="hero-sub">Professional-grade calculators and guides — built by a real bookkeeper working with US clients every day. No fluff, no account required.</p>
-        <div class="hero-actions">
-          <a href="tools.html" class="btn btn-primary">Browse Free Tools →</a>
-          <a href="blog/index.html" class="btn btn-ghost">Read the Blog</a>
-        </div>
-        <div class="hero-trust">
-          <div class="trust-item"><div class="trust-dot"></div>100% free to use</div>
-          <div class="trust-item"><div class="trust-dot"></div>No account needed</div>
-          <div class="trust-item"><div class="trust-dot"></div>2025 & 2026 rates</div>
-          <div class="trust-item"><div class="trust-dot"></div>Built by bookkeepers</div>
-        </div>
+<section>
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Free for US small businesses</div>
+      <h1>Bookkeeping tools that <em>actually</em> save you time</h1>
+      <p class="hero-sub">Professional-grade calculators, trackers and guides — built by a real bookkeeper working with US clients. No fluff, no upsells. Just tools that work.</p>
+      <div class="cta-group">
+        <a href="#tools" class="btn-primary">Browse Free Tools</a>
+        <a href="#signup" class="btn-ghost">Get Email Updates</a>
       </div>
+      <div class="hero-trust">
+        <div class="trust-item"><div class="trust-dot"></div> 100% Free to use</div>
+        <div class="trust-item"><div class="trust-dot"></div> No account needed</div>
+        <div class="trust-item"><div class="trust-dot"></div> Built by bookkeepers</div>
+      </div>
+    </div>
 
-      <!-- Browser mockup -->
-      <div class="mock-browser" aria-hidden="true">
-        <div class="mock-bar">
-          <div class="mock-dot" style="background:#ff5f57"></div>
-          <div class="mock-dot" style="background:#febc2e"></div>
-          <div class="mock-dot" style="background:#28c840"></div>
-          <div class="mock-url">booksmartools.com/invoice-late-fee-calculator.html</div>
+    <div class="hero-visual">
+      <div class="browser-bar">
+        <div class="browser-dot" style="background:#ff5f57"></div>
+        <div class="browser-dot" style="background:#febc2e"></div>
+        <div class="browser-dot" style="background:#28c840"></div>
+      </div>
+      <div class="mock-header">Book<span>Smart</span>Tools — Invoice Late Fee Calculator</div>
+      <div class="mock-body">
+        <div class="mock-field">
+          <div class="mock-label">Invoice Amount</div>
+          <div class="mock-input">$ 4,750.00</div>
         </div>
-        <div class="mock-top"><div class="mock-brand">Book<em>Smart</em>Tools — Invoice Late Fee Calculator</div></div>
-        <div class="mock-body">
-          <div class="mock-field"><div class="mock-lbl">Invoice Amount</div><div class="mock-inp">$ 4,750.00</div></div>
-          <div class="mock-field"><div class="mock-lbl">Due Date</div><div class="mock-inp">January 1, 2025</div></div>
-          <div class="mock-field"><div class="mock-lbl">Monthly Rate</div><div class="mock-inp">% 1.5</div></div>
-          <div class="mock-result">
-            <div class="mock-r-row"><span>Original invoice</span><span>$4,750.00</span></div>
-            <div class="mock-r-row"><span>Late fee (47 days)</span><span style="color:#f0a070">+ $111.63</span></div>
-            <div class="mock-r-total">
-              <span class="mock-r-lbl">Total Due</span>
-              <span class="mock-r-amt">$4,861.63</span>
-            </div>
+        <div class="mock-field">
+          <div class="mock-label">Days Overdue</div>
+          <div class="mock-input">47 days</div>
+        </div>
+        <div class="mock-field">
+          <div class="mock-label">Monthly Rate</div>
+          <div class="mock-input">% 1.5</div>
+        </div>
+        <div class="mock-result">
+          <div class="mock-result-row"><span>Original invoice</span><span>$4,750.00</span></div>
+          <div class="mock-result-row"><span>Late fee (47 days)</span><span style="color:#f0a070">+ $111.63</span></div>
+          <div class="mock-total">
+            <span class="mock-total-label">Total Due</span>
+            <span class="mock-total-amount">$4,861.63</span>
           </div>
         </div>
       </div>
@@ -196,257 +601,211 @@
 </section>
 
 <!-- TICKER -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Invoice Late Fee Calculator</span><span class="sep">◆</span>
-    <span>Payroll Tax Estimator 2025 & 2026</span><span class="sep">◆</span>
-    <span>QuickBooks Reconciliation Guide</span><span class="sep">◆</span>
-    <span>1099 vs W-2 Explained</span><span class="sep">◆</span>
-    <span>All 50 States SUTA Rates</span><span class="sep">◆</span>
-    <span>IRS-Verified Tax Rates</span><span class="sep">◆</span>
-    <span>Invoice Late Fee Calculator</span><span class="sep">◆</span>
-    <span>Payroll Tax Estimator 2025 & 2026</span><span class="sep">◆</span>
-    <span>QuickBooks Reconciliation Guide</span><span class="sep">◆</span>
-    <span>1099 vs W-2 Explained</span><span class="sep">◆</span>
-    <span>All 50 States SUTA Rates</span><span class="sep">◆</span>
-    <span>IRS-Verified Tax Rates</span><span class="sep">◆</span>
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Invoice Late Fee Calculator <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Payroll Tax Estimator <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Expense Categorization Guide <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">QuickBooks Tips <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">1099 vs W-2 Guide <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Mileage Tracker <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Cash Flow Planner <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Invoice Late Fee Calculator <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Payroll Tax Estimator <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Expense Categorization Guide <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">QuickBooks Tips <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">1099 vs W-2 Guide <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Mileage Tracker <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Cash Flow Planner <span class="ticker-sep">◆</span></span>
   </div>
 </div>
 
-<!-- CREDIBILITY STRIP -->
-<div class="cred-strip">
-  <div class="wrap">
-    <div class="cred-inner">
-      <div class="cred-item reveal"><div class="cred-num">6+</div><div class="cred-label">Years US bookkeeping experience</div></div>
-      <div class="cred-item reveal delay-1"><div class="cred-num">50+</div><div class="cred-label">US small business clients</div></div>
-      <div class="cred-item reveal delay-2"><div class="cred-num">2</div><div class="cred-label">Free professional tools</div></div>
-      <div class="cred-item reveal delay-3"><div class="cred-num">0</div><div class="cred-label">Ads, spam or upsells</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- TOOLS SECTION -->
+<!-- TOOLS -->
 <section class="section" id="tools">
-  <div class="wrap">
-    <div class="text-center mb-8">
-      <div class="eyebrow" style="justify-content:center">Free Tools</div>
-      <h2>Built for the real work of bookkeeping</h2>
-      <p style="max-width:520px;margin:12px auto 0">Every tool on this site solves a problem I encounter daily with real US clients. No bloat, no subscriptions, no tricks.</p>
-    </div>
+  <div class="section-label">Free Tools</div>
+  <div class="section-title">Built for the real work of bookkeeping</div>
+  <p class="section-sub">Every tool on this site solves a problem I encounter working with real US small business clients. No bloat, no subscriptions.</p>
 
-    <div class="grid-3" style="margin-top:48px">
-      <div class="tool-card reveal">
-        <div class="tool-badge free">Free</div>
-        <div class="tool-name">Invoice Late Fee Calculator</div>
-        <p class="tool-desc">Calculate exact late fees with monthly compounding, grace periods, and a full breakdown by month — ready to paste into a client email.</p>
-        <a href="invoice-late-fee-calculator.html" class="tool-link">Open Calculator</a>
-      </div>
-      <div class="tool-card reveal delay-1">
-        <div class="tool-badge free">Free</div>
-        <div class="tool-name">Payroll Tax Estimator</div>
-        <p class="tool-desc">2025 & 2026 federal and state payroll taxes for W-2 employees. All 50 states, IRS-verified FICA/FUTA/SUTA rates with year-over-year comparison.</p>
-        <a href="payroll-tax-estimator.html" class="tool-link">Open Estimator</a>
-      </div>
-      <div class="tool-card reveal delay-2">
-        <div class="tool-badge soon">Coming Soon</div>
-        <div class="tool-name">Quarterly Tax Calculator</div>
-        <p class="tool-desc">Estimate quarterly estimated tax payments for self-employed individuals based on projected income, deductions, and filing status.</p>
-        <a href="#newsletter" class="tool-link" style="color:var(--muted)">Get notified</a>
-      </div>
-      <div class="tool-card reveal">
-        <div class="tool-badge soon">Coming Soon</div>
-        <div class="tool-name">Mileage Deduction Tracker</div>
-        <p class="tool-desc">Track business miles at the 2025 IRS standard mileage rate. Calculate your deduction and export a report for tax preparation.</p>
-        <a href="#newsletter" class="tool-link" style="color:var(--muted)">Get notified</a>
-      </div>
-      <div class="tool-card reveal delay-1">
-        <div class="tool-badge soon">Coming Soon</div>
-        <div class="tool-name">Expense Category Checker</div>
-        <p class="tool-desc">Unsure how to categorize a business expense in QuickBooks? Get the correct category and IRS tax treatment in seconds.</p>
-        <a href="#newsletter" class="tool-link" style="color:var(--muted)">Get notified</a>
-      </div>
-      <div class="tool-card reveal delay-2">
-        <div class="tool-badge soon">Coming Soon</div>
-        <div class="tool-name">Cash Flow Forecast Builder</div>
-        <p class="tool-desc">Build a 12-month cash flow projection for your small business. Spot shortfalls before they become a crisis.</p>
-        <a href="#newsletter" class="tool-link" style="color:var(--muted)">Get notified</a>
-      </div>
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-tag free">Free</div>
+      <div class="tool-name">Invoice Late Fee Calculator</div>
+      <p class="tool-desc">Calculate exact late fees with monthly compounding, grace periods, and full breakdown by month. Copy results to send to clients.</p>
+      <a href="invoice-late-fee-calculator.html" class="tool-link">Open Calculator</a>
     </div>
-  </div>
-</section>
-
-<!-- WHY US -->
-<section class="section" style="background:var(--ink);color:white;padding:80px 0">
-  <div class="wrap">
-    <div class="text-center mb-8">
-      <div class="eyebrow" style="justify-content:center;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1)">Why BookSmartTools</div>
-      <h2 style="color:white">Everything you get, for free</h2>
+    <div class="tool-card">
+      <div class="tool-tag free">Free</div>
+      <div class="tool-name">Payroll Tax Estimator</div>
+      <p class="tool-desc">Estimate federal payroll taxes for W-2 employees — Social Security, Medicare, FUTA, and SUTA. Instant breakdown for any salary.</p>
+      <a href="payroll-tax-estimator.html" class="tool-link">Open Estimator</a>
     </div>
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon">📊</div>
-        <div class="feature-title" style="color:white">IRS-Verified Rates</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Every rate is sourced directly from IRS Publication 15, the SSA, and state DOL data — and updated for both 2025 and 2026.</p>
-      </div>
-      <div class="feature-card reveal delay-1">
-        <div class="feature-icon">🔒</div>
-        <div class="feature-title" style="color:white">No Account, No Data</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">All tools work 100% in your browser. Nothing is sent to a server. Your numbers stay on your screen.</p>
-      </div>
-      <div class="feature-card reveal delay-2">
-        <div class="feature-icon">📥</div>
-        <div class="feature-title" style="color:white">Works Offline</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Download any tool and use it without internet. Perfect for client meetings, travel, and areas with poor connectivity.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🇺🇸</div>
-        <div class="feature-title" style="color:white">Built for US Clients</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Everything is built around US tax law — federal payroll tax, all 50-state SUTA, IRS filing requirements, and QuickBooks workflows.</p>
-      </div>
-      <div class="feature-card reveal delay-1">
-        <div class="feature-icon">✍️</div>
-        <div class="feature-title" style="color:white">Real Expertise</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Written and built by a working bookkeeper — not a content farm. Every article and tool reflects actual daily client work.</p>
-      </div>
-      <div class="feature-card reveal delay-2">
-        <div class="feature-icon">🚫</div>
-        <div class="feature-title" style="color:white">Zero Ads, Zero Upsells</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">No banner ads, no pop-ups, no "upgrade to Pro." The tools are free because useful tools are the whole point.</p>
-      </div>
+    <div class="tool-card">
+      <div class="tool-tag soon">Coming Soon</div>
+      <div class="tool-name">Quarterly Tax Calculator</div>
+      <p class="tool-desc">Estimate quarterly estimated tax payments for self-employed individuals and freelancers based on projected annual income.</p>
+      <a href="#signup" class="tool-link" style="color:var(--muted)">Get notified</a>
     </div>
-  </div>
-</section>
-
-<!-- BLOG PREVIEW -->
-<section class="section" style="background:var(--cream)">
-  <div class="wrap">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:16px;">
-      <div>
-        <div class="eyebrow">From the Blog</div>
-        <h2>Practical bookkeeping guides</h2>
-      </div>
-      <a href="blog/index.html" class="btn btn-ghost btn-sm">All Articles →</a>
+    <div class="tool-card">
+      <div class="tool-tag soon">Coming Soon</div>
+      <div class="tool-name">Mileage Deduction Tracker</div>
+      <p class="tool-desc">Track business miles and calculate IRS mileage deductions at the current standard rate. Export for tax preparation.</p>
+      <a href="#signup" class="tool-link" style="color:var(--muted)">Get notified</a>
     </div>
-    <div class="grid-3">
-      <div class="blog-card reveal">
-        <div class="blog-card-top"><span class="blog-cat">Invoicing</span><span class="blog-time">5 min read</span></div>
-        <div class="blog-card-body">
-          <div class="blog-card-title">How to calculate invoice late fees (with the right rate)</div>
-          <p class="blog-card-excerpt">Most US states allow 1.5% per month. Here's how to calculate it correctly, state your terms, and handle clients who push back.</p>
-          <a href="blog/how-to-calculate-invoice-late-fees.html" class="blog-read">Read article</a>
-        </div>
-      </div>
-      <div class="blog-card reveal delay-1">
-        <div class="blog-card-top"><span class="blog-cat">QuickBooks</span><span class="blog-time">7 min read</span></div>
-        <div class="blog-card-body">
-          <div class="blog-card-title">How to reconcile a bank account in QuickBooks Online</div>
-          <p class="blog-card-excerpt">Step-by-step walkthrough including how to fix the most common errors that throw off your ending balance.</p>
-          <a href="blog/quickbooks-bank-reconciliation.html" class="blog-read">Read article</a>
-        </div>
-      </div>
-      <div class="blog-card reveal delay-2">
-        <div class="blog-card-top"><span class="blog-cat">Taxes</span><span class="blog-time">6 min read</span></div>
-        <div class="blog-card-body">
-          <div class="blog-card-title">1099-NEC vs W-2: what every small business owner needs to know</div>
-          <p class="blog-card-excerpt">Misclassifying a worker is one of the most expensive mistakes a small business can make. Here's how to get it right.</p>
-          <a href="blog/1099-vs-w2.html" class="blog-read">Read article</a>
-        </div>
-      </div>
+    <div class="tool-card">
+      <div class="tool-tag soon">Coming Soon</div>
+      <div class="tool-name">Expense Category Checker</div>
+      <p class="tool-desc">Not sure how to categorize a business expense? Enter the description and get the correct QuickBooks category and IRS treatment.</p>
+      <a href="#signup" class="tool-link" style="color:var(--muted)">Get notified</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag soon">Coming Soon</div>
+      <div class="tool-name">Cash Flow Forecast Builder</div>
+      <p class="tool-desc">Build a 12-month cash flow projection for your business. Spot shortfalls before they happen and plan accordingly.</p>
+      <a href="#signup" class="tool-link" style="color:var(--muted)">Get notified</a>
     </div>
   </div>
 </section>
 
 <!-- EMAIL CAPTURE -->
-<section class="capture-section" id="newsletter">
+<section class="capture-section" id="signup">
   <div class="capture-inner">
-    <div class="eyebrow" style="justify-content:center;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)">Stay Updated</div>
-    <h2>New tools before anyone else</h2>
-    <p>Join bookkeepers and small business owners who get free tools, QuickBooks tips, and tax guides delivered to their inbox. No spam, ever.</p>
-    <form class="email-form" novalidate>
-      <input type="email" placeholder="your@email.com" aria-label="Email address">
-      <button type="submit">Get Free Tools →</button>
-    </form>
-    <div class="capture-success">✓ You're in! Watch your inbox for your first free resource.</div>
-    <div class="capture-small">No spam. No credit card. Unsubscribe any time.</div>
+    <div class="section-label">Stay Updated</div>
+    <div class="section-title">Get new tools before anyone else</div>
+    <p>Join bookkeepers and small business owners who get free tools, QuickBooks tips, and tax guides delivered to their inbox. No spam. Unsubscribe any time.</p>
+    <div class="email-form">
+      <input type="email" id="emailInput" placeholder="your@email.com">
+      <button onclick="handleSignup()">Get Free Tools →</button>
+    </div>
+    <div class="success-msg" id="successMsg">✓ You're in! Check your inbox for your first free resource.</div>
+    <div class="capture-small">No spam. No credit card. Free forever.</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-text">
+    <div class="section-label">About</div>
+    <div class="section-title">Built by a bookkeeper, for bookkeepers</div>
+    <p>I'm a professional bookkeeper working remotely with US small business clients. Every tool on this site started as something I needed for my own work.</p>
+    <p>I got tired of doing late fee math in Excel, estimating payroll taxes from memory, and sending clients to complicated IRS worksheets. So I built simpler tools — and decided to share them.</p>
+    <p>Everything here is free. No account required. If a tool helps you save 20 minutes, that's the win.</p>
+  </div>
+
+  <div class="about-stats">
+    <div class="stat-card">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Years of US bookkeeping experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">US small business clients served</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Free tools, no hidden fees</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Ads, spam or upsells. Ever.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section class="blog-section" id="blog">
+  <div class="blog-inner">
+    <div class="section-label">From the Blog</div>
+    <div class="section-title">Practical bookkeeping guides</div>
+
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-card-header">
+          <span class="blog-cat">Invoicing</span>
+          <span>5 min read</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-title">How to calculate invoice late fees (with the right rate)</div>
+          <p class="blog-card-excerpt">Most US states allow 1.5% per month. Here's how to calculate it correctly, what to put on your invoices, and how to handle clients who push back.</p>
+          <a href="blog-articles.html?article=0" class="blog-read-more">Read article</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-card-header">
+          <span class="blog-cat">QuickBooks</span>
+          <span>7 min read</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-title">How to reconcile a bank account in QuickBooks Online</div>
+          <p class="blog-card-excerpt">A step-by-step walkthrough of bank reconciliation in QuickBooks Online — including how to fix the most common errors that throw off your balance.</p>
+          <a href="blog-articles.html?article=1" class="blog-read-more">Read article</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-card-header">
+          <span class="blog-cat">Taxes</span>
+          <span>6 min read</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-title">1099-NEC vs W-2: what every small business owner needs to know</div>
+          <p class="blog-card-excerpt">Hiring someone? The difference between 1099 and W-2 determines your payroll taxes, filing obligations, and legal exposure. Get it wrong and it's expensive.</p>
+          <a href="blog-articles.html?article=2" class="blog-read-more">Read article</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="section">
-  <div class="wrap" style="max-width:680px">
-    <div class="text-center mb-8">
-      <div class="eyebrow" style="justify-content:center">FAQ</div>
-      <h2>Frequently asked</h2>
-    </div>
-    <div>
-      <div class="faq-item">
-        <button class="faq-q">Are these tools really free? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Yes — completely free. No account, no credit card, no trial period. Use them as much as you like and share them with clients or colleagues.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Are the tax rates accurate? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Every federal rate is sourced from IRS Publication 15 (Circular E) and the Social Security Administration. SUTA rates come from Department of Labor and Patriot Software data. The payroll tool covers both 2025 and 2026. That said, always confirm with your CPA for complex situations.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Can I share these tools with my clients? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Absolutely. Share the links freely, or download the HTML files and add them to your own website. No attribution required, though it's appreciated.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Do you offer bookkeeping services? <span class="faq-icon">+</span></button>
-        <div class="faq-a">I have limited availability for US small business clients. If you're looking for a remote bookkeeper with QuickBooks experience, reach out via the About page and I'll let you know if I have capacity.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">How often are the tools updated? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Tax rates are reviewed at the start of each calendar year and updated as soon as the IRS and SSA publish new figures. Subscribe to the newsletter to be notified when anything changes.</div>
-      </div>
-    </div>
+<section class="faq-section">
+  <div class="section-label">Questions</div>
+  <div class="section-title" style="margin-bottom:40px">Frequently asked</div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Are these tools really free? <span class="faq-icon">+</span></div>
+    <div class="faq-a">Yes, completely free. No account, no credit card, no trial period. Use them as much as you like. Some premium tool bundles may be offered in future, but the core tools will always be free.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Are the tax calculations accurate? <span class="faq-icon">+</span></div>
+    <div class="faq-a">The tools use current IRS rates and standard formulas used in professional bookkeeping. That said, always verify important calculations with your CPA or tax professional — especially for complex situations.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Can I share these tools with my clients? <span class="faq-icon">+</span></div>
+    <div class="faq-a">Absolutely. Share freely. You can even download the HTML files and host them on your own website if you want to offer them under your brand.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Do you offer bookkeeping services? <span class="faq-icon">+</span></div>
+    <div class="faq-a">I have limited availability for US small business clients. If you're looking for a remote bookkeeper with QuickBooks experience, reach out via the email list and I'll let you know if I have openings.</div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">Book<em>Smart</em>Tools</div>
-        <p class="footer-tagline">Free professional bookkeeping tools and guides for US small business owners. Built by a real bookkeeper.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Tools</h4>
-        <ul>
-          <li><a href="invoice-late-fee-calculator.html">Invoice Late Fee Calculator</a></li>
-          <li><a href="payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
-          <li><a href="tools.html">All Tools</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Blog</h4>
-        <ul>
-          <li><a href="blog/how-to-calculate-invoice-late-fees.html">Invoice Late Fees</a></li>
-          <li><a href="blog/quickbooks-bank-reconciliation.html">QuickBooks Reconciliation</a></li>
-          <li><a href="blog/1099-vs-w2.html">1099 vs W-2</a></li>
-          <li><a href="blog/index.html">All Articles</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Site</h4>
-        <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="#newsletter">Newsletter</a></li>
-          <li><a href="sitemap.xml">Sitemap</a></li>
-        </ul>
-      </div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Book<em>Smart</em>Tools</div>
+    <div class="footer-links">
+      <a href="#tools">Tools</a>
+      <a href="#blog">Blog</a>
+      <a href="#about">About</a>
+      <a href="#signup">Newsletter</a>
     </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">© 2025 BookSmartTools — Free bookkeeping tools for US small businesses</div>
-      <div class="footer-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Disclaimer</a>
-      </div>
-    </div>
+    <div class="footer-copy">© 2025 BookSmartTools — Free bookkeeping tools</div>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script>
+function handleSignup() {
+  const email = document.getElementById('emailInput').value;
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  document.querySelector('.email-form').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+</script>
 </body>
 </html>
