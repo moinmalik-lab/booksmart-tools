@@ -490,13 +490,22 @@
     vertical-align: middle;
   }
 </style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header>
-  <div class="brand">Book<span>Smart</span>Tools</div>
-  <div class="tagline">PROFESSIONAL BOOKKEEPING UTILITIES</div>
-</header>
+<nav class="site-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Book<em>Smart</em>Tools</a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="tools.html" class="nav-cta">All Tools →</a></li>
+    </ul>
+  </div>
+</nav>
 
 <div class="hero">
   <h1>Invoice Late Fee Calculator</h1>
@@ -795,5 +804,6 @@ function copyResults() {
   });
 }
 </script>
+<script src="js/main.js"></script>
 </body>
 </html>
