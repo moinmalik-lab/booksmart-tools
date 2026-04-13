@@ -83,22 +83,23 @@ input:focus,select:focus{border-color:var(--accent);background:white;}
 .calc-btn.y2026:hover{background:#9a6e00;}
 
 /* Results */
-.results-card{background:var(--ink);color:var(--paper);border:none;}
-.results-card .card-title{color:var(--paper);border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:16px;margin-bottom:18px;}
-.results-card .num{background:var(--accent);}
-.placeholder-msg{text-align:center;padding:40px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:1.9;}
+.results-card{background:#1a1a18 !important;color:#faf8f3;border:none;}
+.results-card .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:18px;}
+.results-card .num{background:#1e5c33;}
+.placeholder-msg{text-align:center;padding:40px 20px;color:rgba(255,255,255,.4);font-size:14px;line-height:1.9;}
 
-.tb{margin-bottom:18px;}
-.tb-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:'DM Mono',monospace;}
-.tr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;}
+.tb{margin-bottom:20px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px;}
+.tb-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px;}
+.tr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;gap:8px;}
 .tr:last-child{border-bottom:none;}
-.tl{color:rgba(255,255,255,.65);}
-.tr-rate{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.3);}
-.ta{font-family:'DM Mono',monospace;font-weight:500;}
+.tl{color:#d8d4c8;font-weight:500;flex:1;min-width:0;}
+.tr-rate{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);white-space:nowrap;flex-shrink:0;}
+.ta{font-family:'DM Mono',monospace;font-weight:700;white-space:nowrap;flex-shrink:0;font-size:14px;color:#faf8f3;}
 .ta.er{color:#7dd4a0;}.ta.ee{color:#f0a070;}
-.total-box{background:rgba(255,255,255,.06);border-radius:3px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.tb-label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.5);}
-.tb-amount{font-family:'DM Mono',monospace;font-size:17px;}
+.total-box{background:rgba(255,255,255,.08);border-radius:3px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border:1px solid rgba(255,255,255,.06);}
+.total-box.grand{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);}
+.tb-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.75);}
+.tb-amount{font-family:'DM Mono',monospace;font-size:17px;font-weight:600;}
 .total-box.grand{background:rgba(255,255,255,.1);}
 .total-box.grand .tb-amount{font-family:'DM Serif Display',serif;font-size:26px;color:white;}
 
@@ -209,12 +210,12 @@ footer a{color:rgba(255,255,255,.6);}
 
       <div class="divider"></div>
 
-      <div class="card-title" style="margin-bottom:10px;"><div class="num">2</div>W-4 Settings</div>
-      <p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">Federal payroll withholding (Box 2 on W-2) uses IRS Pub 15-T, <strong>not</strong> the annual standard deduction. Select the method matching the employee's W-4.</p>
+      <div class="card-title" style="margin-bottom:10px;"><div class="num">2</div>W-4 Employee Settings</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">These match the employee's W-4 form and determine Box 2 (Federal Income Tax Withheld) on the W-2.</p>
 
       <!-- Filing Status -->
       <div class="field">
-        <label>W-4 Step 1 — Filing Status</label>
+        <label>Filing Status (W-4 Step 1)</label>
         <select id="filing" style="height:44px;font-family:'DM Sans',sans-serif;font-size:14px;">
           <option value="single">Single / Married Filing Separately</option>
           <option value="married">Married Filing Jointly</option>
@@ -222,25 +223,27 @@ footer a{color:rgba(255,255,255,.6);}
         </select>
       </div>
 
-      <!-- Withholding Method -->
+      <!-- Step 2 Toggle — simple YES/NO -->
       <div class="field">
-        <label>W-4 Withholding Method</label>
+        <label>W-4 Step 2 — Multiple Jobs / Spouse Works?</label>
         <select id="withMethod" style="height:44px;font-family:'DM Sans',sans-serif;font-size:14px;">
-          <option value="standard">Standard Withholding (Step 2 box NOT checked)</option>
-          <option value="step2">Step 2 Checkbox (multiple jobs / spouse works)</option>
-          <option value="annual">Annual Tax Estimate (uses full standard deduction)</option>
+          <option value="step2" selected>Yes — Step 2 box checked (higher withholding, most common)</option>
+          <option value="standard">No — Step 2 box NOT checked (lower withholding)</option>
         </select>
-        <div class="hint" id="withmethod-hint">Standard: uses IRS Pub 15-T reduced deduction (~$12,200 single 2025). Step 2: no deduction, highest withholding. Annual: uses full $15,750 standard deduction — for tax return estimates only.</div>
+        <div class="hint">When Step 2 is checked, the IRS applies no deduction before calculating withholding — resulting in more tax withheld. This is the most common setting for employees who work a single job.</div>
       </div>
 
-      <!-- Additional Withholding Step 4c -->
+      <!-- Additional Withholding -->
       <div class="field">
-        <label>W-4 Step 4(c) — Additional Annual Withholding ($)</label>
+        <label>Extra Withholding (W-4 Step 4c) — leave $0 if unsure</label>
         <div class="input-prefix" data-prefix="$">
-          <input type="number" id="additionalWH" placeholder="0.00" min="0" step="1" value="0">
+          <input type="number" id="additionalWH" placeholder="0" min="0" step="1" value="0">
         </div>
-        <div class="hint">Extra annual withholding the employee requested on W-4 Step 4(c). Enter the annual total (e.g. $25/month × 12 = $300).</div>
+        <div class="hint">If the employee's W-2 Box 2 is still slightly higher than calculated, the difference is extra annual withholding the employee requested on their W-4 Step 4(c). E.g. if off by $345, enter 345 here.</div>
       </div>
+
+      <!-- Hidden withholding method (not shown, always step2 by default) -->
+      <input type="hidden" id="withMethodHidden" value="step2">
 
       <div class="divider"></div>
 
@@ -277,40 +280,43 @@ footer a{color:rgba(255,255,255,.6);}
 
       <div id="results-content" style="display:none">
 
-        <div class="tb">
-          <div class="tb-title">FICA — Employer share</div>
-          <div class="tr"><span class="tl">Social Security</span><span class="tr-rate" id="r-ss-rate">6.2% / $176,100</span><span class="ta er" id="r-er-ss">—</span></div>
-          <div class="tr"><span class="tl">Medicare (no cap)</span><span class="tr-rate">1.45%</span><span class="ta er" id="r-er-mc">—</span></div>
-          <div class="tr"><span class="tl">FUTA — federal unemployment</span><span class="tr-rate">0.6% / $7,000</span><span class="ta er" id="r-futa">—</span></div>
-          <div class="tr"><span class="tl">SUTA — state unemployment</span><span class="tr-rate" id="r-suta-rate">—</span><span class="ta er" id="r-suta">—</span></div>
+        <div style="background:rgba(160,200,240,.1);border:1px solid rgba(160,200,240,.3);border-radius:4px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#c8dff0;line-height:1.7;">
+          <strong style="color:#a0c8f0;">💡 To match your W-2 Box 2 exactly:</strong><br>
+          Switch method to <strong>"Step 2 Checkbox"</strong> if the employee has Step 2 checked on their W-4 (common for multiple jobs or married couples where both work). Then add any extra amount from W-4 Step 4(c) to the Additional Withholding field below.
+        </div>
+          <div class="tb-title">📗 FICA — Employer share (employer pays, not deducted from employee)</div>
+          <div class="tr"><span class="tl">Social Security tax (employer)</span><span class="tr-rate" id="r-ss-rate">6.2% / $176,100</span><span class="ta er" id="r-er-ss">—</span></div>
+          <div class="tr"><span class="tl">Medicare tax (employer)</span><span class="tr-rate">1.45% / no cap</span><span class="ta er" id="r-er-mc">—</span></div>
+          <div class="tr"><span class="tl">FUTA — federal unemployment (employer)</span><span class="tr-rate">0.6% / $7,000</span><span class="ta er" id="r-futa">—</span></div>
+          <div class="tr"><span class="tl">SUTA — state unemployment (employer)</span><span class="tr-rate" id="r-suta-rate">—</span><span class="ta er" id="r-suta">—</span></div>
         </div>
 
         <div class="tb">
-          <div class="tb-title">FICA — Employee share (withheld)</div>
-          <div class="tr"><span class="tl">Social Security</span><span class="tr-rate" id="r-ee-ss-rate">6.2% / $176,100</span><span class="ta ee" id="r-ee-ss">—</span></div>
-          <div class="tr"><span class="tl">Medicare (no cap)</span><span class="tr-rate">1.45%</span><span class="ta ee" id="r-ee-mc">—</span></div>
-          <div class="tr" id="add-mc-row" style="display:none"><span class="tl">Additional Medicare (&gt;$200K)</span><span class="tr-rate">0.9%</span><span class="ta ee" id="r-add-mc">—</span></div>
+          <div class="tb-title">📙 FICA — Employee share (withheld from paycheck)</div>
+          <div class="tr"><span class="tl">Social Security withheld — W-2 Box 4</span><span class="tr-rate" id="r-ee-ss-rate">6.2% / $176,100</span><span class="ta ee" id="r-ee-ss">—</span></div>
+          <div class="tr"><span class="tl">Medicare withheld — W-2 Box 6</span><span class="tr-rate">1.45% / no cap</span><span class="ta ee" id="r-ee-mc">—</span></div>
+          <div class="tr" id="add-mc-row" style="display:none"><span class="tl">Additional Medicare (&gt;$200K) — W-2 Box 6</span><span class="tr-rate">0.9%</span><span class="ta ee" id="r-add-mc">—</span></div>
         </div>
 
         <div class="tb">
-          <div class="tb-title">Federal Income Tax — Employee withholding (Box 2 on W-2)</div>
-          <div class="tr"><span class="tl">Standard deduction applied</span><span class="tr-rate" id="r-fit-stded">—</span><span class="ta" id="r-fit-stded-amt">—</span></div>
-          <div class="tr"><span class="tl">Federal taxable income</span><span class="tr-rate" id="r-fit-rate">eff. rate</span><span class="ta" id="r-fit-taxable">—</span></div>
-          <div class="tr"><span class="tl">Federal income tax withheld</span><span class="tr-rate" id="r-fit-effrate">—</span><span class="ta" style="color:#a0c8f0;font-weight:600" id="r-fit">—</span></div>
+          <div class="tb-title">📘 Federal Income Tax — W-2 Box 2 (employee withheld)</div>
+          <div class="tr"><span class="tl">W-4 method / deduction applied</span><span class="tr-rate" id="r-fit-stded">—</span><span class="ta" style="color:#c8dff0;" id="r-fit-stded-amt">—</span></div>
+          <div class="tr"><span class="tl">Federal taxable income (after deduction)</span><span class="tr-rate" id="r-fit-rate">—</span><span class="ta" style="color:#c8dff0;" id="r-fit-taxable">—</span></div>
+          <div class="tr" style="background:rgba(160,200,240,.08);border-radius:3px;padding:10px;margin-top:4px;"><span class="tl" style="color:#a0c8f0;font-weight:700;">Federal income tax withheld — Box 2</span><span class="tr-rate" id="r-fit-effrate" style="color:rgba(160,200,240,.6);">—</span><span class="ta" style="color:#a0c8f0;font-size:16px;font-weight:700;" id="r-fit">—</span></div>
         </div>
 
         <div class="tb">
-          <div class="tb-title">State Income Tax — Employee withholding (estimated)</div>
-          <div class="tr"><span class="tl">State income tax withheld</span><span class="tr-rate" id="r-sit-rate">—</span><span class="ta ee" id="r-sit">—</span></div>
-          <div class="tr" id="r-sit-none-row" style="display:none"><span class="tl" style="color:rgba(255,255,255,.4);font-size:12px">✓ No state income tax applies to wages in this state</span><span class="ta" style="color:rgba(255,255,255,.4)">$0.00</span></div>
+          <div class="tb-title">📙 State Income Tax — W-2 Box 17 (employee withheld, estimated)</div>
+          <div class="tr" id="r-sit-none-row" style="display:none"><span class="tl" style="color:#7dd4a0;">✓ No state income tax in this state</span><span class="ta" style="color:#7dd4a0;">$0.00</span></div>
+          <div class="tr" style="background:rgba(200,160,240,.08);border-radius:3px;padding:10px;"><span class="tl" style="color:#c8a0f0;font-weight:700;">State income tax withheld — Box 17</span><span class="tr-rate" id="r-sit-rate" style="color:rgba(200,160,240,.6);">—</span><span class="ta" style="color:#c8a0f0;font-size:16px;font-weight:700;" id="r-sit">—</span></div>
         </div>
 
-        <div>
-          <div class="total-box"><span class="tb-label">Employer annual cost</span><span class="tb-amount" style="color:#7dd4a0" id="r-er-total">—</span></div>
-          <div class="total-box"><span class="tb-label">Employee FICA withheld (annual)</span><span class="tb-amount" style="color:#f0a070" id="r-ee-total">—</span></div>
-          <div class="total-box"><span class="tb-label">Federal income tax withheld (annual)</span><span class="tb-amount" style="color:#a0c8f0" id="r-fit-total">—</span></div>
-          <div class="total-box"><span class="tb-label">State income tax withheld (est.)</span><span class="tb-amount" style="color:#c8a0f0" id="r-sit-total">—</span></div>
-          <div class="total-box grand"><span class="tb-label">Total employee tax burden</span><span class="tb-amount" id="r-grand">—</span></div>
+        <div style="margin-bottom:16px;">
+          <div class="total-box"><span class="tb-label">🟢 Employer annual cost (FICA+FUTA+SUTA)</span><span class="tb-amount" style="color:#7dd4a0;" id="r-er-total">—</span></div>
+          <div class="total-box"><span class="tb-label">🟠 Employee FICA withheld (Box 4 + Box 6)</span><span class="tb-amount" style="color:#f0a070;" id="r-ee-total">—</span></div>
+          <div class="total-box"><span class="tb-label">🔵 Federal income tax withheld (Box 2)</span><span class="tb-amount" style="color:#a0c8f0;" id="r-fit-total">—</span></div>
+          <div class="total-box"><span class="tb-label">🟣 State income tax withheld (Box 17)</span><span class="tb-amount" style="color:#c8a0f0;" id="r-sit-total">—</span></div>
+          <div class="total-box grand"><span class="tb-label">⬜ Total employee tax burden (annual)</span><span class="tb-amount grand" id="r-grand">—</span></div>
         </div>
 
         <div class="compare-row" id="compare-row" style="display:none">
@@ -318,25 +324,25 @@ footer a{color:rgba(255,255,255,.6);}
           <span class="diff" id="r-diff">—</span>
         </div>
 
-        <div class="tb" style="margin-top:16px;">
+        <div class="tb" style="margin-top:8px;">
           <div class="tb-title">Per pay period — <span id="r-period-label">Monthly</span></div>
-          <div class="tr"><span class="tl">Gross wages</span><span class="ta" id="r-period-gross">—</span></div>
-          <div class="tr"><span class="tl">Employee FICA withheld</span><span class="ta ee" id="r-period-ee">—</span></div>
-          <div class="tr"><span class="tl">Federal income tax withheld</span><span class="ta" style="color:#a0c8f0" id="r-period-fit">—</span></div>
-          <div class="tr"><span class="tl">State income tax withheld (est.)</span><span class="ta" style="color:#c8a0f0" id="r-period-sit">—</span></div>
-          <div class="tr"><span class="tl">Total from employee paycheck</span><span class="ta" id="r-period-ee-all">—</span></div>
-          <div class="tr"><span class="tl">Employer tax cost</span><span class="ta er" id="r-period-er">—</span></div>
+          <div class="tr"><span class="tl">Gross wages per period</span><span class="ta" id="r-period-gross">—</span></div>
+          <div class="tr"><span class="tl">Employee FICA withheld (per period)</span><span class="ta ee" id="r-period-ee">—</span></div>
+          <div class="tr"><span class="tl">Federal income tax withheld (per period)</span><span class="ta" style="color:#a0c8f0;" id="r-period-fit">—</span></div>
+          <div class="tr"><span class="tl">State income tax withheld (per period)</span><span class="ta" style="color:#c8a0f0;" id="r-period-sit">—</span></div>
+          <div class="tr" style="border-top:1px solid rgba(255,255,255,.15);margin-top:4px;padding-top:12px;"><span class="tl" style="color:white;font-weight:700;">Total deducted from paycheck (per period)</span><span class="ta" style="color:white;font-weight:700;" id="r-period-ee-all">—</span></div>
+          <div class="tr"><span class="tl">Employer tax cost (per period)</span><span class="ta er" id="r-period-er">—</span></div>
           <div class="tr"><span class="tl">True employer cost per period</span><span class="ta" id="r-period-true">—</span></div>
         </div>
 
         <div class="legend">
-          <div class="li"><div class="ld" style="background:#7dd4a0"></div>Employer cost</div>
-          <div class="li"><div class="ld" style="background:#f0a070"></div>Employee FICA</div>
-          <div class="li"><div class="ld" style="background:#a0c8f0"></div>Federal income tax</div>
-          <div class="li"><div class="ld" style="background:#c8a0f0"></div>State income tax</div>
+          <div class="li"><div class="ld" style="background:#7dd4a0"></div>🟢 Employer cost</div>
+          <div class="li"><div class="ld" style="background:#f0a070"></div>🟠 FICA (employee)</div>
+          <div class="li"><div class="ld" style="background:#a0c8f0"></div>🔵 Federal income tax</div>
+          <div class="li"><div class="ld" style="background:#c8a0f0"></div>🟣 State income tax</div>
         </div>
         <div class="actions">
-          <button class="action-btn" onclick="copyResults()">📋 Copy Summary</button>
+          <button class="action-btn" onclick="copyResults()">📋 Copy W-2 Summary</button>
           <button class="action-btn" onclick="window.print()">🖨 Print</button>
         </div>
       </div>
