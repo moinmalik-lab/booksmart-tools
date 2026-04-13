@@ -3,398 +3,606 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sales Tax Calculator by State 2025 | BookSmartTools</title>
-<meta name="description" content="Calculate sales tax for all 50 US states with 2025 state and average local rates. Free sales tax estimator with full state-by-state breakdown.">
-<link rel="canonical" href="https://booksmartools.com/sales-tax-calculator.html">
-<link rel="stylesheet" href="/booksmart-tools/css/style.css">
+<title>Business Sales Tax Return Calculator 2025 & 2026 | BookSmartTools</title>
+<meta name="description" content="Calculate the exact sales tax your business owes to the state for monthly or quarterly returns. Handles dealer discounts, regional rates (Northern Virginia 6%), and all 45 sales tax states.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1a1a18;--paper:#faf8f3;--cream:#f3efe4;--accent:#1e5c33;--accent-light:#eaf4ee;--red:#c8472a;--red-light:#fdf0ec;--border:#d8d3c5;--muted:#7a7568;--gold:#b8860b;--gold-light:#fdf8ec;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);}
-.hero{background:var(--accent);color:white;text-align:center;padding:48px 24px 40px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border:40px solid rgba(255,255,255,.06);border-radius:50%;}
-.year-badge{display:inline-block;background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:2px;margin-bottom:14px;letter-spacing:.5px;}
-.hero h1{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin-bottom:10px;position:relative;}
-.hero p{font-size:15px;opacity:.88;max-width:560px;margin:0 auto;line-height:1.6;position:relative;}
-
-.container{max-width:960px;margin:0 auto;padding:36px 24px 60px;}
+body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18;}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none;}
+.nav-logo em{color:#6db88a;font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px;}
+.nav-links a:hover{color:white;}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px;}
+.hero{background:#1e5c33;color:white;text-align:center;padding:48px 24px 40px;}
+.tag-row{display:flex;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin-bottom:10px;}
+.hero p{font-size:15px;opacity:.88;max-width:620px;margin:0 auto;line-height:1.6;}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px;}
 .layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
-@media(max-width:680px){.layout{grid-template-columns:1fr;}}
-
-.card{background:white;border:1px solid var(--border);border-radius:4px;padding:28px;}
-.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
-.card-title .num{background:var(--ink);color:white;font-family:'DM Mono',monospace;font-size:12px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.field{margin-bottom:18px;}
-label{display:block;font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-input,select{width:100%;height:44px;border:1px solid var(--border);border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:var(--ink);background:var(--paper);outline:none;transition:border-color .15s;}
-input:focus,select:focus{border-color:var(--accent);background:white;}
-.input-prefix{position:relative;}
-.input-prefix::before{content:attr(data-prefix);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);pointer-events:none;}
-.input-prefix input{padding-left:26px;}
-.hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5;}
-.calc-btn{width:100%;height:52px;background:var(--accent);color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;margin-top:8px;}
+@media(max-width:740px){.layout{grid-template-columns:1fr;}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px;}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace;font-size:12px;color:white;}
+.num.dark{background:#1a1a18;}
+.num.green{background:#1e5c33;}
+.divider{height:1px;background:#d8d3c5;margin:18px 0;}
+.field{margin-bottom:14px;}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px;}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s;}
+input:focus,select:focus{border-color:#1e5c33;background:white;}
+.pw{position:relative;}
+.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none;}
+.pw input{padding-left:26px;}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5;}
+.hint.warn{background:#fdf8ec;color:#b8860b;border-left:3px solid #b8860b;padding:6px 10px;border-radius:0 3px 3px 0;}
+.hint.info{background:#eaf4ee;color:#1e5c33;border-left:3px solid #1e5c33;padding:6px 10px;border-radius:0 3px 3px 0;}
+.rate-box{background:#eaf4ee;border:1px solid #b5d9c0;border-radius:4px;padding:14px 16px;margin-bottom:16px;display:none;}
+.rate-big{font-family:'DM Mono',monospace;font-size:26px;font-weight:700;color:#1e5c33;}
+.rate-sub{font-size:12px;color:#7a7568;margin-top:3px;}
+.calc-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px;}
 .calc-btn:hover{background:#164a28;}
-
-/* Results */
-.results-card{background:var(--ink);color:var(--paper);border:none;}
-.results-card .card-title{color:var(--paper);border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:16px;margin-bottom:18px;}
-.results-card .num{background:var(--accent);}
-.placeholder-msg{text-align:center;padding:40px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:1.9;}
-.tb{margin-bottom:18px;}
-.tb-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:'DM Mono',monospace;}
-.tr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;}
-.tr:last-child{border-bottom:none;}
-.tl{color:rgba(255,255,255,.65);}
-.tr-rate{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);}
-.ta{font-family:'DM Mono',monospace;font-weight:500;}
-.ta.green{color:#7dd4a0;}.ta.amber{color:#f0c060;}.ta.big{font-size:22px;}
-.total-box{background:rgba(255,255,255,.08);border-radius:3px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.total-box.grand{background:rgba(255,255,255,.12);}
-.tb-label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.55);}
-.tb-amount{font-family:'DM Mono',monospace;font-size:18px;}
-.tb-amount.grand{font-family:'DM Serif Display',serif;font-size:28px;color:white;}
-.zero-badge{display:inline-block;background:var(--accent-light);color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;padding:4px 10px;border-radius:2px;margin-top:8px;}
-.actions{display:flex;gap:10px;margin-top:16px;}
-.action-btn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
-.action-btn:hover{background:rgba(255,255,255,.08);color:white;}
-
-/* State search */
-.state-search{position:relative;}
-.state-search-input{padding-left:32px!important;}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
-
-/* Reference table */
-.ref-section{margin-top:40px;}
-.ref-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;}
-.ref-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+/* RESULTS */
+.rc{background:#1a1a18;color:#faf8f3;border:none;}
+.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px;}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2;}
+.rs{margin-bottom:18px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px;}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px;}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;gap:8px;}
+.rr:last-child{border-bottom:none;}
+.rl{color:#d0ccbf;flex:1;}
+.rl.b{color:white;font-weight:700;}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap;}
+.rv.g{color:#7dd4a0;}.rv.a{color:#f0c060;}.rv.r{color:#f08070;}.rv.b2{color:#a0c8f0;}.rv.w{color:white;}
+.tbox{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;margin-bottom:8px;border:1px solid rgba(255,255,255,.07);}
+.tbox.p{background:rgba(255,255,255,.08);}
+.tbox.grand{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);}
+.tlbl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.75);}
+.tval{font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:#f0c060;}
+.tval.grand{font-family:'DM Serif Display',serif;font-size:32px;color:white;}
+.tval.dis{color:#7dd4a0;}
+.due{background:rgba(240,192,96,.1);border:1px solid rgba(240,192,96,.3);border-radius:3px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#f0c060;line-height:1.6;display:none;}
+.actions{display:flex;gap:10px;margin-top:14px;}
+.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;}
+.abtn:hover{background:rgba(255,255,255,.08);color:white;}
+/* REFERENCE */
+.ref{margin-top:44px;}
+.ref h2{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;}
+.ref p{font-size:13px;color:#7a7568;margin-bottom:20px;line-height:1.6;}
 .rt-wrap{overflow-x:auto;}
 .rt{width:100%;border-collapse:collapse;font-size:12px;}
-.rt th{text-align:left;font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--border);background:var(--cream);white-space:nowrap;}
-.rt td{padding:8px 10px;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px;}
+.rt th{text-align:left;font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:#7a7568;padding:8px 10px;border-bottom:2px solid #d8d3c5;background:#f3efe4;}
+.rt td{padding:9px 10px;border-bottom:1px solid #d8d3c5;font-family:'DM Mono',monospace;font-size:12px;vertical-align:top;}
 .rt tr:hover td{background:#f5f3ee;}
-.rt .zero{color:var(--accent);font-weight:600;}
-.rt .high{color:var(--red);font-weight:600;}
-.rt .combined{font-weight:600;color:var(--ink);}
-.badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
-.badge.notax{background:var(--accent-light);color:var(--accent);}
-.badge.high{background:var(--red-light);color:var(--red);}
-footer{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
+.sn{font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;white-space:nowrap;}
+.badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 6px;border-radius:2px;margin-left:4px;}
+.badge.nt{background:#eaf4ee;color:#1e5c33;}
+.badge.dis{background:#e8f0fe;color:#1a56a0;}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
 footer a{color:rgba(255,255,255,.6);}
 </style>
 </head>
 <body>
-
 <nav class="site-nav">
-  <div class="nav-inner">
-    <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
-    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-    <ul class="nav-links">
-      <li><a href="/booksmart-tools/tools.html" class="active">Tools</a></li>
-      <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
-      <li><a href="/booksmart-tools/about.html">About</a></li>
-      <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools →</a></li>
-    </ul>
-  </div>
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/about.html">About</a></li>
+    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
+  </ul>
 </nav>
 
 <div class="hero">
-  <div class="year-badge">2025 STATE RATES · ALL 50 STATES</div>
-  <h1>Sales Tax Calculator by State</h1>
-  <p>Calculate exact sales tax for any purchase in all 50 US states. State base rate plus average local rate — sourced from Tax Foundation 2025 data.</p>
+  <div class="tag-row">
+    <span class="tag-pill">FOR STORES &amp; BUSINESSES</span>
+    <span class="tag-pill">ALL 45 SALES TAX STATES</span>
+    <span class="tag-pill">DEALER DISCOUNT INCLUDED</span>
+    <span class="tag-pill">2025 &amp; 2026 RATES</span>
+  </div>
+  <h1>Business Sales Tax Return Calculator</h1>
+  <p>Calculate the exact sales tax your store collected and must remit to the state — including correct regional rates (Northern Virginia 6%, Hampton Roads 6%), dealer discounts, and exemptions. Matches your actual state return.</p>
 </div>
 
 <div class="container">
   <div class="layout">
-
-    <!-- INPUT -->
     <div class="card">
-      <div class="card-title"><div class="num">1</div>Purchase Details</div>
+      <div class="card-title"><div class="num dark">1</div>Business &amp; Filing Details</div>
 
       <div class="field">
-        <label>Purchase Amount (before tax)</label>
-        <div class="input-prefix" data-prefix="$">
-          <input type="number" id="amount" placeholder="100.00" min="0" step="0.01">
-        </div>
-      </div>
-
-      <div class="field">
-        <label>State</label>
-        <select id="state">
-          <option value="">— Select a state —</option>
+        <label class="flbl">State</label>
+        <select id="state" onchange="onStateChange()">
+          <option value="">-- Select your state --</option>
         </select>
-        <div class="hint" id="state-hint">Select a state to see its sales tax rates.</div>
+      </div>
+
+      <div id="region-field" class="field" style="display:none">
+        <label class="flbl">County / Region (for states with regional rates)</label>
+        <select id="region" onchange="onRegionChange()">
+          <option value="">-- Select your county/region --</option>
+        </select>
+        <div class="hint info" id="region-hint"></div>
+      </div>
+
+      <div class="rate-box" id="rate-box">
+        <div class="rate-big" id="rate-big">--</div>
+        <div class="rate-sub" id="rate-sub">--</div>
       </div>
 
       <div class="field">
-        <label>Rate Type</label>
-        <select id="rateType">
-          <option value="combined">Combined (state + avg local) — recommended</option>
-          <option value="state">State rate only</option>
-          <option value="custom">Custom combined rate</option>
+        <label class="flbl">Reporting Period</label>
+        <select id="period">
+          <option value="January 2025">January 2025</option>
+          <option value="February 2025">February 2025</option>
+          <option value="March 2025">March 2025</option>
+          <option value="April 2025">April 2025</option>
+          <option value="May 2025">May 2025</option>
+          <option value="June 2025">June 2025</option>
+          <option value="July 2025">July 2025</option>
+          <option value="August 2025">August 2025</option>
+          <option value="September 2025">September 2025</option>
+          <option value="October 2025">October 2025</option>
+          <option value="November 2025">November 2025</option>
+          <option value="December 2025">December 2025</option>
+          <option value="January 2026">January 2026</option>
+          <option value="February 2026" selected>February 2026</option>
+          <option value="March 2026">March 2026</option>
+          <option value="April 2026">April 2026</option>
+          <option value="May 2026">May 2026</option>
+          <option value="June 2026">June 2026</option>
+          <option value="July 2026">July 2026</option>
+          <option value="August 2026">August 2026</option>
+          <option value="September 2026">September 2026</option>
+          <option value="October 2026">October 2026</option>
+          <option value="November 2026">November 2026</option>
+          <option value="December 2026">December 2026</option>
+          <option value="Q1 2025 (Jan-Mar)">Q1 2025 (Jan-Mar)</option>
+          <option value="Q2 2025 (Apr-Jun)">Q2 2025 (Apr-Jun)</option>
+          <option value="Q3 2025 (Jul-Sep)">Q3 2025 (Jul-Sep)</option>
+          <option value="Q4 2025 (Oct-Dec)">Q4 2025 (Oct-Dec)</option>
+          <option value="Q1 2026 (Jan-Mar)">Q1 2026 (Jan-Mar)</option>
+          <option value="Q2 2026 (Apr-Jun)">Q2 2026 (Apr-Jun)</option>
+          <option value="Q3 2026 (Jul-Sep)">Q3 2026 (Jul-Sep)</option>
+          <option value="Q4 2026 (Oct-Dec)">Q4 2026 (Oct-Dec)</option>
         </select>
-        <div class="hint">Combined rate includes the population-weighted average local tax. Use "Custom" if you know your exact city/county rate.</div>
       </div>
 
-      <div class="field" id="custom-field" style="display:none">
-        <label>Custom Combined Rate (%)</label>
-        <div class="input-prefix" data-prefix="%">
-          <input type="number" id="customRate" placeholder="8.5" min="0" max="20" step="0.01">
-        </div>
+      <div class="divider"></div>
+      <div class="card-title" style="font-size:16px;margin-bottom:14px;"><div class="num green">2</div>Sales Figures for the Period</div>
+
+      <div class="field">
+        <label class="flbl">Total Gross General Sales</label>
+        <div class="pw" data-p="$"><input type="number" id="gross" placeholder="0.00" min="0" step="0.01"></div>
+        <div class="hint">All sales for the period — taxable AND exempt — before any deductions. This goes in the "Gross General Sales" box on your state return.</div>
       </div>
 
-      <button class="calc-btn" onclick="calculate()">Calculate Sales Tax →</button>
+      <div class="field">
+        <label class="flbl">Total Exempt Sales &amp; Deductions ($)</label>
+        <div class="pw" data-p="$"><input type="number" id="exempt" placeholder="0.00" min="0" step="0.01" value="0"></div>
+        <div class="hint">Wholesale/resale sales, exempt food, prescriptions, government sales, out-of-state deliveries. Must match your exemption certificates on file.</div>
+      </div>
+
+      <div class="field">
+        <label class="flbl">Personal Use (if any, $)</label>
+        <div class="pw" data-p="$"><input type="number" id="personal-use" placeholder="0.00" min="0" step="0.01" value="0"></div>
+        <div class="hint">Items taken from inventory for personal use — taxable at cost. Most businesses enter $0 here.</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="card-title" style="font-size:16px;margin-bottom:14px;"><div class="num green">3</div>Dealer Discount &amp; Adjustments</div>
+
+      <div class="field">
+        <label class="flbl">Apply Vendor Collection Allowance (Dealer Discount)?</label>
+        <select id="apply-discount">
+          <option value="yes">Yes — I filed on time (eligible for dealer discount)</option>
+          <option value="no">No — Late filing or state doesn't offer discount</option>
+        </select>
+        <div class="hint" id="discount-hint">Many states give businesses a small discount on tax owed for filing and paying on time. Virginia: 1% of first $100 of tax + 0.6% of remaining tax.</div>
+      </div>
+
+      <div class="field">
+        <label class="flbl">Penalty (if late, $)</label>
+        <div class="pw" data-p="$"><input type="number" id="penalty" placeholder="0.00" min="0" step="0.01" value="0"></div>
+      </div>
+
+      <div class="field">
+        <label class="flbl">Interest (if late, $)</label>
+        <div class="pw" data-p="$"><input type="number" id="interest" placeholder="0.00" min="0" step="0.01" value="0"></div>
+      </div>
+
+      <button class="calc-btn" onclick="calc()">Calculate Amount Due to State</button>
     </div>
 
     <!-- RESULTS -->
-    <div class="card results-card">
-      <div class="card-title"><div class="num">2</div>Tax Breakdown</div>
-
-      <div id="placeholder" class="placeholder-msg">
-        Enter a purchase amount and select a state, then click<br>
-        <strong style="color:rgba(255,255,255,.8)">Calculate Sales Tax →</strong>
+    <div class="card rc">
+      <div class="card-title"><div class="num green">4</div>Sales Tax Return Summary</div>
+      <div class="ph" id="ph">
+        Select your state, enter gross sales,<br>then click<br>
+        <strong style="color:rgba(255,255,255,.8)">Calculate Amount Due to State</strong><br><br>
+        Includes dealer discount and exactly<br>matches your state return form.
       </div>
+      <div id="rc" style="display:none">
+        <div class="due" id="due"></div>
 
-      <div id="results-content" style="display:none">
-        <div id="notax-msg" style="display:none;text-align:center;padding:20px 0;">
-          <div style="font-size:32px;margin-bottom:12px;">🎉</div>
-          <div style="color:white;font-size:17px;font-weight:600;margin-bottom:8px;" id="notax-state">No Sales Tax</div>
-          <div style="color:rgba(255,255,255,.6);font-size:13px;line-height:1.7;" id="notax-note"></div>
-          <div class="zero-badge">$0.00 sales tax</div>
+        <div class="rs">
+          <div class="rst">GROSS SALES SUMMARY — <span id="r-period"></span></div>
+          <div class="rr"><span class="rl">Gross general sales</span><span class="rv" id="r-gross"></span></div>
+          <div class="rr" id="r-pu-row"><span class="rl">Add: personal use</span><span class="rv" id="r-pu"></span></div>
+          <div class="rr"><span class="rl">Less: exempt sales &amp; deductions</span><span class="rv a" id="r-exempt"></span></div>
+          <div class="rr" style="border-top:1px solid rgba(255,255,255,.15);margin-top:6px;padding-top:10px;">
+            <span class="rl b">Total taxable general sales</span>
+            <span class="rv g" style="font-size:16px" id="r-taxable"></span>
+          </div>
         </div>
 
-        <div id="tax-breakdown">
-          <div class="tb">
-            <div class="tb-title">Rate breakdown</div>
-            <div class="tr"><span class="tl">State base rate</span><span class="tr-rate" id="r-state-pct">—</span><span class="ta green" id="r-state-tax">—</span></div>
-            <div class="tr"><span class="tl">Avg local rate</span><span class="tr-rate" id="r-local-pct">—</span><span class="ta amber" id="r-local-tax">—</span></div>
-            <div class="tr"><span class="tl">Combined rate</span><span class="tr-rate" id="r-combined-pct">—</span><span class="ta" id="r-combined-tax">—</span></div>
-          </div>
-          <div class="total-box">
-            <span class="tb-label">Purchase amount</span>
-            <span class="tb-amount" id="r-purchase">—</span>
-          </div>
-          <div class="total-box">
-            <span class="tb-label">Total sales tax</span>
-            <span class="tb-amount" id="r-tax-total">—</span>
-          </div>
-          <div class="total-box grand">
-            <span class="tb-label">Total amount due</span>
-            <span class="tb-amount grand" id="r-grand">—</span>
-          </div>
-          <div class="actions">
-            <button class="action-btn" onclick="copyResults()">📋 Copy</button>
-            <button class="action-btn" onclick="window.print()">🖨 Print</button>
-          </div>
+        <div class="rs">
+          <div class="rst">TAX CALCULATION</div>
+          <div class="rr"><span class="rl">Rate applied (state + regional)</span><span class="rv" id="r-rate"></span></div>
+          <div class="rr"><span class="rl">Total general sales tax</span><span class="rv b2" style="font-size:16px" id="r-tax"></span></div>
+        </div>
+
+        <div class="rs" id="r-dis-section">
+          <div class="rst">DEALER DISCOUNT (Vendor Collection Allowance)</div>
+          <div class="rr"><span class="rl" id="r-dis-formula">Discount formula</span><span class="rv" id="r-dis-calc"></span></div>
+          <div class="rr"><span class="rl">Dealer discount deducted</span><span class="rv g" id="r-dis">— $0.00</span></div>
+        </div>
+
+        <div class="rs" id="r-adj-section" style="display:none">
+          <div class="rst">PENALTY &amp; INTEREST</div>
+          <div class="rr" id="r-pen-row"><span class="rl">Penalty</span><span class="rv r" id="r-pen"></span></div>
+          <div class="rr" id="r-int-row"><span class="rl">Interest</span><span class="rv r" id="r-int"></span></div>
+        </div>
+
+        <div class="rs">
+          <div class="rst">FILING CHECKLIST — ENTER ON YOUR RETURN</div>
+          <div class="rr"><span class="rl">1. Gross general sales</span><span class="rv" id="r-c1"></span></div>
+          <div class="rr"><span class="rl">2. Exempt sales to deduct</span><span class="rv a" id="r-c2"></span></div>
+          <div class="rr"><span class="rl">3. Total taxable sales</span><span class="rv g" id="r-c3"></span></div>
+          <div class="rr"><span class="rl">4. Total general sales tax</span><span class="rv b2" id="r-c4"></span></div>
+          <div class="rr"><span class="rl">5. Less dealer discount</span><span class="rv g" id="r-c5"></span></div>
+          <div class="rr"><span class="rl">6. Sales &amp; tax totals</span><span class="rv" id="r-c6"></span></div>
+        </div>
+
+        <div class="tbox p">
+          <span class="tlbl">Total sales tax collected</span>
+          <span class="tval" id="r-tax-total"></span>
+        </div>
+        <div class="tbox p" id="r-dis-box">
+          <span class="tlbl">Less: dealer discount</span>
+          <span class="tval dis" id="r-dis-total"></span>
+        </div>
+        <div class="tbox p" id="r-adj-box" style="display:none">
+          <span class="tlbl">Add: penalty &amp; interest</span>
+          <span class="tval" style="color:#f08070" id="r-adj-total"></span>
+        </div>
+        <div class="tbox grand">
+          <span class="tlbl">TOTAL AMOUNT DUE TO STATE</span>
+          <span class="tval grand" id="r-grand"></span>
+        </div>
+
+        <div class="actions">
+          <button class="abtn" onclick="copyRet()">Copy Return Summary</button>
+          <button class="abtn" onclick="window.print()">Print</button>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- IMPORTANT NOTE -->
+  <div style="background:#fdf8ec;border:1px solid #e8d090;border-radius:4px;padding:16px 20px;margin-top:24px;">
+    <strong style="color:#b8860b;">Important — Virginia Regional Rates:</strong>
+    <span style="font-size:13px;color:#7a7568;"> Northern Virginia localities (Prince William, Fairfax, Arlington, Alexandria, Loudoun, Falls Church, Manassas) and Hampton Roads localities charge <strong style="color:#1a1a18;">6.0%</strong> total (state 4.3% + mandatory 1% + regional 0.7%). The rest of Virginia charges 5.3%. Always select your correct county/region to get the right rate.</span>
   </div>
 
   <!-- REFERENCE TABLE -->
-  <div class="ref-section">
-    <div class="ref-title">Sales Tax Rates — All 50 States (2025)</div>
-    <div class="ref-sub">Source: Tax Foundation 2025. Combined = state base + population-weighted average local rate. 5 states have no statewide sales tax.</div>
+  <div class="ref">
+    <h2>State Sales Tax Rates &amp; Filing Info — 2025 &amp; 2026</h2>
+    <p>Business rates for collecting and remitting sales tax. <strong>2026 update: No state increased its base statewide sales tax rate effective January 1, 2026.</strong> Arkansas exempted groceries Jan 1, 2026. Returns generally due 20th of following month. Source: State revenue departments &amp; Tax Foundation 2025/2026.</p>
     <div class="rt-wrap">
-      <table class="rt" id="rates-table">
-        <thead>
-          <tr>
-            <th>State</th>
-            <th>State Rate</th>
-            <th>Avg Local</th>
-            <th>Combined Rate</th>
-            <th>Note</th>
-          </tr>
-        </thead>
-        <tbody id="rates-body"></tbody>
+      <table class="rt">
+        <thead><tr><th>State</th><th>State Rate</th><th>Notes / Regional Rates</th><th>Dealer Discount?</th><th>Return Due</th><th>Filing Portal</th></tr></thead>
+        <tbody id="rtbody"></tbody>
       </table>
     </div>
-    <p style="font-size:11px;color:var(--muted);margin-top:10px;">⚠ Local rates are averages. Your actual rate depends on your specific county, city, and special taxing district. Always verify with your local tax authority for exact rates. Some states exempt groceries, prescription drugs, or other items from sales tax.</p>
+    <p style="font-size:11px;color:#7a7568;margin-top:12px;">For estimation only. Always verify current rates with your state DOR. Consult a CPA for official filing. Dealer discounts vary by state and filing frequency.</p>
   </div>
 </div>
-
-<footer>
-  © 2025 BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">← Back to Home</a> &nbsp;|&nbsp;
-  Rates: Tax Foundation 2025 State &amp; Local Sales Tax Rates. Verify locally before filing.
-</footer>
+<footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; Rates: State DOR websites &amp; Tax Foundation 2025/2026. For estimation only.</footer>
 
 <script src="/booksmart-tools/js/main.js"></script>
 <script>
-// ── STATE SALES TAX DATA (Tax Foundation 2025) ─────────
-// [state, stateRate%, avgLocal%, noTax flag, note]
-const SALES_TAX = [
-  ["Alabama",         4.00, 5.24,  false, "Groceries taxed at 3% state rate"],
-  ["Alaska",          0.00, 1.82,  true,  "No state tax. Local jurisdictions may charge up to ~7.5%"],
-  ["Arizona",         5.60, 2.80,  false, ""],
-  ["Arkansas",        6.50, 2.96,  false, "Reduced rate on groceries"],
-  ["California",      7.25, 1.62,  false, "Highest state rate in US. Some counties exceed 10.25%"],
-  ["Colorado",        2.90, 4.95,  false, "Low state rate but high local rates. Denver 8.81% total"],
-  ["Connecticut",     6.35, 0.00,  false, "No local sales tax. Meals taxed at 7.35% (1% surcharge)"],
-  ["Delaware",        0.00, 0.00,  true,  "No sales tax. No local sales tax either"],
-  ["Florida",         6.00, 1.05,  false, ""],
-  ["Georgia",         4.00, 3.37,  false, ""],
-  ["Hawaii",          0.00, 0.00,  false, "4% General Excise Tax (GET) — not a traditional sales tax"],
-  ["Idaho",           6.00, 0.02,  false, ""],
-  ["Illinois",        6.25, 2.56,  false, "Chicago adds local taxes; effective rate can reach 10.25%"],
-  ["Indiana",         7.00, 0.00,  false, "No local sales tax"],
-  ["Iowa",            6.00, 0.94,  false, "Groceries exempt"],
-  ["Kansas",          6.50, 2.19,  false, "Unprepared food tax reduced to 0% (state rate) in 2025"],
-  ["Kentucky",        6.00, 0.00,  false, "No local sales tax"],
-  ["Louisiana",       5.00, 5.11,  false, "State rate raised from 4.45% to 5% in Jan 2025"],
-  ["Maine",           5.50, 0.00,  false, "No local sales tax. Meals taxed at 8%"],
-  ["Maryland",        6.00, 0.00,  false, "No local sales tax"],
-  ["Massachusetts",   6.25, 0.00,  false, "No local sales tax. Meals taxed at 6.25% (+ local up to 0.75%)"],
-  ["Michigan",        6.00, 0.00,  false, "No local sales tax"],
-  ["Minnesota",       6.875,0.62,  false, "Groceries and prescription drugs exempt"],
-  ["Mississippi",     7.00, 0.07,  false, "One of highest state rates"],
-  ["Missouri",        4.225,4.14,  false, ""],
-  ["Montana",         0.00, 0.00,  true,  "No sales tax"],
-  ["Nebraska",        5.50, 1.44,  false, ""],
-  ["Nevada",          6.85, 1.37,  false, ""],
-  ["New Hampshire",   0.00, 0.00,  true,  "No sales tax. 9% meals & rooms tax applies to restaurants"],
-  ["New Jersey",      6.625,-0.03, false, "Urban Enterprise Zones have half-rate (3.3125%)"],
-  ["New Mexico",      5.00, 2.78,  false, "Gross Receipts Tax — similar to sales tax"],
-  ["New York",        4.00, 4.52,  false, "NYC rate is 8.875% combined"],
-  ["North Carolina",  4.75, 2.24,  false, ""],
-  ["North Dakota",    5.00, 1.96,  false, ""],
-  ["Ohio",            5.75, 1.47,  false, ""],
-  ["Oklahoma",        4.50, 4.47,  false, ""],
-  ["Oregon",          0.00, 0.00,  true,  "No sales tax"],
-  ["Pennsylvania",    6.00, 0.34,  false, "Groceries and clothing exempt"],
-  ["Rhode Island",    7.00, 0.00,  false, "No local sales tax"],
-  ["South Carolina",  6.00, 1.46,  false, ""],
-  ["South Dakota",    4.20, 1.90,  false, "Reduced from 4.5% in 2023; sunset in 2027"],
-  ["Tennessee",       7.00, 2.55,  false, "Reduced grocery rate of 4%"],
-  ["Texas",           6.25, 1.99,  false, ""],
-  ["Utah",            4.85, 1.11,  false, "Groceries taxed at reduced 3% rate"],
-  ["Vermont",         6.00, 0.22,  false, "Meals & alcoholic beverages taxed at 9%"],
-  ["Virginia",        4.30, 1.33,  false, "Groceries taxed at 1%"],
-  ["Washington",      6.50, 2.92,  false, "No income tax; one of highest combined rates"],
-  ["West Virginia",   6.00, 0.58,  false, ""],
-  ["Wisconsin",       5.00, 0.44,  false, ""],
-  ["Wyoming",         4.00, 1.44,  false, ""],
-  ["Washington D.C.", 6.00, 0.00,  false, "No local sales tax. Meals taxed at 10%"],
+// ── STATE DATA ─────────────────────────────────────────
+// [name, baseRate%, discountType, discountNote, returnDue, portal, regions]
+// discountType: 'none' | 'va' | 'pct' (percentage of tax)
+// regions: null or {name: rate%}
+const SD = [
+  ["Alabama",        4.00, "none", "", "20th of following month", "MyAlabamaTaxes (revenue.alabama.gov)", null],
+  ["Alaska",         0.00, "none", "No state sales tax", "Varies by locality", "Contact your local borough", null],
+  ["Arizona",        5.60, "none", "", "20th of following month", "AZTaxes (aztaxes.gov)", null],
+  ["Arkansas",       6.50, "none", "", "20th of following month", "ATAP (atap.arkansas.gov)", null],
+  ["California",     7.25, "pct", "Discount eliminated for most; some districts offer small allowance", "Last day of following month", "CDTFA (cdtfa.ca.gov)", null],
+  ["Colorado",       2.90, "none", "Vendor discount eliminated Jan 2026", "20th of following month", "Revenue Online (revenue.colorado.gov)", null],
+  ["Connecticut",    6.35, "pct", "1% of first $1,000 tax, 0.5% of remaining (capped)", "Last day of following month", "myconneCT (portal.ct.gov/DRS)", null],
+  ["Delaware",       0.00, "none", "No sales tax", "No return required", "No filing required", null],
+  ["Florida",        6.00, "pct", "2.5% of tax collected (max $30/month for monthly filers)", "20th of following month", "Florida e-Services (floridarevenue.com)", null],
+  ["Georgia",        4.00, "none", "", "20th of following month", "Georgia Tax Center (gtc.dor.ga.gov)", null],
+  ["Hawaii",         4.00, "none", "", "20th of following month", "Hawaii Tax Online (tax.hawaii.gov)", null],
+  ["Idaho",          6.00, "none", "", "20th of following month", "TAP (tap.tax.idaho.gov)", null],
+  ["Illinois",       6.25, "none", "", "20th of following month", "MyTax Illinois (mytax.illinois.gov)", null],
+  ["Indiana",        7.00, "none", "", "Last day of following month", "INTIME (intime.dor.in.gov)", null],
+  ["Iowa",           6.00, "none", "", "Last day of following month", "GovConnectIowa (tax.iowa.gov)", null],
+  ["Kansas",         6.50, "none", "", "25th of following month", "KS Customer Service (ksrevenue.gov)", null],
+  ["Kentucky",       6.00, "none", "", "20th of following month", "KY Online Gateway (revenue.ky.gov)", null],
+  ["Louisiana",      5.00, "pct", "Dealer's compensation: vendors may keep a percentage for timely filing", "20th of following month", "LATAP (latap.revenue.louisiana.gov)", null],
+  ["Maine",          5.50, "none", "", "15th of following month", "Maine Tax Portal (portal.maine.gov/mtap)", null],
+  ["Maryland",       6.00, "pct", "0.87% of tax collected (1.2% if filing electronically)", "20th of following month", "bFile (interactive.marylandtaxes.gov)", null],
+  ["Massachusetts",  6.25, "none", "", "20th of following month", "MassTaxConnect (masstaxconnect.dor.state.ma.us)", null],
+  ["Michigan",       6.00, "pct", "0.75% of gross sales tax — capped at $15,000/year", "20th of following month", "Michigan Treasury Online (michigan.gov/taxes)", null],
+  ["Minnesota",      6.875,"none", "", "20th of following month", "e-Services (mndor.state.mn.us)", null],
+  ["Mississippi",    7.00, "none", "", "20th of following month", "TAP (tap.dor.ms.gov)", null],
+  ["Missouri",       4.225,"pct", "2% of first $500 tax, 1.5% of next $500 (capped)", "20th of following month", "MyTax Missouri (mytax.missouri.gov)", null],
+  ["Montana",        0.00, "none", "No sales tax", "No return required", "No filing required", null],
+  ["Nebraska",       5.50, "none", "", "25th of following month", "Nebraska e-File (revenue.nebraska.gov)", null],
+  ["Nevada",         6.85, "none", "", "Last day of following month", "Nevada Tax Center (nevadatax.nv.gov)", null],
+  ["New Hampshire",  0.00, "none", "No sales tax", "No return required", "No filing required", null],
+  ["New Jersey",     6.625,"none", "", "20th of following month", "NJ Taxation (njportal.com/DOR/Sales)", null],
+  ["New Mexico",     5.00, "none", "", "25th of following month", "TAP (tap.state.nm.us)", null],
+  ["New York",       4.00, "none", "", "20th of following month", "NY Business Online (businessexpress.ny.gov)", null],
+  ["North Carolina", 4.75, "none", "", "20th of following month", "e-Business Center (eservices.dor.nc.gov)", null],
+  ["North Dakota",   5.00, "none", "", "Last day of following month", "TAP (apps.nd.gov/tax/tap)", null],
+  ["Ohio",           5.75, "none", "", "23rd of following month", "Ohio Business Gateway (gateway.ohio.gov)", null],
+  ["Oklahoma",       4.50, "none", "", "20th of following month", "OkTAP (oktap.tax.ok.gov)", null],
+  ["Oregon",         0.00, "none", "No sales tax", "No return required", "No filing required", null],
+  ["Pennsylvania",   6.00, "none", "", "20th of following month", "myPATH (mypath.pa.gov)", null],
+  ["Rhode Island",   7.00, "none", "", "20th of following month", "Taxpayer Portal (taxportal.ri.gov)", null],
+  ["South Carolina", 6.00, "none", "", "20th of following month", "MyDORWAY (mydorway.dor.sc.gov)", null],
+  ["South Dakota",   4.20, "none", "", "Last day of following month", "e-Tax (etax.sd.gov)", null],
+  ["Tennessee",      7.00, "none", "", "20th of following month", "TNTAP (tntap.tn.gov)", null],
+  ["Texas",          6.25, "pct", "0.5% of tax collected for timely filers (max $1,000/month)", "20th of following month", "WebFile (comptroller.texas.gov)", null],
+  ["Utah",           4.85, "none", "", "Last day of following month", "TAP (tap.tax.utah.gov)", null],
+  ["Vermont",        6.00, "none", "", "25th of following month", "myVTax (myvtax.vermont.gov)", null],
+  // Virginia has regional rates — select county/region
+  ["Virginia",       4.30, "va",
+   "Dealer discount: 1% of first $100 tax + 0.6% of remaining tax (for timely filers)",
+   "20th of following month", "Virginia Tax eForms (tax.virginia.gov)",
+   {
+     "Northern Virginia (Prince William, Fairfax, Arlington, Alexandria, Loudoun, Falls Church, Manassas, Manassas Park)": 6.00,
+     "Hampton Roads (Norfolk, Virginia Beach, Chesapeake, Portsmouth, Suffolk, Hampton, Newport News, Poquoson)": 6.00,
+     "Historic Triangle (James City County, York County, Williamsburg)": 6.00,
+     "Rest of Virginia (all other localities)": 5.30
+   }],
+  ["Washington",     6.50, "none", "", "25th of following month", "DOR (dor.wa.gov)", null],
+  ["Washington D.C.",6.00, "none", "", "20th of following month", "MyTax DC (mytax.dc.gov)", null],
+  ["West Virginia",  6.00, "none", "", "20th of following month", "MyTaxes (mytaxes.wvtax.gov)", null],
+  ["Wisconsin",      5.00, "none", "", "Last day of following month", "My Tax Account (tap.revenue.wi.gov)", null],
+  ["Wyoming",        4.00, "none", "", "Last day of following month", "e-Services (excise.wy.gov)", null],
 ];
 
-// Populate state dropdown and table
+// State index map
+const stateMap = {};
+SD.forEach((s,i) => stateMap[s[0]] = i);
+
 function init() {
   const sel = document.getElementById('state');
-  const tbody = document.getElementById('rates-body');
-
-  SALES_TAX.forEach((s, i) => {
-    const [name, stRate, localRate, noTax, note] = s;
-    const combined = Math.max(0, stRate + localRate);
-
-    // Dropdown
+  const tb  = document.getElementById('rtbody');
+  SD.forEach((s, i) => {
+    const nt = s[1] === 0;
     const opt = document.createElement('option');
     opt.value = i;
-    opt.textContent = name + (noTax ? ' — No sales tax' : ` — ${combined.toFixed(2)}% combined`);
+    opt.textContent = nt ? s[0] + ' -- No state sales tax' : s[0] + ' -- ' + s[1].toFixed(2) + '%';
     sel.appendChild(opt);
-
     // Table row
+    const regions = s[6];
+    const regionNote = regions
+      ? Object.entries(regions).map(([n,r]) => n.split('(')[0].trim() + ': ' + r.toFixed(2) + '%').join(' | ')
+      : '';
     const tr = document.createElement('tr');
-    const isNoTax = noTax || (stRate === 0 && Math.abs(localRate) < 0.01);
-    const isHigh = combined >= 9;
-    tr.innerHTML = `
-      <td style="font-family:'DM Sans',sans-serif;font-weight:500">${name} ${isNoTax ? '<span class="badge notax">No tax</span>' : ''} ${isHigh && !isNoTax ? '<span class="badge high">High</span>' : ''}</td>
-      <td class="${stRate === 0 ? 'zero' : ''}">${stRate.toFixed(2)}%</td>
-      <td>${localRate > 0 ? '+' : ''}${localRate.toFixed(2)}%</td>
-      <td class="combined ${isHigh?'high':''}">${isNoTax ? '—' : combined.toFixed(2)+'%'}</td>
-      <td style="font-family:'DM Sans',sans-serif;color:var(--muted);font-size:11px">${note}</td>
-    `;
-    tbody.appendChild(tr);
+    tr.innerHTML =
+      '<td class="sn">' + s[0] + (nt ? ' <span class="badge nt">No Tax</span>' : '') + (s[2] !== 'none' && s[2] !== '' ? ' <span class="badge dis">Discount</span>' : '') + '</td>' +
+      '<td style="font-weight:700">' + (nt ? 'N/A' : s[1].toFixed(2) + '%') + '</td>' +
+      '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px;color:#7a7568">' + (regionNote || (nt ? 'No sales tax' : 'Standard statewide rate')) + '</td>' +
+      '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px">' + (s[2] !== 'none' ? '<span style="color:#1e5c33;font-weight:600">Yes</span> — ' + (s[3]||'') : 'No') + '</td>' +
+      '<td style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:#7a7568">' + s[4] + '</td>' +
+      '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px;color:#1e5c33">' + s[5] + '</td>';
+    tb.appendChild(tr);
   });
 }
 
-// Show/hide custom rate field
-document.getElementById('rateType').addEventListener('change', function() {
-  document.getElementById('custom-field').style.display = this.value === 'custom' ? 'block' : 'none';
-});
+function onStateChange() {
+  const i = parseInt(document.getElementById('state').value);
+  const box = document.getElementById('rate-box');
+  const regField = document.getElementById('region-field');
+  if (isNaN(i)) { box.style.display = 'none'; regField.style.display = 'none'; return; }
+  const s = SD[i];
 
-// Update hint when state changes
-document.getElementById('state').addEventListener('change', function() {
-  const idx = parseInt(this.value);
-  if (isNaN(idx)) return;
-  const s = SALES_TAX[idx];
-  const combined = Math.max(0, s[1] + s[2]);
-  const hint = document.getElementById('state-hint');
-  if (s[2] === 0 && !s[3]) {
-    hint.textContent = `${s[0]}: ${s[1].toFixed(2)}% state rate, no local tax. Combined: ${combined.toFixed(2)}%`;
-  } else if (s[3]) {
-    hint.textContent = `${s[0]} has no statewide sales tax. ${s[4]}`;
+  // Handle regions (Virginia)
+  if (s[6]) {
+    regField.style.display = 'block';
+    const rSel = document.getElementById('region');
+    rSel.innerHTML = '<option value="">-- Select your county/region --</option>';
+    Object.entries(s[6]).forEach(([name, rate]) => {
+      const opt = document.createElement('option');
+      opt.value = rate;
+      opt.textContent = name + ' — ' + rate.toFixed(2) + '%';
+      rSel.appendChild(opt);
+    });
+    box.style.display = 'none';
+    document.getElementById('region-hint').textContent = 'Virginia has regional rates. Select the region where your business is located.';
   } else {
-    hint.textContent = `${s[0]}: ${s[1].toFixed(2)}% state + ${s[2].toFixed(2)}% avg local = ${combined.toFixed(2)}% combined. ${s[4]}`;
+    regField.style.display = 'none';
+    showRateBox(s[1], s[0], s[4], s[2], s[3]);
   }
-});
 
-function fmt(n) { return '$' + Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  // Update discount hint
+  document.getElementById('discount-hint').textContent =
+    s[2] === 'va' ? 'Virginia formula: 1% of first $100 of tax collected + 0.6% of tax over $100. For timely monthly filers only.' :
+    s[2] === 'pct' ? s[3] :
+    'This state does not offer a vendor collection allowance / dealer discount.';
+  document.getElementById('apply-discount').value = s[2] !== 'none' ? 'yes' : 'no';
+}
+
+function onRegionChange() {
+  const rate = parseFloat(document.getElementById('region').value);
+  const si = parseInt(document.getElementById('state').value);
+  const s = SD[si];
+  const hint = document.getElementById('region-hint');
+  if (isNaN(rate)) { document.getElementById('rate-box').style.display = 'none'; hint.textContent = 'Select your county/region.'; return; }
+  showRateBox(rate, 'Virginia (' + rate.toFixed(2) + '%)', s[4], s[2], s[3]);
+  hint.textContent = 'Rate confirmed: ' + rate.toFixed(2) + '% (state ' + s[1].toFixed(2) + '% + mandatory 1% + ' + (rate - s[1] - 1).toFixed(2) + '% regional)';
+}
+
+function showRateBox(rate, name, due, discType, discNote) {
+  const box = document.getElementById('rate-box');
+  box.style.display = 'block';
+  document.getElementById('rate-big').textContent = rate === 0 ? 'No Sales Tax' : rate.toFixed(2) + '%';
+  document.getElementById('rate-sub').textContent = (rate === 0 ? name + ' has no statewide sales tax' : 'Rate: ' + rate.toFixed(2) + '% | Due: ' + due);
+}
+
+function getEffectiveRate() {
+  const si = parseInt(document.getElementById('state').value);
+  if (isNaN(si)) return 0;
+  const s = SD[si];
+  if (s[6]) {
+    // Has regions
+    const rv = parseFloat(document.getElementById('region').value);
+    return isNaN(rv) ? s[1] : rv;
+  }
+  return s[1];
+}
+
+function calcDiscount(discType, taxAmt) {
+  if (discType === 'va') {
+    // Virginia: 1% of first $100 + 0.6% of remainder
+    return Math.min(taxAmt, 100) * 0.01 + Math.max(0, taxAmt - 100) * 0.006;
+  }
+  if (discType === 'pct') {
+    // Generic percentage discounts vary — use 0.5% as estimate (user can override)
+    return taxAmt * 0.005;
+  }
+  return 0;
+}
+
+function fmt(n) {
+  const neg = n < 0;
+  const s = Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + '$' + s;
+}
 function pct(n) { return n.toFixed(2) + '%'; }
 
-function calculate() {
-  const amountVal = parseFloat(document.getElementById('amount').value);
-  const stateIdx = parseInt(document.getElementById('state').value);
-  const rateType = document.getElementById('rateType').value;
+function calc() {
+  const si = parseInt(document.getElementById('state').value);
+  if (isNaN(si)) { alert('Please select your state.'); return; }
+  const gross   = parseFloat(document.getElementById('gross').value) || 0;
+  if (gross <= 0) { alert('Please enter your gross sales amount.'); return; }
+  const exempt  = parseFloat(document.getElementById('exempt').value) || 0;
+  const pu      = parseFloat(document.getElementById('personal-use').value) || 0;
+  const applyDis= document.getElementById('apply-discount').value === 'yes';
+  const penalty  = parseFloat(document.getElementById('penalty').value) || 0;
+  const interest = parseFloat(document.getElementById('interest').value) || 0;
+  const period   = document.getElementById('period').value;
 
-  if (!amountVal || amountVal <= 0) { alert('Please enter a purchase amount.'); return; }
-  if (isNaN(stateIdx)) { alert('Please select a state.'); return; }
-
-  const s = SALES_TAX[stateIdx];
-  const [name, stRate, localRate, noTax, note] = s;
-
-  document.getElementById('placeholder').style.display = 'none';
-  document.getElementById('results-content').style.display = 'block';
-
-  // No-tax states
-  if (noTax && stRate === 0 && rateType !== 'custom') {
-    document.getElementById('notax-msg').style.display = 'block';
-    document.getElementById('tax-breakdown').style.display = 'none';
-    document.getElementById('notax-state').textContent = `${name} — No State Sales Tax`;
-    document.getElementById('notax-note').textContent = note || 'This state does not impose a statewide sales tax.';
+  const s = SD[si];
+  const rate = getEffectiveRate();
+  if (rate === 0 && s[0] !== 'Virginia') {
+    alert(s[0] + ' has no state sales tax. No return required.');
     return;
   }
 
-  document.getElementById('notax-msg').style.display = 'none';
-  document.getElementById('tax-breakdown').style.display = 'block';
+  const taxableSales = Math.max(0, gross + pu - exempt);
+  const taxAmt = taxableSales * (rate / 100);
+  const discount = applyDis ? calcDiscount(s[2], taxAmt) : 0;
+  const adjustments = penalty + interest;
+  const totalDue = taxAmt - discount + adjustments;
 
-  let combinedRate, stateTax, localTax, totalTax;
+  document.getElementById('ph').style.display = 'none';
+  document.getElementById('rc').style.display = 'block';
 
-  if (rateType === 'custom') {
-    combinedRate = parseFloat(document.getElementById('customRate').value) || 0;
-    stateTax = amountVal * (stRate / 100);
-    localTax = amountVal * ((combinedRate - stRate) / 100);
-    totalTax = amountVal * (combinedRate / 100);
-  } else if (rateType === 'state') {
-    combinedRate = stRate;
-    stateTax = amountVal * (stRate / 100);
-    localTax = 0;
-    totalTax = stateTax;
+  // Due date badge
+  const due = document.getElementById('due');
+  due.style.display = 'block';
+  due.innerHTML = '<strong>Filing Due: ' + s[4] + '</strong> | Period: ' + period + ' | State: ' + s[0];
+
+  // Sales summary
+  document.getElementById('r-period').textContent = period;
+  document.getElementById('r-gross').textContent = fmt(gross);
+  if (pu > 0) {
+    document.getElementById('r-pu-row').style.display = 'flex';
+    document.getElementById('r-pu').textContent = fmt(pu);
   } else {
-    combinedRate = Math.max(0, stRate + localRate);
-    stateTax = amountVal * (stRate / 100);
-    localTax = amountVal * (Math.max(0, localRate) / 100);
-    totalTax = amountVal * (combinedRate / 100);
+    document.getElementById('r-pu-row').style.display = 'none';
+  }
+  document.getElementById('r-exempt').textContent = exempt > 0 ? '- ' + fmt(exempt) : '$0.00';
+  document.getElementById('r-taxable').textContent = fmt(taxableSales);
+
+  // Tax calc
+  document.getElementById('r-rate').textContent = pct(rate);
+  document.getElementById('r-tax').textContent = fmt(taxAmt);
+
+  // Dealer discount
+  const disSection = document.getElementById('r-dis-section');
+  const disBox = document.getElementById('r-dis-box');
+  if (discount > 0) {
+    disSection.style.display = 'block';
+    disBox.style.display = 'flex';
+    const formula = s[2] === 'va'
+      ? 'VA: 1% of first $100 tax + 0.6% of remaining $' + Math.max(0, taxAmt - 100).toFixed(2)
+      : '0.5% of tax (estimated — verify with your state)';
+    document.getElementById('r-dis-formula').textContent = formula;
+    document.getElementById('r-dis-calc').textContent = '- ' + fmt(discount);
+    document.getElementById('r-dis').textContent = '- ' + fmt(discount);
+    document.getElementById('r-dis-total').textContent = '- ' + fmt(discount);
+  } else {
+    disSection.style.display = 'none';
+    disBox.style.display = 'none';
   }
 
-  const total = amountVal + totalTax;
+  // Penalty & interest
+  const adjSection = document.getElementById('r-adj-section');
+  const adjBox = document.getElementById('r-adj-box');
+  if (adjustments > 0) {
+    adjSection.style.display = 'block';
+    adjBox.style.display = 'flex';
+    document.getElementById('r-pen-row').style.display = penalty > 0 ? 'flex' : 'none';
+    document.getElementById('r-int-row').style.display = interest > 0 ? 'flex' : 'none';
+    if (penalty > 0) document.getElementById('r-pen').textContent = fmt(penalty);
+    if (interest > 0) document.getElementById('r-int').textContent = fmt(interest);
+    document.getElementById('r-adj-total').textContent = fmt(adjustments);
+  } else {
+    adjSection.style.display = 'none';
+    adjBox.style.display = 'none';
+  }
 
-  document.getElementById('r-state-pct').textContent = pct(stRate);
-  document.getElementById('r-state-tax').textContent = fmt(stateTax);
-  document.getElementById('r-local-pct').textContent = rateType === 'state' ? '0.00% (excluded)' : pct(Math.max(0, localRate));
-  document.getElementById('r-local-tax').textContent = fmt(rateType === 'state' ? 0 : localTax);
-  document.getElementById('r-combined-pct').textContent = pct(combinedRate);
-  document.getElementById('r-combined-tax').textContent = fmt(totalTax);
-  document.getElementById('r-purchase').textContent = fmt(amountVal);
-  document.getElementById('r-tax-total').textContent = fmt(totalTax);
-  document.getElementById('r-grand').textContent = fmt(total);
+  // Totals
+  document.getElementById('r-tax-total').textContent = fmt(taxAmt);
+  document.getElementById('r-grand').textContent = fmt(totalDue);
+
+  // Checklist
+  document.getElementById('r-c1').textContent = fmt(gross);
+  document.getElementById('r-c2').textContent = fmt(exempt);
+  document.getElementById('r-c3').textContent = fmt(taxableSales);
+  document.getElementById('r-c4').textContent = fmt(taxAmt);
+  document.getElementById('r-c5').textContent = discount > 0 ? '- ' + fmt(discount) : '$0.00';
+  document.getElementById('r-c6').textContent = fmt(taxAmt - discount);
 }
 
-function copyResults() {
-  const state = SALES_TAX[parseInt(document.getElementById('state').value)][0];
-  const amount = document.getElementById('r-purchase').textContent;
-  const tax = document.getElementById('r-tax-total').textContent;
-  const total = document.getElementById('r-grand').textContent;
-  const combined = document.getElementById('r-combined-pct').textContent;
-  const text = `Sales Tax Summary\n─────────────────\nState: ${state}\nPurchase Amount: ${amount}\nSales Tax (${combined}): ${tax}\nTotal Amount Due: ${total}\n\nSource: Tax Foundation 2025 | BookSmartTools.com`;
-  navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+function copyRet() {
+  const si = parseInt(document.getElementById('state').value);
+  const s = SD[si];
+  const period = document.getElementById('period').value;
+  const t =
+    'SALES TAX RETURN SUMMARY\n' + '='.repeat(40) + '\n' +
+    'State: ' + s[0] + '\nPeriod: ' + period + '\nRate: ' + document.getElementById('r-rate').textContent + '\nFiling Due: ' + s[4] + '\n\n' +
+    'Gross Sales:         ' + document.getElementById('r-gross').textContent + '\n' +
+    'Less Exempt Sales:   ' + document.getElementById('r-exempt').textContent + '\n' +
+    'Net Taxable Sales:   ' + document.getElementById('r-taxable').textContent + '\n' +
+    'Total Sales Tax:     ' + document.getElementById('r-tax-total').textContent + '\n' +
+    'Less Dealer Discount:' + document.getElementById('r-c5').textContent + '\n' +
+    'AMOUNT DUE TO STATE: ' + document.getElementById('r-grand').textContent + '\n\n' +
+    'Generated by BookSmartTools.com — For estimation only';
+  navigator.clipboard.writeText(t).then(() => alert('Copied!'));
 }
 
 init();
