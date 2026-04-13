@@ -671,62 +671,137 @@ function calcFIT(salary, filingStatus, year, withMethod, additionalWH) {
 // type:'none'=no wage tax, 'flat'=single rate, 'grad'=graduated brackets (single filer)
 // Brackets: [[threshold, rate], ...] — income above threshold taxed at rate
 // stdDed: simplified state standard deduction for estimation
+// ── STATE INCOME TAX — 2025 & 2026 RATES ─────────────
+// Sources: Tax Foundation 2026 State Income Tax Rates (Feb 2026)
+// 9 states cut income taxes Jan 1 2026: GA, IN, KY, MS, MT, NE, NC, OH, OK
+// Utah also reduced: 4.55% → 4.45% | South Carolina: 6.2% → 6.1%
+
 const STATE_TAX = {
-  "Alabama":        {type:'grad',brackets:[[0,.02],[500,.04],[3000,.05]],stdDed:3000,note:'Top 5.0%'},
-  "Alaska":         {type:'none',note:'No state income tax'},
-  "Arizona":        {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
-  "Arkansas":       {type:'grad',brackets:[[0,.02],[5000,.04],[8701,.044]],stdDed:2200,note:'Top 4.4%'},
-  "California":     {type:'grad',brackets:[[0,.01],[10412,.02],[24684,.04],[38959,.06],[54081,.08],[68350,.093],[349137,.103],[418961,.113],[698274,.123],[1000000,.133]],stdDed:5202,note:'Top 13.3%'},
-  "Colorado":       {type:'flat',rate:.044,stdDed:14600,note:'Flat 4.4%'},
-  "Connecticut":    {type:'grad',brackets:[[0,.03],[10000,.05],[50000,.055],[100000,.06],[200000,.065],[250000,.069],[500000,.0699]],stdDed:15000,note:'Top 6.99%'},
-  "Delaware":       {type:'grad',brackets:[[0,0],[2000,.022],[5000,.039],[10000,.048],[20000,.052],[25000,.055],[60000,.066]],stdDed:3250,note:'Top 6.6%'},
-  "Washington D.C.":{type:'grad',brackets:[[0,.04],[10000,.06],[40000,.065],[60000,.085],[350000,.0925],[1000000,.1075]],stdDed:14600,note:'Top 10.75%'},
-  "Florida":        {type:'none',note:'No state income tax'},
-  "Georgia":        {type:'flat',rate:.0539,stdDed:12000,note:'Flat 5.39%'},
-  "Hawaii":         {type:'grad',brackets:[[0,.014],[2400,.032],[4800,.055],[9600,.064],[14400,.068],[19200,.072],[24000,.076],[36000,.079],[48000,.083],[150000,.11]],stdDed:2200,note:'Top 11.0%'},
-  "Idaho":          {type:'grad',brackets:[[0,.01],[1662,.03],[4987,.045],[8309,.058]],stdDed:14600,note:'Top 5.8%'},
-  "Illinois":       {type:'flat',rate:.0495,stdDed:0,note:'Flat 4.95% (no std deduction)'},
-  "Indiana":        {type:'flat',rate:.0305,stdDed:1000,note:'Flat 3.05%'},
-  "Iowa":           {type:'flat',rate:.038,stdDed:14600,note:'Flat 3.8% (2025)'},
-  "Kansas":         {type:'grad',brackets:[[0,.031],[15000,.057]],stdDed:3500,note:'Top 5.7%'},
-  "Kentucky":       {type:'flat',rate:.04,stdDed:3160,note:'Flat 4.0%'},
-  "Louisiana":      {type:'grad',brackets:[[0,.0185],[12500,.035],[50000,.043]],stdDed:4500,note:'Top 4.3% (2025 reduced)'},
-  "Maine":          {type:'grad',brackets:[[0,.058],[24500,.0675],[58050,.0715]],stdDed:14600,note:'Top 7.15%'},
-  "Maryland":       {type:'grad',brackets:[[0,.02],[1000,.03],[2000,.04],[3000,.0475],[100000,.05],[125000,.0525],[150000,.055],[250000,.0575]],stdDed:2400,note:'Top 5.75% + local tax'},
-  "Massachusetts":  {type:'flat',rate:.05,stdDed:0,note:'Flat 5.0% (+4% surtax >$1M)'},
-  "Michigan":       {type:'flat',rate:.0405,stdDed:5600,note:'Flat 4.05%'},
-  "Minnesota":      {type:'grad',brackets:[[0,.0535],[30070,.068],[98760,.0785],[183340,.0985]],stdDed:14575,note:'Top 9.85%'},
-  "Mississippi":    {type:'flat',rate:.047,stdDed:2300,note:'Flat 4.7%'},
-  "Missouri":       {type:'grad',brackets:[[0,.015],[1121,.02],[2242,.025],[3363,.03],[4484,.035],[5605,.04],[6726,.045],[7847,.048]],stdDed:14600,note:'Top 4.8%'},
-  "Montana":        {type:'grad',brackets:[[0,.01],[3300,.02],[5800,.03],[8900,.04],[12100,.05],[15600,.059]],stdDed:14600,note:'Top 5.9%'},
-  "Nebraska":       {type:'grad',brackets:[[0,.0246],[3700,.0351],[22170,.052]],stdDed:7900,note:'Top 5.2%'},
-  "Nevada":         {type:'none',note:'No state income tax'},
-  "New Hampshire":  {type:'none',note:'No wage income tax (2025)'},
-  "New Jersey":     {type:'grad',brackets:[[0,.014],[20000,.0175],[35000,.035],[40000,.05526],[75000,.0637],[500000,.0897],[1000000,.1075]],stdDed:0,note:'Top 10.75%'},
-  "New Mexico":     {type:'grad',brackets:[[0,.017],[5500,.032],[11000,.047],[16000,.049],[210000,.059]],stdDed:14600,note:'Top 5.9%'},
-  "New York":       {type:'grad',brackets:[[0,.04],[17150,.045],[23600,.0525],[27900,.0585],[161550,.0625],[323200,.0685],[2155350,.0965],[5000000,.103],[25000000,.109]],stdDed:8000,note:'Top 10.9%'},
-  "North Carolina": {type:'flat',rate:.0425,stdDed:12750,note:'Flat 4.25%'},
-  "North Dakota":   {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
-  "Ohio":           {type:'grad',brackets:[[0,0],[26050,.0275],[100000,.035]],stdDed:0,note:'Top 3.5%'},
-  "Oklahoma":       {type:'grad',brackets:[[0,.0025],[1000,.005],[2500,.0075],[3750,.01],[4900,.02],[7200,.0475]],stdDed:6350,note:'Top 4.75%'},
-  "Oregon":         {type:'grad',brackets:[[0,.0475],[17400,.0675],[250000,.099]],stdDed:2745,note:'Top 9.9%'},
-  "Pennsylvania":   {type:'flat',rate:.0307,stdDed:0,note:'Flat 3.07% (no std deduction)'},
-  "Rhode Island":   {type:'grad',brackets:[[0,.0375],[77450,.0475],[176050,.0599]],stdDed:10550,note:'Top 5.99%'},
-  "South Carolina": {type:'grad',brackets:[[0,0],[3460,.03],[17330,.062]],stdDed:14600,note:'Top 6.2%'},
-  "South Dakota":   {type:'none',note:'No state income tax'},
-  "Tennessee":      {type:'none',note:'No state income tax'},
-  "Texas":          {type:'none',note:'No state income tax'},
-  "Utah":           {type:'flat',rate:.0455,stdDed:0,note:'Flat 4.55%'},
-  "Vermont":        {type:'grad',brackets:[[0,.0335],[45400,.066],[110050,.076],[229550,.0875]],stdDed:14600,note:'Top 8.75%'},
-  "Virginia":       {type:'grad',brackets:[[0,.02],[3000,.03],[5000,.05],[17000,.0575]],stdDed:8750,note:'Top 5.75% (2025 withholding std ded $8,750 from Jul 2025)'},
-  "Washington":     {type:'none',note:'No wage income tax'},
-  "West Virginia":  {type:'grad',brackets:[[0,.03],[10000,.04],[25000,.045],[40000,.05],[60000,.0512]],stdDed:0,note:'Top 5.12%'},
-  "Wisconsin":      {type:'grad',brackets:[[0,.035],[13810,.044],[27630,.053],[304170,.0765]],stdDed:12070,note:'Top 7.65%'},
-  "Wyoming":        {type:'none',note:'No state income tax'}
+  2025: {
+    "Alabama":        {type:'grad',brackets:[[0,.02],[500,.04],[3000,.05]],stdDed:3000,note:'Top 5.0%'},
+    "Alaska":         {type:'none',note:'No state income tax'},
+    "Arizona":        {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
+    "Arkansas":       {type:'grad',brackets:[[0,.02],[5000,.04],[8701,.044]],stdDed:2200,note:'Top 4.4%'},
+    "California":     {type:'grad',brackets:[[0,.01],[10412,.02],[24684,.04],[38959,.06],[54081,.08],[68350,.093],[349137,.103],[418961,.113],[698274,.123],[1000000,.133]],stdDed:5202,note:'Top 13.3%'},
+    "Colorado":       {type:'flat',rate:.044,stdDed:14600,note:'Flat 4.4%'},
+    "Connecticut":    {type:'grad',brackets:[[0,.03],[10000,.05],[50000,.055],[100000,.06],[200000,.065],[250000,.069],[500000,.0699]],stdDed:15000,note:'Top 6.99%'},
+    "Delaware":       {type:'grad',brackets:[[0,0],[2000,.022],[5000,.039],[10000,.048],[20000,.052],[25000,.055],[60000,.066]],stdDed:3250,note:'Top 6.6%'},
+    "Washington D.C.":{type:'grad',brackets:[[0,.04],[10000,.06],[40000,.065],[60000,.085],[350000,.0925],[1000000,.1075]],stdDed:14600,note:'Top 10.75%'},
+    "Florida":        {type:'none',note:'No state income tax'},
+    "Georgia":        {type:'flat',rate:.0539,stdDed:12000,note:'Flat 5.39%'},
+    "Hawaii":         {type:'grad',brackets:[[0,.014],[2400,.032],[4800,.055],[9600,.064],[14400,.068],[19200,.072],[24000,.076],[36000,.079],[48000,.083],[150000,.11]],stdDed:2200,note:'Top 11.0%'},
+    "Idaho":          {type:'flat',rate:.058,stdDed:14600,note:'Flat 5.8%'},
+    "Illinois":       {type:'flat',rate:.0495,stdDed:0,note:'Flat 4.95%'},
+    "Indiana":        {type:'flat',rate:.0305,stdDed:1000,note:'Flat 3.05%'},
+    "Iowa":           {type:'flat',rate:.038,stdDed:14600,note:'Flat 3.8%'},
+    "Kansas":         {type:'grad',brackets:[[0,.031],[15000,.057]],stdDed:3500,note:'Top 5.7%'},
+    "Kentucky":       {type:'flat',rate:.04,stdDed:3160,note:'Flat 4.0%'},
+    "Louisiana":      {type:'flat',rate:.03,stdDed:4500,note:'Flat 3.0% (2025)'},
+    "Maine":          {type:'grad',brackets:[[0,.058],[24500,.0675],[58050,.0715]],stdDed:14600,note:'Top 7.15%'},
+    "Maryland":       {type:'grad',brackets:[[0,.02],[1000,.03],[2000,.04],[3000,.0475],[100000,.05],[125000,.0525],[150000,.055],[250000,.0575]],stdDed:2400,note:'Top 5.75% + local tax'},
+    "Massachusetts":  {type:'flat',rate:.05,stdDed:0,note:'Flat 5.0%'},
+    "Michigan":       {type:'flat',rate:.0405,stdDed:5600,note:'Flat 4.05%'},
+    "Minnesota":      {type:'grad',brackets:[[0,.0535],[30070,.068],[98760,.0785],[183340,.0985]],stdDed:14575,note:'Top 9.85%'},
+    "Mississippi":    {type:'flat',rate:.047,stdDed:2300,note:'Flat 4.7%'},
+    "Missouri":       {type:'grad',brackets:[[0,.015],[1121,.02],[2242,.025],[3363,.03],[4484,.035],[5605,.04],[6726,.045],[7847,.048]],stdDed:14600,note:'Top 4.8%'},
+    "Montana":        {type:'grad',brackets:[[0,.01],[3300,.02],[5800,.03],[8900,.04],[12100,.05],[15600,.059]],stdDed:14600,note:'Top 5.9%'},
+    "Nebraska":       {type:'grad',brackets:[[0,.0246],[3700,.0351],[22170,.052]],stdDed:7900,note:'Top 5.2%'},
+    "Nevada":         {type:'none',note:'No state income tax'},
+    "New Hampshire":  {type:'none',note:'No wage income tax'},
+    "New Jersey":     {type:'grad',brackets:[[0,.014],[20000,.0175],[35000,.035],[40000,.05526],[75000,.0637],[500000,.0897],[1000000,.1075]],stdDed:0,note:'Top 10.75%'},
+    "New Mexico":     {type:'grad',brackets:[[0,.017],[5500,.032],[11000,.047],[16000,.049],[210000,.059]],stdDed:14600,note:'Top 5.9%'},
+    "New York":       {type:'grad',brackets:[[0,.04],[17150,.045],[23600,.0525],[27900,.0585],[161550,.0625],[323200,.0685],[2155350,.0965],[5000000,.103],[25000000,.109]],stdDed:8000,note:'Top 10.9%'},
+    "North Carolina": {type:'flat',rate:.0425,stdDed:12750,note:'Flat 4.25%'},
+    "North Dakota":   {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
+    "Ohio":           {type:'grad',brackets:[[0,0],[26050,.0275],[100000,.035]],stdDed:0,note:'Top 3.5%'},
+    "Oklahoma":       {type:'grad',brackets:[[0,.0025],[1000,.005],[2500,.0075],[3750,.01],[4900,.02],[7200,.0475]],stdDed:6350,note:'Top 4.75%'},
+    "Oregon":         {type:'grad',brackets:[[0,.0475],[17400,.0675],[250000,.099]],stdDed:2745,note:'Top 9.9%'},
+    "Pennsylvania":   {type:'flat',rate:.0307,stdDed:0,note:'Flat 3.07%'},
+    "Rhode Island":   {type:'grad',brackets:[[0,.0375],[77450,.0475],[176050,.0599]],stdDed:10550,note:'Top 5.99%'},
+    "South Carolina": {type:'grad',brackets:[[0,0],[3460,.03],[17330,.062]],stdDed:14600,note:'Top 6.2%'},
+    "South Dakota":   {type:'none',note:'No state income tax'},
+    "Tennessee":      {type:'none',note:'No state income tax'},
+    "Texas":          {type:'none',note:'No state income tax'},
+    "Utah":           {type:'flat',rate:.0455,stdDed:0,note:'Flat 4.55%'},
+    "Vermont":        {type:'grad',brackets:[[0,.0335],[45400,.066],[110050,.076],[229550,.0875]],stdDed:14600,note:'Top 8.75%'},
+    "Virginia":       {type:'grad',brackets:[[0,.02],[3000,.03],[5000,.05],[17000,.0575]],stdDed:8750,note:'Top 5.75%'},
+    "Washington":     {type:'none',note:'No wage income tax'},
+    "West Virginia":  {type:'grad',brackets:[[0,.03],[10000,.04],[25000,.045],[40000,.05],[60000,.0512]],stdDed:0,note:'Top 5.12%'},
+    "Wisconsin":      {type:'grad',brackets:[[0,.035],[13810,.044],[27630,.053],[304170,.0765]],stdDed:12070,note:'Top 7.65%'},
+    "Wyoming":        {type:'none',note:'No state income tax'}
+  },
+  2026: {
+    // ── 2026 RATES — 9 states cut income taxes Jan 1 2026 ──
+    // Source: Tax Foundation Feb 2026, CBS News, Kiplinger, Americans for Tax Reform
+    "Alabama":        {type:'grad',brackets:[[0,.02],[500,.04],[3000,.05]],stdDed:3000,note:'Top 5.0% (unchanged)'},
+    "Alaska":         {type:'none',note:'No state income tax'},
+    "Arizona":        {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5% (unchanged)'},
+    "Arkansas":       {type:'grad',brackets:[[0,.02],[5000,.04],[8701,.039]],stdDed:2200,note:'Top 3.9% (2026 reduction)'},
+    "California":     {type:'grad',brackets:[[0,.01],[10756,.02],[25499,.04],[40246,.06],[55866,.08],[70606,.093],[361082,.103],[432896,.113],[721315,.123],[1000000,.133]],stdDed:5540,note:'Top 13.3% (brackets inflation-adj)'},
+    "Colorado":       {type:'flat',rate:.044,stdDed:14600,note:'Flat 4.4% (unchanged)'},
+    "Connecticut":    {type:'grad',brackets:[[0,.03],[10000,.05],[50000,.055],[100000,.06],[200000,.065],[250000,.069],[500000,.0699]],stdDed:15000,note:'Top 6.99% (unchanged)'},
+    "Delaware":       {type:'grad',brackets:[[0,0],[2000,.022],[5000,.039],[10000,.048],[20000,.052],[25000,.055],[60000,.066]],stdDed:3250,note:'Top 6.6% (unchanged)'},
+    "Washington D.C.":{type:'grad',brackets:[[0,.04],[10000,.06],[40000,.065],[60000,.085],[350000,.0925],[1000000,.1075]],stdDed:14600,note:'Top 10.75% (unchanged)'},
+    "Florida":        {type:'none',note:'No state income tax'},
+    // GEORGIA: 5.39% → 5.09% (confirmed Tax Foundation, CBS News)
+    "Georgia":        {type:'flat',rate:.0509,stdDed:12000,note:'Flat 5.09% ↓ (was 5.39% in 2025)'},
+    "Hawaii":         {type:'grad',brackets:[[0,.014],[2400,.032],[4800,.055],[9600,.064],[14400,.068],[19200,.072],[24000,.076],[36000,.079],[48000,.083],[150000,.11]],stdDed:2200,note:'Top 11.0% (unchanged)'},
+    "Idaho":          {type:'flat',rate:.058,stdDed:14600,note:'Flat 5.8% (unchanged)'},
+    "Illinois":       {type:'flat',rate:.0495,stdDed:0,note:'Flat 4.95% (unchanged)'},
+    // INDIANA: 3.05% → 2.95% (confirmed Tax Foundation, CBS News)
+    "Indiana":        {type:'flat',rate:.0295,stdDed:1000,note:'Flat 2.95% ↓ (was 3.05% in 2025)'},
+    // IOWA: 3.8% unchanged for 2026
+    "Iowa":           {type:'flat',rate:.038,stdDed:14600,note:'Flat 3.8% (unchanged)'},
+    "Kansas":         {type:'grad',brackets:[[0,.031],[15000,.057]],stdDed:3500,note:'Top 5.7% (unchanged)'},
+    // KENTUCKY: 4.0% → 3.5% (confirmed Tax Foundation, CBS News)
+    "Kentucky":       {type:'flat',rate:.035,stdDed:3160,note:'Flat 3.5% ↓ (was 4.0% in 2025)'},
+    "Louisiana":      {type:'flat',rate:.03,stdDed:4500,note:'Flat 3.0% (unchanged)'},
+    "Maine":          {type:'grad',brackets:[[0,.058],[24500,.0675],[58050,.0715]],stdDed:14600,note:'Top 7.15% (unchanged)'},
+    "Maryland":       {type:'grad',brackets:[[0,.02],[1000,.03],[2000,.04],[3000,.0475],[100000,.05],[125000,.0525],[150000,.055],[250000,.0575],[1000000,.0625],[2000000,.065]],stdDed:2400,note:'Top 6.5% (new brackets 2025)'},
+    "Massachusetts":  {type:'flat',rate:.05,stdDed:0,note:'Flat 5.0% (unchanged)'},
+    "Michigan":       {type:'flat',rate:.0405,stdDed:5600,note:'Flat 4.05% (unchanged)'},
+    "Minnesota":      {type:'grad',brackets:[[0,.0535],[30380,.068],[99770,.0785],[185020,.0985]],stdDed:14575,note:'Top 9.85% (brackets inflation-adj)'},
+    // MISSISSIPPI: 4.7% → 4.0% (confirmed Tax Foundation, CBS News)
+    "Mississippi":    {type:'flat',rate:.04,stdDed:2300,note:'Flat 4.0% ↓ (was 4.7% in 2025)'},
+    "Missouri":       {type:'grad',brackets:[[0,.015],[1121,.02],[2242,.025],[3363,.03],[4484,.035],[5605,.04],[6726,.045],[7847,.048]],stdDed:14600,note:'Top 4.8% (unchanged)'},
+    // MONTANA: 5.9% → 5.65% (confirmed Tax Foundation, CBS News)
+    "Montana":        {type:'grad',brackets:[[0,.01],[3600,.02],[6300,.03],[9700,.04],[13600,.05],[17900,.0565]],stdDed:14600,note:'Top 5.65% ↓ (was 5.9% in 2025)'},
+    // NEBRASKA: 5.2% → 4.55% (confirmed Tax Foundation, CBS News)
+    "Nebraska":       {type:'grad',brackets:[[0,.0246],[3700,.0351],[22170,.0455]],stdDed:7900,note:'Top 4.55% ↓ (was 5.2% in 2025)'},
+    "Nevada":         {type:'none',note:'No state income tax'},
+    "New Hampshire":  {type:'none',note:'No wage income tax'},
+    "New Jersey":     {type:'grad',brackets:[[0,.014],[20000,.0175],[35000,.035],[40000,.05526],[75000,.0637],[500000,.0897],[1000000,.1075]],stdDed:0,note:'Top 10.75% (unchanged)'},
+    "New Mexico":     {type:'grad',brackets:[[0,.017],[5500,.032],[11000,.047],[16000,.049],[210000,.059]],stdDed:14600,note:'Top 5.9% (unchanged)'},
+    "New York":       {type:'grad',brackets:[[0,.04],[17150,.045],[23600,.0525],[27900,.0585],[161550,.0625],[323200,.0685],[2155350,.0965],[5000000,.103],[25000000,.109]],stdDed:8350,note:'Top 10.9% (std ded adj)'},
+    // NORTH CAROLINA: 4.25% → 3.99% (confirmed Tax Foundation, CBS News)
+    "North Carolina": {type:'flat',rate:.0399,stdDed:12750,note:'Flat 3.99% ↓ (was 4.25% in 2025)'},
+    "North Dakota":   {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5% (unchanged)'},
+    // OHIO: → 2.75% flat on income >$26,050 (confirmed Tax Foundation)
+    "Ohio":           {type:'grad',brackets:[[0,0],[26050,.0275]],stdDed:0,note:'Flat 2.75% >$26,050 ↓ (was 3.5% top in 2025)'},
+    // OKLAHOMA: 4.75% → 4.50% top, new 3 brackets (confirmed Tax Foundation)
+    "Oklahoma":       {type:'grad',brackets:[[0,.025],[7500,.035],[15000,.045]],stdDed:6350,note:'Top 4.5% ↓ (was 4.75% in 2025, now 3 brackets)'},
+    "Oregon":         {type:'grad',brackets:[[0,.0475],[17400,.0675],[250000,.099]],stdDed:2745,note:'Top 9.9% (unchanged)'},
+    "Pennsylvania":   {type:'flat',rate:.0307,stdDed:0,note:'Flat 3.07% (unchanged)'},
+    "Rhode Island":   {type:'grad',brackets:[[0,.0375],[77450,.0475],[176050,.0599]],stdDed:10550,note:'Top 5.99% (unchanged)'},
+    // SOUTH CAROLINA: 6.2% → 6.1% (confirmed Americans for Tax Reform)
+    "South Carolina": {type:'grad',brackets:[[0,0],[3460,.03],[17330,.061]],stdDed:14600,note:'Top 6.1% ↓ (was 6.2% in 2025)'},
+    "South Dakota":   {type:'none',note:'No state income tax'},
+    "Tennessee":      {type:'none',note:'No state income tax'},
+    "Texas":          {type:'none',note:'No state income tax'},
+    // UTAH: 4.55% → 4.45% (confirmed Kiplinger, TurboTax)
+    "Utah":           {type:'flat',rate:.0445,stdDed:0,note:'Flat 4.45% ↓ (was 4.55% in 2025)'},
+    "Vermont":        {type:'grad',brackets:[[0,.0335],[45400,.066],[110050,.076],[229550,.0875]],stdDed:14600,note:'Top 8.75% (unchanged)'},
+    "Virginia":       {type:'grad',brackets:[[0,.02],[3000,.03],[5000,.05],[17000,.0575]],stdDed:8750,note:'Top 5.75% (unchanged)'},
+    "Washington":     {type:'none',note:'No wage income tax'},
+    "West Virginia":  {type:'grad',brackets:[[0,.03],[10000,.04],[25000,.045],[40000,.05],[60000,.0512]],stdDed:0,note:'Top 5.12% (unchanged)'},
+    "Wisconsin":      {type:'grad',brackets:[[0,.035],[13810,.044],[27630,.053],[304170,.0765]],stdDed:12070,note:'Top 7.65% (unchanged)'},
+    "Wyoming":        {type:'none',note:'No state income tax'}
+  }
 };
 
-function calcStateTax(stateName, salary) {
-  const st = STATE_TAX[stateName];
+function calcStateTax(stateName, salary, year) {
+  const yearData = STATE_TAX[year] || STATE_TAX[2025];
+  const st = yearData[stateName];
   if (!st || st.type === 'none') return {tax:0, rate:0, note: st ? st.note : 'No state income tax'};
   const taxable = Math.max(0, salary - (st.stdDed || 0));
   let tax = 0;
@@ -913,7 +988,7 @@ function calculate() {
   const suta = Math.min(salary, sutaBase) * sutaRate;
 
   // State income tax (employee only)
-  const sitResult = calcStateTax(stateName, salary);
+  const sitResult = calcStateTax(stateName, salary, currentYear);
   const sit = sitResult.tax;
 
   // Federal Income Tax withholding (employee only — Box 2 on W-2)
