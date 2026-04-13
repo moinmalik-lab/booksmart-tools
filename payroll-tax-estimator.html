@@ -144,13 +144,22 @@ input:focus,select:focus{border-color:var(--accent);background:white;}
 footer{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
 footer a{color:rgba(255,255,255,.6);}
 </style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header>
-  <div class="brand">Book<span>Smart</span>Tools</div>
-  <div class="tagline">PROFESSIONAL BOOKKEEPING UTILITIES</div>
-</header>
+<nav class="site-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Book<em>Smart</em>Tools</a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="tools.html" class="nav-cta">All Tools →</a></li>
+    </ul>
+  </div>
+</nav>
 
 <div class="hero">
   <h1>Payroll Tax Estimator</h1>
@@ -200,28 +209,37 @@ footer a{color:rgba(255,255,255,.6);}
 
       <div class="divider"></div>
 
-      <div class="card-title" style="margin-bottom:10px;"><div class="num">2</div>W-4 Filing Status (Step 1)</div>
-      <p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">Select the employee's W-4 Step 1 filing status. The 2020 W-4 redesign removed allowances — employees now choose one of three statuses which determines the standard deduction applied per IRS Pub. 15-T.</p>
+      <div class="card-title" style="margin-bottom:10px;"><div class="num">2</div>W-4 Settings</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">Federal payroll withholding (Box 2 on W-2) uses IRS Pub 15-T, <strong>not</strong> the annual standard deduction. Select the method matching the employee's W-4.</p>
 
-      <div class="filing-cards">
-        <label class="filing-card selected" onclick="selectFiling(this,'single')">
-          <input type="radio" name="filing" value="single" checked>
-          <div class="fc-title"><span class="fc-radio"></span>Single / Married Filing Separately</div>
-          <div class="fc-desc">Unmarried employees, or married employees filing separately. Also use when employee checks Step 2 "higher withholding" box for multiple jobs.</div>
-          <div class="fc-std">2025 Std. Deduction: $15,000 &nbsp;·&nbsp; 2026: $15,000 &nbsp;·&nbsp; IRS Table Column A</div>
-        </label>
-        <label class="filing-card" onclick="selectFiling(this,'married')">
-          <input type="radio" name="filing" value="married">
-          <div class="fc-title"><span class="fc-radio"></span>Married Filing Jointly</div>
-          <div class="fc-desc">Married employees filing a joint return. Uses the higher deduction = lower withholding. If both spouses work, employee should complete W-4 Step 2 to prevent under-withholding.</div>
-          <div class="fc-std">2025 Std. Deduction: $30,000 &nbsp;·&nbsp; 2026: $30,000 &nbsp;·&nbsp; IRS Table Column B</div>
-        </label>
-        <label class="filing-card" onclick="selectFiling(this,'hoh')">
-          <input type="radio" name="filing" value="hoh">
-          <div class="fc-title"><span class="fc-radio"></span>Head of Household</div>
-          <div class="fc-desc">Unmarried employees who paid more than half the cost of maintaining a home with a qualifying dependent. Lower withholding than Single but more than MFJ.</div>
-          <div class="fc-std">2025 Std. Deduction: $22,500 &nbsp;·&nbsp; 2026: $22,500 &nbsp;·&nbsp; IRS Table Column C</div>
-        </label>
+      <!-- Filing Status -->
+      <div class="field">
+        <label>W-4 Step 1 — Filing Status</label>
+        <select id="filing" style="height:44px;font-family:'DM Sans',sans-serif;font-size:14px;">
+          <option value="single">Single / Married Filing Separately</option>
+          <option value="married">Married Filing Jointly</option>
+          <option value="hoh">Head of Household</option>
+        </select>
+      </div>
+
+      <!-- Withholding Method -->
+      <div class="field">
+        <label>W-4 Withholding Method</label>
+        <select id="withMethod" style="height:44px;font-family:'DM Sans',sans-serif;font-size:14px;">
+          <option value="standard">Standard Withholding (Step 2 box NOT checked)</option>
+          <option value="step2">Step 2 Checkbox (multiple jobs / spouse works)</option>
+          <option value="annual">Annual Tax Estimate (uses full standard deduction)</option>
+        </select>
+        <div class="hint" id="withmethod-hint">Standard: uses IRS Pub 15-T reduced deduction (~$12,200 single 2025). Step 2: no deduction, highest withholding. Annual: uses full $15,750 standard deduction — for tax return estimates only.</div>
+      </div>
+
+      <!-- Additional Withholding Step 4c -->
+      <div class="field">
+        <label>W-4 Step 4(c) — Additional Annual Withholding ($)</label>
+        <div class="input-prefix" data-prefix="$">
+          <input type="number" id="additionalWH" placeholder="0.00" min="0" step="1" value="0">
+        </div>
+        <div class="hint">Extra annual withholding the employee requested on W-4 Step 4(c). Enter the annual total (e.g. $25/month × 12 = $300).</div>
       </div>
 
       <div class="divider"></div>
@@ -274,10 +292,25 @@ footer a{color:rgba(255,255,255,.6);}
           <div class="tr" id="add-mc-row" style="display:none"><span class="tl">Additional Medicare (&gt;$200K)</span><span class="tr-rate">0.9%</span><span class="ta ee" id="r-add-mc">—</span></div>
         </div>
 
+        <div class="tb">
+          <div class="tb-title">Federal Income Tax — Employee withholding (Box 2 on W-2)</div>
+          <div class="tr"><span class="tl">Standard deduction applied</span><span class="tr-rate" id="r-fit-stded">—</span><span class="ta" id="r-fit-stded-amt">—</span></div>
+          <div class="tr"><span class="tl">Federal taxable income</span><span class="tr-rate" id="r-fit-rate">eff. rate</span><span class="ta" id="r-fit-taxable">—</span></div>
+          <div class="tr"><span class="tl">Federal income tax withheld</span><span class="tr-rate" id="r-fit-effrate">—</span><span class="ta" style="color:#a0c8f0;font-weight:600" id="r-fit">—</span></div>
+        </div>
+
+        <div class="tb">
+          <div class="tb-title">State Income Tax — Employee withholding (estimated)</div>
+          <div class="tr"><span class="tl">State income tax withheld</span><span class="tr-rate" id="r-sit-rate">—</span><span class="ta ee" id="r-sit">—</span></div>
+          <div class="tr" id="r-sit-none-row" style="display:none"><span class="tl" style="color:rgba(255,255,255,.4);font-size:12px">✓ No state income tax applies to wages in this state</span><span class="ta" style="color:rgba(255,255,255,.4)">$0.00</span></div>
+        </div>
+
         <div>
           <div class="total-box"><span class="tb-label">Employer annual cost</span><span class="tb-amount" style="color:#7dd4a0" id="r-er-total">—</span></div>
-          <div class="total-box"><span class="tb-label">Employee annual withheld</span><span class="tb-amount" style="color:#f0a070" id="r-ee-total">—</span></div>
-          <div class="total-box grand"><span class="tb-label">Total payroll tax burden</span><span class="tb-amount" id="r-grand">—</span></div>
+          <div class="total-box"><span class="tb-label">Employee FICA withheld (annual)</span><span class="tb-amount" style="color:#f0a070" id="r-ee-total">—</span></div>
+          <div class="total-box"><span class="tb-label">Federal income tax withheld (annual)</span><span class="tb-amount" style="color:#a0c8f0" id="r-fit-total">—</span></div>
+          <div class="total-box"><span class="tb-label">State income tax withheld (est.)</span><span class="tb-amount" style="color:#c8a0f0" id="r-sit-total">—</span></div>
+          <div class="total-box grand"><span class="tb-label">Total employee tax burden</span><span class="tb-amount" id="r-grand">—</span></div>
         </div>
 
         <div class="compare-row" id="compare-row" style="display:none">
@@ -289,13 +322,18 @@ footer a{color:rgba(255,255,255,.6);}
           <div class="tb-title">Per pay period — <span id="r-period-label">Monthly</span></div>
           <div class="tr"><span class="tl">Gross wages</span><span class="ta" id="r-period-gross">—</span></div>
           <div class="tr"><span class="tl">Employee FICA withheld</span><span class="ta ee" id="r-period-ee">—</span></div>
+          <div class="tr"><span class="tl">Federal income tax withheld</span><span class="ta" style="color:#a0c8f0" id="r-period-fit">—</span></div>
+          <div class="tr"><span class="tl">State income tax withheld (est.)</span><span class="ta" style="color:#c8a0f0" id="r-period-sit">—</span></div>
+          <div class="tr"><span class="tl">Total from employee paycheck</span><span class="ta" id="r-period-ee-all">—</span></div>
           <div class="tr"><span class="tl">Employer tax cost</span><span class="ta er" id="r-period-er">—</span></div>
           <div class="tr"><span class="tl">True employer cost per period</span><span class="ta" id="r-period-true">—</span></div>
         </div>
 
         <div class="legend">
           <div class="li"><div class="ld" style="background:#7dd4a0"></div>Employer cost</div>
-          <div class="li"><div class="ld" style="background:#f0a070"></div>Employee withheld</div>
+          <div class="li"><div class="ld" style="background:#f0a070"></div>Employee FICA</div>
+          <div class="li"><div class="ld" style="background:#a0c8f0"></div>Federal income tax</div>
+          <div class="li"><div class="ld" style="background:#c8a0f0"></div>State income tax</div>
         </div>
         <div class="actions">
           <button class="action-btn" onclick="copyResults()">📋 Copy Summary</button>
@@ -305,7 +343,34 @@ footer a{color:rgba(255,255,255,.6);}
     </div>
   </div>
 
-  <!-- RATE COMPARISON TABLE -->
+  <!-- FEDERAL INCOME TAX TABLE -->
+  <div class="compare-table-section" style="margin-top:28px;">
+    <div class="compare-title">Federal Income Tax Brackets — 2025 vs 2026 (Single Filers)</div>
+    <div class="compare-sub">Source: IRS Rev. Proc. 2024-40 (2025) and Rev. Proc. 2025-32 (2026). Standard deduction increased for both years via OBBBA. Rates unchanged — only thresholds adjusted for inflation.</div>
+    <table class="ct">
+      <thead><tr><th>Rate</th><th>2025 Single — Taxable Income</th><th>2026 Single — Taxable Income</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td><strong>10%</strong></td><td>$0 – $11,925</td><td>$0 – $12,400</td><td><span class="badge up">+$475</span></td></tr>
+        <tr><td><strong>12%</strong></td><td>$11,925 – $48,475</td><td>$12,400 – $50,400</td><td><span class="badge up">+$1,925</span></td></tr>
+        <tr><td><strong>22%</strong></td><td>$48,475 – $103,350</td><td>$50,400 – $105,725</td><td><span class="badge up">+$2,375</span></td></tr>
+        <tr><td><strong>24%</strong></td><td>$103,350 – $197,300</td><td>$105,725 – $201,850</td><td><span class="badge up">+$2,550</span></td></tr>
+        <tr><td><strong>32%</strong></td><td>$197,300 – $250,525</td><td>$201,850 – $256,300</td><td><span class="badge up">+$4,550</span></td></tr>
+        <tr><td><strong>35%</strong></td><td>$250,525 – $626,350</td><td>$256,300 – $640,600</td><td><span class="badge up">+$14,250</span></td></tr>
+        <tr><td><strong>37%</strong></td><td>Over $626,350</td><td>Over $640,600</td><td><span class="badge up">+$14,250</span></td></tr>
+      </tbody>
+    </table>
+    <table class="ct" style="margin-top:12px;">
+      <thead><tr><th>Filing Status</th><th>2025 Std. Deduction</th><th>2026 Std. Deduction</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr class="changed-row"><td>Single / MFS</td><td>$15,750</td><td>$16,100</td><td><span class="badge up">+$350</span></td></tr>
+        <tr class="changed-row"><td>Married Filing Jointly</td><td>$31,500</td><td>$32,200</td><td><span class="badge up">+$700</span></td></tr>
+        <tr class="changed-row"><td>Head of Household</td><td>$23,625</td><td>$24,150</td><td><span class="badge up">+$525</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">⚠ The W-4 filing status you select above determines which standard deduction is applied. FIT withholding in this tool = annual estimate using full-year bracket table. Actual per-paycheck withholding uses IRS Pub. 15-T percentage method tables which account for W-4 Steps 2–4 (multiple jobs, dependents, extra withholding). For exact withholding, use the IRS Tax Withholding Estimator at irs.gov/W4App.</p>
+  </div>
+
+  <!-- FEDERAL INCOME TAX TABLE -->
   <div class="compare-table-section">
     <div class="compare-title">2025 vs 2026 — Federal Rate Comparison</div>
     <div class="compare-sub">Key changes between tax years. Yellow rows = changed for 2026.</div>
@@ -413,15 +478,18 @@ footer a{color:rgba(255,255,255,.6);}
         <table class="rt">
           <thead><tr><th>Tax</th><th>2025</th><th>2026</th></tr></thead>
           <tbody>
-            <tr><td>SS Rate (each side)</td><td>6.2%</td><td class="highlight">6.2%</td></tr>
+            <tr><td>SS Rate (each side)</td><td>6.2%</td><td>6.2%</td></tr>
             <tr><td>SS Wage Base</td><td>$176,100</td><td class="highlight">$184,500 ↑</td></tr>
             <tr><td>Medicare (each side)</td><td>1.45%</td><td>1.45%</td></tr>
             <tr><td>Add'l Medicare (ee)</td><td>0.9% &gt;$200K</td><td>0.9% &gt;$200K</td></tr>
             <tr><td>FUTA rate (net)</td><td>0.6%</td><td>0.6%</td></tr>
-            <tr><td>FUTA Wage Base</td><td>$7,000</td><td>$7,000</td></tr>
+            <tr><td>FIT Rates</td><td>10%–37%</td><td>10%–37%</td></tr>
+            <tr><td>Std. Ded. (Single)</td><td>$15,750</td><td class="highlight">$16,100 ↑</td></tr>
+            <tr><td>Std. Ded. (MFJ)</td><td>$31,500</td><td class="highlight">$32,200 ↑</td></tr>
+            <tr><td>Std. Ded. (HoH)</td><td>$23,625</td><td class="highlight">$24,150 ↑</td></tr>
           </tbody>
         </table>
-        <div class="vbadge">✓ IRS Pub. 15 &amp; SSA · Jan 2026</div>
+        <div class="vbadge">✓ IRS Rev. Proc. 2024-40 &amp; 2025-32 · OBBBA</div>
       </div>
 
       <div class="info-card">
@@ -446,13 +514,81 @@ footer a{color:rgba(255,255,255,.6);}
       </div>
 
       <div class="info-card">
-        <h3>SUTA — Key Facts</h3>
-        <p>New employer rates range from <strong>0.35%</strong> (South Carolina) to <strong>4.00%</strong> (Hawaii). States set their own wage bases independently.</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--muted);">Biggest 2026 wage base jumps: Colorado (+$6,800), Alaska (+$4,500), Washington (+$5,400). Only Alaska, New Jersey, and Pennsylvania require employee SUTA contributions. California's FUTA credit reduction adds extra cost for 2025 filings.</p>
-        <div class="vbadge">✓ DOL / Patriot Software / FirstNonprofit · 2026</div>
+        <h3>State Income Tax — All 50 States</h3>
+        <p>8 states have <strong>no wage income tax</strong>: Alaska, Florida, Nevada, New Hampshire (2025), South Dakota, Tennessee, Texas, Wyoming, Washington (wages only).</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--muted);">The remaining 42 states + D.C. tax wages. 14 use a flat rate (AZ 2.5% — GA 5.39%). 28 use graduated brackets (CA tops at 13.3%, HI at 11%, NY at 10.9%, NJ at 10.75%). State income tax is an <strong>employee-only</strong> cost — employers do not match it.</p>
+        <div class="vbadge">✓ Tax Foundation 2025 State Income Tax Rates</div>
+      </div>
+      <div class="info-card">
+        <h3>SUTA — Key Facts (2025 & 2026)</h3>
+        <p>New employer rates range from <strong>0.35%</strong> (South Carolina) to <strong>4.00%</strong> (Hawaii). Wage bases range from $7,000 (AR, CA, FL, TN) to $78,200 (Washington in 2026).</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--muted);">Biggest 2026 wage base jumps: Colorado (+$6,800), Alaska (+$4,500), Washington (+$5,400). Only Alaska, New Jersey, and Pennsylvania require employee SUTA contributions. California's FUTA credit reduction adds extra cost on 2025 Form 940 filings.</p>
+        <div class="vbadge">✓ DOL / Patriot Software / First Nonprofit · 2025–2026</div>
       </div>
     </div>
   </div>
+
+  <!-- STATE INCOME TAX RATES TABLE -->
+  <div class="compare-table-section" style="margin-top:28px;">
+    <div class="compare-title">State Income Tax Rates — All 50 States (2025)</div>
+    <div class="compare-sub">Top marginal rates sourced from Tax Foundation. No-tax states shown in green. High-tax states (top rate &gt;8%) shown in yellow. Actual withholding depends on filing status, brackets, deductions, and local taxes.</div>
+    <table class="ct">
+      <thead><tr><th>State</th><th>Type</th><th>Top Rate</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Alabama</td><td>Graduated</td><td>5.0%</td><td>3 brackets: 2%–5%</td></tr>
+        <tr style="background:var(--green-lt)"><td>Alaska</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr><td>Arizona</td><td>Flat</td><td>2.5%</td><td>Lowest flat rate in US</td></tr>
+        <tr><td>Arkansas</td><td>Graduated</td><td>4.4%</td><td>Two-bracket system</td></tr>
+        <tr class="changed-row"><td>California</td><td>Graduated</td><td>13.3%</td><td>Highest in US; 10 brackets</td></tr>
+        <tr><td>Colorado</td><td>Flat</td><td>4.4%</td><td></td></tr>
+        <tr><td>Connecticut</td><td>Graduated</td><td>6.99%</td><td>7 brackets</td></tr>
+        <tr><td>Delaware</td><td>Graduated</td><td>6.6%</td><td>7 brackets; first $2K exempt</td></tr>
+        <tr><td>Washington D.C.</td><td>Graduated</td><td>10.75%</td><td>6 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>Florida</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr><td>Georgia</td><td>Flat</td><td>5.39%</td><td>Transitioning to lower flat rate</td></tr>
+        <tr class="changed-row"><td>Hawaii</td><td>Graduated</td><td>11.0%</td><td>10 brackets; 2nd highest in US</td></tr>
+        <tr><td>Idaho</td><td>Graduated</td><td>5.8%</td><td>4 brackets</td></tr>
+        <tr><td>Illinois</td><td>Flat</td><td>4.95%</td><td>No standard deduction</td></tr>
+        <tr><td>Indiana</td><td>Flat</td><td>3.05%</td><td>+ county tax varies</td></tr>
+        <tr><td>Iowa</td><td>Flat</td><td>3.8%</td><td>Reduced to flat rate 2025</td></tr>
+        <tr><td>Kansas</td><td>Graduated</td><td>5.7%</td><td>Two-bracket system</td></tr>
+        <tr><td>Kentucky</td><td>Flat</td><td>4.0%</td><td></td></tr>
+        <tr><td>Louisiana</td><td>Graduated</td><td>4.3%</td><td>Reduced rates effective 2025</td></tr>
+        <tr><td>Maine</td><td>Graduated</td><td>7.15%</td><td>3 brackets</td></tr>
+        <tr><td>Maryland</td><td>Graduated</td><td>5.75%</td><td>+ local/county tax 2.25%–3.2%</td></tr>
+        <tr><td>Massachusetts</td><td>Flat</td><td>5.0%</td><td>+4% surtax on income over $1M</td></tr>
+        <tr><td>Michigan</td><td>Flat</td><td>4.05%</td><td></td></tr>
+        <tr class="changed-row"><td>Minnesota</td><td>Graduated</td><td>9.85%</td><td>4 brackets</td></tr>
+        <tr><td>Mississippi</td><td>Flat</td><td>4.7%</td><td>First $10K exempt</td></tr>
+        <tr><td>Missouri</td><td>Graduated</td><td>4.8%</td><td>8 brackets</td></tr>
+        <tr><td>Montana</td><td>Graduated</td><td>5.9%</td><td>6 brackets</td></tr>
+        <tr><td>Nebraska</td><td>Graduated</td><td>5.2%</td><td>3 brackets; declining to 3.99%</td></tr>
+        <tr style="background:var(--green-lt)"><td>Nevada</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr style="background:var(--green-lt)"><td>New Hampshire</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>Repealed interest/dividends tax 2025</td></tr>
+        <tr class="changed-row"><td>New Jersey</td><td>Graduated</td><td>10.75%</td><td>7 brackets</td></tr>
+        <tr><td>New Mexico</td><td>Graduated</td><td>5.9%</td><td>5 brackets</td></tr>
+        <tr class="changed-row"><td>New York</td><td>Graduated</td><td>10.9%</td><td>9 brackets; + NYC local tax</td></tr>
+        <tr><td>North Carolina</td><td>Flat</td><td>4.25%</td><td>Declining to 3.99% by 2026</td></tr>
+        <tr><td>North Dakota</td><td>Flat</td><td>2.5%</td><td>Reduced to flat rate</td></tr>
+        <tr><td>Ohio</td><td>Graduated</td><td>3.5%</td><td>First $26K exempt; + city tax</td></tr>
+        <tr><td>Oklahoma</td><td>Graduated</td><td>4.75%</td><td>6 brackets</td></tr>
+        <tr class="changed-row"><td>Oregon</td><td>Graduated</td><td>9.9%</td><td>3 brackets; high earner surcharge</td></tr>
+        <tr><td>Pennsylvania</td><td>Flat</td><td>3.07%</td><td>No standard deduction; + local EIT</td></tr>
+        <tr><td>Rhode Island</td><td>Graduated</td><td>5.99%</td><td>3 brackets</td></tr>
+        <tr><td>South Carolina</td><td>Graduated</td><td>6.2%</td><td>3 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>South Dakota</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr style="background:var(--green-lt)"><td>Tennessee</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr style="background:var(--green-lt)"><td>Texas</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+        <tr><td>Utah</td><td>Flat</td><td>4.55%</td><td>No std deduction; uses personal exemption credit</td></tr>
+        <tr class="changed-row"><td>Vermont</td><td>Graduated</td><td>8.75%</td><td>4 brackets</td></tr>
+        <tr><td>Virginia</td><td>Graduated</td><td>5.75%</td><td>4 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>Washington</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No wage tax (capital gains only)</td></tr>
+        <tr><td>West Virginia</td><td>Graduated</td><td>5.12%</td><td>5 brackets; rate cuts in progress</td></tr>
+        <tr><td>Wisconsin</td><td>Graduated</td><td>7.65%</td><td>4 brackets</td></tr>
+        <tr style="background:var(--green-lt)"><td>Wyoming</td><td>None</td><td style="color:var(--green);font-weight:600">0%</td><td>No state income tax</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">⚠ Yellow = top rate above 8%. Green = no wage income tax. State income tax rates change annually — this table reflects 2025 enacted rates from Tax Foundation. Some states also levy local income taxes (NYC, PA municipalities, OH cities) not included in this estimate. Always verify current rates with your state revenue department or a licensed CPA.</p>
 </div>
 
 <footer>
@@ -463,9 +599,147 @@ footer a{color:rgba(255,255,255,.6);}
 <script>
 // ── DATA ──────────────────────────────────────────────
 const FED = {
-  2025: { SS_RATE:.062, SS_BASE:176100, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000 },
-  2026: { SS_RATE:.062, SS_BASE:184500, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000 }
+  2025: {
+    SS_RATE:.062, SS_BASE:176100, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000,
+    // FIT Annual Brackets — IRS Rev. Proc. 2024-40 + OBBBA
+    // Annual Standard Deductions (for ANNUAL TAX RETURN calculation only)
+    stdDed:{ single:15750, married:31500, hoh:23625 },
+    // IRS Pub 15-T "Standard Withholding" deductions (for PAYROLL WITHHOLDING — different from annual return!)
+    // Pub 15-T 2025 was published Dec 2024 using pre-OBBBA deduction amounts. Subtract this BEFORE applying brackets.
+    // Step 2 Checkbox method uses $0 (full gross wages go through brackets)
+    pub15t:{ single:12200, married:24400, hoh:18350 },
+    brackets:{
+      single:  [[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,626350,.35],[626350,Infinity,.37]],
+      married: [[0,23850,.10],[23850,96950,.12],[96950,206700,.22],[206700,394600,.24],[394600,501050,.32],[501050,751600,.35],[751600,Infinity,.37]],
+      hoh:     [[0,17000,.10],[17000,64850,.12],[64850,103350,.22],[103350,197300,.24],[197300,250500,.32],[250500,626350,.35],[626350,Infinity,.37]]
+    }
+  },
+  2026: {
+    SS_RATE:.062, SS_BASE:184500, MC_RATE:.0145, ADD_MC:.009, ADD_MC_THRESH:200000, FUTA:.006, FUTA_BASE:7000,
+    // FIT Annual Brackets — IRS Rev. Proc. 2025-32 (OBBBA permanent + 2026 inflation)
+    stdDed:{ single:16100, married:32200, hoh:24150 },
+    // Pub 15-T 2026 Standard Withholding deductions (confirmed from IRS Pub 15-T 2026)
+    pub15t:{ single:12900, married:25800, hoh:19350 },
+    brackets:{
+      single:  [[0,12400,.10],[12400,50400,.12],[50400,105725,.22],[105725,201850,.24],[201850,256300,.32],[256300,640600,.35],[640600,Infinity,.37]],
+      married: [[0,24800,.10],[24800,100800,.12],[100800,211450,.22],[211450,403650,.24],[403650,512550,.32],[512550,768700,.35],[768700,Infinity,.37]],
+      hoh:     [[0,17700,.10],[17700,67450,.12],[67450,105725,.22],[105725,201850,.24],[201850,256250,.32],[256250,640600,.35],[640600,Infinity,.37]]
+    }
+  }
 };
+
+// ── FEDERAL INCOME TAX CALCULATOR (IRS Pub 15-T Method) ─
+// withMethod: 'standard' = Standard Withholding (Step 2 NOT checked, uses Pub 15-T deduction)
+//             'step2'    = Step 2 Checkbox Withholding (multiple jobs, NO deduction, full wages)
+//             'annual'   = Annual tax return estimate (uses full standard deduction)
+function calcFIT(salary, filingStatus, year, withMethod, additionalWH) {
+  const f = FED[year];
+  const statusKey = filingStatus === 'married' ? 'married' : filingStatus === 'hoh' ? 'hoh' : 'single';
+
+  let deduction = 0;
+  if (withMethod === 'annual') {
+    deduction = f.stdDed[statusKey];           // Full annual standard deduction
+  } else if (withMethod === 'standard') {
+    deduction = f.pub15t[statusKey];            // Pub 15-T reduced withholding deduction
+  } else {
+    deduction = 0;                              // Step 2 checkbox: no deduction, full wages
+  }
+
+  const taxable = Math.max(0, salary - deduction);
+  let tax = 0;
+  for (const [lo, hi, rate] of f.brackets[statusKey]) {
+    if (taxable <= lo) break;
+    tax += (Math.min(taxable, hi) - lo) * rate;
+  }
+  tax += (additionalWH || 0);                  // Add Step 4(c) additional withholding (annual)
+
+  const effRate = taxable > 0 ? (tax / taxable * 100).toFixed(2) : '0.00';
+  let marginalRate = 10;
+  for (const [lo, hi, rate] of f.brackets[statusKey]) {
+    if (taxable > lo) marginalRate = rate * 100;
+  }
+  return { tax, taxable, deduction, effRate, marginalRate, method: withMethod };
+}
+
+
+// type:'none'=no wage tax, 'flat'=single rate, 'grad'=graduated brackets (single filer)
+// Brackets: [[threshold, rate], ...] — income above threshold taxed at rate
+// stdDed: simplified state standard deduction for estimation
+const STATE_TAX = {
+  "Alabama":        {type:'grad',brackets:[[0,.02],[500,.04],[3000,.05]],stdDed:3000,note:'Top 5.0%'},
+  "Alaska":         {type:'none',note:'No state income tax'},
+  "Arizona":        {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
+  "Arkansas":       {type:'grad',brackets:[[0,.02],[5000,.04],[8701,.044]],stdDed:2200,note:'Top 4.4%'},
+  "California":     {type:'grad',brackets:[[0,.01],[10412,.02],[24684,.04],[38959,.06],[54081,.08],[68350,.093],[349137,.103],[418961,.113],[698274,.123],[1000000,.133]],stdDed:5202,note:'Top 13.3%'},
+  "Colorado":       {type:'flat',rate:.044,stdDed:14600,note:'Flat 4.4%'},
+  "Connecticut":    {type:'grad',brackets:[[0,.03],[10000,.05],[50000,.055],[100000,.06],[200000,.065],[250000,.069],[500000,.0699]],stdDed:15000,note:'Top 6.99%'},
+  "Delaware":       {type:'grad',brackets:[[0,0],[2000,.022],[5000,.039],[10000,.048],[20000,.052],[25000,.055],[60000,.066]],stdDed:3250,note:'Top 6.6%'},
+  "Washington D.C.":{type:'grad',brackets:[[0,.04],[10000,.06],[40000,.065],[60000,.085],[350000,.0925],[1000000,.1075]],stdDed:14600,note:'Top 10.75%'},
+  "Florida":        {type:'none',note:'No state income tax'},
+  "Georgia":        {type:'flat',rate:.0539,stdDed:12000,note:'Flat 5.39%'},
+  "Hawaii":         {type:'grad',brackets:[[0,.014],[2400,.032],[4800,.055],[9600,.064],[14400,.068],[19200,.072],[24000,.076],[36000,.079],[48000,.083],[150000,.11]],stdDed:2200,note:'Top 11.0%'},
+  "Idaho":          {type:'grad',brackets:[[0,.01],[1662,.03],[4987,.045],[8309,.058]],stdDed:14600,note:'Top 5.8%'},
+  "Illinois":       {type:'flat',rate:.0495,stdDed:0,note:'Flat 4.95% (no std deduction)'},
+  "Indiana":        {type:'flat',rate:.0305,stdDed:1000,note:'Flat 3.05%'},
+  "Iowa":           {type:'flat',rate:.038,stdDed:14600,note:'Flat 3.8% (2025)'},
+  "Kansas":         {type:'grad',brackets:[[0,.031],[15000,.057]],stdDed:3500,note:'Top 5.7%'},
+  "Kentucky":       {type:'flat',rate:.04,stdDed:3160,note:'Flat 4.0%'},
+  "Louisiana":      {type:'grad',brackets:[[0,.0185],[12500,.035],[50000,.043]],stdDed:4500,note:'Top 4.3% (2025 reduced)'},
+  "Maine":          {type:'grad',brackets:[[0,.058],[24500,.0675],[58050,.0715]],stdDed:14600,note:'Top 7.15%'},
+  "Maryland":       {type:'grad',brackets:[[0,.02],[1000,.03],[2000,.04],[3000,.0475],[100000,.05],[125000,.0525],[150000,.055],[250000,.0575]],stdDed:2400,note:'Top 5.75% + local tax'},
+  "Massachusetts":  {type:'flat',rate:.05,stdDed:0,note:'Flat 5.0% (+4% surtax >$1M)'},
+  "Michigan":       {type:'flat',rate:.0405,stdDed:5600,note:'Flat 4.05%'},
+  "Minnesota":      {type:'grad',brackets:[[0,.0535],[30070,.068],[98760,.0785],[183340,.0985]],stdDed:14575,note:'Top 9.85%'},
+  "Mississippi":    {type:'flat',rate:.047,stdDed:2300,note:'Flat 4.7%'},
+  "Missouri":       {type:'grad',brackets:[[0,.015],[1121,.02],[2242,.025],[3363,.03],[4484,.035],[5605,.04],[6726,.045],[7847,.048]],stdDed:14600,note:'Top 4.8%'},
+  "Montana":        {type:'grad',brackets:[[0,.01],[3300,.02],[5800,.03],[8900,.04],[12100,.05],[15600,.059]],stdDed:14600,note:'Top 5.9%'},
+  "Nebraska":       {type:'grad',brackets:[[0,.0246],[3700,.0351],[22170,.052]],stdDed:7900,note:'Top 5.2%'},
+  "Nevada":         {type:'none',note:'No state income tax'},
+  "New Hampshire":  {type:'none',note:'No wage income tax (2025)'},
+  "New Jersey":     {type:'grad',brackets:[[0,.014],[20000,.0175],[35000,.035],[40000,.05526],[75000,.0637],[500000,.0897],[1000000,.1075]],stdDed:0,note:'Top 10.75%'},
+  "New Mexico":     {type:'grad',brackets:[[0,.017],[5500,.032],[11000,.047],[16000,.049],[210000,.059]],stdDed:14600,note:'Top 5.9%'},
+  "New York":       {type:'grad',brackets:[[0,.04],[17150,.045],[23600,.0525],[27900,.0585],[161550,.0625],[323200,.0685],[2155350,.0965],[5000000,.103],[25000000,.109]],stdDed:8000,note:'Top 10.9%'},
+  "North Carolina": {type:'flat',rate:.0425,stdDed:12750,note:'Flat 4.25%'},
+  "North Dakota":   {type:'flat',rate:.025,stdDed:14600,note:'Flat 2.5%'},
+  "Ohio":           {type:'grad',brackets:[[0,0],[26050,.0275],[100000,.035]],stdDed:0,note:'Top 3.5%'},
+  "Oklahoma":       {type:'grad',brackets:[[0,.0025],[1000,.005],[2500,.0075],[3750,.01],[4900,.02],[7200,.0475]],stdDed:6350,note:'Top 4.75%'},
+  "Oregon":         {type:'grad',brackets:[[0,.0475],[17400,.0675],[250000,.099]],stdDed:2745,note:'Top 9.9%'},
+  "Pennsylvania":   {type:'flat',rate:.0307,stdDed:0,note:'Flat 3.07% (no std deduction)'},
+  "Rhode Island":   {type:'grad',brackets:[[0,.0375],[77450,.0475],[176050,.0599]],stdDed:10550,note:'Top 5.99%'},
+  "South Carolina": {type:'grad',brackets:[[0,0],[3460,.03],[17330,.062]],stdDed:14600,note:'Top 6.2%'},
+  "South Dakota":   {type:'none',note:'No state income tax'},
+  "Tennessee":      {type:'none',note:'No state income tax'},
+  "Texas":          {type:'none',note:'No state income tax'},
+  "Utah":           {type:'flat',rate:.0455,stdDed:0,note:'Flat 4.55%'},
+  "Vermont":        {type:'grad',brackets:[[0,.0335],[45400,.066],[110050,.076],[229550,.0875]],stdDed:14600,note:'Top 8.75%'},
+  "Virginia":       {type:'grad',brackets:[[0,.02],[3000,.03],[5000,.05],[17000,.0575]],stdDed:8750,note:'Top 5.75% (2025 withholding std ded $8,750 from Jul 2025)'},
+  "Washington":     {type:'none',note:'No wage income tax'},
+  "West Virginia":  {type:'grad',brackets:[[0,.03],[10000,.04],[25000,.045],[40000,.05],[60000,.0512]],stdDed:0,note:'Top 5.12%'},
+  "Wisconsin":      {type:'grad',brackets:[[0,.035],[13810,.044],[27630,.053],[304170,.0765]],stdDed:12070,note:'Top 7.65%'},
+  "Wyoming":        {type:'none',note:'No state income tax'}
+};
+
+function calcStateTax(stateName, salary) {
+  const st = STATE_TAX[stateName];
+  if (!st || st.type === 'none') return {tax:0, rate:0, note: st ? st.note : 'No state income tax'};
+  const taxable = Math.max(0, salary - (st.stdDed || 0));
+  let tax = 0;
+  if (st.type === 'flat') {
+    tax = taxable * st.rate;
+    return {tax, rate:(st.rate*100).toFixed(2), note:st.note};
+  }
+  const brackets = st.brackets;
+  for (let i = 0; i < brackets.length; i++) {
+    const lo = brackets[i][0], rate = brackets[i][1];
+    const hi = i+1 < brackets.length ? brackets[i+1][0] : Infinity;
+    if (taxable <= lo) break;
+    tax += (Math.min(taxable,hi) - lo) * rate;
+  }
+  const effRate = taxable > 0 ? (tax/taxable*100).toFixed(2) : '0.00';
+  return {tax, rate:effRate, topRate:(brackets[brackets.length-1][1]*100).toFixed(1), note:st.note};
+}
+
+
 
 // [state label, rate, base2025, base2026]
 const STATES = [
@@ -619,6 +893,7 @@ function calculate() {
   const salary = parseFloat(document.getElementById('salary').value);
   const freq = parseInt(document.getElementById('frequency').value);
   const idx = parseInt(document.getElementById('state').value);
+  const stateName = STATES[idx][0];
   const sutaRate = STATES[idx][1] / 100;
   const sutaBase = parseFloat(document.getElementById('sutaBase').value);
   if (!salary || salary <= 0) { alert('Please enter a valid salary.'); return; }
@@ -630,13 +905,24 @@ function calculate() {
   const addMC = salary > f.ADD_MC_THRESH ? (salary - f.ADD_MC_THRESH) * f.ADD_MC : 0;
   const futa = Math.min(salary, f.FUTA_BASE) * f.FUTA;
   const suta = Math.min(salary, sutaBase) * sutaRate;
+
+  // State income tax (employee only)
+  const sitResult = calcStateTax(stateName, salary);
+  const sit = sitResult.tax;
+
+  // Federal Income Tax withholding (employee only — Box 2 on W-2)
+  const selectedFiling = document.getElementById('filing')?.value || 'single';
+  const withMethod = document.getElementById('withMethod')?.value || 'standard';
+  const additionalWH = parseFloat(document.getElementById('additionalWH')?.value) || 0;
+  const fitResult = calcFIT(salary, selectedFiling, currentYear, withMethod, additionalWH);
+  const fit = fitResult.tax;
+
   const erTotal = erSS + erMC + futa + suta;
   const eeTotal = eeSS + eeMC + addMC;
-  const grand = erTotal + eeTotal;
+  const grand = erTotal + eeTotal + fit + sit;
 
   const pl = {52:'Weekly', 26:'Bi-Weekly', 24:'Semi-Monthly', 12:'Monthly'};
 
-  // Show compare if we have previous calc from other year
   if (lastGrand !== null) {
     const diff = grand - lastGrand;
     const sign = diff >= 0 ? '+' : '';
@@ -657,9 +943,37 @@ function calculate() {
   document.getElementById('r-ee-mc').textContent = fmt(eeMC);
   document.getElementById('r-er-total').textContent = fmt(erTotal);
   document.getElementById('r-ee-total').textContent = fmt(eeTotal);
+  document.getElementById('r-fit-total').textContent = fmt(fit);
+  document.getElementById('r-sit-total').textContent = fmt(sit);
   document.getElementById('r-grand').textContent = fmt(grand);
+
+  // Federal income tax display
+  const fitStatusLabels = {single:'Single / MFS', married:'Married Filing Jointly', hoh:'Head of Household'};
+  const methodLabels = {standard:`Pub 15-T Standard (−$${fitResult.deduction.toLocaleString()})`, step2:'Step 2 Checkbox (no deduction)', annual:`Annual Estimate (−$${fitResult.deduction.toLocaleString()} std ded)`};
+  document.getElementById('r-fit-stded').textContent = fitStatusLabels[selectedFiling] || 'Single';
+  document.getElementById('r-fit-stded-amt').textContent = methodLabels[withMethod] || '';
+  document.getElementById('r-fit-taxable').textContent = fmt(fitResult.taxable);
+  document.getElementById('r-fit-effrate').textContent = `eff. ${fitResult.effRate}% / marg. ${fitResult.marginalRate}%`;
+  document.getElementById('r-fit').textContent = fmt(fit);
+
+  // State income tax display
+  const sitNone = sit === 0;
+  document.getElementById('r-sit').textContent = fmt(sit);
+  document.getElementById('r-sit-none-row').style.display = sitNone ? 'flex' : 'none';
+  if (!sitNone) {
+    const rateLabel = sitResult.topRate
+      ? `eff. ${sitResult.rate}% (top ${sitResult.topRate}%)`
+      : `${sitResult.rate}% flat`;
+    document.getElementById('r-sit-rate').textContent = rateLabel;
+  } else {
+    document.getElementById('r-sit-rate').textContent = sitResult.note || '0%';
+  }
+
   document.getElementById('r-period-gross').textContent = fmt(salary/freq);
   document.getElementById('r-period-ee').textContent = fmt(eeTotal/freq);
+  document.getElementById('r-period-fit').textContent = fmt(fit/freq);
+  document.getElementById('r-period-sit').textContent = fmt(sit/freq);
+  document.getElementById('r-period-ee-all').textContent = fmt((eeTotal + fit + sit)/freq);
   document.getElementById('r-period-er').textContent = fmt(erTotal/freq);
   document.getElementById('r-period-true').textContent = fmt((salary+erTotal)/freq);
   document.getElementById('r-period-label').textContent = pl[freq]||'Per Period';
@@ -672,15 +986,23 @@ function calculate() {
 function copyResults() {
   const salary = document.getElementById('salary').value;
   const state = STATES[parseInt(document.getElementById('state').value)][0];
+  const selectedFiling = document.getElementById('filing')?.value || 'single';
+  const withMethod = document.getElementById('withMethod')?.value || 'standard';
+  const additionalWH = document.getElementById('additionalWH')?.value || '0';
+  const filingLabels = {single:'Single/MFS', married:'Married Filing Jointly', hoh:'Head of Household'};
+  const methodLabels = {standard:'Pub 15-T Standard Withholding', step2:'Step 2 Checkbox (no deduction)', annual:'Annual Tax Estimate'};
   const erTotal = document.getElementById('r-er-total').textContent;
   const eeTotal = document.getElementById('r-ee-total').textContent;
+  const fit = document.getElementById('r-fit-total').textContent;
+  const sit = document.getElementById('r-sit-total').textContent;
   const grand = document.getElementById('r-grand').textContent;
-  const text = `${currentYear} Payroll Tax Summary\n─────────────────────\nSalary: $${salary}\nState: ${state}\nEmployer cost (annual): ${erTotal}\nEmployee withheld (annual): ${eeTotal}\nTotal payroll tax: ${grand}\n\nRates: IRS Publication 15 (${currentYear})\nTool: BookSmartTools.com`;
-  navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+  const text = `${currentYear} Payroll Tax Summary (W-2 Estimate)\n${'─'.repeat(44)}\nSalary: $${salary}\nFiling Status: ${filingLabels[selectedFiling]}\nState: ${state}\n\nEmployer Costs:\n  FICA + FUTA + SUTA: ${erTotal}\n\nEmployee Withholding:\n  FICA (SS + Medicare): ${eeTotal}\n  Federal Income Tax (Box 2): ${fit}\n  State Income Tax (est.): ${sit}\n\nTotal Employee Tax Burden: ${grand}\n\nSources: IRS Rev. Proc. ${currentYear === 2025 ? '2024-40' : '2025-32'} | Tax Foundation 2025 | DOL\nTool: BookSmartTools.com\nNote: FIT based on ${filingLabels[selectedFiling]} standard deduction. State IT estimated using single-filer brackets.`;
+  navigator.clipboard.writeText(text).then(() => alert('Full W-2 tax summary copied!'));
 }
 
 // ── STARTUP ───────────────────────────────────────────
 setYear(2025);
 </script>
+<script src="js/main.js"></script>
 </body>
 </html>
