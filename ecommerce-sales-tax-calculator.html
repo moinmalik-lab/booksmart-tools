@@ -339,206 +339,913 @@ footer a{color:rgba(255,255,255,.5);}
 
 <script src="/booksmart-tools/js/main.js"></script>
 <script>
-// ── COMPLETE COUNTY DATA ────────────────────────────────
+// ── COMPLETE COUNTY DATA — ALL 50 STATES + D.C. ──────────
 const STATES = {
-  "Virginia": {
-    due:"20th of following month", portal:"Virginia Tax eForms (tax.virginia.gov)",
-    note:"Northern Virginia &amp; Hampton Roads: 6.00% (state 4.3% + mandatory 1% + 0.7% regional). Rest of VA: 5.30%.",
-    discount:"va",
-    counties:{
-      "Alexandria City":6.00,"Arlington County":6.00,"Fairfax City":6.00,
-      "Fairfax County":6.00,"Falls Church City":6.00,"Loudoun County":6.00,
-      "Manassas City":6.00,"Manassas Park City":6.00,"Prince William County":6.00,
-      "Chesapeake City":6.00,"Hampton City":6.00,"Isle of Wight County":6.00,
-      "James City County":6.00,"Newport News City":6.00,"Norfolk City":6.00,
-      "Poquoson City":6.00,"Portsmouth City":6.00,"Suffolk City":6.00,
-      "Virginia Beach City":6.00,"Williamsburg City":6.00,"York County":6.00,
-      "Albemarle County":5.30,"Augusta County":5.30,"Bedford County":5.30,
-      "Botetourt County":5.30,"Campbell County":5.30,"Carroll County":5.30,
-      "Charlottesville City":5.30,"Chesterfield County":5.30,"Frederick County":5.30,
-      "Harrisonburg City":5.30,"Henrico County":5.30,"Lynchburg City":5.30,
-      "Montgomery County":5.30,"Roanoke City":5.30,"Roanoke County":5.30,
-      "Rockingham County":5.30,"Shenandoah County":5.30,"Spotsylvania County":5.30,
-      "Stafford County":5.30,"Warren County":5.30,"Wise County":5.30
+  "Alabama": {
+    "due": "20th of following month",
+    "portal": "MyAlabamaTaxes (revenue.alabama.gov)",
+    "note": "State 4%. Counties add local rates. Combined avg ~9.25%.",
+    "discount": "none",
+    "counties": {
+      "Jefferson County (Birmingham)": 10.0,
+      "Mobile County": 10.0,
+      "Madison County (Huntsville)": 9.0,
+      "Montgomery County": 10.0,
+      "Shelby County": 9.0,
+      "Tuscaloosa County": 10.0,
+      "Lee County (Auburn/Opelika)": 9.0,
+      "Calhoun County (Anniston)": 9.0,
+      "Etowah County (Gadsden)": 9.0,
+      "Morgan County (Decatur)": 9.0,
+      "Baldwin County": 9.0,
+      "Marshall County": 9.0
+    }
+  },
+  "Alaska": {
+    "due": "Varies by locality",
+    "portal": "Contact your local borough",
+    "note": "No statewide sales tax. Some boroughs charge 0%-7.5% local sales tax.",
+    "discount": "none",
+    "counties": {
+      "Anchorage (no sales tax)": 0.0,
+      "Juneau": 5.0,
+      "Fairbanks (no sales tax)": 0.0,
+      "Sitka": 6.0,
+      "Ketchikan": 7.0,
+      "Kodiak": 6.0,
+      "Kenai Peninsula Borough": 0.0
+    }
+  },
+  "Arizona": {
+    "due": "20th of following month",
+    "portal": "AZTaxes (aztaxes.gov)",
+    "note": "State 5.6%. Cities and counties add TPT. Phoenix 8.6%, Tucson 8.7%.",
+    "discount": "none",
+    "counties": {
+      "Maricopa County (Phoenix)": 8.6,
+      "Pima County (Tucson)": 8.7,
+      "Pinal County": 8.7,
+      "Yavapai County (Prescott)": 7.6,
+      "Coconino County (Flagstaff)": 9.18,
+      "Mohave County (Kingman)": 8.35,
+      "Yuma County": 8.41,
+      "Navajo County (Show Low)": 8.6,
+      "Apache County": 8.6,
+      "Gila County": 8.35,
+      "Graham County": 8.6,
+      "La Paz County": 8.6,
+      "Santa Cruz County": 9.6
+    }
+  },
+  "Arkansas": {
+    "due": "20th of following month",
+    "portal": "ATAP (atap.arkansas.gov)",
+    "note": "State 6.5%. Counties and cities add local rates. Combined avg ~9.46%.",
+    "discount": "none",
+    "counties": {
+      "Pulaski County (Little Rock)": 9.5,
+      "Benton County (Bentonville)": 9.5,
+      "Washington County (Fayetteville)": 9.75,
+      "Sebastian County (Fort Smith)": 9.25,
+      "Craighead County (Jonesboro)": 9.5,
+      "Garland County (Hot Springs)": 9.5,
+      "Saline County (Benton)": 9.25,
+      "Faulkner County (Conway)": 9.25,
+      "Jefferson County (Pine Bluff)": 9.5,
+      "Lonoke County": 9.0
     }
   },
   "California": {
-    due:"Last day of following month", portal:"CDTFA (cdtfa.ca.gov)",
-    note:"State base 7.25%. Districts add local rates. Rates vary significantly by city/zip.",
-    discount:"none",
-    counties:{
-      "Los Angeles County":10.25,"San Francisco County":8.625,"San Diego County":7.75,
-      "Orange County":7.75,"Santa Clara County":9.125,"Alameda County":10.25,
-      "Riverside County":8.75,"San Bernardino County":8.75,"Sacramento County":8.75,
-      "Contra Costa County":9.25,"Fresno County":8.35,"Kern County":8.25,
-      "San Mateo County":9.375,"Ventura County":7.25,"Sonoma County":9.25,
-      "Marin County":9.25,"Monterey County":9.25,"Santa Barbara County":8.75,
-      "Solano County":8.375,"Stanislaus County":8.25,"San Joaquin County":8.75,
-      "Tulare County":7.75,"Shasta County":7.25,"San Luis Obispo County":7.75,
-      "Santa Cruz County":9.25,"El Dorado County":7.25,"Napa County":8.25
+    "due": "Last day of following month",
+    "portal": "CDTFA (cdtfa.ca.gov)",
+    "note": "State 7.25%. Districts add significant local rates. Varies greatly by city/zip.",
+    "discount": "none",
+    "counties": {
+      "Los Angeles County": 10.25,
+      "San Francisco County": 8.625,
+      "San Diego County": 7.75,
+      "Orange County": 7.75,
+      "Santa Clara County": 9.125,
+      "Alameda County": 10.25,
+      "Riverside County": 8.75,
+      "San Bernardino County": 8.75,
+      "Sacramento County": 8.75,
+      "Contra Costa County": 9.25,
+      "Fresno County": 8.35,
+      "Kern County": 8.25,
+      "San Mateo County": 9.375,
+      "Ventura County": 7.25,
+      "Sonoma County": 9.25,
+      "Marin County": 9.25,
+      "Monterey County": 9.25,
+      "Santa Barbara County": 8.75,
+      "Solano County": 8.375,
+      "Stanislaus County": 8.25,
+      "San Joaquin County": 8.75,
+      "Tulare County": 7.75,
+      "Shasta County": 7.25,
+      "San Luis Obispo County": 7.75,
+      "Santa Cruz County": 9.25,
+      "El Dorado County": 7.25,
+      "Napa County": 8.25,
+      "Humboldt County": 8.25,
+      "Butte County": 8.25
     }
   },
-  "Texas": {
-    due:"20th of following month", portal:"WebFile (comptroller.texas.gov)",
-    note:"State 6.25%. Cities and counties can add up to 2% local. Most major metros at 8.25% combined.",
-    discount:"pct",
-    counties:{
-      "Harris County (Houston)":8.25,"Dallas County":8.25,"Tarrant County (Fort Worth)":8.25,
-      "Bexar County (San Antonio)":8.25,"Travis County (Austin)":8.25,
-      "Collin County (Plano/McKinney)":8.25,"Denton County":8.25,"El Paso County":8.25,
-      "Hidalgo County (McAllen)":8.25,"Fort Bend County":8.25,"Montgomery County":8.25,
-      "Williamson County":8.25,"Cameron County (Brownsville)":8.25,
-      "Nueces County (Corpus Christi)":8.25,"Jefferson County (Beaumont)":8.25,
-      "Lubbock County":8.25,"Webb County (Laredo)":8.25,"Galveston County":8.25,
-      "Brazoria County":8.25,"Smith County (Tyler)":8.25,"Brazos County (Bryan/College Station)":8.25,
-      "Tom Green County (San Angelo)":8.25,"Ector County (Odessa)":8.25
+  "Colorado": {
+    "due": "20th of following month",
+    "portal": "Revenue Online (revenue.colorado.gov)",
+    "note": "State 2.9%. Very high local rates. Denver 8.81%, some areas exceed 11%.",
+    "discount": "none",
+    "counties": {
+      "Denver County": 8.81,
+      "El Paso County (Colorado Springs)": 8.2,
+      "Arapahoe County (Aurora)": 8.0,
+      "Jefferson County (Lakewood)": 8.5,
+      "Adams County (Thornton)": 8.75,
+      "Larimer County (Fort Collins)": 7.55,
+      "Douglas County (Castle Rock)": 6.9,
+      "Weld County (Greeley)": 7.01,
+      "Boulder County": 8.845,
+      "Pueblo County": 7.6,
+      "Mesa County (Grand Junction)": 7.27,
+      "Garfield County (Glenwood Springs)": 8.6,
+      "Eagle County (Vail)": 8.5,
+      "Summit County": 8.375,
+      "La Plata County (Durango)": 7.9
     }
   },
-  "New York": {
-    due:"20th of following month", portal:"NY Business Online (businessexpress.ny.gov)",
-    note:"State 4%. NYC = 8.875% combined. Other counties vary 7%–8.875%. File with NY State Department of Tax & Finance.",
-    discount:"none",
-    counties:{
-      "New York City (5 boroughs)":8.875,"Nassau County":8.625,"Suffolk County":8.625,
-      "Westchester County":8.375,"Erie County (Buffalo)":8.75,"Monroe County (Rochester)":8.00,
-      "Onondaga County (Syracuse)":8.00,"Albany County":8.00,"Dutchess County":8.375,
-      "Orange County":8.125,"Rockland County":8.375,"Saratoga County":7.00,
-      "Ulster County":8.00,"Broome County (Binghamton)":8.00,"Oneida County (Utica)":8.75,
-      "Niagara County":8.00,"Schenectady County":8.00,"Rensselaer County (Troy)":8.00,
-      "Chemung County (Elmira)":8.00,"Clinton County":8.00,"Jefferson County (Watertown)":8.00,
-      "Chautauqua County":8.00,"Cattaraugus County":8.00
+  "Connecticut": {
+    "due": "Last day of following month",
+    "portal": "myconneCT (portal.ct.gov/DRS)",
+    "note": "Flat 6.35% statewide. No county-level variation. Meals taxed at 7.35%.",
+    "discount": "pct",
+    "counties": {
+      "All Connecticut Statewide": 6.35
     }
   },
-  "Washington": {
-    due:"25th of following month", portal:"DOR (dor.wa.gov)",
-    note:"State 6.5%. Local rates vary significantly. Seattle area exceeds 10%. No state income tax — sales tax is primary revenue.",
-    discount:"none",
-    counties:{
-      "King County (Seattle area)":10.25,"Pierce County (Tacoma)":10.20,
-      "Snohomish County (Everett)":10.60,"Spokane County":8.90,"Clark County (Vancouver)":8.70,
-      "Thurston County (Olympia)":9.00,"Kitsap County":9.10,"Whatcom County (Bellingham)":8.80,
-      "Yakima County":8.80,"Benton County (Kennewick/Richland)":8.70,"Skagit County":8.80,
-      "Cowlitz County (Longview)":8.30,"Grant County (Moses Lake)":8.30,
-      "Franklin County (Pasco)":8.60,"Lewis County (Chehalis)":8.10,
-      "Island County":8.80,"Mason County":8.80,"Jefferson County":8.80
+  "Delaware": {
+    "due": "No return required",
+    "portal": "No filing required",
+    "note": "No sales tax in Delaware.",
+    "discount": "none",
+    "counties": {
+      "No sales tax - no return required": 0.0
     }
   },
   "Florida": {
-    due:"20th of following month", portal:"Florida e-Services (floridarevenue.com)",
-    note:"State 6%. Counties add discretionary surtax 0.5%–2.5%. Tampa area (Hillsborough) is highest at 8.5%.",
-    discount:"pct",
-    counties:{
-      "Miami-Dade County":7.00,"Broward County (Fort Lauderdale)":7.00,
-      "Palm Beach County":7.00,"Hillsborough County (Tampa)":8.50,
-      "Orange County (Orlando)":6.50,"Pinellas County (St. Pete/Clearwater)":7.00,
-      "Duval County (Jacksonville)":7.50,"Lee County (Fort Myers/Cape Coral)":6.50,
-      "Polk County (Lakeland)":7.00,"Brevard County (Melbourne/Titusville)":7.00,
-      "Volusia County (Daytona Beach)":6.50,"Pasco County":7.00,
-      "Sarasota County":7.00,"Manatee County (Bradenton)":7.50,
-      "Collier County (Naples)":6.00,"Seminole County (Sanford)":7.00,
-      "Lake County":7.00,"Alachua County (Gainesville)":7.00,
-      "Leon County (Tallahassee)":7.50,"Osceola County (Kissimmee)":7.50,
-      "Escambia County (Pensacola)":7.50,"Bay County (Panama City)":7.50,
-      "St. Johns County":6.50,"Marion County (Ocala)":7.00
-    }
-  },
-  "Illinois": {
-    due:"20th of following month", portal:"MyTax Illinois (mytax.illinois.gov)",
-    note:"State 6.25%. Chicago/Cook County can exceed 10.25% combined. Highly variable by location.",
-    discount:"none",
-    counties:{
-      "Cook County (Chicago city)":10.25,"Cook County (Chicago suburbs)":9.00,
-      "DuPage County":7.75,"Lake County":7.00,"Will County (Joliet)":8.00,
-      "Kane County (Aurora/Elgin)":8.25,"McHenry County":7.00,
-      "Winnebago County (Rockford)":8.25,"Madison County (Alton/Edwardsville)":7.85,
-      "St. Clair County (Belleville/O'Fallon)":7.85,"Champaign County (Champaign-Urbana)":8.75,
-      "Sangamon County (Springfield)":8.75,"Peoria County":8.75,
-      "McLean County (Bloomington-Normal)":8.00,"Macon County (Decatur)":8.50
-    }
-  },
-  "Pennsylvania": {
-    due:"20th of following month", portal:"myPATH (mypath.pa.gov)",
-    note:"State 6%. Philadelphia = 8% (adds 2%). Allegheny/Pittsburgh = 7% (adds 1%). All other counties = 6%.",
-    discount:"none",
-    counties:{
-      "Philadelphia County":8.00,"Allegheny County (Pittsburgh)":7.00,
-      "Montgomery County":6.00,"Bucks County":6.00,"Delaware County":6.00,
-      "Chester County":6.00,"Lancaster County":6.00,"York County":6.00,
-      "Berks County (Reading)":6.00,"Lehigh County (Allentown)":6.00,
-      "Northampton County (Bethlehem)":6.00,"Erie County":6.00,
-      "Dauphin County (Harrisburg)":6.00,"Westmoreland County (Greensburg)":6.00,
-      "Luzerne County (Wilkes-Barre)":6.00,"Lackawanna County (Scranton)":6.00,
-      "Cumberland County":6.00,"Schuylkill County":6.00
-    }
-  },
-  "Tennessee": {
-    due:"20th of following month", portal:"TNTAP (tntap.tn.gov)",
-    note:"State 7%. Counties add local rates. Most areas 9.25%–9.75% combined. No state income tax.",
-    discount:"none",
-    counties:{
-      "Shelby County (Memphis)":9.75,"Davidson County (Nashville)":9.25,
-      "Knox County (Knoxville)":9.25,"Hamilton County (Chattanooga)":9.25,
-      "Rutherford County (Murfreesboro)":9.25,"Williamson County (Franklin)":9.25,
-      "Montgomery County (Clarksville)":9.50,"Sumner County (Hendersonville)":9.25,
-      "Wilson County (Lebanon)":9.25,"Maury County (Columbia)":9.25,
-      "Sullivan County (Kingsport/Bristol)":9.25,"Washington County (Johnson City)":9.25
+    "due": "20th of following month",
+    "portal": "Florida e-Services (floridarevenue.com)",
+    "note": "State 6%. Counties add discretionary surtax 0.5%-2.5%.",
+    "discount": "pct",
+    "counties": {
+      "Miami-Dade County": 7.0,
+      "Broward County (Fort Lauderdale)": 7.0,
+      "Palm Beach County": 7.0,
+      "Hillsborough County (Tampa)": 8.5,
+      "Orange County (Orlando)": 6.5,
+      "Pinellas County (St. Pete)": 7.0,
+      "Duval County (Jacksonville)": 7.5,
+      "Lee County (Fort Myers)": 6.5,
+      "Polk County (Lakeland)": 7.0,
+      "Brevard County": 7.0,
+      "Volusia County (Daytona)": 6.5,
+      "Pasco County": 7.0,
+      "Sarasota County": 7.0,
+      "Manatee County (Bradenton)": 7.5,
+      "Collier County (Naples)": 6.0,
+      "Seminole County": 7.0,
+      "Lake County": 7.0,
+      "Alachua County (Gainesville)": 7.0,
+      "Leon County (Tallahassee)": 7.5,
+      "Osceola County (Kissimmee)": 7.5,
+      "Escambia County (Pensacola)": 7.5,
+      "Bay County (Panama City)": 7.5,
+      "St. Johns County": 6.5,
+      "Marion County (Ocala)": 7.0,
+      "St. Lucie County (Port St. Lucie)": 7.0,
+      "Charlotte County (Port Charlotte)": 7.0
     }
   },
   "Georgia": {
-    due:"20th of following month", portal:"Georgia Tax Center (gtc.dor.ga.gov)",
-    note:"State 4%. Counties add 2%–4% local, SPLOST, and MARTA (Atlanta). Most areas 7%–9% combined.",
-    discount:"none",
-    counties:{
-      "Fulton County (Atlanta)":8.90,"DeKalb County":8.00,"Gwinnett County":6.00,
-      "Cobb County":6.00,"Clayton County":8.00,"Chatham County (Savannah)":7.00,
-      "Richmond County (Augusta)":8.00,"Bibb County (Macon)":7.00,
-      "Clarke County (Athens)":8.00,"Cherokee County":6.00,
-      "Forsyth County":6.00,"Hall County (Gainesville)":7.00,
-      "Henry County":6.00,"Columbia County (Evans)":8.00
+    "due": "20th of following month",
+    "portal": "Georgia Tax Center (gtc.dor.ga.gov)",
+    "note": "State 4%. Counties add SPLOST and local taxes. Atlanta area highest.",
+    "discount": "none",
+    "counties": {
+      "Fulton County (Atlanta)": 8.9,
+      "DeKalb County": 8.0,
+      "Gwinnett County": 6.0,
+      "Cobb County": 6.0,
+      "Clayton County": 8.0,
+      "Cherokee County": 6.0,
+      "Chatham County (Savannah)": 7.0,
+      "Richmond County (Augusta)": 8.0,
+      "Bibb County (Macon)": 7.0,
+      "Clarke County (Athens)": 8.0,
+      "Forsyth County": 6.0,
+      "Hall County (Gainesville)": 7.0,
+      "Henry County": 6.0,
+      "Columbia County (Evans)": 8.0,
+      "Muscogee County (Columbus)": 8.0,
+      "Lowndes County (Valdosta)": 7.0,
+      "Whitfield County (Dalton)": 7.0
     }
   },
-  "Ohio": {
-    due:"23rd of following month", portal:"Ohio Business Gateway (gateway.ohio.gov)",
-    note:"State 5.75%. Counties add 0.5%–2.25% local. Cuyahoga (Cleveland) among highest at 8%.",
-    discount:"none",
-    counties:{
-      "Cuyahoga County (Cleveland)":8.00,"Franklin County (Columbus)":7.50,
-      "Hamilton County (Cincinnati)":7.80,"Summit County (Akron)":6.75,
-      "Montgomery County (Dayton)":7.50,"Lucas County (Toledo)":7.75,
-      "Stark County (Canton)":6.50,"Lorain County":6.50,"Lake County":7.25,
-      "Mahoning County (Youngstown)":7.25,"Butler County":6.50,"Warren County":6.50,
-      "Delaware County":7.00,"Medina County":6.75
+  "Hawaii": {
+    "due": "20th of following month",
+    "portal": "Hawaii Tax Online (tax.hawaii.gov)",
+    "note": "4% General Excise Tax (GET). Oahu adds 0.5% surcharge.",
+    "discount": "none",
+    "counties": {
+      "Honolulu County (Oahu)": 4.5,
+      "Maui County": 4.0,
+      "Hawaii County (Big Island)": 4.0,
+      "Kauai County": 4.0
     }
   },
-  "New Jersey": {
-    due:"20th of following month", portal:"NJ Taxation (njportal.com/DOR/Sales)",
-    note:"Flat 6.625% statewide. Some Urban Enterprise Zones: 3.3125%. No county-level variation for standard sales.",
-    discount:"none",
-    counties:{
-      "All Counties (standard rate)":6.625,
-      "Urban Enterprise Zones (select cities — half rate)":3.3125
+  "Idaho": {
+    "due": "20th of following month",
+    "portal": "TAP (tap.tax.idaho.gov)",
+    "note": "Flat 6% statewide. Very limited local sales taxes.",
+    "discount": "none",
+    "counties": {
+      "Ada County (Boise)": 6.0,
+      "Canyon County (Nampa/Caldwell)": 6.0,
+      "Kootenai County (Coeur d'Alene)": 6.0,
+      "Twin Falls County": 6.0,
+      "Bonneville County (Idaho Falls)": 6.0,
+      "Bannock County (Pocatello)": 6.0,
+      "All Other Idaho Counties": 6.0
+    }
+  },
+  "Illinois": {
+    "due": "20th of following month",
+    "portal": "MyTax Illinois (mytax.illinois.gov)",
+    "note": "State 6.25%. Chicago/Cook County up to 10.25% combined.",
+    "discount": "none",
+    "counties": {
+      "Cook County (Chicago city)": 10.25,
+      "Cook County (Chicago suburbs)": 9.0,
+      "DuPage County": 7.75,
+      "Lake County": 7.0,
+      "Will County (Joliet)": 8.0,
+      "Kane County (Aurora/Elgin)": 8.25,
+      "McHenry County": 7.0,
+      "Winnebago County (Rockford)": 8.25,
+      "Madison County": 7.85,
+      "St. Clair County (Belleville)": 7.85,
+      "Champaign County": 8.75,
+      "Sangamon County (Springfield)": 8.75,
+      "Peoria County": 8.75,
+      "McLean County (Bloomington)": 8.0,
+      "Macon County (Decatur)": 8.5
+    }
+  },
+  "Indiana": {
+    "due": "Last day of following month",
+    "portal": "INTIME (intime.dor.in.gov)",
+    "note": "Flat 7% statewide. No local sales tax in Indiana.",
+    "discount": "none",
+    "counties": {
+      "All Indiana Counties - Flat 7% Statewide": 7.0
+    }
+  },
+  "Iowa": {
+    "due": "Last day of following month",
+    "portal": "GovConnectIowa (tax.iowa.gov)",
+    "note": "State 6%. Local option 1% added in many jurisdictions.",
+    "discount": "none",
+    "counties": {
+      "Polk County (Des Moines)": 7.0,
+      "Linn County (Cedar Rapids)": 7.0,
+      "Scott County (Davenport)": 7.0,
+      "Johnson County (Iowa City)": 7.0,
+      "Black Hawk County (Waterloo)": 7.0,
+      "Woodbury County (Sioux City)": 7.0,
+      "Dubuque County": 7.0,
+      "Story County (Ames)": 7.0,
+      "Pottawattamie County (Council Bluffs)": 7.0,
+      "All Other Iowa Counties": 6.0
+    }
+  },
+  "Kansas": {
+    "due": "25th of following month",
+    "portal": "KS Customer Service (ksrevenue.gov)",
+    "note": "State 6.5% (groceries exempt 2025). Counties and cities add local rates.",
+    "discount": "none",
+    "counties": {
+      "Johnson County (Overland Park/Olathe)": 9.1,
+      "Sedgwick County (Wichita)": 8.5,
+      "Shawnee County (Topeka)": 9.15,
+      "Wyandotte County (Kansas City KS)": 9.125,
+      "Douglas County (Lawrence)": 9.3,
+      "Riley County (Manhattan)": 8.95,
+      "Saline County (Salina)": 8.75,
+      "Reno County (Hutchinson)": 8.5,
+      "All Other Kansas Counties": 7.5
+    }
+  },
+  "Kentucky": {
+    "due": "20th of following month",
+    "portal": "KY Online Gateway (revenue.ky.gov)",
+    "note": "Flat 6% statewide. No local sales tax in Kentucky.",
+    "discount": "none",
+    "counties": {
+      "All Kentucky Counties - Flat 6% Statewide": 6.0
+    }
+  },
+  "Louisiana": {
+    "due": "20th of following month",
+    "portal": "LATAP (latap.revenue.louisiana.gov)",
+    "note": "State 5%. Parishes add significant local rates. Combined avg ~10.1%.",
+    "discount": "pct",
+    "counties": {
+      "Orleans Parish (New Orleans)": 9.45,
+      "Jefferson Parish (Metairie)": 9.2,
+      "East Baton Rouge Parish (Baton Rouge)": 9.95,
+      "St. Tammany Parish (Slidell/Covington)": 9.2,
+      "Caddo Parish (Shreveport)": 9.05,
+      "Calcasieu Parish (Lake Charles)": 9.7,
+      "Rapides Parish (Alexandria)": 9.7,
+      "Ouachita Parish (Monroe)": 9.45,
+      "St. Landry Parish (Opelousas)": 9.95,
+      "Lafourche Parish": 9.7,
+      "Terrebonne Parish (Houma)": 9.7,
+      "Tangipahoa Parish (Hammond)": 9.45,
+      "Livingston Parish": 9.45,
+      "Ascension Parish (Gonzales)": 9.45
+    }
+  },
+  "Maine": {
+    "due": "15th of following month",
+    "portal": "Maine Tax Portal (portal.maine.gov/mtap)",
+    "note": "Flat 5.5% statewide. No local sales tax. Meals taxed at 8%.",
+    "discount": "none",
+    "counties": {
+      "All Maine Counties - Flat 5.5% Statewide": 5.5
+    }
+  },
+  "Maryland": {
+    "due": "20th of following month",
+    "portal": "bFile (interactive.marylandtaxes.gov)",
+    "note": "Flat 6% statewide. No local sales tax variation.",
+    "discount": "pct",
+    "counties": {
+      "All Maryland Counties - Flat 6% Statewide": 6.0
     }
   },
   "Massachusetts": {
-    due:"20th of following month", portal:"MassTaxConnect (masstaxconnect.dor.state.ma.us)",
-    note:"Flat 6.25% statewide sales tax. No county-level variation for sales tax (local meals tax is separate).",
-    discount:"none",
-    counties:{
-      "All Counties — standard rate":6.25
+    "due": "20th of following month",
+    "portal": "MassTaxConnect (masstaxconnect.dor.state.ma.us)",
+    "note": "Flat 6.25% statewide. No county-level sales tax variation.",
+    "discount": "none",
+    "counties": {
+      "All Massachusetts Counties - Flat 6.25%": 6.25
+    }
+  },
+  "Michigan": {
+    "due": "20th of following month",
+    "portal": "Michigan Treasury Online (michigan.gov/taxes)",
+    "note": "Flat 6% statewide. No local sales tax in Michigan.",
+    "discount": "pct",
+    "counties": {
+      "All Michigan Counties - Flat 6% Statewide": 6.0
+    }
+  },
+  "Minnesota": {
+    "due": "20th of following month",
+    "portal": "e-Services (mndor.state.mn.us)",
+    "note": "State 6.875%. Minneapolis area adds extra taxes. Most areas 7.375%-8%+.",
+    "discount": "none",
+    "counties": {
+      "Hennepin County (Minneapolis)": 8.025,
+      "Ramsey County (St. Paul)": 7.375,
+      "Dakota County": 7.375,
+      "Anoka County": 7.375,
+      "Washington County": 7.375,
+      "Scott County": 7.375,
+      "Carver County": 7.375,
+      "St. Louis County (Duluth)": 7.875,
+      "Olmsted County (Rochester)": 7.875,
+      "Stearns County (St. Cloud)": 7.875,
+      "All Other Minnesota Counties": 7.375
+    }
+  },
+  "Mississippi": {
+    "due": "20th of following month",
+    "portal": "TAP (tap.dor.ms.gov)",
+    "note": "State 7%. Very limited local additions.",
+    "discount": "none",
+    "counties": {
+      "Hinds County (Jackson)": 7.0,
+      "Harrison County (Biloxi/Gulfport)": 7.0,
+      "DeSoto County (Southaven)": 7.0,
+      "Rankin County (Brandon)": 7.0,
+      "Madison County (Ridgeland)": 7.0,
+      "Forrest County (Hattiesburg)": 7.0,
+      "All Other Mississippi Counties": 7.0
+    }
+  },
+  "Missouri": {
+    "due": "20th of following month",
+    "portal": "MyTax Missouri (mytax.missouri.gov)",
+    "note": "State 4.225%. Cities and counties add significant local rates. KC area ~10.85%.",
+    "discount": "pct",
+    "counties": {
+      "Jackson County (Kansas City MO)": 10.85,
+      "St. Louis County": 9.679,
+      "St. Louis City": 11.679,
+      "Greene County (Springfield)": 8.225,
+      "Clay County (N. Kansas City)": 8.725,
+      "St. Charles County": 8.95,
+      "Jefferson County": 7.725,
+      "Boone County (Columbia)": 7.975,
+      "Cass County (Belton/Raymore)": 7.225,
+      "Franklin County": 7.225,
+      "Christian County (Nixa/Ozark)": 7.975,
+      "Jasper County (Joplin)": 8.225
+    }
+  },
+  "Montana": {
+    "due": "No return required",
+    "portal": "No filing required",
+    "note": "No sales tax in Montana.",
+    "discount": "none",
+    "counties": {
+      "No sales tax - no return required": 0.0
+    }
+  },
+  "Nebraska": {
+    "due": "25th of following month",
+    "portal": "Nebraska e-File (revenue.nebraska.gov)",
+    "note": "State 5.5%. Cities add local rates. Omaha 7%, Lincoln 7%.",
+    "discount": "none",
+    "counties": {
+      "Douglas County (Omaha)": 7.0,
+      "Lancaster County (Lincoln)": 7.0,
+      "Sarpy County (Papillion/Bellevue)": 7.0,
+      "Hall County (Grand Island)": 7.0,
+      "Buffalo County (Kearney)": 7.0,
+      "Dodge County (Fremont)": 7.0,
+      "All Other Nebraska Counties": 5.5
+    }
+  },
+  "Nevada": {
+    "due": "Last day of following month",
+    "portal": "Nevada Tax Center (nevadatax.nv.gov)",
+    "note": "State 6.85%. Clark County (Las Vegas) 8.375%, Washoe (Reno) 8.265%.",
+    "discount": "none",
+    "counties": {
+      "Clark County (Las Vegas/Henderson)": 8.375,
+      "Washoe County (Reno/Sparks)": 8.265,
+      "Carson City": 7.6,
+      "Douglas County": 7.1,
+      "Elko County": 7.1,
+      "Lyon County": 7.1,
+      "Nye County (Pahrump)": 6.85,
+      "Churchill County (Fallon)": 6.85,
+      "All Other Nevada Counties": 6.85
+    }
+  },
+  "New Hampshire": {
+    "due": "No return required",
+    "portal": "No filing required",
+    "note": "No sales tax. Meals and Rooms Tax 8.5% is separate.",
+    "discount": "none",
+    "counties": {
+      "No sales tax - no return required": 0.0
+    }
+  },
+  "New Jersey": {
+    "due": "20th of following month",
+    "portal": "NJ Taxation (njportal.com/DOR/Sales)",
+    "note": "Flat 6.625% statewide. Urban Enterprise Zones: 3.3125%.",
+    "discount": "none",
+    "counties": {
+      "All Counties - Standard Rate": 6.625,
+      "Urban Enterprise Zones (select cities)": 3.3125
+    }
+  },
+  "New Mexico": {
+    "due": "25th of following month",
+    "portal": "TAP (tap.state.nm.us)",
+    "note": "Gross Receipts Tax (GRT) - similar to sales tax. State 5%. Cities add local.",
+    "discount": "none",
+    "counties": {
+      "Bernalillo County (Albuquerque)": 7.875,
+      "Dona Ana County (Las Cruces)": 8.3125,
+      "Sandoval County (Rio Rancho)": 7.625,
+      "Santa Fe County": 8.4375,
+      "San Juan County (Farmington)": 7.625,
+      "McKinley County (Gallup)": 7.875,
+      "Chaves County (Roswell)": 7.375,
+      "Otero County (Alamogordo)": 7.875,
+      "All Other New Mexico Counties": 5.0
+    }
+  },
+  "New York": {
+    "due": "20th of following month",
+    "portal": "NY Business Online (businessexpress.ny.gov)",
+    "note": "State 4%. NYC = 8.875%. Other counties vary 7%-8.875%.",
+    "discount": "none",
+    "counties": {
+      "New York City (5 boroughs)": 8.875,
+      "Nassau County": 8.625,
+      "Suffolk County": 8.625,
+      "Westchester County": 8.375,
+      "Erie County (Buffalo)": 8.75,
+      "Monroe County (Rochester)": 8.0,
+      "Onondaga County (Syracuse)": 8.0,
+      "Albany County": 8.0,
+      "Dutchess County": 8.375,
+      "Orange County": 8.125,
+      "Rockland County": 8.375,
+      "Saratoga County": 7.0,
+      "Ulster County": 8.0,
+      "Broome County (Binghamton)": 8.0,
+      "Oneida County (Utica)": 8.75,
+      "Niagara County": 8.0,
+      "Schenectady County": 8.0,
+      "Rensselaer County (Troy)": 8.0,
+      "Chemung County (Elmira)": 8.0,
+      "Clinton County": 8.0,
+      "Jefferson County (Watertown)": 8.0,
+      "Chautauqua County": 8.0,
+      "Cattaraugus County": 8.0
     }
   },
   "North Carolina": {
-    due:"20th of following month", portal:"e-Business Center (eservices.dor.nc.gov)",
-    note:"State 4.75% (3.99% from 2026 for income). Sales tax: counties add 2%–2.25%. Most areas 6.75%–7%.",
-    discount:"none",
-    counties:{
-      "Mecklenburg County (Charlotte)":7.25,"Wake County (Raleigh)":7.25,
-      "Guilford County (Greensboro/High Point)":6.75,"Durham County":7.50,
-      "Forsyth County (Winston-Salem)":7.00,"Buncombe County (Asheville)":7.00,
-      "Cumberland County (Fayetteville)":7.00,"Union County":7.00,
-      "Cabarrus County (Concord)":7.00,"Gaston County (Gastonia)":7.00,
-      "Onslow County (Jacksonville)":6.75,"New Hanover County (Wilmington)":7.00,
-      "Catawba County (Hickory)":6.75,"Durham County":7.50
+    "due": "20th of following month",
+    "portal": "e-Business Center (eservices.dor.nc.gov)",
+    "note": "State 4.75%. Counties add 2%-2.25% local. Most areas 6.75%-7.5%.",
+    "discount": "none",
+    "counties": {
+      "Mecklenburg County (Charlotte)": 7.25,
+      "Wake County (Raleigh)": 7.25,
+      "Guilford County (Greensboro)": 6.75,
+      "Durham County": 7.5,
+      "Forsyth County (Winston-Salem)": 7.0,
+      "Buncombe County (Asheville)": 7.0,
+      "Cumberland County (Fayetteville)": 7.0,
+      "Union County": 7.0,
+      "Cabarrus County (Concord)": 7.0,
+      "Gaston County": 7.0,
+      "Onslow County (Jacksonville)": 6.75,
+      "New Hanover County (Wilmington)": 7.0,
+      "Catawba County (Hickory)": 6.75,
+      "Robeson County": 7.0,
+      "Rowan County (Salisbury)": 7.0
+    }
+  },
+  "North Dakota": {
+    "due": "Last day of following month",
+    "portal": "TAP (apps.nd.gov/tax/tap)",
+    "note": "State 5%. Cities add local rates. Fargo 7.5%, Bismarck 7%.",
+    "discount": "none",
+    "counties": {
+      "Cass County (Fargo)": 7.5,
+      "Burleigh County (Bismarck)": 7.0,
+      "Grand Forks County": 7.25,
+      "Ward County (Minot)": 7.0,
+      "Morton County (Mandan)": 7.0,
+      "Williams County (Williston)": 7.0,
+      "All Other North Dakota Counties": 5.0
+    }
+  },
+  "Ohio": {
+    "due": "23rd of following month",
+    "portal": "Ohio Business Gateway (gateway.ohio.gov)",
+    "note": "State 5.75%. Counties add 0.5%-2.25% local. Cuyahoga (Cleveland) 8%.",
+    "discount": "none",
+    "counties": {
+      "Cuyahoga County (Cleveland)": 8.0,
+      "Franklin County (Columbus)": 7.5,
+      "Hamilton County (Cincinnati)": 7.8,
+      "Summit County (Akron)": 6.75,
+      "Montgomery County (Dayton)": 7.5,
+      "Lucas County (Toledo)": 7.75,
+      "Stark County (Canton)": 6.5,
+      "Lorain County": 6.5,
+      "Lake County": 7.25,
+      "Mahoning County (Youngstown)": 7.25,
+      "Butler County": 6.5,
+      "Warren County": 6.5,
+      "Delaware County": 7.0,
+      "Medina County": 6.75,
+      "Licking County (Newark)": 7.25
+    }
+  },
+  "Oklahoma": {
+    "due": "20th of following month",
+    "portal": "OkTAP (oktap.tax.ok.gov)",
+    "note": "State 4.5% (2026). Cities and counties add local rates. OKC and Tulsa ~8.5%.",
+    "discount": "none",
+    "counties": {
+      "Oklahoma County (Oklahoma City)": 8.625,
+      "Tulsa County": 8.517,
+      "Cleveland County (Norman)": 8.375,
+      "Comanche County (Lawton)": 8.875,
+      "Canadian County (Yukon/Mustang)": 8.375,
+      "Rogers County (Claremore)": 8.517,
+      "Wagoner County (Broken Arrow)": 8.517,
+      "Payne County (Stillwater)": 8.875,
+      "Pontotoc County (Ada)": 9.0,
+      "Garfield County (Enid)": 9.0,
+      "All Other Oklahoma Counties": 7.5
+    }
+  },
+  "Oregon": {
+    "due": "No return required",
+    "portal": "No filing required",
+    "note": "No sales tax in Oregon.",
+    "discount": "none",
+    "counties": {
+      "No sales tax - no return required": 0.0
+    }
+  },
+  "Pennsylvania": {
+    "due": "20th of following month",
+    "portal": "myPATH (mypath.pa.gov)",
+    "note": "State 6%. Philadelphia 8% (+2%), Allegheny/Pittsburgh 7% (+1%). All others 6%.",
+    "discount": "none",
+    "counties": {
+      "Philadelphia County": 8.0,
+      "Allegheny County (Pittsburgh)": 7.0,
+      "Montgomery County": 6.0,
+      "Bucks County": 6.0,
+      "Delaware County": 6.0,
+      "Chester County": 6.0,
+      "Lancaster County": 6.0,
+      "York County": 6.0,
+      "Berks County (Reading)": 6.0,
+      "Lehigh County (Allentown)": 6.0,
+      "Northampton County (Bethlehem)": 6.0,
+      "Erie County": 6.0,
+      "Dauphin County (Harrisburg)": 6.0,
+      "Westmoreland County": 6.0,
+      "Luzerne County (Wilkes-Barre)": 6.0,
+      "Lackawanna County (Scranton)": 6.0
+    }
+  },
+  "Rhode Island": {
+    "due": "20th of following month",
+    "portal": "Taxpayer Portal (taxportal.ri.gov)",
+    "note": "Flat 7% statewide. No local sales tax in Rhode Island.",
+    "discount": "none",
+    "counties": {
+      "All Rhode Island - Flat 7% Statewide": 7.0
+    }
+  },
+  "South Carolina": {
+    "due": "20th of following month",
+    "portal": "MyDORWAY (mydorway.dor.sc.gov)",
+    "note": "State 6% (6.1% in 2026). Counties add local option taxes.",
+    "discount": "none",
+    "counties": {
+      "Greenville County": 7.0,
+      "Richland County (Columbia)": 8.0,
+      "Charleston County": 9.0,
+      "Horry County (Myrtle Beach)": 8.5,
+      "Spartanburg County": 7.0,
+      "Lexington County": 7.0,
+      "York County (Rock Hill)": 7.0,
+      "Anderson County": 7.0,
+      "Beaufort County (Hilton Head)": 8.5,
+      "Berkeley County": 7.0,
+      "Dorchester County": 7.0,
+      "All Other SC Counties": 7.0
+    }
+  },
+  "South Dakota": {
+    "due": "Last day of following month",
+    "portal": "e-Tax (etax.sd.gov)",
+    "note": "State 4.2% (may revert to 4.5% in 2027). Cities add local rates.",
+    "discount": "none",
+    "counties": {
+      "Minnehaha County (Sioux Falls)": 6.2,
+      "Pennington County (Rapid City)": 6.2,
+      "Brown County (Aberdeen)": 6.2,
+      "Beadle County (Huron)": 6.2,
+      "Codington County (Watertown)": 6.2,
+      "All Other South Dakota Counties": 4.2
+    }
+  },
+  "Tennessee": {
+    "due": "20th of following month",
+    "portal": "TNTAP (tntap.tn.gov)",
+    "note": "State 7% (groceries 4%). Counties add local rates. Most areas 9.25%-9.75%.",
+    "discount": "none",
+    "counties": {
+      "Shelby County (Memphis)": 9.75,
+      "Davidson County (Nashville)": 9.25,
+      "Knox County (Knoxville)": 9.25,
+      "Hamilton County (Chattanooga)": 9.25,
+      "Rutherford County (Murfreesboro)": 9.25,
+      "Williamson County (Franklin)": 9.25,
+      "Montgomery County (Clarksville)": 9.5,
+      "Sumner County": 9.25,
+      "Wilson County (Lebanon)": 9.25,
+      "Maury County (Columbia)": 9.25,
+      "Sullivan County (Kingsport)": 9.25,
+      "Washington County (Johnson City)": 9.25,
+      "Blount County (Maryville)": 9.75,
+      "Bradley County (Cleveland)": 9.25
+    }
+  },
+  "Texas": {
+    "due": "20th of following month",
+    "portal": "WebFile (comptroller.texas.gov)",
+    "note": "State 6.25%. Cities/counties can add up to 2% local. Most metro areas at 8.25%.",
+    "discount": "pct",
+    "counties": {
+      "Harris County (Houston)": 8.25,
+      "Dallas County": 8.25,
+      "Tarrant County (Fort Worth)": 8.25,
+      "Bexar County (San Antonio)": 8.25,
+      "Travis County (Austin)": 8.25,
+      "Collin County (Plano/McKinney)": 8.25,
+      "Denton County": 8.25,
+      "El Paso County": 8.25,
+      "Hidalgo County (McAllen)": 8.25,
+      "Fort Bend County": 8.25,
+      "Montgomery County": 8.25,
+      "Williamson County": 8.25,
+      "Cameron County (Brownsville)": 8.25,
+      "Nueces County (Corpus Christi)": 8.25,
+      "Jefferson County (Beaumont)": 8.25,
+      "Lubbock County": 8.25,
+      "Webb County (Laredo)": 8.25,
+      "Galveston County": 8.25,
+      "Brazoria County": 8.25,
+      "Smith County (Tyler)": 8.25,
+      "Brazos County (Bryan/College Stn)": 8.25,
+      "Tom Green County (San Angelo)": 8.25,
+      "Ector County (Odessa)": 8.25
+    }
+  },
+  "Utah": {
+    "due": "Last day of following month",
+    "portal": "TAP (tap.tax.utah.gov)",
+    "note": "State 4.85% (includes 1.25% mandatory local). Counties add more.",
+    "discount": "none",
+    "counties": {
+      "Salt Lake County (Salt Lake City)": 7.25,
+      "Utah County (Provo/Orem)": 6.85,
+      "Davis County (Layton)": 7.0,
+      "Weber County (Ogden)": 7.25,
+      "Washington County (St. George)": 6.35,
+      "Cache County (Logan)": 6.35,
+      "Iron County (Cedar City)": 6.35,
+      "Summit County (Park City)": 8.05,
+      "All Other Utah Counties": 6.1
+    }
+  },
+  "Vermont": {
+    "due": "25th of following month",
+    "portal": "myVTax (myvtax.vermont.gov)",
+    "note": "State 6%. Meals & rooms taxed at 9%. Local option 1% in some towns.",
+    "discount": "none",
+    "counties": {
+      "All Vermont - Statewide 6%": 6.0,
+      "Burlington (with local option 1%)": 7.0,
+      "Montpelier (with local option 1%)": 7.0
+    }
+  },
+  "Virginia": {
+    "due": "20th of following month",
+    "portal": "Virginia Tax eForms (tax.virginia.gov)",
+    "note": "Northern Virginia & Hampton Roads: 6.00% (4.3% + mandatory 1% + 0.7% regional). Rest of VA: 5.30%.",
+    "discount": "va",
+    "counties": {
+      "Alexandria City": 6.0,
+      "Arlington County": 6.0,
+      "Fairfax City": 6.0,
+      "Fairfax County": 6.0,
+      "Falls Church City": 6.0,
+      "Loudoun County": 6.0,
+      "Manassas City": 6.0,
+      "Manassas Park City": 6.0,
+      "Prince William County": 6.0,
+      "Chesapeake City": 6.0,
+      "Hampton City": 6.0,
+      "Isle of Wight County": 6.0,
+      "James City County": 6.0,
+      "Newport News City": 6.0,
+      "Norfolk City": 6.0,
+      "Poquoson City": 6.0,
+      "Portsmouth City": 6.0,
+      "Suffolk City": 6.0,
+      "Virginia Beach City": 6.0,
+      "Williamsburg City": 6.0,
+      "York County": 6.0,
+      "Albemarle County": 5.3,
+      "Augusta County": 5.3,
+      "Bedford County": 5.3,
+      "Botetourt County": 5.3,
+      "Campbell County": 5.3,
+      "Carroll County": 5.3,
+      "Charlottesville City": 5.3,
+      "Chesterfield County": 5.3,
+      "Frederick County": 5.3,
+      "Harrisonburg City": 5.3,
+      "Henrico County": 5.3,
+      "Lynchburg City": 5.3,
+      "Montgomery County": 5.3,
+      "Roanoke City": 5.3,
+      "Roanoke County": 5.3,
+      "Rockingham County": 5.3,
+      "Shenandoah County": 5.3,
+      "Spotsylvania County": 5.3,
+      "Stafford County": 5.3,
+      "Warren County": 5.3,
+      "Wise County": 5.3
+    }
+  },
+  "Washington": {
+    "due": "25th of following month",
+    "portal": "DOR (dor.wa.gov)",
+    "note": "State 6.5%. Local rates vary significantly. Seattle area exceeds 10%.",
+    "discount": "none",
+    "counties": {
+      "King County (Seattle area)": 10.25,
+      "Pierce County (Tacoma)": 10.2,
+      "Snohomish County (Everett)": 10.6,
+      "Spokane County": 8.9,
+      "Clark County (Vancouver)": 8.7,
+      "Thurston County (Olympia)": 9.0,
+      "Kitsap County": 9.1,
+      "Whatcom County (Bellingham)": 8.8,
+      "Yakima County": 8.8,
+      "Benton County (Kennewick/Richland)": 8.7,
+      "Skagit County": 8.8,
+      "Cowlitz County": 8.3,
+      "Grant County": 8.3,
+      "Franklin County (Pasco)": 8.6,
+      "Lewis County": 8.1,
+      "Island County": 8.8,
+      "Mason County": 8.8,
+      "Jefferson County": 8.8
+    }
+  },
+  "Washington D.C.": {
+    "due": "20th of following month",
+    "portal": "MyTax DC (mytax.dc.gov)",
+    "note": "Flat 6% statewide for general sales. Meals taxed at 10%.",
+    "discount": "none",
+    "counties": {
+      "Washington D.C. - Statewide 6%": 6.0
+    }
+  },
+  "West Virginia": {
+    "due": "20th of following month",
+    "portal": "MyTaxes (mytaxes.wvtax.gov)",
+    "note": "State 6%. Limited local additions. Most areas 6%-7%.",
+    "discount": "none",
+    "counties": {
+      "Kanawha County (Charleston)": 6.0,
+      "Cabell County (Huntington)": 6.0,
+      "Monongalia County (Morgantown)": 6.0,
+      "Berkeley County (Martinsburg)": 6.0,
+      "Wood County (Parkersburg)": 6.0,
+      "Raleigh County (Beckley)": 6.0,
+      "All Other West Virginia Counties": 6.0
+    }
+  },
+  "Wisconsin": {
+    "due": "Last day of following month",
+    "portal": "My Tax Account (tap.revenue.wi.gov)",
+    "note": "State 5%. Counties add 0.5% in most areas. Milwaukee area 5.6%.",
+    "discount": "none",
+    "counties": {
+      "Milwaukee County": 5.6,
+      "Dane County (Madison)": 5.5,
+      "Waukesha County": 5.5,
+      "Brown County (Green Bay)": 5.5,
+      "Racine County": 5.5,
+      "Outagamie County (Appleton)": 5.5,
+      "Winnebago County (Oshkosh)": 5.5,
+      "Rock County (Janesville/Beloit)": 5.5,
+      "Washington County": 5.5,
+      "Kenosha County": 5.5,
+      "All Other Wisconsin Counties": 5.5
+    }
+  },
+  "Wyoming": {
+    "due": "Last day of following month",
+    "portal": "e-Services (excise.wy.gov)",
+    "note": "State 4%. Counties add up to 2% local. Combined most areas 5%-6%.",
+    "discount": "none",
+    "counties": {
+      "Laramie County (Cheyenne)": 6.0,
+      "Natrona County (Casper)": 6.0,
+      "Sweetwater County (Rock Springs)": 6.0,
+      "Albany County (Laramie)": 6.0,
+      "Campbell County (Gillette)": 6.0,
+      "Fremont County (Lander/Riverton)": 5.0,
+      "Park County (Cody)": 5.0,
+      "Teton County (Jackson)": 6.0,
+      "All Other Wyoming Counties": 5.0
     }
   }
 };
