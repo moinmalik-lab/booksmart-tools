@@ -361,19 +361,27 @@ footer a{color:rgba(255,255,255,.5);}
         </div>
 
         <div class="ex-how">
-          <div class="ex-how-title">Excel Column Format:</div>
-          <div class="ex-how-row"><span class="col-letter">A</span> <span class="col-name">State</span> <span class="col-eg">e.g. Virginia</span></div>
-          <div class="ex-how-row"><span class="col-letter">B</span> <span class="col-name">County / Jurisdiction</span> <span class="col-eg">e.g. Prince William County</span></div>
-          <div class="ex-how-row"><span class="col-letter">C</span> <span class="col-name">Gross Sales ($)</span> <span class="col-eg">e.g. 202995.47</span></div>
-          <div class="ex-how-row"><span class="col-letter">D</span> <span class="col-name">Exempt Sales ($)</span> <span class="col-eg">e.g. 0 (or leave blank)</span></div>
-          <div class="ex-how-row"><span class="col-letter">E</span> <span class="col-name">Period</span> <span class="col-eg">e.g. February 2026</span></div>
-          <div class="ex-how-row" style="margin-top:8px;color:#7a7568;font-size:11px">Row 1 = headers (auto-detected). One row per county per state.</div>
+          <div class="ex-how-title">How It Works — Any Format Accepted:</div>
+          <div class="ex-how-row"><span class="col-letter">1</span> <span class="col-name">Upload any Excel or CSV</span> <span class="col-eg">Your Amazon, Shopify, eBay export</span></div>
+          <div class="ex-how-row"><span class="col-letter">2</span> <span class="col-name">We show you all your columns</span> <span class="col-eg">Pick which column = which field</span></div>
+          <div class="ex-how-row"><span class="col-letter">3</span> <span class="col-name">Click Generate Reports</span> <span class="col-eg">Get one report per state, ready to print</span></div>
+          <div class="ex-how-row" style="margin-top:8px;color:#1e5c33;font-size:11px;background:#eaf4ee;padding:8px 10px;border-radius:3px;border:none">✅ No template needed. Works with any column names — State, Ship-To State, Destination, Sales Total, Revenue, etc.</div>
         </div>
       </div>
 
       <!-- RIGHT: Status / Preview -->
       <div class="ex-preview-col">
         <div id="ex-status" class="ex-status-box" style="display:none"></div>
+
+        <!-- COLUMN MAPPER — shown after file read, before preview -->
+        <div id="col-mapper" style="display:none">
+          <div class="ex-preview-title">Step 2 — Match Your Columns</div>
+          <div style="font-size:12px;color:#7a7568;margin-bottom:12px;line-height:1.6">Your file has <strong id="col-count">0</strong> columns. Tell us which one is which — leave blank if your file doesn't have that field.</div>
+          <div class="mapper-grid" id="mapper-grid">
+            <!-- filled dynamically -->
+          </div>
+          <button class="btn-confirm-map" id="btn-confirm-map" onclick="confirmMapping()">Confirm Column Mapping →</button>
+        </div>
         <div id="ex-preview" style="display:none">
           <div class="ex-preview-title">Uploaded Data Preview</div>
           <div class="ex-preview-table-wrap">
@@ -522,6 +530,13 @@ footer a{color:rgba(255,255,255,.5);}
 .report-footer-note{font-size:11px;color:#7a7568;border-top:1px solid #ede9e1;padding-top:12px;line-height:1.6;}
 
 /* PRINT STYLES */
+.mapper-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.mapper-lbl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#1a1a18;padding:4px 0 2px;}
+.mapper-req{color:#c8472a;}
+.mapper-sel select{width:100%;height:36px;border:1px solid #d0cbbf;border-radius:3px;padding:0 10px;font-family:'DM Sans',sans-serif;font-size:12px;background:#faf8f3;outline:none;}
+.mapper-sel select:focus{border-color:#1e5c33;}
+.btn-confirm-map{width:100%;height:40px;background:#1a1a18;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;transition:background .15s;}
+.btn-confirm-map:hover{background:#333;}
 @media print{
   .site-nav,.hero,.main .grid,.excel-section,.reports-header .reports-actions,.print-btn,.btn-print-all,.btn-copy-summary{display:none!important;}
   .state-report{border:1px solid #ccc;margin-bottom:0;page-break-after:always;}
@@ -1732,15 +1747,21 @@ function downloadTemplate(){
   XLSX.writeFile(wb,'BookSmartTools_SalesTax_Template.xlsx');
 }
 
-// ── FILE HANDLER ──────────────────────────────────────
+// ── FILE HANDLER — Smart Column Mapper ───────────────
+let rawRows = []; // all rows from file
+let fileKeys = []; // column headers from file
+
 function handleFile(file){
   if(!file) return;
   const status  = document.getElementById('ex-status');
+  const mapper  = document.getElementById('col-mapper');
   const preview = document.getElementById('ex-preview');
   status.style.display='block';
   status.className='ex-status-box info';
   status.innerHTML='⏳ Reading <strong>'+file.name+'</strong>...';
+  mapper.style.display='none';
   preview.style.display='none';
+  uploadedRows=[];
 
   const reader = new FileReader();
   reader.onload = function(e){
@@ -1748,57 +1769,111 @@ function handleFile(file){
       const data = new Uint8Array(e.target.result);
       const wb   = XLSX.read(data,{type:'array'});
       const ws   = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws,{defval:''});
-      if(!rows.length) throw new Error('No data rows found.');
+      rawRows    = XLSX.utils.sheet_to_json(ws,{defval:''});
+      if(!rawRows.length) throw new Error('No data rows found in the file.');
 
-      // Auto-detect column names
-      const keys = Object.keys(rows[0]);
-      function col(patterns){
-        return keys.find(k=>patterns.some(p=>k.toLowerCase().includes(p.toLowerCase())))||'';
-      }
-      const cState  = col(['state']);
-      const cCounty = col(['county','jurisdiction','city','location','region','territory']);
-      const cGross  = col(['gross','total sales','sales amount','revenue','amount']);
-      const cExempt = col(['exempt','deduction','non-tax','nontax']);
-      const cPeriod = col(['period','month','date','filing']);
-
-      if(!cState||!cGross) throw new Error('Could not detect required columns. Make sure your file has a "State" column and a "Gross Sales" column.');
-
-      uploadedRows = rows.map(r=>({
-        state:  String(r[cState]||'').trim(),
-        county: String(r[cCounty]||'').trim(),
-        gross:  parseFloat(String(r[cGross]||'0').replace(/[$,]/g,''))||0,
-        exempt: parseFloat(String(r[cExempt]||'0').replace(/[$,]/g,''))||0,
-        period: String(r[cPeriod]||'').trim()||'Not specified'
-      })).filter(r=>r.state&&r.gross>0);
-
-      if(!uploadedRows.length) throw new Error('No valid data rows found. Check that State and Gross Sales columns have values.');
-
-      // Stats
-      const stateCount={};
-      uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
-      const totalGross = uploadedRows.reduce((s,r)=>s+r.gross,0);
+      fileKeys = Object.keys(rawRows[0]);
+      if(!fileKeys.length) throw new Error('Could not read column headers from the file.');
 
       status.className='ex-status-box ok';
-      status.innerHTML='✅ File read successfully! <strong>'+uploadedRows.length+' rows</strong> across <strong>'+Object.keys(stateCount).length+' states</strong>. Total gross sales: <strong>$'+fmtN(totalGross)+'</strong>';
+      status.innerHTML='✅ <strong>'+file.name+'</strong> read — <strong>'+rawRows.length+' rows</strong>, <strong>'+fileKeys.length+' columns</strong> found. Now match your columns below:';
 
-      // Preview table (first 12 rows)
-      const tbl = document.getElementById('ex-preview-table');
-      const preview_rows = uploadedRows.slice(0,12);
-      tbl.innerHTML='<tr><th>State</th><th>County / Jurisdiction</th><th>Gross Sales</th><th>Exempt Sales</th><th>Period</th></tr>'
-        +preview_rows.map(r=>`<tr><td>${r.state}</td><td>${r.county||'—'}</td><td>$${fmtN(r.gross)}</td><td>$${fmtN(r.exempt)}</td><td>${r.period}</td></tr>`).join('')
-        +(uploadedRows.length>12?`<tr><td colspan="5" style="text-align:center;color:#7a7568;padding:8px">... and ${uploadedRows.length-12} more rows</td></tr>`:'');
+      // Build column count display
+      document.getElementById('col-count').textContent = fileKeys.length;
 
-      const stateList = Object.entries(stateCount).map(([s,c])=>s+' ('+c+' row'+(c>1?'s':'')+')').join(', ');
-      document.getElementById('ex-summary').innerHTML='<strong>States detected:</strong> '+stateList+'<br><strong>Total rows:</strong> '+uploadedRows.length+' &nbsp;|&nbsp; <strong>Total gross sales:</strong> $'+fmtN(totalGross);
+      // Build mapper dropdowns
+      buildMapper();
+      mapper.style.display='block';
 
-      preview.style.display='block';
     }catch(err){
       status.className='ex-status-box err';
-      status.innerHTML='❌ Error: <strong>'+err.message+'</strong><br>Check the file matches the template format.';
+      status.innerHTML='❌ Error reading file: <strong>'+err.message+'</strong><br>Try saving as .xlsx or .csv and re-upload.';
     }
   };
   reader.readAsArrayBuffer(file);
+}
+
+// Guess best column for a field based on keyword patterns
+function guessCol(patterns){
+  return fileKeys.find(k=>patterns.some(p=>k.toLowerCase().includes(p.toLowerCase())))||'';
+}
+
+function buildMapper(){
+  const grid = document.getElementById('mapper-grid');
+  const fields = [
+    {id:'map-state',  label:'State <span class="mapper-req">*</span>',   patterns:['state','province'],          required:true},
+    {id:'map-county', label:'County / Jurisdiction',                       patterns:['county','jurisdiction','city','district','territory','location','region','ship-to','destination'],required:false},
+    {id:'map-gross',  label:'Gross Sales ($) <span class="mapper-req">*</span>', patterns:['gross','total','sales','revenue','amount','subtotal','net sales'], required:true},
+    {id:'map-exempt', label:'Exempt Sales ($)',                             patterns:['exempt','deduction','non-tax','nontax','excluded'],required:false},
+    {id:'map-period', label:'Period / Month',                              patterns:['period','month','date','filing','quarter','year'],required:false},
+  ];
+
+  grid.innerHTML = fields.map(f=>`
+    <div>
+      <div class="mapper-lbl">${f.label}</div>
+      <div class="mapper-sel">
+        <select id="${f.id}">
+          <option value="">— ${f.required?'Required — select column':'Optional — leave blank if n/a'} —</option>
+          ${fileKeys.map(k=>`<option value="${k}" ${guessCol(f.patterns)===k?'selected':''}>${k}${rawRows[0][k]!==undefined?' (e.g. '+String(rawRows[0][k]).substring(0,20)+')':''}</option>`).join('')}
+        </select>
+      </div>
+    </div>`).join('');
+
+  // Show sample of first 3 rows
+  const sampleDiv = document.createElement('div');
+  sampleDiv.style.cssText='grid-column:1/-1;margin-top:8px;';
+  sampleDiv.innerHTML='<div style="font-size:10px;color:#7a7568;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Your file — first 3 rows preview:</div>'
+    +'<div style="overflow-x:auto;border:1px solid #ddd8cc;border-radius:3px;">'
+    +'<table style="border-collapse:collapse;font-size:11px;min-width:100%">'
+    +'<tr>'+fileKeys.map(k=>`<th style="background:#f3efe4;padding:5px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#7a7568;border-bottom:1px solid #ddd8cc;white-space:nowrap">${k}</th>`).join('')+'</tr>'
+    +rawRows.slice(0,3).map(r=>'<tr>'+fileKeys.map(k=>`<td style="padding:5px 8px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;white-space:nowrap">${String(r[k]).substring(0,25)}</td>`).join('')+'</tr>').join('')
+    +'</table></div>';
+  grid.appendChild(sampleDiv);
+}
+
+function confirmMapping(){
+  const cState  = document.getElementById('map-state')?.value;
+  const cCounty = document.getElementById('map-county')?.value;
+  const cGross  = document.getElementById('map-gross')?.value;
+  const cExempt = document.getElementById('map-exempt')?.value;
+  const cPeriod = document.getElementById('map-period')?.value;
+
+  if(!cState) { alert('Please select the column that contains State names.'); return; }
+  if(!cGross) { alert('Please select the column that contains Gross Sales amounts.'); return; }
+
+  // Parse rows using confirmed mapping
+  uploadedRows = rawRows.map(r=>({
+    state:  String(r[cState]||'').trim(),
+    county: cCounty ? String(r[cCounty]||'').trim() : '',
+    gross:  parseFloat(String(r[cGross]||'0').replace(/[$,\s]/g,''))||0,
+    exempt: cExempt ? parseFloat(String(r[cExempt]||'0').replace(/[$,\s]/g,''))||0 : 0,
+    period: cPeriod ? String(r[cPeriod]||'').trim() : 'Not specified'
+  })).filter(r=>r.state&&r.gross>0);
+
+  if(!uploadedRows.length){
+    alert('No valid rows found after mapping. Check:\n• State column has state names (e.g. Virginia)\n• Gross Sales column has numeric values\n• Skip rows with 0 or blank sales');
+    return;
+  }
+
+  // Stats
+  const stateCount={};
+  uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
+  const totalGross = uploadedRows.reduce((s,r)=>s+r.gross,0);
+
+  // Show preview
+  const tbl = document.getElementById('ex-preview-table');
+  const previewRows = uploadedRows.slice(0,12);
+  tbl.innerHTML='<tr><th>State</th><th>County / Jurisdiction</th><th>Gross Sales</th><th>Exempt Sales</th><th>Period</th></tr>'
+    +previewRows.map(r=>`<tr><td>${r.state}</td><td>${r.county||'—'}</td><td>$${fmtN(r.gross)}</td><td>$${fmtN(r.exempt)}</td><td>${r.period}</td></tr>`).join('')
+    +(uploadedRows.length>12?`<tr><td colspan="5" style="text-align:center;color:#7a7568;padding:8px">... and ${uploadedRows.length-12} more rows</td></tr>`:'');
+
+  const stateList = Object.entries(stateCount).sort((a,b)=>b[1]-a[1]).map(([s,c])=>s+' ('+c+')').join(', ');
+  document.getElementById('ex-summary').innerHTML='<strong>✅ '+uploadedRows.length+' valid rows confirmed</strong> across <strong>'+Object.keys(stateCount).length+' states</strong><br>'
+    +'<strong>Total gross sales:</strong> $'+fmtN(totalGross)+'<br>'
+    +'<strong>States:</strong> '+stateList;
+
+  document.getElementById('col-mapper').style.display='none';
+  document.getElementById('ex-preview').style.display='block';
 }
 
 // ── LOOK UP COUNTY RATE ───────────────────────────────
