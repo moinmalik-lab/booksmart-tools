@@ -1839,65 +1839,184 @@ function downloadTemplate(){
   XLSX.writeFile(wb,'BookSmartTools_SalesTax_Template.xlsx');
 }
 
-// ── FILE HANDLER — Smart Column Mapper ───────────────
-let rawRows = []; // all rows from file
-let fileKeys = []; // column headers from file
+// ── FILE HANDLER — Auto-detect columns, no mapper needed ──
+let rawRows  = [];
+let fileKeys = [];
+let mappedCols = {};
+
+// Simple CSV parser fallback (when XLSX unavailable)
+function parseCSV(text){
+  const lines = text.trim().split('\n');
+  if(!lines.length) return [];
+  const headers = lines[0].split(',').map(h=>h.replace(/^"|"$/g,'').trim());
+  return lines.slice(1).map(line=>{
+    const vals = line.split(',').map(v=>v.replace(/^"|"$/g,'').trim());
+    const obj = {};
+    headers.forEach((h,i)=>{ obj[h] = vals[i]||''; });
+    return obj;
+  }).filter(r=>Object.values(r).some(v=>v));
+}
+
+// Auto-detect which column maps to which field
+function autoDetect(keys){
+  function best(patterns){ return keys.find(k=>patterns.some(p=>k.toLowerCase().replace(/[\s_-]/g,'').includes(p.toLowerCase().replace(/[\s_-]/g,'')))) || ''; }
+  return {
+    state:  best(['state','province','shiptostate','destinationstate','taxstate']),
+    county: best(['county','jurisdiction','city','district','territory','location','region','shipto','destination','localarea']),
+    gross:  best(['gross','totalsales','salesamount','revenue','amount','subtotal','netsales','taxablesales','sales']),
+    exempt: best(['exempt','deduction','nontax','excluded','exemptamt']),
+    period: best(['period','month','date','filing','quarter','year','reportingperiod']),
+  };
+}
 
 function handleFile(file){
   if(!file) return;
-  const status  = document.getElementById('ex-status');
-  const mapper  = document.getElementById('col-mapper');
-  const preview = document.getElementById('ex-preview');
-  status.style.display='block';
-  status.className='ex-status-box info';
-  status.innerHTML='⏳ Reading <strong>'+file.name+'</strong>...';
-  mapper.style.display='none';
-  preview.style.display='none';
-  uploadedRows=[];
+  const statusEl = document.getElementById('ex-status');
+  const previewEl= document.getElementById('ex-preview');
+  const mapperEl = document.getElementById('col-mapper');
+
+  statusEl.style.display = 'block';
+  statusEl.className     = 'ex-status-box info';
+  statusEl.innerHTML     = '⏳ Reading <strong>' + file.name + '</strong>...';
+  if(mapperEl) mapperEl.style.display = 'none';
+  if(previewEl) previewEl.style.display = 'none';
+  uploadedRows = [];
+
+  const isCSV = file.name.toLowerCase().endsWith('.csv');
 
   const reader = new FileReader();
+
+  reader.onerror = function(){
+    statusEl.className = 'ex-status-box err';
+    statusEl.innerHTML = '❌ Could not read the file. Please try again.';
+  };
+
   reader.onload = function(e){
-    try{
-      const data = new Uint8Array(e.target.result);
-      const wb   = XLSX.read(data,{type:'array'});
-      const ws   = wb.Sheets[wb.SheetNames[0]];
-      rawRows    = XLSX.utils.sheet_to_json(ws,{defval:''});
-      if(!rawRows.length) throw new Error('No data rows found in the file.');
+    try {
+      let rows = [];
 
-      fileKeys = Object.keys(rawRows[0]);
-      if(!fileKeys.length) throw new Error('Could not read column headers from the file.');
+      if(isCSV){
+        // CSV — parse directly
+        rows = parseCSV(e.target.result);
+      } else {
+        // Excel — try XLSX library
+        if(typeof XLSX === 'undefined'){
+          // XLSX didn't load — try treating as CSV
+          try {
+            rows = parseCSV(e.target.result);
+          } catch(e2){
+            throw new Error('Excel library failed to load. Please save your file as .csv and try again.');
+          }
+        } else {
+          const data = new Uint8Array(e.target.result);
+          const wb   = XLSX.read(data, {type:'array'});
+          const ws   = wb.Sheets[wb.SheetNames[0]];
+          rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+        }
+      }
 
-      status.className='ex-status-box ok';
-      status.innerHTML='✅ <strong>'+file.name+'</strong> read — <strong>'+rawRows.length+' rows</strong>, <strong>'+fileKeys.length+' columns</strong> found. Now match your columns below:';
+      if(!rows.length) throw new Error('No data rows found. Make sure your file has a header row and data.');
 
-      // Build column count display
-      document.getElementById('col-count').textContent = fileKeys.length;
+      rawRows  = rows;
+      fileKeys = Object.keys(rows[0]);
+      if(!fileKeys.length) throw new Error('Could not read column headers.');
 
-      // Build mapper dropdowns
-      buildMapper();
-      mapper.style.display='block';
+      // Auto-detect columns
+      mappedCols = autoDetect(fileKeys);
 
-    }catch(err){
-      status.className='ex-status-box err';
-      status.innerHTML='❌ Error reading file: <strong>'+err.message+'</strong><br>Try saving as .xlsx or .csv and re-upload.';
+      if(!mappedCols.state && !mappedCols.gross){
+        // Can't auto-detect — show column mapper
+        showColumnMapper(statusEl, mapperEl, file.name);
+        return;
+      }
+
+      // Auto-detect worked — process directly
+      processRows(mappedCols);
+
+      const stateCount = {};
+      uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
+      const totalGross = uploadedRows.reduce((s,r)=>s+r.gross, 0);
+
+      if(!uploadedRows.length){
+        showColumnMapper(statusEl, mapperEl, file.name);
+        return;
+      }
+
+      // Show success + preview
+      statusEl.className = 'ex-status-box ok';
+      statusEl.innerHTML = '✅ <strong>' + uploadedRows.length + ' rows</strong> detected across <strong>' + Object.keys(stateCount).length + ' states</strong>. Total gross sales: <strong>$' + fmtN(totalGross) + '</strong>'
+        + (mappedCols.county ? '' : ' <span style="color:#b8860b"> — No county column found; tax will use state-level rate.</span>');
+
+      // Build preview table
+      buildPreviewTable();
+      if(previewEl) previewEl.style.display = 'block';
+
+    } catch(err){
+      statusEl.className = 'ex-status-box err';
+      statusEl.innerHTML = '❌ <strong>Could not read file:</strong> ' + err.message + '<br><small>Try saving as .csv (File → Save As → CSV) and uploading again.</small>';
     }
   };
-  reader.readAsArrayBuffer(file);
+
+  if(isCSV){
+    reader.readAsText(file);
+  } else {
+    reader.readAsArrayBuffer(file);
+  }
 }
 
-// Guess best column for a field based on keyword patterns
+// Show column mapper when auto-detect fails
+function showColumnMapper(statusEl, mapperEl, filename){
+  statusEl.className = 'ex-status-box info';
+  statusEl.innerHTML = '✅ File read: <strong>' + rawRows.length + ' rows</strong>, <strong>' + fileKeys.length + ' columns</strong>.<br>'
+    + '<strong>Column names not recognized.</strong> Match your columns below:';
+  buildMapper();
+  if(mapperEl){ mapperEl.style.display='block'; mapperEl.scrollIntoView({behavior:'smooth'}); }
+}
+
+// Process raw rows using column mapping
+function processRows(cols){
+  uploadedRows = rawRows.map(r=>({
+    state:  String(r[cols.state]  || '').trim(),
+    county: cols.county ? String(r[cols.county] || '').trim() : '',
+    gross:  parseFloat(String(r[cols.gross] || '0').replace(/[$,\s]/g,'')) || 0,
+    exempt: cols.exempt ? parseFloat(String(r[cols.exempt]||'0').replace(/[$,\s]/g,''))||0 : 0,
+    period: cols.period ? String(r[cols.period]||'').trim() : 'Not specified',
+  })).filter(r => r.state && r.gross > 0);
+}
+
+// Build preview table
+function buildPreviewTable(){
+  const tbl = document.getElementById('ex-preview-table');
+  const rows = uploadedRows.slice(0, 12);
+  if(!tbl) return;
+  tbl.innerHTML = '<tr><th>State</th><th>County / Jurisdiction</th><th>Gross Sales</th><th>Exempt Sales</th><th>Period</th></tr>'
+    + rows.map(r=>`<tr><td>${r.state}</td><td>${r.county||'—'}</td><td>$${fmtN(r.gross)}</td><td>$${fmtN(r.exempt)}</td><td>${r.period}</td></tr>`).join('')
+    + (uploadedRows.length > 12 ? `<tr><td colspan="5" style="text-align:center;color:#7a7568;padding:8px">... and ${uploadedRows.length-12} more rows</td></tr>` : '');
+
+  const stateCount = {};
+  uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
+  const stateList = Object.entries(stateCount).sort((a,b)=>b[1]-a[1]).map(([s,c])=>s+' ('+c+')').join(', ');
+  const totalGross = uploadedRows.reduce((s,r)=>s+r.gross, 0);
+  const sumEl = document.getElementById('ex-summary');
+  if(sumEl) sumEl.innerHTML = '<strong>States:</strong> ' + stateList + '<br><strong>Total gross sales:</strong> $' + fmtN(totalGross);
+}
+
+// Column mapper (fallback when auto-detect fails)
 function guessCol(patterns){
   return fileKeys.find(k=>patterns.some(p=>k.toLowerCase().includes(p.toLowerCase())))||'';
 }
 
 function buildMapper(){
   const grid = document.getElementById('mapper-grid');
+  if(!grid) return;
+  document.getElementById('col-count').textContent = fileKeys.length;
+
   const fields = [
-    {id:'map-state',  label:'State <span class="mapper-req">*</span>',   patterns:['state','province'],          required:true},
-    {id:'map-county', label:'County / Jurisdiction',                       patterns:['county','jurisdiction','city','district','territory','location','region','ship-to','destination'],required:false},
-    {id:'map-gross',  label:'Gross Sales ($) <span class="mapper-req">*</span>', patterns:['gross','total','sales','revenue','amount','subtotal','net sales'], required:true},
-    {id:'map-exempt', label:'Exempt Sales ($)',                             patterns:['exempt','deduction','non-tax','nontax','excluded'],required:false},
-    {id:'map-period', label:'Period / Month',                              patterns:['period','month','date','filing','quarter','year'],required:false},
+    {id:'map-state',  label:'State <span style="color:#c8472a">*</span>',    patterns:['state','province'],         required:true},
+    {id:'map-county', label:'County / Jurisdiction',                          patterns:['county','jurisdiction','city','district','location'], required:false},
+    {id:'map-gross',  label:'Gross Sales ($) <span style="color:#c8472a">*</span>', patterns:['gross','total','sales','revenue','amount'], required:true},
+    {id:'map-exempt', label:'Exempt Sales ($)',                               patterns:['exempt','deduction','nontax'],  required:false},
+    {id:'map-period', label:'Period / Month',                                 patterns:['period','month','date','filing'],required:false},
   ];
 
   grid.innerHTML = fields.map(f=>`
@@ -1905,21 +2024,21 @@ function buildMapper(){
       <div class="mapper-lbl">${f.label}</div>
       <div class="mapper-sel">
         <select id="${f.id}">
-          <option value="">— ${f.required?'Required — select column':'Optional — leave blank if n/a'} —</option>
-          ${fileKeys.map(k=>`<option value="${k}" ${guessCol(f.patterns)===k?'selected':''}>${k}${rawRows[0][k]!==undefined?' (e.g. '+String(rawRows[0][k]).substring(0,20)+')':''}</option>`).join('')}
+          <option value="">— ${f.required?'Required':'Optional'} —</option>
+          ${fileKeys.map(k=>`<option value="${k}" ${guessCol(f.patterns)===k?'selected':''}>${k}</option>`).join('')}
         </select>
       </div>
     </div>`).join('');
 
-  // Show sample of first 3 rows
+  // Sample rows
   const sampleDiv = document.createElement('div');
-  sampleDiv.style.cssText='grid-column:1/-1;margin-top:8px;';
-  sampleDiv.innerHTML='<div style="font-size:10px;color:#7a7568;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Your file — first 3 rows preview:</div>'
-    +'<div style="overflow-x:auto;border:1px solid #ddd8cc;border-radius:3px;">'
-    +'<table style="border-collapse:collapse;font-size:11px;min-width:100%">'
-    +'<tr>'+fileKeys.map(k=>`<th style="background:#f3efe4;padding:5px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#7a7568;border-bottom:1px solid #ddd8cc;white-space:nowrap">${k}</th>`).join('')+'</tr>'
-    +rawRows.slice(0,3).map(r=>'<tr>'+fileKeys.map(k=>`<td style="padding:5px 8px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;white-space:nowrap">${String(r[k]).substring(0,25)}</td>`).join('')+'</tr>').join('')
-    +'</table></div>';
+  sampleDiv.style.cssText = 'grid-column:1/-1;margin-top:8px;';
+  sampleDiv.innerHTML = '<div style="font-size:10px;color:#7a7568;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Your file — first 3 rows:</div>'
+    + '<div style="overflow-x:auto;border:1px solid #ddd8cc;border-radius:3px;">'
+    + '<table style="border-collapse:collapse;font-size:11px;min-width:100%">'
+    + '<tr>' + fileKeys.map(k=>`<th style="background:#f3efe4;padding:5px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#7a7568;border-bottom:1px solid #ddd8cc;white-space:nowrap">${k}</th>`).join('') + '</tr>'
+    + rawRows.slice(0,3).map(r=>'<tr>'+fileKeys.map(k=>`<td style="padding:5px 8px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;white-space:nowrap">${String(r[k]).substring(0,25)}</td>`).join('')+'</tr>').join('')
+    + '</table></div>';
   grid.appendChild(sampleDiv);
 }
 
@@ -1930,42 +2049,32 @@ function confirmMapping(){
   const cExempt = document.getElementById('map-exempt')?.value;
   const cPeriod = document.getElementById('map-period')?.value;
 
-  if(!cState) { alert('Please select the column that contains State names.'); return; }
-  if(!cGross) { alert('Please select the column that contains Gross Sales amounts.'); return; }
+  if(!cState){ alert('Please select the column containing State names.'); return; }
+  if(!cGross){ alert('Please select the column containing Gross Sales amounts.'); return; }
 
-  // Parse rows using confirmed mapping
-  uploadedRows = rawRows.map(r=>({
-    state:  String(r[cState]||'').trim(),
-    county: cCounty ? String(r[cCounty]||'').trim() : '',
-    gross:  parseFloat(String(r[cGross]||'0').replace(/[$,\s]/g,''))||0,
-    exempt: cExempt ? parseFloat(String(r[cExempt]||'0').replace(/[$,\s]/g,''))||0 : 0,
-    period: cPeriod ? String(r[cPeriod]||'').trim() : 'Not specified'
-  })).filter(r=>r.state&&r.gross>0);
+  const cols = { state:cState, county:cCounty, gross:cGross, exempt:cExempt, period:cPeriod };
+  processRows(cols);
 
   if(!uploadedRows.length){
-    alert('No valid rows found after mapping. Check:\n• State column has state names (e.g. Virginia)\n• Gross Sales column has numeric values\n• Skip rows with 0 or blank sales');
+    alert('No valid rows found after mapping. Check that State and Gross Sales columns have values.');
     return;
   }
 
-  // Stats
-  const stateCount={};
+  const stateCount = {};
   uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
-  const totalGross = uploadedRows.reduce((s,r)=>s+r.gross,0);
+  const totalGross = uploadedRows.reduce((s,r)=>s+r.gross, 0);
 
-  // Show preview
-  const tbl = document.getElementById('ex-preview-table');
-  const previewRows = uploadedRows.slice(0,12);
-  tbl.innerHTML='<tr><th>State</th><th>County / Jurisdiction</th><th>Gross Sales</th><th>Exempt Sales</th><th>Period</th></tr>'
-    +previewRows.map(r=>`<tr><td>${r.state}</td><td>${r.county||'—'}</td><td>$${fmtN(r.gross)}</td><td>$${fmtN(r.exempt)}</td><td>${r.period}</td></tr>`).join('')
-    +(uploadedRows.length>12?`<tr><td colspan="5" style="text-align:center;color:#7a7568;padding:8px">... and ${uploadedRows.length-12} more rows</td></tr>`:'');
+  const statusEl = document.getElementById('ex-status');
+  statusEl.className = 'ex-status-box ok';
+  statusEl.innerHTML = '✅ <strong>' + uploadedRows.length + ' valid rows</strong> across <strong>' + Object.keys(stateCount).length + ' states</strong>. Total: <strong>$' + fmtN(totalGross) + '</strong>';
 
-  const stateList = Object.entries(stateCount).sort((a,b)=>b[1]-a[1]).map(([s,c])=>s+' ('+c+')').join(', ');
-  document.getElementById('ex-summary').innerHTML='<strong>✅ '+uploadedRows.length+' valid rows confirmed</strong> across <strong>'+Object.keys(stateCount).length+' states</strong><br>'
-    +'<strong>Total gross sales:</strong> $'+fmtN(totalGross)+'<br>'
-    +'<strong>States:</strong> '+stateList;
+  const mapperEl = document.getElementById('col-mapper');
+  if(mapperEl) mapperEl.style.display = 'none';
 
-  document.getElementById('col-mapper').style.display='none';
-  document.getElementById('ex-preview').style.display='block';
+  buildPreviewTable();
+
+  const previewEl = document.getElementById('ex-preview');
+  if(previewEl){ previewEl.style.display = 'block'; previewEl.scrollIntoView({behavior:'smooth'}); }
 }
 
 // ── LOOK UP COUNTY RATE ───────────────────────────────
