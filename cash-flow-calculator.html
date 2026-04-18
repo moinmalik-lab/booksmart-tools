@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cash Flow Calculator | Business Cash Flow Analysis | BookSmartTools</title>
+<meta name="description" content="Calculate your business cash flow from operating, investing, and financing activities. Generate a simple cash flow statement.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px}.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+.hero{background:linear-gradient(135deg,#1a2e1a 0%,#2d4a1e 50%,#1a2e1a 100%);color:white;text-align:center;padding:48px 24px 40px}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin:0 4px 8px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin:12px 0 10px}.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}@media(max-width:720px){.layout{grid-template-columns:1fr}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.divider{height:1px;background:#d8d3c5;margin:18px 0}.field{margin-bottom:14px}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:#1e5c33;background:white}
+.pw{position:relative}.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none}.pw input{padding-left:26px}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5}
+.calc-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px}.calc-btn:hover{background:#165228}
+.rc{background:#1a1a18;color:#faf8f3;border:none}.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2}
+.rs{margin-bottom:16px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px}.rr:last-child{border-bottom:none}
+.rl{color:#d0ccbf;flex:1}.rl.b{color:white;font-weight:700}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap}.rv.g{color:#7dd4a0}.rv.a{color:#f0c060}.rv.r{color:#f08070}.rv.w{color:white}
+.grand{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin-bottom:10px}
+.gtl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}.gtv{font-family:'DM Serif Display',serif;font-size:32px;color:white}
+.actions{display:flex;gap:10px;margin-top:12px}.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}.abtn:hover{background:rgba(255,255,255,.08);color:white}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style></head><body><nav class="site-nav"><a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a><ul class="nav-links"><li><a href="/booksmart-tools/tools.html">Tools</a></li><li><a href="/booksmart-tools/about.html">About</a></li><li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li></ul></nav>
+<div class="hero"><span class="tag-pill">BOOKKEEPING</span><span class="tag-pill">CASH FLOW STATEMENT</span>
+<h1>Cash Flow Calculator</h1><p>Calculate your business operating, investing, and financing cash flows. Get a simple cash flow statement for any period.</p></div>
+<div class="container"><div class="layout">
+<div class="card">
+<div class="card-title"><div class="num">1</div>Cash Flow Components</div>
+<div class="card-title" style="font-size:14px;color:#1e5c33;margin-bottom:10px">OPERATING ACTIVITIES</div>
+<div class="field"><label class="flbl">Net Income</label><div class="pw" data-p="$"><input type="number" id="net-income" placeholder="0.00" step="0.01"></div></div>
+<div class="field"><label class="flbl">Add: Depreciation & Amortization</label><div class="pw" data-p="$"><input type="number" id="depr" placeholder="0.00" min="0" step="0.01" value="0"></div></div>
+<div class="field"><label class="flbl">Change in Accounts Receivable (increase = negative)</label><div class="pw" data-p="$"><input type="number" id="ar-change" placeholder="0.00" step="0.01" value="0"></div></div>
+<div class="field"><label class="flbl">Change in Inventory (increase = negative)</label><div class="pw" data-p="$"><input type="number" id="inv-change" placeholder="0.00" step="0.01" value="0"></div></div>
+<div class="field"><label class="flbl">Change in Accounts Payable (increase = positive)</label><div class="pw" data-p="$"><input type="number" id="ap-change" placeholder="0.00" step="0.01" value="0"></div></div>
+<div class="divider"></div>
+<div class="card-title" style="font-size:14px;color:#b8860b;margin-bottom:10px">INVESTING ACTIVITIES</div>
+<div class="field"><label class="flbl">Capital Expenditures (CapEx) — negative</label><div class="pw" data-p="$"><input type="number" id="capex" placeholder="0.00" step="0.01" value="0"></div></div>
+<div class="field"><label class="flbl">Proceeds from Asset Sales</label><div class="pw" data-p="$"><input type="number" id="asset-sales" placeholder="0.00" min="0" step="0.01" value="0"></div></div>
+<div class="divider"></div>
+<div class="card-title" style="font-size:14px;color:#7a7568;margin-bottom:10px">FINANCING ACTIVITIES</div>
+<div class="field"><label class="flbl">Loan Proceeds</label><div class="pw" data-p="$"><input type="number" id="loan-in" placeholder="0.00" min="0" step="0.01" value="0"></div></div>
+<div class="field"><label class="flbl">Loan Repayments — negative</label><div class="pw" data-p="$"><input type="number" id="loan-out" placeholder="0.00" step="0.01" value="0"></div></div>
+<div class="field"><label class="flbl">Owner Draws / Dividends Paid</label><div class="pw" data-p="$"><input type="number" id="dividends" placeholder="0.00" min="0" step="0.01" value="0"></div></div>
+<button class="calc-btn" onclick="calcCF()">Generate Cash Flow Statement →</button>
+</div>
+<div class="card rc"><div class="card-title"><div class="num" style="background:#2d4a1e">2</div>Cash Flow Statement</div>
+<div class="ph" id="ph">Enter your cash flow data<br>to generate a statement →</div>
+<div id="rc" style="display:none">
+<div class="rs"><div class="rst">OPERATING CASH FLOW</div>
+<div class="rr"><span class="rl">Net income</span><span class="rv" id="r-ni"></span></div>
+<div class="rr"><span class="rl">+ Depreciation</span><span class="rv g" id="r-dep"></span></div>
+<div class="rr"><span class="rl">Change in AR</span><span class="rv" id="r-ar"></span></div>
+<div class="rr"><span class="rl">Change in inventory</span><span class="rv" id="r-inv"></span></div>
+<div class="rr"><span class="rl">Change in AP</span><span class="rv" id="r-ap"></span></div>
+<div class="rr"><span class="rl b">Net Operating Cash Flow</span><span class="rv" id="r-ocf"></span></div>
+</div>
+<div class="rs"><div class="rst">INVESTING CASH FLOW</div>
+<div class="rr"><span class="rl">CapEx</span><span class="rv r" id="r-capex"></span></div>
+<div class="rr"><span class="rl">Asset sales</span><span class="rv g" id="r-asales"></span></div>
+<div class="rr"><span class="rl b">Net Investing Cash Flow</span><span class="rv" id="r-icf"></span></div>
+</div>
+<div class="rs"><div class="rst">FINANCING CASH FLOW</div>
+<div class="rr"><span class="rl">Loan proceeds</span><span class="rv g" id="r-lin"></span></div>
+<div class="rr"><span class="rl">Loan repayments</span><span class="rv r" id="r-lout"></span></div>
+<div class="rr"><span class="rl">Dividends / draws</span><span class="rv r" id="r-div"></span></div>
+<div class="rr"><span class="rl b">Net Financing Cash Flow</span><span class="rv" id="r-fcf"></span></div>
+</div>
+<div class="grand"><span class="gtl">NET CHANGE IN CASH</span><span class="gtv" id="r-grand"></span></div>
+<div class="actions"><button class="abtn" onclick="window.print()">🖨 Print</button></div>
+</div></div></div></div><footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a></footer>
+<script>
+function fmt(n){return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function g(id){return parseFloat(document.getElementById(id).value)||0;}
+function sv(id,val){const e=document.getElementById(id);e.textContent=fmt(Math.abs(val));e.className='rv '+(val>=0?'g':'r');}
+function calcCF(){
+const ni=g('net-income'),dep=g('depr'),ar=-g('ar-change'),inv=-g('inv-change'),ap=g('ap-change');
+const capex=-Math.abs(g('capex')),asales=g('asset-sales');
+const lin=g('loan-in'),lout=-Math.abs(g('loan-out')),divs=-Math.abs(g('dividends'));
+const ocf=ni+dep+ar+inv+ap,icf=capex+asales,fcf=lin+lout+divs;
+const net=ocf+icf+fcf;
+document.getElementById('ph').style.display='none';
+document.getElementById('rc').style.display='block';
+sv('r-ni',ni);document.getElementById('r-dep').textContent=fmt(dep);
+sv('r-ar',ar);sv('r-inv',inv);sv('r-ap',ap);
+const ocfEl=document.getElementById('r-ocf');ocfEl.textContent=fmt(Math.abs(ocf));ocfEl.className='rv '+(ocf>=0?'g':'r');
+document.getElementById('r-capex').textContent=fmt(Math.abs(capex));
+document.getElementById('r-asales').textContent=fmt(asales);
+const icfEl=document.getElementById('r-icf');icfEl.textContent=fmt(Math.abs(icf));icfEl.className='rv '+(icf>=0?'g':'r');
+document.getElementById('r-lin').textContent=fmt(lin);
+document.getElementById('r-lout').textContent=fmt(Math.abs(lout));
+document.getElementById('r-div').textContent=fmt(Math.abs(divs));
+const fcfEl=document.getElementById('r-fcf');fcfEl.textContent=fmt(Math.abs(fcf));fcfEl.className='rv '+(fcf>=0?'g':'r');
+document.getElementById('r-grand').textContent=(net>=0?'+':'')+fmt(net);
+document.getElementById('r-grand').style.color=net>=0?'#7dd4a0':'#f08070';
+}
+</script></body></html>
