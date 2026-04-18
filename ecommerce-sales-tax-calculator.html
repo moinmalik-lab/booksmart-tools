@@ -422,6 +422,7 @@ footer a{color:rgba(255,255,255,.5);}
               <th>Dealer Discount</th>
               <th>AMOUNT DUE</th>
               <th>Filing Due Date</th>
+              <th>File Online</th>
             </tr>
           </thead>
           <tbody id="summary-tbody"></tbody>
@@ -550,6 +551,7 @@ footer a{color:rgba(255,255,255,.5);}
 // ── COMPLETE COUNTY DATA — ALL 50 STATES + D.C. ──────────
 const STATES = {
   "Alabama": {
+    "url": "https://www.revenue.alabama.gov/",
     "due": "20th of following month",
     "portal": "MyAlabamaTaxes (revenue.alabama.gov)",
     "note": "State 4%. Counties add local rates. Combined avg ~9.25%.",
@@ -570,6 +572,7 @@ const STATES = {
     }
   },
   "Alaska": {
+    "url": "",
     "due": "Varies by locality",
     "portal": "Contact your local borough",
     "note": "No statewide sales tax. Some boroughs charge 0%-7.5% local sales tax.",
@@ -585,6 +588,7 @@ const STATES = {
     }
   },
   "Arizona": {
+    "url": "https://aztaxes.gov/",
     "due": "20th of following month",
     "portal": "AZTaxes (aztaxes.gov)",
     "note": "State 5.6%. Cities and counties add TPT. Phoenix 8.6%, Tucson 8.7%.",
@@ -606,6 +610,7 @@ const STATES = {
     }
   },
   "Arkansas": {
+    "url": "https://atap.arkansas.gov/",
     "due": "20th of following month",
     "portal": "ATAP (atap.arkansas.gov)",
     "note": "State 6.5%. Counties and cities add local rates. Combined avg ~9.46%.",
@@ -624,6 +629,7 @@ const STATES = {
     }
   },
   "California": {
+    "url": "https://www.cdtfa.ca.gov/",
     "due": "Last day of following month",
     "portal": "CDTFA (cdtfa.ca.gov)",
     "note": "State 7.25%. Districts add significant local rates. Varies greatly by city/zip.",
@@ -661,6 +667,7 @@ const STATES = {
     }
   },
   "Colorado": {
+    "url": "https://revenue.colorado.gov/",
     "due": "20th of following month",
     "portal": "Revenue Online (revenue.colorado.gov)",
     "note": "State 2.9%. Very high local rates. Denver 8.81%, some areas exceed 11%.",
@@ -684,6 +691,7 @@ const STATES = {
     }
   },
   "Connecticut": {
+    "url": "https://portal.ct.gov/DRS",
     "due": "Last day of following month",
     "portal": "myconneCT (portal.ct.gov/DRS)",
     "note": "Flat 6.35% statewide. No county-level variation. Meals taxed at 7.35%.",
@@ -693,6 +701,7 @@ const STATES = {
     }
   },
   "Delaware": {
+    "url": "",
     "due": "No return required",
     "portal": "No filing required",
     "note": "No sales tax in Delaware.",
@@ -702,6 +711,7 @@ const STATES = {
     }
   },
   "Florida": {
+    "url": "https://floridarevenue.com/taxes/eservices/",
     "due": "20th of following month",
     "portal": "Florida e-Services (floridarevenue.com)",
     "note": "State 6%. Counties add discretionary surtax 0.5%-2.5%.",
@@ -736,6 +746,7 @@ const STATES = {
     }
   },
   "Georgia": {
+    "url": "https://gtc.dor.ga.gov/",
     "due": "20th of following month",
     "portal": "Georgia Tax Center (gtc.dor.ga.gov)",
     "note": "State 4%. Counties add SPLOST and local taxes. Atlanta area highest.",
@@ -761,6 +772,7 @@ const STATES = {
     }
   },
   "Hawaii": {
+    "url": "https://tax.hawaii.gov/",
     "due": "20th of following month",
     "portal": "Hawaii Tax Online (tax.hawaii.gov)",
     "note": "4% General Excise Tax (GET). Oahu adds 0.5% surcharge.",
@@ -773,6 +785,7 @@ const STATES = {
     }
   },
   "Idaho": {
+    "url": "https://tap.tax.idaho.gov/",
     "due": "20th of following month",
     "portal": "TAP (tap.tax.idaho.gov)",
     "note": "Flat 6% statewide. Very limited local sales taxes.",
@@ -788,6 +801,7 @@ const STATES = {
     }
   },
   "Illinois": {
+    "url": "https://mytax.illinois.gov/",
     "due": "20th of following month",
     "portal": "MyTax Illinois (mytax.illinois.gov)",
     "note": "State 6.25%. Chicago/Cook County up to 10.25% combined.",
@@ -811,6 +825,7 @@ const STATES = {
     }
   },
   "Indiana": {
+    "url": "https://intime.dor.in.gov/",
     "due": "Last day of following month",
     "portal": "INTIME (intime.dor.in.gov)",
     "note": "Flat 7% statewide. No local sales tax in Indiana.",
@@ -820,6 +835,7 @@ const STATES = {
     }
   },
   "Iowa": {
+    "url": "https://tax.iowa.gov/",
     "due": "Last day of following month",
     "portal": "GovConnectIowa (tax.iowa.gov)",
     "note": "State 6%. Local option 1% added in many jurisdictions.",
@@ -838,6 +854,7 @@ const STATES = {
     }
   },
   "Kansas": {
+    "url": "https://ksrevenue.gov/",
     "due": "25th of following month",
     "portal": "KS Customer Service (ksrevenue.gov)",
     "note": "State 6.5% (groceries exempt 2025). Counties and cities add local rates.",
@@ -855,6 +872,7 @@ const STATES = {
     }
   },
   "Kentucky": {
+    "url": "https://revenue.ky.gov/",
     "due": "20th of following month",
     "portal": "KY Online Gateway (revenue.ky.gov)",
     "note": "Flat 6% statewide. No local sales tax in Kentucky.",
@@ -864,6 +882,7 @@ const STATES = {
     }
   },
   "Louisiana": {
+    "url": "https://latap.revenue.louisiana.gov/",
     "due": "20th of following month",
     "portal": "LATAP (latap.revenue.louisiana.gov)",
     "note": "State 5%. Parishes add significant local rates. Combined avg ~10.1%.",
@@ -886,6 +905,7 @@ const STATES = {
     }
   },
   "Maine": {
+    "url": "https://portal.maine.gov/mtap/",
     "due": "15th of following month",
     "portal": "Maine Tax Portal (portal.maine.gov/mtap)",
     "note": "Flat 5.5% statewide. No local sales tax. Meals taxed at 8%.",
@@ -895,6 +915,7 @@ const STATES = {
     }
   },
   "Maryland": {
+    "url": "https://interactive.marylandtaxes.gov/",
     "due": "20th of following month",
     "portal": "bFile (interactive.marylandtaxes.gov)",
     "note": "Flat 6% statewide. No local sales tax variation.",
@@ -904,6 +925,7 @@ const STATES = {
     }
   },
   "Massachusetts": {
+    "url": "https://masstaxconnect.dor.state.ma.us/",
     "due": "20th of following month",
     "portal": "MassTaxConnect (masstaxconnect.dor.state.ma.us)",
     "note": "Flat 6.25% statewide. No county-level sales tax variation.",
@@ -913,6 +935,7 @@ const STATES = {
     }
   },
   "Michigan": {
+    "url": "https://www.michigan.gov/taxes/",
     "due": "20th of following month",
     "portal": "Michigan Treasury Online (michigan.gov/taxes)",
     "note": "Flat 6% statewide. No local sales tax in Michigan.",
@@ -922,6 +945,7 @@ const STATES = {
     }
   },
   "Minnesota": {
+    "url": "https://www.mndor.state.mn.us/",
     "due": "20th of following month",
     "portal": "e-Services (mndor.state.mn.us)",
     "note": "State 6.875%. Minneapolis area adds extra taxes. Most areas 7.375%-8%+.",
@@ -941,6 +965,7 @@ const STATES = {
     }
   },
   "Mississippi": {
+    "url": "https://tap.dor.ms.gov/",
     "due": "20th of following month",
     "portal": "TAP (tap.dor.ms.gov)",
     "note": "State 7%. Very limited local additions.",
@@ -956,6 +981,7 @@ const STATES = {
     }
   },
   "Missouri": {
+    "url": "https://mytax.missouri.gov/",
     "due": "20th of following month",
     "portal": "MyTax Missouri (mytax.missouri.gov)",
     "note": "State 4.225%. Cities and counties add significant local rates. KC area ~10.85%.",
@@ -976,6 +1002,7 @@ const STATES = {
     }
   },
   "Montana": {
+    "url": "",
     "due": "No return required",
     "portal": "No filing required",
     "note": "No sales tax in Montana.",
@@ -985,6 +1012,7 @@ const STATES = {
     }
   },
   "Nebraska": {
+    "url": "https://revenue.nebraska.gov/",
     "due": "25th of following month",
     "portal": "Nebraska e-File (revenue.nebraska.gov)",
     "note": "State 5.5%. Cities add local rates. Omaha 7%, Lincoln 7%.",
@@ -1000,6 +1028,7 @@ const STATES = {
     }
   },
   "Nevada": {
+    "url": "https://nevadatax.nv.gov/",
     "due": "Last day of following month",
     "portal": "Nevada Tax Center (nevadatax.nv.gov)",
     "note": "State 6.85%. Clark County (Las Vegas) 8.375%, Washoe (Reno) 8.265%.",
@@ -1017,6 +1046,7 @@ const STATES = {
     }
   },
   "New Hampshire": {
+    "url": "",
     "due": "No return required",
     "portal": "No filing required",
     "note": "No sales tax. Meals and Rooms Tax 8.5% is separate.",
@@ -1026,6 +1056,7 @@ const STATES = {
     }
   },
   "New Jersey": {
+    "url": "https://www.njportal.com/DOR/Sales/",
     "due": "20th of following month",
     "portal": "NJ Taxation (njportal.com/DOR/Sales)",
     "note": "Flat 6.625% statewide. Urban Enterprise Zones: 3.3125%.",
@@ -1036,6 +1067,7 @@ const STATES = {
     }
   },
   "New Mexico": {
+    "url": "https://tap.state.nm.us/",
     "due": "25th of following month",
     "portal": "TAP (tap.state.nm.us)",
     "note": "Gross Receipts Tax (GRT) - similar to sales tax. State 5%. Cities add local.",
@@ -1053,6 +1085,7 @@ const STATES = {
     }
   },
   "New York": {
+    "url": "https://businessexpress.ny.gov/",
     "due": "20th of following month",
     "portal": "NY Business Online (businessexpress.ny.gov)",
     "note": "State 4%. NYC = 8.875%. Other counties vary 7%-8.875%.",
@@ -1084,6 +1117,7 @@ const STATES = {
     }
   },
   "North Carolina": {
+    "url": "https://eservices.dor.nc.gov/",
     "due": "20th of following month",
     "portal": "e-Business Center (eservices.dor.nc.gov)",
     "note": "State 4.75%. Counties add 2%-2.25% local. Most areas 6.75%-7.5%.",
@@ -1107,6 +1141,7 @@ const STATES = {
     }
   },
   "North Dakota": {
+    "url": "https://apps.nd.gov/tax/tap/",
     "due": "Last day of following month",
     "portal": "TAP (apps.nd.gov/tax/tap)",
     "note": "State 5%. Cities add local rates. Fargo 7.5%, Bismarck 7%.",
@@ -1122,6 +1157,7 @@ const STATES = {
     }
   },
   "Ohio": {
+    "url": "https://gateway.ohio.gov/",
     "due": "23rd of following month",
     "portal": "Ohio Business Gateway (gateway.ohio.gov)",
     "note": "State 5.75%. Counties add 0.5%-2.25% local. Cuyahoga (Cleveland) 8%.",
@@ -1145,6 +1181,7 @@ const STATES = {
     }
   },
   "Oklahoma": {
+    "url": "https://oktap.tax.ok.gov/",
     "due": "20th of following month",
     "portal": "OkTAP (oktap.tax.ok.gov)",
     "note": "State 4.5% (2026). Cities and counties add local rates. OKC and Tulsa ~8.5%.",
@@ -1164,6 +1201,7 @@ const STATES = {
     }
   },
   "Oregon": {
+    "url": "",
     "due": "No return required",
     "portal": "No filing required",
     "note": "No sales tax in Oregon.",
@@ -1173,6 +1211,7 @@ const STATES = {
     }
   },
   "Pennsylvania": {
+    "url": "https://mypath.pa.gov/",
     "due": "20th of following month",
     "portal": "myPATH (mypath.pa.gov)",
     "note": "State 6%. Philadelphia 8% (+2%), Allegheny/Pittsburgh 7% (+1%). All others 6%.",
@@ -1197,6 +1236,7 @@ const STATES = {
     }
   },
   "Rhode Island": {
+    "url": "https://taxportal.ri.gov/",
     "due": "20th of following month",
     "portal": "Taxpayer Portal (taxportal.ri.gov)",
     "note": "Flat 7% statewide. No local sales tax in Rhode Island.",
@@ -1206,6 +1246,7 @@ const STATES = {
     }
   },
   "South Carolina": {
+    "url": "https://mydorway.dor.sc.gov/",
     "due": "20th of following month",
     "portal": "MyDORWAY (mydorway.dor.sc.gov)",
     "note": "State 6% (6.1% in 2026). Counties add local option taxes.",
@@ -1226,6 +1267,7 @@ const STATES = {
     }
   },
   "South Dakota": {
+    "url": "https://etax.sd.gov/",
     "due": "Last day of following month",
     "portal": "e-Tax (etax.sd.gov)",
     "note": "State 4.2% (may revert to 4.5% in 2027). Cities add local rates.",
@@ -1240,6 +1282,7 @@ const STATES = {
     }
   },
   "Tennessee": {
+    "url": "https://tntap.tn.gov/",
     "due": "20th of following month",
     "portal": "TNTAP (tntap.tn.gov)",
     "note": "State 7% (groceries 4%). Counties add local rates. Most areas 9.25%-9.75%.",
@@ -1262,6 +1305,7 @@ const STATES = {
     }
   },
   "Texas": {
+    "url": "https://www.comptroller.texas.gov/taxes/sales/",
     "due": "20th of following month",
     "portal": "WebFile (comptroller.texas.gov)",
     "note": "State 6.25%. Cities/counties can add up to 2% local. Most metro areas at 8.25%.",
@@ -1293,6 +1337,7 @@ const STATES = {
     }
   },
   "Utah": {
+    "url": "https://tap.tax.utah.gov/",
     "due": "Last day of following month",
     "portal": "TAP (tap.tax.utah.gov)",
     "note": "State 4.85% (includes 1.25% mandatory local). Counties add more.",
@@ -1310,6 +1355,7 @@ const STATES = {
     }
   },
   "Vermont": {
+    "url": "https://myvtax.vermont.gov/",
     "due": "25th of following month",
     "portal": "myVTax (myvtax.vermont.gov)",
     "note": "State 6%. Meals & rooms taxed at 9%. Local option 1% in some towns.",
@@ -1321,6 +1367,7 @@ const STATES = {
     }
   },
   "Virginia": {
+    "url": "https://www.tax.virginia.gov/retail-sales-and-use-tax",
     "due": "20th of following month",
     "portal": "Virginia Tax eForms (tax.virginia.gov)",
     "note": "Northern Virginia & Hampton Roads: 6.00% (4.3% + mandatory 1% + 0.7% regional). Rest of VA: 5.30%.",
@@ -1371,6 +1418,7 @@ const STATES = {
     }
   },
   "Washington": {
+    "url": "https://dor.wa.gov/",
     "due": "25th of following month",
     "portal": "DOR (dor.wa.gov)",
     "note": "State 6.5%. Local rates vary significantly. Seattle area exceeds 10%.",
@@ -1397,6 +1445,7 @@ const STATES = {
     }
   },
   "Washington D.C.": {
+    "url": "https://mytax.dc.gov/",
     "due": "20th of following month",
     "portal": "MyTax DC (mytax.dc.gov)",
     "note": "Flat 6% statewide for general sales. Meals taxed at 10%.",
@@ -1406,6 +1455,7 @@ const STATES = {
     }
   },
   "West Virginia": {
+    "url": "https://mytaxes.wvtax.gov/",
     "due": "20th of following month",
     "portal": "MyTaxes (mytaxes.wvtax.gov)",
     "note": "State 6%. Limited local additions. Most areas 6%-7%.",
@@ -1421,6 +1471,7 @@ const STATES = {
     }
   },
   "Wisconsin": {
+    "url": "https://tap.revenue.wi.gov/",
     "due": "Last day of following month",
     "portal": "My Tax Account (tap.revenue.wi.gov)",
     "note": "State 5%. Counties add 0.5% in most areas. Milwaukee area 5.6%.",
@@ -1440,6 +1491,7 @@ const STATES = {
     }
   },
   "Wyoming": {
+    "url": "https://excise.wy.gov/",
     "due": "Last day of following month",
     "portal": "e-Services (excise.wy.gov)",
     "note": "State 4%. Counties add up to 2% local. Combined most areas 5%-6%.",
@@ -1963,7 +2015,8 @@ function generateReports(){
       <td>${fmtD(stateTax)}</td>
       <td style="color:#1e5c33">${discount>0?'- '+fmtD(discount):'$0.00'}</td>
       <td style="font-weight:700;color:#1e5c33;font-size:14px">${fmtD(amountDue)}</td>
-      <td style="font-size:11px;color:#7a7568">${sd?.due||'Check state DOR'}</td>`;
+      <td style="font-size:11px;color:#7a7568">${sd?.due||'Check state DOR'}</td>
+      <td>${sd?.url?`<a href="${sd.url}" target="_blank" rel="noopener" style="color:#1e5c33;font-weight:600;font-size:11px;text-decoration:none;white-space:nowrap" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🔗 File Now ↗</a>`:'<span style="color:#aaa;font-size:11px">—</span>'}</td>`;
     summaryBody.appendChild(tr);
 
     // ── Individual state report card ──
@@ -1988,7 +2041,7 @@ function generateReports(){
       <div class="state-report-head">
         <div>
           <h3>${stateName} — Sales Tax Return</h3>
-          <div class="report-meta">Period: ${period} &nbsp;|&nbsp; Due: ${sd?.due||'Check state DOR'} &nbsp;|&nbsp; File at: ${sd?.portal||'State DOR website'}</div>
+          <div class="report-meta">Period: ${period} &nbsp;|&nbsp; Due: ${sd?.due||'Check state DOR'} &nbsp;|&nbsp; <a href="${sd?.url||'#'}" target="_blank" rel="noopener" style="color:#7dd4a0;text-decoration:none" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🔗 File Online ↗</a></div>
         </div>
         <button class="print-btn" onclick="printOne('${stateName.replace(/'/g,"\\'")}')">🖨 Print This Report</button>
       </div>
@@ -2016,7 +2069,7 @@ function generateReports(){
           <div class="report-val" style="font-family:'DM Serif Display',serif;font-size:26px">${fmtD(amountDue)}</div>
         </div>
         <div class="report-footer-note">
-          📍 File at: <strong>${sd?.portal||'Contact state DOR'}</strong> &nbsp;·&nbsp;
+          📍 File at: ${sd?.url ? `<a href="${sd.url}" target="_blank" rel="noopener" style="color:#1e5c33;font-weight:700">${sd.portal} ↗</a>` : `<strong>${sd?.portal||'Contact state DOR'}</strong>`} &nbsp;·&nbsp;
           📅 Due: <strong>${sd?.due||'Check state DOR'}</strong> &nbsp;·&nbsp;
           Generated by BookSmartTools.com — For estimation only. Always verify with your state DOR before filing.
         </div>
