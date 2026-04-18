@@ -386,6 +386,35 @@ const SD = [
 const stateMap = {};
 SD.forEach((s,i) => stateMap[s[0]] = i);
 
+// ── STATE FILING PORTAL URLs ─────────────────────────────
+const PORTAL_URLS = {
+  "Alabama":"https://www.revenue.alabama.gov/","Alaska":"https://www.commerce.alaska.gov/web/dcra/",
+  "Arizona":"https://aztaxes.gov/","Arkansas":"https://atap.arkansas.gov/",
+  "California":"https://www.cdtfa.ca.gov/","Colorado":"https://revenue.colorado.gov/",
+  "Connecticut":"https://portal.ct.gov/DRS","Delaware":"https://revenue.delaware.gov/",
+  "Florida":"https://floridarevenue.com/taxes/eservices/","Georgia":"https://gtc.dor.ga.gov/",
+  "Hawaii":"https://tax.hawaii.gov/","Idaho":"https://tap.tax.idaho.gov/",
+  "Illinois":"https://mytax.illinois.gov/","Indiana":"https://intime.dor.in.gov/",
+  "Iowa":"https://tax.iowa.gov/","Kansas":"https://ksrevenue.gov/",
+  "Kentucky":"https://revenue.ky.gov/","Louisiana":"https://latap.revenue.louisiana.gov/",
+  "Maine":"https://portal.maine.gov/mtap/","Maryland":"https://interactive.marylandtaxes.gov/",
+  "Massachusetts":"https://masstaxconnect.dor.state.ma.us/","Michigan":"https://www.michigan.gov/taxes/",
+  "Minnesota":"https://www.mndor.state.mn.us/","Mississippi":"https://tap.dor.ms.gov/",
+  "Missouri":"https://mytax.missouri.gov/","Montana":"","Nebraska":"https://revenue.nebraska.gov/",
+  "Nevada":"https://nevadatax.nv.gov/","New Hampshire":"","New Jersey":"https://www.njportal.com/DOR/Sales/",
+  "New Mexico":"https://tap.state.nm.us/","New York":"https://businessexpress.ny.gov/",
+  "North Carolina":"https://eservices.dor.nc.gov/","North Dakota":"https://apps.nd.gov/tax/tap/",
+  "Ohio":"https://gateway.ohio.gov/","Oklahoma":"https://oktap.tax.ok.gov/","Oregon":"",
+  "Pennsylvania":"https://mypath.pa.gov/","Rhode Island":"https://taxportal.ri.gov/",
+  "South Carolina":"https://mydorway.dor.sc.gov/","South Dakota":"https://etax.sd.gov/",
+  "Tennessee":"https://tntap.tn.gov/","Texas":"https://www.comptroller.texas.gov/taxes/sales/",
+  "Utah":"https://tap.tax.utah.gov/","Vermont":"https://myvtax.vermont.gov/",
+  "Virginia":"https://www.tax.virginia.gov/retail-sales-and-use-tax",
+  "Washington":"https://dor.wa.gov/","Washington D.C.":"https://mytax.dc.gov/",
+  "West Virginia":"https://mytaxes.wvtax.gov/","Wisconsin":"https://tap.revenue.wi.gov/",
+  "Wyoming":"https://excise.wy.gov/"
+};
+
 function init() {
   const sel = document.getElementById('state');
   const tb  = document.getElementById('rtbody');
@@ -407,7 +436,7 @@ function init() {
       '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px;color:#7a7568">' + (regionNote || (nt ? 'No sales tax' : 'Standard statewide rate')) + '</td>' +
       '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px">' + (s[2] !== 'none' ? '<span style="color:#1e5c33;font-weight:600">Yes</span> — ' + (s[3]||'') : 'No') + '</td>' +
       '<td style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:#7a7568">' + s[4] + '</td>' +
-      '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px">' + (s[7] ? '<a href="'+s[7]+'" target="_blank" rel="noopener" style="color:#1e5c33;text-decoration:none;font-weight:600" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">🔗 ' + s[5] + ' ↗</a>' : '<span style="color:#7a7568">'+s[5]+'</span>') + '</td>';
+      '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px">' + (PORTAL_URLS[s[0]] ? '<a href="'+PORTAL_URLS[s[0]]+'" target="_blank" rel="noopener" style="color:#1e5c33;text-decoration:none;font-weight:600" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">🔗 ' + s[5] + ' ↗</a>' : '<span style="color:#7a7568">'+s[5]+'</span>') + '</td>';
     tb.appendChild(tr);
   });
 }
@@ -590,16 +619,15 @@ function calc() {
 
   // Show File Now button if state has a portal URL
   const fb = document.getElementById('file-btn-st');
-  if(fb){ fb.style.display = SD[i][7] ? 'flex' : 'none'; }
+  if(fb){ fb.style.display = PORTAL_URLS[SD[si][0]] ? 'inline-flex' : 'none'; }
 }
 
 function openPortalST(){
   const i = parseInt(document.getElementById('state').value);
   if(isNaN(i)) return;
-  const s = SD[i];
-  const url = s[7] || '';
+  const url = PORTAL_URLS[SD[i][0]] || '';
   if(url) window.open(url,'_blank','noopener');
-  else alert('Filing portal: ' + s[5]);
+  else alert('Visit your state Department of Revenue website to file online.');
 }
 
 function copyRet() {
