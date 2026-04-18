@@ -224,6 +224,7 @@ footer a{color:rgba(255,255,255,.6);}
         <div class="actions">
           <button class="abtn" onclick="copyRet()">📋 Copy Return</button>
           <button class="abtn" onclick="window.print()">🖨 Print</button>
+          <button class="abtn" id="file-btn" onclick="openPortal()" style="display:none;background:rgba(125,212,160,.15);border-color:rgba(125,212,160,.4);color:#7dd4a0">🔗 File Now ↗</button>
         </div>
       </div>
     </div>
@@ -324,7 +325,7 @@ function init(){
       +`<td class="rate-cell" style="color:${m.state===0?'#1e5c33':'#1a1a18'}">${m.state===0?'No Tax':m.state.toFixed(2)+'%'}</td>`
       +`<td style="color:${m.local?'#b8860b':'#7a7568'}">${m.local?'Yes — see localities':'No'}</td>`
       +`<td style="font-size:11px;color:#7a7568">${m.note}</td>`
-      +`<td style="font-size:11px;color:#1e5c33">${m.portal}</td>`;
+      +`<td style="font-size:11px">${m.url?`<a href="${m.url}" target="_blank" rel="noopener" style="color:#1e5c33;text-decoration:none;font-weight:600" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🔗 ${m.portal} ↗</a>`:`<span style="color:#7a7568">${m.portal}</span>`}</td>`;
     tb.appendChild(tr);
   });
 }
@@ -518,6 +519,37 @@ function calc(){
   document.getElementById('r-c4').textContent = r.vatax ? pct(r.local)+' county F&B tax' : pct(r.total);
   document.getElementById('r-c5').textContent = discount>0 ? '- '+fmt(discount) : '$0.00';
   document.getElementById('r-grand').textContent = fmt(totalDue);
+
+  // Show File Now button
+  const fileBtn = document.getElementById('file-btn');
+  const m = MEALS[stateName];
+  if(fileBtn) fileBtn.style.display = (m && (m.url || m.vatax)) ? 'flex' : 'none';
+}
+
+function openPortal(){
+  const name = document.getElementById('state').value;
+  const m = name ? MEALS[name] : null;
+  if(!m) return;
+  // For Virginia, use county portal if available
+  const sel = document.getElementById('locality');
+  let url = m.url || '';
+  if(m.vatax && sel && sel.value){
+    const locName = sel.options[sel.selectedIndex]?.dataset?.loc || '';
+    const countyUrls = {
+      'Prince William County':  'https://www.pwcva.gov/department/tax-administration',
+      'Manassas Park City':     'https://www.pwcva.gov/department/tax-administration',
+      'Fairfax County':         'https://www.fairfaxcounty.gov/finance/tax/business/',
+      'Arlington County':       'https://www.arlingtonva.us/Government/Departments/DHS/Finance/Taxes/Business-Taxes/Meals-Tax',
+      'Alexandria City':        'https://www.alexandriava.gov/finance/info/default.aspx?id=34374',
+      'Loudoun County':         'https://www.loudoun.gov/1049/Food-Beverage-Tax',
+      'Virginia Beach City':    'https://www.vbgov.com/government/departments/finance/business-license-taxes/Pages/meal-tax.aspx',
+      'Norfolk City':           'https://www.norfolk.gov/index.aspx?NID=1043',
+      'Richmond City':          'https://www.rva.gov/finance/taxes',
+    };
+    if(countyUrls[locName]) url = countyUrls[locName];
+  }
+  if(url) window.open(url,'_blank','noopener');
+  else alert('Filing portal: ' + (m.portal || 'Check your state DOR website'));
 }
 
 function copyRet(){
