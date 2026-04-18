@@ -425,7 +425,7 @@ function init() {
     opt.textContent = nt ? s[0] + ' -- No state sales tax' : s[0] + ' -- ' + s[1].toFixed(2) + '%';
     sel.appendChild(opt);
     // Table row
-    const regions = s[6];
+    const regions = (s[6] && typeof s[6] === 'object') ? s[6] : null;
     const regionNote = regions
       ? Object.entries(regions).map(([n,r]) => n.split('(')[0].trim() + ': ' + r.toFixed(2) + '%').join(' | ')
       : '';
@@ -449,7 +449,7 @@ function onStateChange() {
   const s = SD[i];
 
   // Handle regions (Virginia)
-  if (s[6]) {
+  if (s[6] && typeof s[6] === 'object') {
     regField.style.display = 'block';
     const rSel = document.getElementById('region');
     rSel.innerHTML = '<option value="">-- Select your county/region --</option>';
@@ -495,7 +495,7 @@ function getEffectiveRate() {
   const si = parseInt(document.getElementById('state').value);
   if (isNaN(si)) return 0;
   const s = SD[si];
-  if (s[6]) {
+  if (s[6] && typeof s[6] === 'object') {
     // Has regions
     const rv = parseFloat(document.getElementById('region').value);
     return isNaN(rv) ? s[1] : rv;
