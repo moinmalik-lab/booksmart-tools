@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PTO Calculator | Paid Time Off Accrual | BookSmartTools</title>
+<meta name="description" content="Calculate PTO accrual balance, earned hours, and payout value. Supports hourly, daily, and per-pay-period accrual methods.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}
+.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px}
+.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+.hero{background:linear-gradient(135deg,#1a2e1a 0%,#2d4a1e 50%,#1a2e1a 100%);color:white;text-align:center;padding:48px 24px 40px}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin:0 4px 8px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin:12px 0 10px}
+.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media(max-width:720px){.layout{grid-template-columns:1fr}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.divider{height:1px;background:#d8d3c5;margin:18px 0}
+.field{margin-bottom:14px}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:#1e5c33;background:white}
+.pw{position:relative}
+.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none}
+.pw input{padding-left:26px}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5}
+.calc-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px}
+.calc-btn:hover{background:#165228}
+.rc{background:#1a1a18;color:#faf8f3;border:none}
+.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2}
+.rs{margin-bottom:16px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px}
+.rr:last-child{border-bottom:none}
+.rl{color:#d0ccbf;flex:1}
+.rl.b{color:white;font-weight:700}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap}
+.rv.g{color:#7dd4a0}.rv.a{color:#f0c060}.rv.r{color:#f08070}.rv.w{color:white}
+.grand{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin-bottom:10px}
+.gtl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.gtv{font-family:'DM Serif Display',serif;font-size:32px;color:white}
+.actions{display:flex;gap:10px;margin-top:12px}
+.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}
+.abtn:hover{background:rgba(255,255,255,.08);color:white}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style></head><body><nav class="site-nav">
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/about.html">About</a></li>
+    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
+  </ul>
+</nav>
+<div class="hero">
+  <span class="tag-pill">PAYROLL & HR</span><span class="tag-pill">EMPLOYEE BENEFITS</span>
+  <h1>PTO / Paid Time Off Calculator</h1>
+  <p>Calculate how much PTO an employee has earned, their current balance, and the cash value of their accrued time off.</p>
+</div>
+<div class="container"><div class="layout">
+  <div class="card">
+    <div class="card-title"><div class="num">1</div>PTO Policy & Employee Info</div>
+    <div class="field"><label class="flbl">PTO Accrual Rate</label>
+      <select id="accrual-type">
+        <option value="annual">Annual allotment (lump sum)</option>
+        <option value="per-period">Per pay period accrual</option>
+        <option value="hourly">Per hour worked</option>
+      </select>
+    </div>
+    <div class="field" id="annual-field"><label class="flbl">Annual PTO Days Allotted</label>
+      <input type="number" id="annual-days" placeholder="15" value="15" min="0" step="0.5">
+    </div>
+    <div class="field" id="period-field" style="display:none"><label class="flbl">PTO Hours Accrued Per Pay Period</label>
+      <input type="number" id="period-hours" placeholder="3.077" value="3.077" min="0" step="0.001">
+      <div class="hint">e.g. 80 hrs/yr ÷ 26 pay periods = 3.077 hrs/period</div>
+    </div>
+    <div class="field" id="hourly-accrual-field" style="display:none"><label class="flbl">PTO Hours Earned Per Hour Worked</label>
+      <input type="number" id="hours-per-hour" placeholder="0.0385" value="0.0385" min="0" step="0.0001">
+      <div class="hint">e.g. 80 hrs/yr ÷ 2080 work hrs = 0.0385 hrs/hr worked</div>
+    </div>
+    <div class="field"><label class="flbl">Pay Frequency</label>
+      <select id="pay-freq">
+        <option value="52">Weekly (52×/year)</option>
+        <option value="26" selected>Bi-Weekly (26×/year)</option>
+        <option value="24">Semi-Monthly (24×/year)</option>
+        <option value="12">Monthly (12×/year)</option>
+      </select>
+    </div>
+    <div class="field"><label class="flbl">Pay Periods Completed This Year</label>
+      <input type="number" id="periods-done" placeholder="13" value="13" min="0" step="1">
+    </div>
+    <div class="field"><label class="flbl">PTO Hours Already Used</label>
+      <input type="number" id="pto-used" placeholder="0" value="0" min="0" step="0.5">
+    </div>
+    <div class="field"><label class="flbl">Employee Hourly Rate (for payout value)</label>
+      <div class="pw" data-p="$"><input type="number" id="hourly-rate" placeholder="0.00" min="0" step="0.01"></div>
+    </div>
+    <button class="calc-btn" onclick="calcPTO()">Calculate PTO Balance →</button>
+  </div>
+  <div class="card rc">
+    <div class="card-title"><div class="num" style="background:#2d4a1e">2</div>PTO Balance</div>
+    <div class="ph" id="ph">Enter PTO policy details<br>to calculate employee balance →</div>
+    <div id="rc" style="display:none">
+      <div class="rs">
+        <div class="rst">PTO ACCRUAL</div>
+        <div class="rr"><span class="rl">Total PTO earned to date</span><span class="rv g" id="r-earned"></span></div>
+        <div class="rr"><span class="rl">PTO hours used</span><span class="rv r" id="r-used"></span></div>
+        <div class="rr"><span class="rl b">Current PTO balance</span><span class="rv w" id="r-balance"></span></div>
+        <div class="rr"><span class="rl">PTO balance in days (8 hrs)</span><span class="rv" id="r-days"></span></div>
+      </div>
+      <div class="rs">
+        <div class="rst">PROJECTED</div>
+        <div class="rr"><span class="rl">Total PTO at year end</span><span class="rv a" id="r-year-end"></span></div>
+        <div class="rr"><span class="rl">Monthly accrual rate</span><span class="rv" id="r-monthly-rate"></span></div>
+      </div>
+      <div id="payout-section" class="rs" style="display:none">
+        <div class="rst">PAYOUT VALUE</div>
+        <div class="rr"><span class="rl">Current balance value</span><span class="rv g" id="r-payout"></span></div>
+        <div class="rr"><span class="rl">Year-end balance value</span><span class="rv a" id="r-payout-ye"></span></div>
+      </div>
+      <div class="grand"><span class="gtl">PTO BALANCE</span><span class="gtv" id="r-grand"></span></div>
+    </div>
+  </div>
+</div></div><footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp; For estimation only</footer>
+<script>
+function fmt(n){return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function pct(n){return (+(+n||0).toFixed(2))+'%'}
+document.getElementById('accrual-type').addEventListener('change',function(){
+  const v=this.value;
+  document.getElementById('annual-field').style.display=v==='annual'?'block':'none';
+  document.getElementById('period-field').style.display=v==='per-period'?'block':'none';
+  document.getElementById('hourly-accrual-field').style.display=v==='hourly'?'block':'none';
+});
+function calcPTO(){
+  const type=document.getElementById('accrual-type').value;
+  const freq=parseInt(document.getElementById('pay-freq').value)||26;
+  const done=parseInt(document.getElementById('periods-done').value)||0;
+  const used=parseFloat(document.getElementById('pto-used').value)||0;
+  const rate=parseFloat(document.getElementById('hourly-rate').value)||0;
+  let totalEarned=0,annualTotal=0;
+  if(type==='annual'){const d=parseFloat(document.getElementById('annual-days').value)||0;const annHrs=d*8;totalEarned=(done/freq)*annHrs;annualTotal=annHrs;}
+  else if(type==='per-period'){const h=parseFloat(document.getElementById('period-hours').value)||0;totalEarned=done*h;annualTotal=h*freq;}
+  else{const hph=parseFloat(document.getElementById('hours-per-hour').value)||0;const workHrs=done*(40/52*freq/freq)*40;totalEarned=workHrs*hph;annualTotal=2080*hph;}
+  const balance=Math.max(0,totalEarned-used);
+  document.getElementById('ph').style.display='none';
+  document.getElementById('rc').style.display='block';
+  document.getElementById('r-earned').textContent=totalEarned.toFixed(1)+' hrs';
+  document.getElementById('r-used').textContent=used.toFixed(1)+' hrs';
+  document.getElementById('r-balance').textContent=balance.toFixed(1)+' hrs';
+  document.getElementById('r-days').textContent=(balance/8).toFixed(1)+' days';
+  document.getElementById('r-year-end').textContent=annualTotal.toFixed(1)+' hrs';
+  document.getElementById('r-monthly-rate').textContent=((annualTotal/12)).toFixed(1)+' hrs/month';
+  document.getElementById('r-grand').textContent=balance.toFixed(1)+' hrs';
+  if(rate>0){
+    document.getElementById('payout-section').style.display='block';
+    document.getElementById('r-payout').textContent=fmt(balance*rate);
+    document.getElementById('r-payout-ye').textContent=fmt(annualTotal*rate);
+  }
+}
+</script></body></html>
