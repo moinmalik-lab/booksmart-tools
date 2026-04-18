@@ -3,485 +3,539 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meals Tax Calculator by State & County 2025 | BookSmartTools</title>
-<meta name="description" content="Calculate restaurant and prepared food tax by state and county. Includes local meals taxes for Virginia, Massachusetts, Vermont, New Hampshire and all 50 states.">
-<link rel="canonical" href="https://booksmartools.com/meals-tax-calculator.html">
-<link rel="stylesheet" href="/booksmart-tools/css/style.css">
+<title>Meals Tax Calculator 2026 | Restaurant & Prepared Food Tax | BookSmartTools</title>
+<meta name="description" content="Calculate meals tax on restaurant food, prepared food and beverages for all 50 states and major counties. Accurate 2026 rates for restaurant owners filing meals tax returns.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1a1a18;--paper:#faf8f3;--cream:#f3efe4;--accent:#c8472a;--accent-light:#fdf0ec;--green:#1e5c33;--green-light:#eaf4ee;--border:#d8d3c5;--muted:#7a7568;--gold:#b8860b;--gold-light:#fdf8ec;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);}
-.hero{background:var(--ink);color:white;text-align:center;padding:48px 24px 40px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border:40px solid rgba(255,255,255,.06);border-radius:50%;}
-.year-badge{display:inline-block;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);font-size:11px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:2px;margin-bottom:14px;letter-spacing:.5px;}
-.hero h1{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin-bottom:10px;position:relative;color:white;}
-.hero p{font-size:15px;opacity:.8;max-width:560px;margin:0 auto;line-height:1.6;position:relative;}
-
-.container{max-width:960px;margin:0 auto;padding:36px 24px 60px;}
+body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18;}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none;}
+.nav-logo em{color:#6db88a;font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px;}
+.nav-links a:hover{color:white;}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px;}
+.hero{background:linear-gradient(135deg,#2d1b00 0%,#6b3a00 50%,#3d1f00 100%);color:white;text-align:center;padding:48px 24px 40px;}
+.tag-row{display:flex;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin-bottom:10px;}
+.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6;}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px;}
 .layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
-@media(max-width:680px){.layout{grid-template-columns:1fr;}}
-
-.card{background:white;border:1px solid var(--border);border-radius:4px;padding:28px;}
-.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
-.card-title .num{background:var(--ink);color:white;font-family:'DM Mono',monospace;font-size:12px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.field{margin-bottom:18px;}
-label{display:block;font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-input,select{width:100%;height:44px;border:1px solid var(--border);border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:var(--ink);background:var(--paper);outline:none;transition:border-color .15s;}
-input:focus,select:focus{border-color:var(--accent);background:white;}
-.input-prefix{position:relative;}
-.input-prefix::before{content:attr(data-prefix);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);pointer-events:none;}
-.input-prefix input{padding-left:26px;}
-.hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5;}
-.hint.warn{color:#b8860b;background:var(--gold-light);padding:6px 10px;border-radius:3px;border-left:3px solid var(--gold);}
-.calc-btn{width:100%;height:52px;background:var(--accent);color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;margin-top:8px;}
-.calc-btn:hover{background:#a02e18;}
-
-/* County not found message */
-.county-msg{font-size:12px;padding:8px 12px;border-radius:3px;margin-top:6px;display:none;}
-.county-msg.found{background:var(--green-light);color:var(--green);border:1px solid #b5d9c0;}
-.county-msg.notfound{background:var(--gold-light);color:var(--gold);border:1px solid #e8d090;}
-
-/* Results */
-.results-card{background:var(--ink);color:var(--paper);border:none;}
-.results-card .card-title{color:var(--paper);border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:16px;margin-bottom:18px;}
-.results-card .num{background:var(--accent);}
-.placeholder-msg{text-align:center;padding:40px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:1.9;}
-.tb{margin-bottom:18px;}
-.tb-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:'DM Mono',monospace;}
-.tr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;}
-.tr:last-child{border-bottom:none;}
-.tl{color:rgba(255,255,255,.65);}
-.tr-rate{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);}
-.ta{font-family:'DM Mono',monospace;font-weight:500;}
-.ta.orange{color:#f0a070;}.ta.amber{color:#f0c060;}.ta.red{color:#f08070;}
-.total-box{background:rgba(255,255,255,.08);border-radius:3px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.total-box.grand{background:rgba(255,255,255,.12);}
-.tb-label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.55);}
-.tb-amount{font-family:'DM Mono',monospace;font-size:18px;}
-.tb-amount.grand{font-family:'DM Serif Display',serif;font-size:28px;color:white;}
-.actions{display:flex;gap:10px;margin-top:16px;}
-.action-btn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
-.action-btn:hover{background:rgba(255,255,255,.08);color:white;}
-.note-box{background:rgba(255,255,255,.06);border-left:3px solid rgba(255,200,100,.5);border-radius:0 3px 3px 0;padding:10px 14px;margin-top:14px;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;}
-
-/* Reference section */
-.ref-section{margin-top:40px;}
-.ref-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;}
-.ref-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
-.state-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-@media(max-width:620px){.state-cards{grid-template-columns:1fr;}}
-.state-card{background:white;border:1px solid var(--border);border-radius:4px;padding:20px;}
-.state-card h3{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.state-card .badge{font-size:10px;font-family:'DM Mono',monospace;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:2px;font-weight:600;}
-.state-card .badge.green{background:var(--green-light);color:var(--green);}
-.state-card p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:8px;}
-.rate-list{list-style:none;font-size:12px;}
-.rate-list li{padding:5px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;font-family:'DM Mono',monospace;color:var(--muted);}
-.rate-list li:last-child{border-bottom:none;}
-.rate-list .r{color:var(--ink);font-weight:500;}
-footer{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
+@media(max-width:720px){.layout{grid-template-columns:1fr;}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px;}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.num.amber{background:#b8860b;}
+.divider{height:1px;background:#d8d3c5;margin:18px 0;}
+.field{margin-bottom:14px;}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px;}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s;}
+input:focus,select:focus{border-color:#b8860b;background:white;}
+.pw{position:relative;}
+.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none;}
+.pw input{padding-left:26px;}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5;}
+.hint.info{background:#fdf8ec;color:#8a6000;border-left:3px solid #b8860b;padding:6px 10px;border-radius:0 3px 3px 0;margin-top:6px;}
+.rate-box{background:#fdf8ec;border:1px solid #e8c84a;border-radius:4px;padding:14px 16px;margin-bottom:16px;display:none;}
+.rate-big{font-family:'DM Mono',monospace;font-size:26px;font-weight:700;color:#b8860b;}
+.rate-sub{font-size:12px;color:#7a7568;margin-top:3px;}
+.calc-btn{width:100%;height:52px;background:#b8860b;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px;}
+.calc-btn:hover{background:#9a7009;}
+/* RESULTS */
+.rc{background:#1a1a18;color:#faf8f3;border:none;}
+.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px;}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2;}
+.rs{margin-bottom:18px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px;}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px;}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;gap:8px;}
+.rr:last-child{border-bottom:none;}
+.rl{color:#d0ccbf;flex:1;}
+.rl.b{color:white;font-weight:700;}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap;}
+.rv.g{color:#7dd4a0;}.rv.a{color:#f0c060;}.rv.r{color:#f08070;}.rv.w{color:white;}
+.tbox{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;margin-bottom:8px;border:1px solid rgba(255,255,255,.07);}
+.tbox.p{background:rgba(255,255,255,.08);}
+.tbox.grand{background:rgba(255,180,0,.12);border-color:rgba(255,180,0,.3);}
+.tlbl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.tval{font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:#f0c060;}
+.tval.grand{font-family:'DM Serif Display',serif;font-size:30px;color:white;}
+.due{background:rgba(240,192,96,.1);border:1px solid rgba(240,192,96,.3);border-radius:3px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#f0c060;line-height:1.6;display:none;}
+.actions{display:flex;gap:10px;margin-top:14px;}
+.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;}
+.abtn:hover{background:rgba(255,255,255,.08);color:white;}
+/* REF TABLE */
+.ref{margin-top:44px;}
+.ref h2{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;}
+.ref p{font-size:13px;color:#7a7568;margin-bottom:20px;line-height:1.6;}
+.rt-wrap{overflow-x:auto;}
+.rt{width:100%;border-collapse:collapse;font-size:12px;}
+.rt th{text-align:left;font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:#7a7568;padding:8px 10px;border-bottom:2px solid #d8d3c5;background:#f3efe4;}
+.rt td{padding:9px 10px;border-bottom:1px solid #d8d3c5;font-size:12px;vertical-align:top;}
+.rt tr:hover td{background:#f5f3ee;}
+.sn{font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;white-space:nowrap;}
+.rate-cell{font-family:'DM Mono',monospace;font-weight:700;}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
 footer a{color:rgba(255,255,255,.6);}
 </style>
 </head>
 <body>
-
 <nav class="site-nav">
-  <div class="nav-inner">
-    <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
-    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-    <ul class="nav-links">
-      <li><a href="/booksmart-tools/tools.html" class="active">Tools</a></li>
-      <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
-      <li><a href="/booksmart-tools/about.html">About</a></li>
-      <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools →</a></li>
-    </ul>
-  </div>
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/about.html">About</a></li>
+    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
+  </ul>
 </nav>
 
 <div class="hero">
-  <div class="year-badge">RESTAURANT & PREPARED FOOD TAX · 2025</div>
+  <div class="tag-row">
+    <span class="tag-pill">RESTAURANTS & FOOD SERVICE</span>
+    <span class="tag-pill">ALL 50 STATES</span>
+    <span class="tag-pill">2026 RATES</span>
+    <span class="tag-pill">PREPARED FOOD TAX</span>
+  </div>
   <h1>Meals Tax Calculator</h1>
-  <p>Calculate restaurant and prepared food tax by state and county/city. Includes local meals taxes that stack on top of the standard sales tax — sourced from state revenue departments and Tax Foundation data.</p>
+  <p>Calculate meals tax on restaurant food, prepared food, and beverages for all 50 states and major counties. For restaurant owners filing monthly meals tax returns.</p>
 </div>
 
 <div class="container">
   <div class="layout">
-
-    <!-- INPUT -->
     <div class="card">
-      <div class="card-title"><div class="num">1</div>Meal & Location</div>
+      <div class="card-title"><div class="num amber">1</div>Location & Business Info</div>
 
       <div class="field">
-        <label>Bill Amount (before tax & tip)</label>
-        <div class="input-prefix" data-prefix="$">
-          <input type="number" id="amount" placeholder="75.00" min="0" step="0.01">
-        </div>
-      </div>
-
-      <div class="field">
-        <label>State</label>
+        <label class="flbl">State</label>
         <select id="state" onchange="onStateChange()">
-          <option value="">— Select a state —</option>
+          <option value="">-- Select your state --</option>
         </select>
       </div>
 
-      <div class="field" id="county-field" style="display:none">
-        <label>County / City <span style="font-weight:400;color:var(--muted)">(for local meals tax)</span></label>
-        <select id="county" onchange="onCountyChange()">
-          <option value="">— Select county/city —</option>
+      <div class="field" id="locality-field" style="display:none">
+        <label class="flbl">County / City (for local meals tax)</label>
+        <select id="locality" onchange="onLocalityChange()">
+          <option value="">-- Select your county or city --</option>
         </select>
-        <div class="county-msg" id="county-msg"></div>
+        <div class="hint info" id="locality-hint"></div>
       </div>
 
-      <div class="field" id="custom-field" style="display:none">
-        <label>Custom Local Meals Tax Rate (%)</label>
-        <div class="input-prefix" data-prefix="%">
-          <input type="number" id="customRate" placeholder="0" min="0" max="15" step="0.01" value="0">
-        </div>
-        <div class="hint" id="custom-hint">Enter 0 if your county/city has no additional meals tax.</div>
+      <div class="rate-box" id="rate-box">
+        <div class="rate-big" id="rate-big">--</div>
+        <div class="rate-sub" id="rate-sub">--</div>
       </div>
 
       <div class="field">
-        <label>Tip Amount (optional)</label>
-        <div class="input-prefix" data-prefix="$">
-          <input type="number" id="tip" placeholder="0.00" min="0" step="0.01" value="0">
-        </div>
-        <div class="hint">Voluntary tips are NOT subject to meals tax. Mandatory service charges ARE taxable in most states.</div>
+        <label class="flbl">Reporting Period</label>
+        <select id="period">
+          <option value="January 2026">January 2026</option>
+          <option value="February 2026" selected>February 2026</option>
+          <option value="March 2026">March 2026</option>
+          <option value="April 2026">April 2026</option>
+          <option value="May 2026">May 2026</option>
+          <option value="June 2026">June 2026</option>
+          <option value="July 2026">July 2026</option>
+          <option value="August 2026">August 2026</option>
+          <option value="September 2026">September 2026</option>
+          <option value="October 2026">October 2026</option>
+          <option value="November 2026">November 2026</option>
+          <option value="December 2026">December 2026</option>
+          <option value="Q1 2026 (Jan-Mar)">Q1 2026 (Jan-Mar)</option>
+          <option value="Q2 2026 (Apr-Jun)">Q2 2026 (Apr-Jun)</option>
+          <option value="Q3 2026 (Jul-Sep)">Q3 2026 (Jul-Sep)</option>
+          <option value="Q4 2026 (Oct-Dec)">Q4 2026 (Oct-Dec)</option>
+        </select>
       </div>
 
-      <button class="calc-btn" onclick="calculate()">Calculate Meals Tax →</button>
+      <div class="divider"></div>
+      <div class="card-title" style="font-size:16px;margin-bottom:14px;"><div class="num amber">2</div>Sales Figures</div>
+
+      <div class="field">
+        <label class="flbl">Total Gross Food & Beverage Sales</label>
+        <div class="pw" data-p="$"><input type="number" id="gross" placeholder="0.00" min="0" step="0.01"></div>
+        <div class="hint">All food and beverage sales including dine-in, takeout, catering, and delivery for the period.</div>
+      </div>
+
+      <div class="field">
+        <label class="flbl">Exempt Sales (if any, $)</label>
+        <div class="pw" data-p="$"><input type="number" id="exempt" placeholder="0.00" min="0" step="0.01" value="0"></div>
+        <div class="hint">Employee meals, charitable sales, sales to tax-exempt orgs. Most restaurants enter $0.</div>
+      </div>
+
+      <div class="field">
+        <label class="flbl">Alcohol / Beverage Sales (if taxed separately, $)</label>
+        <div class="pw" data-p="$"><input type="number" id="alcohol" placeholder="0.00" min="0" step="0.01" value="0"></div>
+        <div class="hint">Some states/localities tax alcohol at a different rate. Leave $0 if same rate applies.</div>
+      </div>
+
+      <button class="calc-btn" onclick="calc()">Calculate Meals Tax Due →</button>
     </div>
 
     <!-- RESULTS -->
-    <div class="card results-card">
-      <div class="card-title"><div class="num">2</div>Tax Breakdown</div>
-
-      <div id="placeholder" class="placeholder-msg">
-        Enter your bill amount and location, then click<br>
-        <strong style="color:rgba(255,255,255,.8)">Calculate Meals Tax →</strong>
+    <div class="card rc">
+      <div class="card-title"><div class="num amber">3</div>Meals Tax Return Summary</div>
+      <div class="ph" id="ph">
+        Select your state and location,<br>enter your food sales, then click<br>
+        <strong style="color:rgba(255,255,255,.8)">Calculate Meals Tax Due →</strong><br><br>
+        Results match your state meals<br>tax return form.
       </div>
+      <div id="rc" style="display:none">
+        <div class="due" id="due"></div>
 
-      <div id="results-content" style="display:none">
-        <div class="tb">
-          <div class="tb-title">Meals tax breakdown</div>
-          <div class="tr"><span class="tl">State sales tax on food</span><span class="tr-rate" id="r-state-pct">—</span><span class="ta orange" id="r-state-tax">—</span></div>
-          <div class="tr" id="r-local-row"><span class="tl">Local meals tax</span><span class="tr-rate" id="r-local-pct">—</span><span class="ta amber" id="r-local-tax">—</span></div>
-          <div class="tr"><span class="tl">Total meals tax rate</span><span class="tr-rate" id="r-total-pct">—</span><span class="ta red" id="r-total-tax">—</span></div>
+        <div class="rs">
+          <div class="rst">SALES SUMMARY — <span id="r-period"></span></div>
+          <div class="rr"><span class="rl">Gross food & beverage sales</span><span class="rv" id="r-gross"></span></div>
+          <div class="rr" id="r-alc-row"><span class="rl">Of which: alcohol (if diff. rate)</span><span class="rv a" id="r-alc"></span></div>
+          <div class="rr"><span class="rl">Less: exempt sales</span><span class="rv a" id="r-exempt"></span></div>
+          <div class="rr" style="border-top:1px solid rgba(255,255,255,.15);margin-top:4px;padding-top:10px;">
+            <span class="rl b">Net taxable sales</span>
+            <span class="rv g" style="font-size:16px" id="r-taxable"></span>
+          </div>
         </div>
 
-        <div class="tb">
-          <div class="tb-title">Bill summary</div>
-          <div class="tr"><span class="tl">Pre-tax food &amp; drinks</span><span class="ta" id="r-subtotal">—</span></div>
-          <div class="tr"><span class="tl">Meals tax</span><span class="ta orange" id="r-tax-line">—</span></div>
-          <div class="tr" id="r-tip-row"><span class="tl">Tip (not taxed)</span><span class="ta" id="r-tip-line">—</span></div>
+        <div class="rs">
+          <div class="rst">MEALS TAX CALCULATION</div>
+          <div class="rr"><span class="rl">State meals tax rate</span><span class="rv" id="r-state-rate"></span></div>
+          <div class="rr" id="r-local-row" style="display:none"><span class="rl">Local meals tax rate</span><span class="rv" id="r-local-rate"></span></div>
+          <div class="rr" id="r-combined-row" style="display:none"><span class="rl">Combined meals tax rate</span><span class="rv" id="r-combined-rate"></span></div>
+          <div class="rr"><span class="rl">Meals tax on food sales</span><span class="rv a" id="r-meals-tax"></span></div>
+          <div class="rr" id="r-alc-tax-row" style="display:none"><span class="rl">Tax on alcohol (if diff. rate)</span><span class="rv a" id="r-alc-tax"></span></div>
         </div>
 
-        <div class="total-box grand">
-          <span class="tb-label">Total to pay</span>
-          <span class="tb-amount grand" id="r-grand">—</span>
+        <div class="rs">
+          <div class="rst">FILING CHECKLIST</div>
+          <div class="rr"><span class="rl">1. Gross food & beverage sales</span><span class="rv" id="r-c1"></span></div>
+          <div class="rr"><span class="rl">2. Less exempt sales</span><span class="rv a" id="r-c2"></span></div>
+          <div class="rr"><span class="rl">3. Net taxable sales</span><span class="rv g" id="r-c3"></span></div>
+          <div class="rr"><span class="rl">4. Meals tax rate applied</span><span class="rv" id="r-c4"></span></div>
+          <div class="rr" style="border-top:1px solid rgba(255,255,255,.15);margin-top:4px;padding-top:10px;">
+            <span class="rl b">5. MEALS TAX DUE</span>
+            <span class="rv w" style="font-size:18px" id="r-c5"></span>
+          </div>
         </div>
 
-        <div class="note-box" id="r-note"></div>
+        <div class="tbox grand">
+          <span class="tlbl">TOTAL MEALS TAX DUE TO STATE</span>
+          <span class="tval grand" id="r-grand"></span>
+        </div>
 
         <div class="actions">
-          <button class="action-btn" onclick="copyResults()">📋 Copy</button>
-          <button class="action-btn" onclick="window.print()">🖨 Print</button>
+          <button class="abtn" onclick="copyRet()">📋 Copy Return</button>
+          <button class="abtn" onclick="window.print()">🖨 Print</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- REFERENCE: KEY STATES -->
-  <div class="ref-section">
-    <div class="ref-title">Meals Tax Guide — States With Separate or Higher Restaurant Tax Rates</div>
-    <div class="ref-sub">Most states apply their standard sales tax to restaurant meals. These states charge extra meals taxes or have notable differences. Source: State revenue departments, Tax Foundation 2025.</div>
-
-    <div class="state-cards">
-
-      <div class="state-card">
-        <h3>Virginia <span class="badge">County-level</span></h3>
-        <p>State sales tax on prepared food: <strong>5.3%</strong> (4.3% state + 1% mandatory local). Counties and cities may add their own meals tax on top — up to 6% for cities, 4% for counties.</p>
-        <ul class="rate-list">
-          <li><span>Arlington County (from Jul 2025)</span><span class="r">5% + 5.3% = 10.3%</span></li>
-          <li><span>Fairfax County (from Jan 2026)</span><span class="r">4% + 5.3% = 9.3%</span></li>
-          <li><span>Alexandria City</span><span class="r">4% + 5.3% = 9.3%</span></li>
-          <li><span>Richmond City</span><span class="r">7.5% + 5.3% = 12.8%</span></li>
-          <li><span>Virginia Beach</span><span class="r">5.5% + 5.3% = 10.8%</span></li>
-          <li><span>Roanoke City</span><span class="r">6.5% + 5.3% = 11.8%</span></li>
-          <li><span>No local tax counties</span><span class="r">5.3% total</span></li>
-        </ul>
-      </div>
-
-      <div class="state-card">
-        <h3>Massachusetts <span class="badge">City/Town option</span></h3>
-        <p>State sales tax on meals: <strong>6.25%</strong>. All cities and towns may add a local meals excise tax of up to <strong>0.75%</strong>. Most major cities have adopted the full rate.</p>
-        <ul class="rate-list">
-          <li><span>Boston (local 0.75%)</span><span class="r">7.00% total</span></li>
-          <li><span>Cambridge (local 0.75%)</span><span class="r">7.00% total</span></li>
-          <li><span>Worcester (local 0.75%)</span><span class="r">7.00% total</span></li>
-          <li><span>Springfield (local 0.75%)</span><span class="r">7.00% total</span></li>
-          <li><span>Towns with no local tax</span><span class="r">6.25% total</span></li>
-        </ul>
-      </div>
-
-      <div class="state-card">
-        <h3>New Hampshire <span class="badge green">State-level only</span></h3>
-        <p>No general sales tax. Instead, NH charges a statewide <strong>8.5% Meals & Rooms Tax</strong> on all prepared food and restaurant meals. No local additions permitted.</p>
-        <ul class="rate-list">
-          <li><span>All cities and towns</span><span class="r">8.5% flat</span></li>
-        </ul>
-        <p style="margin-top:10px">Note: The rate was reduced from 9% to 8.5% effective June 2021 and remains at 8.5% through 2025.</p>
-      </div>
-
-      <div class="state-card">
-        <h3>Vermont <span class="badge">State + local option</span></h3>
-        <p>State meals & rooms tax: <strong>9%</strong> on restaurant meals (higher than the 6% general sales tax). Select towns may also add a local option tax of <strong>1%</strong>.</p>
-        <ul class="rate-list">
-          <li><span>Burlington (local 1%)</span><span class="r">10% total</span></li>
-          <li><span>Stowe (local 1%)</span><span class="r">10% total</span></li>
-          <li><span>Montpelier (local 1%)</span><span class="r">10% total</span></li>
-          <li><span>No local tax towns</span><span class="r">9% total</span></li>
-        </ul>
-      </div>
-
-      <div class="state-card">
-        <h3>Maine <span class="badge green">State-level only</span></h3>
-        <p>Meals tax: <strong>8%</strong> on restaurant food and prepared food (higher than the 5.5% general sales tax). The 8% rate applies statewide with no local additions.</p>
-        <ul class="rate-list">
-          <li><span>All cities and towns</span><span class="r">8% flat</span></li>
-        </ul>
-      </div>
-
-      <div class="state-card">
-        <h3>Washington D.C. <span class="badge">City-wide</span></h3>
-        <p>Restaurant meals are taxed at <strong>10%</strong> in D.C. (vs 6% on general goods). This higher rate applies to all restaurant and prepared food purchases.</p>
-        <ul class="rate-list">
-          <li><span>All of Washington D.C.</span><span class="r">10% flat</span></li>
-        </ul>
-      </div>
-
-      <div class="state-card">
-        <h3>Connecticut <span class="badge">State-wide surcharge</span></h3>
-        <p>General sales tax: 6.35%. Meals tax: <strong>7.35%</strong> — a 1% surcharge applies to all restaurant meals and certain prepared food statewide. No local additions.</p>
-        <ul class="rate-list">
-          <li><span>All cities and towns</span><span class="r">7.35% flat</span></li>
-        </ul>
-      </div>
-
-      <div class="state-card">
-        <h3>Tennessee <span class="badge">Reduced grocery rate</span></h3>
-        <p>Restaurant meals taxed at full <strong>7%</strong> state rate (plus local avg ~2.55%). Grocery items get reduced 4% state rate. One of highest combined meals tax states.</p>
-        <ul class="rate-list">
-          <li><span>Nashville/Davidson Co.</span><span class="r">9.25% avg combined</span></li>
-          <li><span>Memphis/Shelby Co.</span><span class="r">9.75% avg combined</span></li>
-          <li><span>State rate only</span><span class="r">7.00%</span></li>
-        </ul>
-      </div>
-
+  <!-- REFERENCE TABLE -->
+  <div class="ref">
+    <h2>Meals Tax Rates — All 50 States (2026)</h2>
+    <p>Prepared food and restaurant meals tax rates. Most states apply their standard sales tax rate to restaurant food. Some states have a separate higher meals tax rate. Local meals taxes can add significant additional amounts on top of the state rate — especially in Virginia, Massachusetts, South Carolina, and other states that authorize local meals taxes. Source: State revenue departments, Tax Foundation 2026, RestaurantCPAs.com.</p>
+    <div class="rt-wrap">
+      <table class="rt">
+        <thead><tr><th>State</th><th>State Meals/Prepared Food Rate</th><th>Local Meals Tax?</th><th>Notes</th><th>Filing Portal</th></tr></thead>
+        <tbody id="rtbody"></tbody>
+      </table>
     </div>
-
-    <div style="background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:20px;margin-top:20px;">
-      <h3 style="font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:10px;">States where standard sales tax applies to meals (no extra meals tax)</h3>
-      <p style="font-size:13px;color:var(--muted);line-height:1.7;">Most states simply apply their regular sales tax rate to restaurant meals. These include: Alabama, Arizona, Arkansas, California, Colorado, Florida, Georgia, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maryland, Michigan, Minnesota, Mississippi, Missouri, Nebraska, Nevada, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Pennsylvania, Rhode Island, South Carolina, South Dakota, Texas, Utah, Virginia*, Washington, West Virginia, Wisconsin, Wyoming.</p>
-      <p style="font-size:12px;color:var(--muted);margin-top:8px;">*Virginia's standard rate already includes a mandatory 1% local add-on. Counties/cities may add further meals taxes on top.</p>
-      <p style="font-size:12px;color:var(--muted);margin-top:6px;">States with NO sales tax on meals: Alaska, Delaware, Montana, Oregon. Note: NH has no sales tax but imposes a specific 8.5% meals & rooms tax.</p>
-    </div>
+    <p style="font-size:11px;color:#7a7568;margin-top:12px;">⚠ For estimation only. Restaurant tax rules are complex — verify exact rates with your state DOR. Local meals taxes vary widely even within the same state. Consult a CPA for official filing guidance.</p>
   </div>
 </div>
 
 <footer>
-  © 2025 BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">← Back to Home</a> &nbsp;|&nbsp;
-  Sources: State revenue dept. websites, Tax Foundation 2025, Virginia VRLTA, Massachusetts DOR, NH DRA. Always verify locally.
+  BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp;
+  Meals tax rates: State revenue departments & Tax Foundation 2026. For estimation only.
 </footer>
 
 <script src="/booksmart-tools/js/main.js"></script>
 <script>
-// ── MEALS TAX DATA ─────────────────────────────────
-// [state, stateMealsRate%, note, hasLocalOption, counties]
-// counties: {name: localMealsRate%}
-const MEALS_TAX = {
-  "Alabama":       { state:4.00,  note:"Standard sales tax applies to meals. Avg local ~5.24% additional.", local:false, counties:{} },
-  "Alaska":        { state:0.00,  note:"No state sales tax on meals. Local boroughs may charge sales tax. Check your specific area.", local:true, counties:{"Anchorage":0,"Juneau":5,"Fairbanks":0,"Sitka":5,"Ketchikan":5.5} },
-  "Arizona":       { state:5.60,  note:"Standard sales tax applies to restaurant food.", local:false, counties:{} },
-  "Arkansas":      { state:6.50,  note:"Standard sales tax applies to meals.", local:false, counties:{} },
-  "California":    { state:7.25,  note:"Standard sales tax applies to hot prepared food. Many localities add 1-3%.", local:false, counties:{"Los Angeles":10.25,"San Francisco":8.625,"San Diego":7.75,"San Jose":9.375,"Sacramento":8.75,"Oakland":10.25,"Long Beach":10.25} },
-  "Colorado":      { state:2.90,  note:"Standard sales tax + local. Denver and other cities have additional local taxes.", local:false, counties:{"Denver":8.81,"Boulder":8.845,"Colorado Springs":8.2,"Aurora":8.0} },
-  "Connecticut":   { state:7.35,  note:"1% SURCHARGE: All restaurant meals taxed at 7.35% statewide (vs 6.35% general sales tax). No local additions.", local:false, counties:{} },
-  "Delaware":      { state:0.00,  note:"No sales tax and no meals tax in Delaware.", local:false, counties:{} },
-  "Florida":       { state:6.00,  note:"Standard sales tax + avg local 1.05%.", local:false, counties:{"Miami-Dade":7.0,"Broward":7.0,"Palm Beach":7.0,"Hillsborough":8.5,"Orange (Orlando)":6.5,"Pinellas":7.0} },
-  "Georgia":       { state:4.00,  note:"Standard sales tax applies to meals. Local rates add ~3.37%.", local:false, counties:{} },
-  "Hawaii":        { state:4.00,  note:"General Excise Tax of 4% applies (not traditional sales tax). Meals included.", local:false, counties:{} },
-  "Idaho":         { state:6.00,  note:"Standard sales tax applies to prepared food.", local:false, counties:{} },
-  "Illinois":      { state:6.25,  note:"Standard rate on prepared food. Chicago has one of highest: up to 10.25% + restaurant surcharge.", local:false, counties:{"Chicago":10.25,"Cook County":10.25,"DuPage County":7.5,"Suburban Cook":10.0} },
-  "Indiana":       { state:7.00,  note:"Standard 7% state rate. No local sales tax.", local:false, counties:{} },
-  "Iowa":          { state:6.00,  note:"Standard rate. Local option up to 1%.", local:false, counties:{} },
-  "Kansas":        { state:6.50,  note:"Standard sales tax on prepared food. Avg local ~2.19%.", local:false, counties:{} },
-  "Kentucky":      { state:6.00,  note:"Standard 6% rate statewide. No local sales tax.", local:false, counties:{} },
-  "Louisiana":     { state:5.00,  note:"State rate raised to 5% in Jan 2025. Local avg ~5.11% additional.", local:false, counties:{"New Orleans":9.45,"Baton Rouge":9.95,"Shreveport":9.05} },
-  "Maine":         { state:8.00,  note:"HIGHER RATE: Maine taxes restaurant meals at 8% statewide (vs 5.5% general sales tax). No local meals tax.", local:false, counties:{} },
-  "Maryland":      { state:6.00,  note:"Standard 6% sales tax. No local sales tax except in resort areas (Ocean City 1% hotel tax not on meals).", local:false, counties:{} },
-  "Massachusetts": { state:6.25,  note:"State meals tax 6.25%. Cities/towns may add LOCAL MEALS EXCISE up to 0.75%. Most major cities charge the full 0.75%.", local:true, counties:{"Boston":0.75,"Cambridge":0.75,"Worcester":0.75,"Springfield":0.75,"Lowell":0.75,"Providence area":0.75,"Quincy":0.75,"Framingham":0.75,"New Bedford":0.75,"Brockton":0.75,"Barnstable":0.75,"Plymouth":0.75,"Amherst":0.75,"Northampton":0.75,"No local tax towns":0} },
-  "Michigan":      { state:6.00,  note:"Standard 6% rate. No local sales tax on meals.", local:false, counties:{} },
-  "Minnesota":     { state:6.875, note:"Standard rate. Minneapolis adds extra 2.65% city restaurant tax — highest in US at 12+ combined.", local:false, counties:{"Minneapolis":2.65,"St. Paul":0.5,"Duluth":1.0,"Rochester":0} },
-  "Mississippi":   { state:7.00,  note:"Full 7% on all prepared food. No local additions.", local:false, counties:{} },
-  "Missouri":      { state:4.225, note:"Standard rate + local. Kansas City area: 10.85% combined.", local:false, counties:{"Kansas City":4.975,"St. Louis":5.454,"Springfield":2.175} },
-  "Montana":       { state:0.00,  note:"No sales tax. Resort areas (Big Sky, West Yellowstone, Whitefish, Red Lodge, Seeley Lake) charge a 3% resort tax on meals.", local:true, counties:{"Big Sky Resort Area":3,"West Yellowstone":3,"Whitefish":3,"Red Lodge":3,"Seeley Lake":3,"All other areas":0} },
-  "Nebraska":      { state:5.50,  note:"Standard rate. Omaha adds 1.5%, Lincoln adds 0%.", local:false, counties:{"Omaha":7.0,"Lincoln":5.5} },
-  "Nevada":        { state:6.85,  note:"Standard rate + local. Clark County (Las Vegas) 8.375%.", local:false, counties:{"Las Vegas/Clark Co.":8.375,"Reno/Washoe Co.":8.265} },
-  "New Hampshire": { state:8.50,  note:"SPECIAL STATEWIDE MEALS TAX: NH has no general sales tax but charges 8.5% Meals & Rooms Tax on ALL restaurant food. No local additions.", local:false, counties:{} },
-  "New Jersey":    { state:6.625, note:"Standard rate. No local sales tax on meals.", local:false, counties:{} },
-  "New Mexico":    { state:5.00,  note:"Gross Receipts Tax (similar to sales tax) applies to restaurants.", local:false, counties:{} },
-  "New York":      { state:4.00,  note:"Standard rate + local. NYC 8.875% combined. Most food for home consumption exempt but restaurant meals taxable.", local:false, counties:{"New York City":8.875,"Nassau County":8.625,"Suffolk County":8.625,"Westchester":8.375,"Albany":8.0} },
-  "North Carolina":{ state:4.75,  note:"Standard sales tax + local avg 2.24%.", local:false, counties:{} },
-  "North Dakota":  { state:5.00,  note:"Standard rate. Fargo and other cities add local.", local:false, counties:{"Fargo":7.5,"Bismarck":7.0} },
-  "Ohio":          { state:5.75,  note:"Standard rate + local avg 1.47%. Cuyahoga (Cleveland area) 8%.", local:false, counties:{"Cuyahoga (Cleveland)":8.0,"Franklin (Columbus)":7.5,"Hamilton (Cincinnati)":7.8} },
-  "Oklahoma":      { state:4.50,  note:"Standard rate + local. Oklahoma City area 8.625%.", local:false, counties:{"Oklahoma City":8.625,"Tulsa":8.517} },
-  "Oregon":        { state:0.00,  note:"No sales tax and no meals tax in Oregon.", local:false, counties:{} },
-  "Pennsylvania":  { state:6.00,  note:"Standard rate. Philadelphia adds 2% city tax, making meals 8% total.", local:false, counties:{"Philadelphia":8.0,"Allegheny (Pittsburgh)":7.0,"All other counties":6.0} },
-  "Rhode Island":  { state:8.00,  note:"Restaurant meals taxed at 8% statewide (same as general rate). No local meals tax.", local:false, counties:{} },
-  "South Carolina":{ state:6.00,  note:"Standard rate + local. Counties/municipalities may add local hospitality tax.", local:true, counties:{"Charleston":9.0,"Columbia":7.5,"Myrtle Beach":11.5,"Hilton Head":8.5,"Greenville":7.0} },
-  "South Dakota":  { state:4.20,  note:"Standard rate + local avg 1.9%.", local:false, counties:{} },
-  "Tennessee":     { state:7.00,  note:"Full 7% on prepared food. Avg local ~2.55% additional. One of highest combined rates.", local:false, counties:{"Nashville/Davidson":9.25,"Memphis/Shelby":9.75,"Knoxville":9.25,"Chattanooga":9.25} },
-  "Texas":         { state:6.25,  note:"Standard rate + local up to 2%. Houston 8.25%, Dallas 8.25%.", local:false, counties:{"Houston":8.25,"Dallas":8.25,"San Antonio":8.25,"Austin":8.25} },
-  "Utah":          { state:4.85,  note:"Standard rate + local ~1.11%.", local:false, counties:{} },
-  "Vermont":       { state:9.00,  note:"HIGHER RATE: Vermont Meals & Rooms Tax is 9% statewide (vs 6% general sales tax). Select towns may add 1% LOCAL OPTION.", local:true, counties:{"Burlington":10.0,"Stowe":10.0,"Montpelier":10.0,"Brattleboro":10.0,"Middlebury":10.0,"All other towns":9.0} },
-  "Virginia":      { state:5.30,  note:"State food tax 5.3% (4.3% + mandatory 1% local). Counties/cities may add LOCAL MEALS TAX on top.", local:true, counties:{"Arlington County":5.0,"Fairfax County":4.0,"Alexandria City":4.0,"Richmond City":7.5,"Virginia Beach":5.5,"Roanoke City":6.5,"Norfolk City":6.5,"Chesapeake City":5.5,"Hampton City":7.5,"Newport News":6.5,"Charlottesville City":4.0,"Lynchburg City":6.5,"Harrisonburg City":5.0,"Frederick County":4.0,"Loudoun County":4.0,"Prince William County":4.0,"Chesterfield County":4.0,"Henrico County":4.0,"Albemarle County":4.0,"No meals tax counties":0} },
-  "Washington":    { state:6.50,  note:"Standard rate + local avg 2.92%. Seattle 10.35% combined.", local:false, counties:{"Seattle":3.85,"Bellevue":3.5,"Tacoma":3.7,"Spokane":2.5} },
-  "Washington D.C.":{ state:10.00, note:"D.C. taxes restaurant meals at 10% — higher than the 6% general rate. District-wide, no local variations.", local:false, counties:{} },
-  "West Virginia": { state:6.00,  note:"Standard rate + local avg 0.58%.", local:false, counties:{} },
-  "Wisconsin":     { state:5.00,  note:"Standard rate + local. Milwaukee area has county additions.", local:false, counties:{"Milwaukee":5.6,"Madison":5.5} },
-  "Wyoming":       { state:4.00,  note:"Standard rate + local avg 1.44%.", local:false, counties:{} },
+// ── MEALS TAX DATA — ALL 50 STATES + D.C. 2026 ─────────
+// Structure: [stateMealsRate%, hasLocalMeals, note, portal, localities]
+// localities: null = no local tax | {name: additionalLocalRate%}
+// stateMealsRate = STATE-ONLY portion of meals/prepared food tax
+// Local rate is ADDED ON TOP of state rate
+
+const MEALS = {
+  "Alabama":    {state:4.00, local:true,  note:"State 4% + county/city local taxes avg 5-6%. No separate meals tax — full sales tax on all restaurant food.", portal:"MyAlabamaTaxes (revenue.alabama.gov)", localities:{"Jefferson County (Birmingham)":6.00,"Mobile County":5.00,"Madison County (Huntsville)":5.00,"Montgomery County":5.00,"Shelby County":5.00,"All Other Alabama":4.50}},
+  "Alaska":     {state:0.00, local:true,  note:"No state sales tax. Some cities/boroughs charge local sales tax on restaurant meals.", portal:"Contact your local borough", localities:{"Juneau":5.00,"Ketchikan":7.00,"Sitka":6.00,"Kodiak":6.00,"No local tax areas":0.00}},
+  "Arizona":    {state:5.60, local:true,  note:"State TPT (Transaction Privilege Tax) 5.6% on restaurant meals. Cities add significant local rates.", portal:"AZTaxes (aztaxes.gov)", localities:{"Maricopa County (Phoenix area)":3.00,"Pima County (Tucson area)":3.10,"Coconino County (Flagstaff)":3.58,"All Other Arizona":2.00}},
+  "Arkansas":   {state:6.50, local:true,  note:"Full 6.5% state rate on all prepared food. Cities may add HMR (Hotel/Motel/Restaurant) tax. Fayetteville adds 2% HMR + 5% alcohol.", portal:"ATAP (atap.arkansas.gov)", localities:{"Little Rock HMR":2.00,"Fayetteville HMR":2.00,"Fort Smith HMR":2.00,"Hot Springs HMR":3.00,"No HMR areas":0.00}},
+  "California": {state:7.25, local:true,  note:"Full state rate 7.25% applies to all restaurant meals. No separate meals tax — local district taxes add on top.", portal:"CDTFA (cdtfa.ca.gov)", localities:{"Los Angeles County":3.00,"San Francisco":1.375,"San Diego County":0.50,"Orange County":0.50,"Santa Clara County":1.875,"All Other California":0.00}},
+  "Colorado":   {state:2.90, local:true,  note:"State 2.9%. Denver and many cities add significant local taxes. Denver total ~8.81%.", portal:"Revenue Online (revenue.colorado.gov)", localities:{"Denver":5.91,"Colorado Springs":3.12,"Aurora":5.10,"Fort Collins":3.65,"Boulder":5.945,"All Other Colorado":2.00}},
+  "Connecticut":{state:7.35, local:false, note:"Connecticut charges a HIGHER 7.35% rate on restaurant meals vs. 6.35% general sales tax rate. No additional local meals tax.", portal:"myconneCT (portal.ct.gov/DRS)", localities:null},
+  "Delaware":   {state:0.00, local:false, note:"No state sales tax. No meals tax. Delaware restaurants do not collect sales tax.", portal:"No filing required", localities:null},
+  "Florida":    {state:6.00, local:true,  note:"State 6% on restaurant meals. Counties add discretionary surtax 0.5%-2.5%. No separate state meals tax.", portal:"Florida e-Services (floridarevenue.com)", localities:{"Miami-Dade":1.00,"Broward":1.00,"Palm Beach":1.00,"Hillsborough (Tampa)":2.50,"Orange (Orlando)":0.50,"Pinellas":1.00,"Duval (Jacksonville)":1.50,"All Other Florida":0.50}},
+  "Georgia":    {state:4.00, local:true,  note:"State 4% on prepared food. Counties add SPLOST and other local rates. Atlanta/Fulton area highest.", portal:"Georgia Tax Center (gtc.dor.ga.gov)", localities:{"Fulton County (Atlanta)":4.90,"DeKalb County":4.00,"Gwinnett County":2.00,"Chatham County (Savannah)":3.00,"Richmond County (Augusta)":4.00,"All Other Georgia":3.00}},
+  "Hawaii":     {state:4.00, local:true,  note:"General Excise Tax (GET) on restaurants. Oahu adds 0.5% surcharge = 4.5% total. No separate meals tax.", portal:"Hawaii Tax Online (tax.hawaii.gov)", localities:{"Honolulu / Oahu":0.50,"Maui County":0.00,"Hawaii County (Big Island)":0.00,"Kauai County":0.00}},
+  "Idaho":      {state:6.00, local:false, note:"Full 6% state rate on restaurant meals and prepared food. No separate local meals tax.", portal:"TAP (tap.tax.idaho.gov)", localities:null},
+  "Illinois":   {state:6.25, local:true,  note:"Full 6.25% state rate on prepared food for immediate consumption (grocery rate eliminated Jan 2026). Chicago and many municipalities add local taxes. Chicago total ~10.25%.", portal:"MyTax Illinois (mytax.illinois.gov)", localities:{"Chicago / Cook County city":4.00,"Cook County suburbs":2.75,"DuPage County":1.50,"Lake County":0.75,"Kane County":2.00,"All Other Illinois":1.25}},
+  "Indiana":    {state:7.00, local:false, note:"Flat 7% on all prepared food and restaurant meals. No local sales tax in Indiana.", portal:"INTIME (intime.dor.in.gov)", localities:null},
+  "Iowa":       {state:6.00, local:true,  note:"Full 6% state rate on restaurant meals. Many cities add 1% local option tax = 7% in most cities.", portal:"GovConnectIowa (tax.iowa.gov)", localities:{"Des Moines area":1.00,"Cedar Rapids area":1.00,"Davenport area":1.00,"Iowa City area":1.00,"All Other Iowa (check local option)":0.00}},
+  "Kansas":     {state:6.50, local:true,  note:"Full 6.5% state rate on restaurant meals (groceries exempt, but prepared food is fully taxable). Cities add local taxes.", portal:"KS Customer Service (ksrevenue.gov)", localities:{"Johnson County (Overland Park/Olathe)":2.60,"Sedgwick County (Wichita)":2.00,"Shawnee County (Topeka)":2.65,"Wyandotte County (Kansas City KS)":2.625,"All Other Kansas":1.00}},
+  "Kentucky":   {state:6.00, local:false, note:"Full 6% state rate on restaurant meals and prepared food. No local sales tax in Kentucky.", portal:"KY Online Gateway (revenue.ky.gov)", localities:null},
+  "Louisiana":  {state:5.00, local:true,  note:"State 5% on restaurant meals. Parishes add significant local rates. New Orleans total ~9.45%.", portal:"LATAP (latap.revenue.louisiana.gov)", localities:{"Orleans Parish (New Orleans)":4.45,"Jefferson Parish (Metairie)":4.20,"East Baton Rouge (Baton Rouge)":4.95,"St. Tammany Parish":4.20,"Caddo Parish (Shreveport)":4.05,"All Other Louisiana":4.00}},
+  "Maine":      {state:8.00, local:false, note:"Maine charges a HIGHER 8% prepared food tax rate (vs 5.5% general sales tax). This higher rate applies to restaurant meals and prepared food. No additional local meals tax.", portal:"Maine Tax Portal (portal.maine.gov/mtap)", localities:null},
+  "Maryland":   {state:6.00, local:true,  note:"State 6% on restaurant meals. Some resort areas can add local meals tax. Ocean City adds hospitality tax.", portal:"bFile (interactive.marylandtaxes.gov)", localities:{"Ocean City (Worcester County)":1.00,"Baltimore City":0.00,"All Other Maryland":0.00}},
+  "Massachusetts":{state:6.25,local:true, note:"State 6.25% meals tax on restaurant food. Cities and towns can add a local meals tax up to 0.75%. Over 250 municipalities have adopted the local meals tax.", portal:"MassTaxConnect (masstaxconnect.dor.state.ma.us)", localities:{"Boston":0.75,"Cambridge":0.75,"Worcester":0.75,"Springfield":0.75,"Lowell":0.75,"New Bedford":0.75,"Brockton":0.75,"Quincy":0.75,"Lynn":0.75,"Fall River":0.75,"Newton":0.75,"Somerville":0.75,"Lawrence":0.75,"Waltham":0.75,"Many other cities/towns (check your city)":0.75,"Towns without local meals tax":0.00}},
+  "Michigan":   {state:6.00, local:false, note:"Full 6% state rate on restaurant meals and prepared food. No local sales tax in Michigan.", portal:"Michigan Treasury Online (michigan.gov/taxes)", localities:null},
+  "Minnesota":  {state:6.875,local:true,  note:"State 6.875% on restaurant food. Minneapolis adds extra taxes. Duluth has a special food & beverage tax.", portal:"e-Services (mndor.state.mn.us)", localities:{"Minneapolis (Hennepin)":1.15,"St. Paul (Ramsey)":0.50,"Duluth (food & bev tax)":2.25,"All Other Minnesota":0.50}},
+  "Mississippi":{state:7.00, local:false, note:"Full 7% state rate on restaurant meals and prepared food. Very limited local additions.", portal:"TAP (tap.dor.ms.gov)", localities:null},
+  "Missouri":   {state:4.225,local:true,  note:"State 4.225% on restaurant meals. Cities and counties add significant local taxes. Kansas City total ~10.85%. Many cities add restaurant-specific taxes.", portal:"MyTax Missouri (mytax.missouri.gov)", localities:{"Kansas City (Jackson County)":6.625,"St. Louis City":7.454,"St. Louis County":5.454,"Springfield (Greene County)":4.00,"Columbia (Boone County)":3.75,"All Other Missouri":3.00}},
+  "Montana":    {state:0.00, local:false, note:"No state sales tax. No meals tax. Montana restaurants do not collect sales tax.", portal:"No filing required", localities:null},
+  "Nebraska":   {state:5.50, local:true,  note:"State 5.5% on restaurant meals. Omaha and Lincoln add 1.5% local tax = 7% total.", portal:"Nebraska e-File (revenue.nebraska.gov)", localities:{"Douglas County (Omaha)":1.50,"Lancaster County (Lincoln)":1.50,"Sarpy County (Bellevue/Papillion)":1.50,"All Other Nebraska":0.00}},
+  "Nevada":     {state:6.85, local:true,  note:"State 6.85% on restaurant meals. Clark County (Las Vegas) adds 1.525% = 8.375% total.", portal:"Nevada Tax Center (nevadatax.nv.gov)", localities:{"Clark County (Las Vegas/Henderson)":1.525,"Washoe County (Reno/Sparks)":1.415,"Carson City":0.75,"All Other Nevada":0.00}},
+  "New Hampshire":{state:8.50,local:false,note:"New Hampshire has NO general sales tax but charges a statewide 8.5% Meals & Rooms Tax on all restaurant meals. File with NH Department of Revenue Administration.", portal:"NH DRA (revenue.nh.gov)", localities:null},
+  "New Jersey": {state:6.625,local:true, note:"State 6.625% on restaurant meals. Some municipalities have additional restaurant taxes. Atlantic City adds casino hotel tax.", portal:"NJ Taxation (njportal.com/DOR/Sales)", localities:{"Atlantic City":3.00,"Newark":0.00,"Jersey City":0.00,"All Other New Jersey":0.00}},
+  "New Mexico": {state:5.00, local:true,  note:"Gross Receipts Tax on restaurant food. State 5%. Cities add local rates. Albuquerque total ~7.875%.", portal:"TAP (tap.state.nm.us)", localities:{"Bernalillo County (Albuquerque)":2.875,"Santa Fe":3.4375,"Dona Ana County (Las Cruces)":3.3125,"All Other New Mexico":0.00}},
+  "New York":   {state:4.00, local:true,  note:"State 4% on restaurant meals. NYC adds 4.875% local = 8.875% total. Other counties add 3%-4.875%.", portal:"NY Business Online (businessexpress.ny.gov)", localities:{"New York City (5 boroughs)":4.875,"Nassau County":4.625,"Suffolk County":4.625,"Westchester County":4.375,"Erie County (Buffalo)":4.75,"Monroe County (Rochester)":4.00,"Onondaga County (Syracuse)":4.00,"Albany County":4.00,"All Other New York":4.00}},
+  "North Carolina":{state:4.75,local:true,note:"State 4.75% on restaurant meals. Counties add 2%-2.25% local tax. No separate local meals tax — standard local sales tax applies.", portal:"e-Business Center (eservices.dor.nc.gov)", localities:{"Mecklenburg County (Charlotte)":2.50,"Wake County (Raleigh)":2.50,"Guilford County (Greensboro)":2.00,"Durham County":2.75,"Buncombe County (Asheville)":2.25,"All Other North Carolina":2.00}},
+  "North Dakota":{state:5.00,local:true,  note:"Full 5% state rate on restaurant meals. Cities add local taxes. Fargo 7.5%, Bismarck 7%.", portal:"TAP (apps.nd.gov/tax/tap)", localities:{"Cass County (Fargo)":2.50,"Burleigh County (Bismarck)":2.00,"Grand Forks":2.25,"Ward County (Minot)":2.00,"All Other North Dakota":0.00}},
+  "Ohio":       {state:5.75, local:true,  note:"State 5.75% on restaurant meals eaten on premises. Takeout/drive-thru is NOT taxable in Ohio. Counties add 0.5%-2.25% local.", portal:"Ohio Business Gateway (gateway.ohio.gov)", localities:{"Cuyahoga County (Cleveland)":2.25,"Franklin County (Columbus)":1.75,"Hamilton County (Cincinnati)":2.05,"Summit County (Akron)":1.00,"Lucas County (Toledo)":2.00,"All Other Ohio":1.00}},
+  "Oklahoma":   {state:4.50, local:true,  note:"State 4.5% on all restaurant meals. Cities add significant local taxes. OKC and Tulsa area 8.5%+.", portal:"OkTAP (oktap.tax.ok.gov)", localities:{"Oklahoma County (Oklahoma City)":4.125,"Tulsa County":4.017,"Cleveland County (Norman)":3.875,"Comanche County (Lawton)":4.375,"All Other Oklahoma":3.00}},
+  "Oregon":     {state:0.00, local:false, note:"No state sales tax. No meals tax. Oregon restaurants do not collect sales tax.", portal:"No filing required", localities:null},
+  "Pennsylvania":{state:6.00,local:true, note:"State 6%. Philadelphia adds 2% = 8% total. Pittsburgh (Allegheny) adds 1% = 7% total. All other areas 6%.", portal:"myPATH (mypath.pa.gov)", localities:{"Philadelphia County":2.00,"Allegheny County (Pittsburgh)":1.00,"All Other Pennsylvania":0.00}},
+  "Rhode Island":{state:8.00,local:false, note:"Rhode Island charges a HIGHER 8% meals tax rate on restaurant food (vs 7% general sales tax). No additional local meals tax.", portal:"Taxpayer Portal (taxportal.ri.gov)", localities:null},
+  "South Carolina":{state:6.00,local:true,note:"State 6% on restaurant meals. Many counties add hospitality taxes 1%-2.5%. Myrtle Beach total 11.5% (6% state + 1.5% county + 1.5% city + 2.5% hospitality).", portal:"MyDORWAY (mydorway.dor.sc.gov)", localities:{"Horry County (Myrtle Beach)":5.50,"Charleston County":2.00,"Richland County (Columbia)":2.00,"Beaufort County (Hilton Head)":2.50,"Greenville County":1.00,"All Other South Carolina":1.00}},
+  "South Dakota":{state:4.20,local:true, note:"State 4.2% on restaurant meals. Cities add local rates. Sioux Falls and Rapid City add 2% = 6.2% total.", portal:"e-Tax (etax.sd.gov)", localities:{"Minnehaha County (Sioux Falls)":2.00,"Pennington County (Rapid City)":2.00,"All Other South Dakota":0.00}},
+  "Tennessee":  {state:7.00, local:true,  note:"State 7% on restaurant meals (reduced 4% rate does NOT apply to restaurant food). Counties add local taxes. Memphis 9.75%, Nashville 9.25%.", portal:"TNTAP (tntap.tn.gov)", localities:{"Shelby County (Memphis)":2.75,"Davidson County (Nashville)":2.25,"Knox County (Knoxville)":2.25,"Hamilton County (Chattanooga)":2.25,"Williamson County (Franklin)":2.25,"Montgomery County (Clarksville)":2.50,"All Other Tennessee":2.25}},
+  "Texas":      {state:6.25, local:true,  note:"Full 6.25% state rate on restaurant meals. Cities/counties add up to 2% local. Most metro areas 8.25%. No separate meals tax.", portal:"WebFile (comptroller.texas.gov)", localities:{"Harris County (Houston)":2.00,"Dallas County":2.00,"Tarrant County (Fort Worth)":2.00,"Bexar County (San Antonio)":2.00,"Travis County (Austin)":2.00,"All Other Texas":2.00}},
+  "Utah":       {state:4.85, local:true,  note:"State 4.85% on restaurant meals. Salt Lake County total 7.25%. Resort areas may have additional taxes.", portal:"TAP (tap.tax.utah.gov)", localities:{"Salt Lake County (SLC)":2.40,"Utah County (Provo/Orem)":2.00,"Weber County (Ogden)":2.40,"Summit County (Park City — resort tax)":3.20,"All Other Utah":1.50}},
+  "Vermont":    {state:9.00, local:false, note:"Vermont charges a HIGHER 9% statewide meals & rooms tax on restaurant food and prepared meals (vs 6% general sales tax). Some towns add up to 1% local option. Very clear meals-specific tax.", portal:"myVTax (myvtax.vermont.gov)", localities:{"Burlington (with local option)":1.00,"Stowe (with local option)":1.00,"Montpelier (with local option)":1.00,"All Other Vermont":0.00}},
+  "Virginia":   {state:0, local:true, vatax:true, note:"IMPORTANT: Virginia restaurants have TWO SEPARATE tax filings. (1) STATE SALES TAX: 5.3% base (or 6.0% in Northern Virginia) — filed with Virginia Tax on Form ST-1. Use the Sales Tax Calculator for this. (2) LOCAL FOOD & BEVERAGE TAX: filed separately with your county or city. This calculator handles ONLY the county F&B portion. 2026 confirmed rates: Prince William 3% (3% vendor discount, confirmed from actual filing), Fairfax 4% (effective Jan 2026), Arlington 5% (effective July 2025), Alexandria 4%. Source: RestaurantCPAs.com Jan 2026.", portal:"Filed with your County/City — NOT with Virginia Tax", localities:{"Prince William County":3.00,"Manassas Park City":3.00,"Fairfax County":4.00,"Fairfax City":4.00,"Arlington County":5.00,"Alexandria City":4.00,"Loudoun County":4.00,"Falls Church City":4.00,"Manassas City":4.00,"Virginia Beach City":5.50,"Chesapeake City":5.50,"Norfolk City":6.50,"Portsmouth City":6.50,"Suffolk City":6.50,"Hampton City":7.50,"Newport News City":7.50,"York County (Williamsburg area)":4.00,"James City County":4.00,"Williamsburg City":5.00,"Richmond City":7.50,"Henrico County":4.00,"Chesterfield County":4.00,"Roanoke City":6.50,"Roanoke County":4.00,"Lynchburg City":6.50,"Charlottesville City":5.00,"Fredericksburg City":4.00,"Spotsylvania County":4.00,"Stafford County":4.00,"Harrisonburg City":5.00,"Winchester City":5.00,"Staunton City":4.00,"Waynesboro City":4.00,"Danville City":6.50,"Bristol City":6.50,"Hopewell City":6.50,"Petersburg City":6.50,"Counties with no F&B tax — state sales tax only":0.00}},
+  "Washington": {state:6.50, local:true,  note:"State 6.5% on restaurant meals. Local rates add significantly. Seattle area exceeds 10%. No separate meals tax — standard local sales tax applies.", portal:"DOR (dor.wa.gov)", localities:{"King County (Seattle)":3.75,"Pierce County (Tacoma)":3.70,"Snohomish County (Everett)":4.10,"Spokane County":2.40,"Clark County (Vancouver)":2.20,"Thurston County (Olympia)":2.50,"All Other Washington":2.00}},
+  "Washington D.C.":{state:10.00,local:false,note:"Washington D.C. charges a 10% restaurant/meals tax (higher than the 6% general sales tax). This rate applies to all restaurant meals, carry-out, and catering. File with DC Office of Tax & Revenue.", portal:"MyTax DC (mytax.dc.gov)", localities:null},
+  "West Virginia":{state:6.00,local:false,note:"Full 6% state rate on restaurant meals and prepared food. No local meals tax in West Virginia.", portal:"MyTaxes (mytaxes.wvtax.gov)", localities:null},
+  "Wisconsin":  {state:5.00, local:true,  note:"State 5% on restaurant meals. Most counties add 0.5% = 5.5% in most areas. Milwaukee County 5.6%.", portal:"My Tax Account (tap.revenue.wi.gov)", localities:{"Milwaukee County":0.60,"Dane County (Madison)":0.50,"Waukesha County":0.50,"Brown County (Green Bay)":0.50,"All Other Wisconsin":0.50}},
+  "Wyoming":    {state:4.00, local:true,  note:"State 4% on restaurant meals. Counties add up to 2% local tax. Teton County (Jackson) is highest.", portal:"e-Services (excise.wy.gov)", localities:{"Teton County (Jackson)":2.00,"Laramie County (Cheyenne)":2.00,"Natrona County (Casper)":2.00,"All Other Wyoming":1.00}},
 };
 
-// ── POPULATE DROPDOWNS ──────────────────────────────
-function init() {
+function init(){
   const sel = document.getElementById('state');
-  Object.keys(MEALS_TAX).sort().forEach(name => {
+  const tb  = document.getElementById('rtbody');
+  Object.keys(MEALS).sort().forEach(name=>{
+    const m = MEALS[name];
     const opt = document.createElement('option');
     opt.value = name;
-    opt.textContent = name;
+    opt.textContent = name + (m.state===0?' — No meals tax':' — '+m.state.toFixed(2)+'% meals tax rate');
     sel.appendChild(opt);
+    const tr = document.createElement('tr');
+    tr.innerHTML=`<td class="sn">${name}</td>`
+      +`<td class="rate-cell" style="color:${m.state===0?'#1e5c33':'#1a1a18'}">${m.state===0?'No Tax':m.state.toFixed(2)+'%'}</td>`
+      +`<td style="color:${m.local?'#b8860b':'#7a7568'}">${m.local?'Yes — see localities':'No'}</td>`
+      +`<td style="font-size:11px;color:#7a7568">${m.note}</td>`
+      +`<td style="font-size:11px;color:#1e5c33">${m.portal}</td>`;
+    tb.appendChild(tr);
   });
 }
 
-function onStateChange() {
+function onStateChange(){
+  const name = document.getElementById('state').value;
+  const m    = name ? MEALS[name] : null;
+  const locField = document.getElementById('locality-field');
+  const rateBox  = document.getElementById('rate-box');
+  if(!m){ locField.style.display='none'; rateBox.style.display='none'; return; }
+
+  if(m.localities){
+    locField.style.display='block';
+    const lSel = document.getElementById('locality');
+    lSel.innerHTML='<option value="">-- Select your county or city --</option>';
+    Object.entries(m.localities).forEach(([loc,rate])=>{
+      const o=document.createElement('option');
+      o.value=rate;
+      o.dataset.loc=loc;
+      const total= m.vatax ? rate : (m.state+rate);
+      const label= m.vatax
+        ? loc+' — F&B tax: '+rate.toFixed(2)+'%'+(loc.toLowerCase().includes('prince william')||loc.toLowerCase().includes('manassas park')?' (3% vendor discount)':'')
+        : loc+' — local meals tax: +'+rate.toFixed(2)+'% (total: '+total.toFixed(2)+'%)';
+      o.textContent=label;
+      lSel.appendChild(o);
+    });
+    document.getElementById('locality-hint').textContent=name+' allows local meals taxes on top of the '+m.state.toFixed(2)+'% state rate. Select your city/county.';
+    rateBox.style.display='none';
+  } else {
+    locField.style.display='none';
+    showRate(m.state, 0, name, m);
+  }
+}
+
+function onLocalityChange(){
   const stateName = document.getElementById('state').value;
-  if (!stateName) {
-    document.getElementById('county-field').style.display = 'none';
-    document.getElementById('custom-field').style.display = 'none';
+  const m = MEALS[stateName];
+  const sel = document.getElementById('locality');
+  const localRate = parseFloat(sel.value)||0;
+  showRate(m.state, localRate, stateName, m);
+}
+
+function showRate(stateRate, localRate, name, m){
+  const total = stateRate+localRate;
+  const box = document.getElementById('rate-box');
+  box.style.display='block';
+
+  // Virginia is special: state sales tax filed separately, only show county F&B rate
+  if(m.vatax){
+    if(localRate===0){
+      document.getElementById('rate-big').textContent='0% — No F&B Tax';
+      document.getElementById('rate-sub').textContent='This Virginia locality has no food & beverage tax. State sales tax (5.3%/6.0%) is still due separately — use the Sales Tax Calculator.';
+    } else {
+      const sel=document.getElementById('locality');
+      const locName=sel?.options[sel.selectedIndex]?.dataset?.loc||'';
+      const isPW = locName.toLowerCase().includes('prince william');
+      document.getElementById('rate-big').textContent=localRate.toFixed(2)+'%';
+      document.getElementById('rate-sub').textContent='County Food & Beverage Tax: '+localRate.toFixed(2)+'%'+(isPW?' (3% vendor discount applies)':'')+' — Filed with your county, NOT with Virginia Tax. State sales tax is a separate filing.';
+    }
     return;
   }
 
-  const data = MEALS_TAX[stateName];
-  const countySel = document.getElementById('county');
-  countySel.innerHTML = '<option value="">— Select county/city —</option>';
-
-  if (data.local && Object.keys(data.counties).length > 0) {
-    document.getElementById('county-field').style.display = 'block';
-    document.getElementById('custom-field').style.display = 'none';
-    Object.entries(data.counties).sort().forEach(([name, rate]) => {
-      const opt = document.createElement('option');
-      opt.value = rate;
-      opt.textContent = `${name} — ${rate > 0 ? '+' + rate.toFixed(1) + '% meals tax' : 'No local meals tax'}`;
-      countySel.appendChild(opt);
-    });
-    // Add "Other/not listed" option
-    const other = document.createElement('option');
-    other.value = 'custom';
-    other.textContent = 'My county/city — enter rate manually';
-    countySel.appendChild(other);
-  } else {
-    document.getElementById('county-field').style.display = 'none';
-    document.getElementById('custom-field').style.display = 'none';
+  if(stateRate===0){
+    document.getElementById('rate-big').textContent='No Meals Tax';
+    document.getElementById('rate-sub').textContent=name+' has no meals/sales tax';
+    return;
   }
+  document.getElementById('rate-big').textContent = total.toFixed(2)+'%';
+  document.getElementById('rate-sub').textContent = (localRate>0
+    ? name+': '+stateRate.toFixed(2)+'% state + '+localRate.toFixed(2)+'% local = '+total.toFixed(2)+'% total'
+    : name+': '+stateRate.toFixed(2)+'% meals tax rate');
 }
 
-function onCountyChange() {
-  const val = document.getElementById('county').value;
-  const msg = document.getElementById('county-msg');
-  if (val === 'custom') {
-    document.getElementById('custom-field').style.display = 'block';
-    msg.style.display = 'none';
-  } else if (val !== '') {
-    document.getElementById('custom-field').style.display = 'none';
-    const rate = parseFloat(val);
-    msg.style.display = 'block';
-    msg.className = 'county-msg found';
-    msg.textContent = rate > 0 ? `✓ Local meals tax: +${rate.toFixed(1)}% added on top of state rate` : '✓ No local meals tax for this county/city';
-  } else {
-    document.getElementById('custom-field').style.display = 'none';
-    msg.style.display = 'none';
+function getrates(){
+  const name = document.getElementById('state').value;
+  if(!name) return null;
+  const m = MEALS[name];
+  const localRate = m.localities ? parseFloat(document.getElementById('locality').value)||0 : 0;
+
+  // Virginia: only county F&B tax, state sales tax is separate
+  if(m.vatax){
+    const sel=document.getElementById('locality');
+    const locName=sel?.options[sel.selectedIndex]?.dataset?.loc||sel?.options[sel.selectedIndex]?.text||'';
+    const isPW = locName.toLowerCase().includes('prince william') || locName.toLowerCase().includes('manassas park');
+    return {
+      state:0,
+      local:localRate,
+      total:localRate,
+      vatax:true,
+      vataxDiscount: isPW ? 0.03 : 0,  // Prince William & Manassas Park: 3% vendor discount confirmed
+      note:m.note,
+      due:'20th of following month',
+      portal:m.portal,
+      locName
+    };
   }
+
+  return { state:m.state, local:localRate, total:m.state+localRate, note:m.note, due:'20th of following month', portal:m.portal };
 }
 
-// ── CALCULATE ───────────────────────────────────────
-function fmt(n) { return '$' + Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+function fmt(n){ return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function pct(n){ return (+n||0).toFixed(2)+'%'; }
 
-function calculate() {
-  const amount = parseFloat(document.getElementById('amount').value);
-  const tip = parseFloat(document.getElementById('tip').value) || 0;
+function calc(){
   const stateName = document.getElementById('state').value;
-  if (!amount || amount <= 0) { alert('Please enter a bill amount.'); return; }
-  if (!stateName) { alert('Please select a state.'); return; }
+  if(!stateName){ alert('Please select your state.'); return; }
+  const r = getrates();
+  if(!r){ alert('Please select your state.'); return; }
+  const gross   = parseFloat(document.getElementById('gross').value)||0;
+  if(!gross){ alert('Please enter your gross food and beverage sales.'); return; }
+  const exempt  = parseFloat(document.getElementById('exempt').value)||0;
+  const alcohol = parseFloat(document.getElementById('alcohol').value)||0;
+  const period  = document.getElementById('period').value;
 
-  const data = MEALS_TAX[stateName];
-  const countyVal = document.getElementById('county').value;
+  const taxable  = Math.max(0, gross - exempt);
+  const grossTax = taxable * (r.total / 100);
+  const discount = r.vataxDiscount ? grossTax * r.vataxDiscount : 0;
+  const mealsTax = grossTax - discount;
+  const totalDue = mealsTax;
 
-  let localRate = 0;
-  if (countyVal === 'custom') {
-    localRate = parseFloat(document.getElementById('customRate').value) || 0;
-  } else if (countyVal !== '' && !isNaN(parseFloat(countyVal))) {
-    localRate = parseFloat(countyVal);
-  }
+  document.getElementById('ph').style.display='none';
+  document.getElementById('rc').style.display='block';
 
-  const stateRate = data.state;
-  const totalRate = stateRate + localRate;
-  const stateTax = amount * (stateRate / 100);
-  const localTax = amount * (localRate / 100);
-  const totalTax = amount * (totalRate / 100);
-  const grandTotal = amount + totalTax + tip;
-
-  // Update DOM
-  document.getElementById('placeholder').style.display = 'none';
-  document.getElementById('results-content').style.display = 'block';
-
-  document.getElementById('r-state-pct').textContent = stateRate.toFixed(2) + '%';
-  document.getElementById('r-state-tax').textContent = fmt(stateTax);
-
-  const localRow = document.getElementById('r-local-row');
-  if (localRate > 0) {
-    localRow.style.display = 'flex';
-    document.getElementById('r-local-pct').textContent = '+' + localRate.toFixed(2) + '%';
-    document.getElementById('r-local-tax').textContent = fmt(localTax);
+  // Due date banner — Virginia shows county warning
+  const due = document.getElementById('due');
+  due.style.display='block';
+  if(r.vatax){
+    due.innerHTML='<strong>'+stateName+' — '+(r.locName||'County')+' Food &amp; Beverage Tax</strong><br>Filed with: <strong>'+r.portal+'</strong> | Period: '+period+'<br><span style="opacity:.8;font-size:11px">⚠ Virginia state sales tax (5.3% or 6.0%) is a SEPARATE filing with Virginia Tax using the Sales Tax Calculator.</span>';
   } else {
-    localRow.style.display = 'none';
+    due.innerHTML='<strong>'+stateName+'</strong> — Meals tax return due: 20th of following month | Period: '+period;
   }
 
-  document.getElementById('r-total-pct').textContent = totalRate.toFixed(2) + '%';
-  document.getElementById('r-total-tax').textContent = fmt(totalTax);
-  document.getElementById('r-subtotal').textContent = fmt(amount);
-  document.getElementById('r-tax-line').textContent = fmt(totalTax);
+  document.getElementById('r-period').textContent = period;
+  document.getElementById('r-gross').textContent  = fmt(gross);
 
-  const tipRow = document.getElementById('r-tip-row');
-  if (tip > 0) {
-    tipRow.style.display = 'flex';
-    document.getElementById('r-tip-line').textContent = fmt(tip);
+  document.getElementById('r-alc-row').style.display = alcohol>0 ? 'flex' : 'none';
+  if(alcohol>0) document.getElementById('r-alc').textContent = fmt(alcohol);
+
+  document.getElementById('r-exempt').textContent  = exempt>0 ? '- '+fmt(exempt) : '$0.00';
+  document.getElementById('r-taxable').textContent = fmt(taxable);
+
+  // Rate rows
+  if(r.vatax){
+    // Virginia: only show county F&B rate, NOT state sales tax
+    document.getElementById('r-state-rate').textContent = 'Filed separately (Sales Tax Calculator)';
+    if(r.local>0){
+      document.getElementById('r-local-row').style.display   = 'flex';
+      document.getElementById('r-combined-row').style.display= 'none';
+      document.getElementById('r-local-rate').textContent    = pct(r.local)+' — '+r.locName+' Food & Beverage Tax';
+    } else {
+      document.getElementById('r-local-row').style.display   = 'none';
+      document.getElementById('r-combined-row').style.display= 'none';
+    }
   } else {
-    tipRow.style.display = 'none';
+    document.getElementById('r-state-rate').textContent = pct(r.state);
+    if(r.local>0){
+      document.getElementById('r-local-row').style.display   = 'flex';
+      document.getElementById('r-combined-row').style.display= 'flex';
+      document.getElementById('r-local-rate').textContent    = pct(r.local);
+      document.getElementById('r-combined-rate').textContent = pct(r.total);
+    } else {
+      document.getElementById('r-local-row').style.display   = 'none';
+      document.getElementById('r-combined-row').style.display= 'none';
+    }
   }
 
-  document.getElementById('r-grand').textContent = fmt(grandTotal);
-  document.getElementById('r-note').textContent = data.note;
+  // Tax display with vendor discount
+  if(discount>0){
+    document.getElementById('r-meals-tax').textContent = fmt(grossTax)+' (before vendor discount)';
+    // Add or update discount row
+    let disRow = document.getElementById('r-discount-row');
+    if(!disRow){
+      disRow = document.createElement('div');
+      disRow.className='rr'; disRow.id='r-discount-row';
+      disRow.innerHTML='<span class="rl">Less: vendor collection discount ('+pct(r.vataxDiscount*100)+')</span><span class="rv g" id="r-discount-val"></span>';
+      document.getElementById('r-meals-tax').closest('.rs').appendChild(disRow);
+    }
+    disRow.style.display='flex';
+    document.getElementById('r-discount-val').textContent='- '+fmt(discount);
+  } else {
+    document.getElementById('r-meals-tax').textContent = fmt(mealsTax);
+    const disRow = document.getElementById('r-discount-row');
+    if(disRow) disRow.style.display='none';
+  }
+  document.getElementById('r-alc-tax-row').style.display='none';
+
+  // Checklist
+  document.getElementById('r-c1').textContent = fmt(gross);
+  document.getElementById('r-c2').textContent = fmt(exempt);
+  document.getElementById('r-c3').textContent = fmt(taxable);
+  document.getElementById('r-c4').textContent = r.vatax ? pct(r.local)+' county F&B tax' : pct(r.total);
+  document.getElementById('r-c5').textContent = discount>0 ? '- '+fmt(discount) : '$0.00';
+  document.getElementById('r-grand').textContent = fmt(totalDue);
 }
 
-function copyResults() {
+function copyRet(){
   const state = document.getElementById('state').value;
-  const amount = document.getElementById('r-subtotal').textContent;
-  const tax = document.getElementById('r-total-tax').textContent;
-  const rate = document.getElementById('r-total-pct').textContent;
-  const total = document.getElementById('r-grand').textContent;
-  const text = `Meals Tax Summary\n─────────────────\nState: ${state}\nPre-tax bill: ${amount}\nMeals tax (${rate}): ${tax}\nTotal to pay: ${total}\n\nSource: State revenue depts. | BookSmartTools.com`;
-  navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+  const period = document.getElementById('period').value;
+  const t=`MEALS TAX RETURN SUMMARY
+${'='.repeat(40)}
+State: ${state}
+Period: ${period}
+
+Gross Food & Beverage Sales: ${document.getElementById('r-gross').textContent}
+Less Exempt Sales:            ${document.getElementById('r-exempt').textContent}
+Net Taxable Sales:            ${document.getElementById('r-taxable').textContent}
+Meals Tax Rate Applied:       ${document.getElementById('r-c4').textContent}
+MEALS TAX DUE TO STATE:       ${document.getElementById('r-grand').textContent}
+
+Generated by BookSmartTools.com — For estimation only`;
+  navigator.clipboard.writeText(t).then(()=>alert('Copied!'));
 }
 
 init();
