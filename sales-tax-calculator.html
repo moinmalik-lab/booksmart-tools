@@ -284,8 +284,9 @@ footer a{color:rgba(255,255,255,.6);}
         </div>
 
         <div class="actions">
-          <button class="abtn" onclick="copyRet()">Copy Return Summary</button>
-          <button class="abtn" onclick="window.print()">Print</button>
+          <button class="abtn" onclick="copyRet()">📋 Copy Return Summary</button>
+          <button class="abtn" onclick="window.print()">🖨 Print</button>
+          <button class="abtn" id="file-btn-st" onclick="openPortalST()" style="display:none;background:rgba(125,212,160,.15);border-color:rgba(125,212,160,.4);color:#7dd4a0">🔗 File Now ↗</button>
         </div>
       </div>
     </div>
@@ -319,51 +320,51 @@ footer a{color:rgba(255,255,255,.6);}
 // discountType: 'none' | 'va' | 'pct' (percentage of tax)
 // regions: null or {name: rate%}
 const SD = [
-  ["Alabama",        4.00, "none", "", "20th of following month", "MyAlabamaTaxes (revenue.alabama.gov)", null],
-  ["Alaska",         0.00, "none", "No state sales tax", "Varies by locality", "Contact your local borough", null],
-  ["Arizona",        5.60, "none", "", "20th of following month", "AZTaxes (aztaxes.gov)", null],
-  ["Arkansas",       6.50, "none", "", "20th of following month", "ATAP (atap.arkansas.gov)", null],
-  ["California",     7.25, "pct", "Discount eliminated for most; some districts offer small allowance", "Last day of following month", "CDTFA (cdtfa.ca.gov)", null],
-  ["Colorado",       2.90, "none", "Vendor discount eliminated Jan 2026", "20th of following month", "Revenue Online (revenue.colorado.gov)", null],
-  ["Connecticut",    6.35, "pct", "1% of first $1,000 tax, 0.5% of remaining (capped)", "Last day of following month", "myconneCT (portal.ct.gov/DRS)", null],
-  ["Delaware",       0.00, "none", "No sales tax", "No return required", "No filing required", null],
-  ["Florida",        6.00, "pct", "2.5% of tax collected (max $30/month for monthly filers)", "20th of following month", "Florida e-Services (floridarevenue.com)", null],
-  ["Georgia",        4.00, "none", "", "20th of following month", "Georgia Tax Center (gtc.dor.ga.gov)", null],
-  ["Hawaii",         4.00, "none", "", "20th of following month", "Hawaii Tax Online (tax.hawaii.gov)", null],
-  ["Idaho",          6.00, "none", "", "20th of following month", "TAP (tap.tax.idaho.gov)", null],
-  ["Illinois",       6.25, "none", "", "20th of following month", "MyTax Illinois (mytax.illinois.gov)", null],
-  ["Indiana",        7.00, "none", "", "Last day of following month", "INTIME (intime.dor.in.gov)", null],
-  ["Iowa",           6.00, "none", "", "Last day of following month", "GovConnectIowa (tax.iowa.gov)", null],
-  ["Kansas",         6.50, "none", "", "25th of following month", "KS Customer Service (ksrevenue.gov)", null],
-  ["Kentucky",       6.00, "none", "", "20th of following month", "KY Online Gateway (revenue.ky.gov)", null],
-  ["Louisiana",      5.00, "pct", "Dealer's compensation: vendors may keep a percentage for timely filing", "20th of following month", "LATAP (latap.revenue.louisiana.gov)", null],
-  ["Maine",          5.50, "none", "", "15th of following month", "Maine Tax Portal (portal.maine.gov/mtap)", null],
-  ["Maryland",       6.00, "pct", "0.87% of tax collected (1.2% if filing electronically)", "20th of following month", "bFile (interactive.marylandtaxes.gov)", null],
-  ["Massachusetts",  6.25, "none", "", "20th of following month", "MassTaxConnect (masstaxconnect.dor.state.ma.us)", null],
-  ["Michigan",       6.00, "pct", "0.75% of gross sales tax — capped at $15,000/year", "20th of following month", "Michigan Treasury Online (michigan.gov/taxes)", null],
-  ["Minnesota",      6.875,"none", "", "20th of following month", "e-Services (mndor.state.mn.us)", null],
-  ["Mississippi",    7.00, "none", "", "20th of following month", "TAP (tap.dor.ms.gov)", null],
-  ["Missouri",       4.225,"pct", "2% of first $500 tax, 1.5% of next $500 (capped)", "20th of following month", "MyTax Missouri (mytax.missouri.gov)", null],
-  ["Montana",        0.00, "none", "No sales tax", "No return required", "No filing required", null],
-  ["Nebraska",       5.50, "none", "", "25th of following month", "Nebraska e-File (revenue.nebraska.gov)", null],
-  ["Nevada",         6.85, "none", "", "Last day of following month", "Nevada Tax Center (nevadatax.nv.gov)", null],
-  ["New Hampshire",  0.00, "none", "No sales tax", "No return required", "No filing required", null],
-  ["New Jersey",     6.625,"none", "", "20th of following month", "NJ Taxation (njportal.com/DOR/Sales)", null],
-  ["New Mexico",     5.00, "none", "", "25th of following month", "TAP (tap.state.nm.us)", null],
-  ["New York",       4.00, "none", "", "20th of following month", "NY Business Online (businessexpress.ny.gov)", null],
-  ["North Carolina", 4.75, "none", "", "20th of following month", "e-Business Center (eservices.dor.nc.gov)", null],
-  ["North Dakota",   5.00, "none", "", "Last day of following month", "TAP (apps.nd.gov/tax/tap)", null],
-  ["Ohio",           5.75, "none", "", "23rd of following month", "Ohio Business Gateway (gateway.ohio.gov)", null],
-  ["Oklahoma",       4.50, "none", "", "20th of following month", "OkTAP (oktap.tax.ok.gov)", null],
-  ["Oregon",         0.00, "none", "No sales tax", "No return required", "No filing required", null],
-  ["Pennsylvania",   6.00, "none", "", "20th of following month", "myPATH (mypath.pa.gov)", null],
-  ["Rhode Island",   7.00, "none", "", "20th of following month", "Taxpayer Portal (taxportal.ri.gov)", null],
-  ["South Carolina", 6.00, "none", "", "20th of following month", "MyDORWAY (mydorway.dor.sc.gov)", null],
-  ["South Dakota",   4.20, "none", "", "Last day of following month", "e-Tax (etax.sd.gov)", null],
-  ["Tennessee",      7.00, "none", "", "20th of following month", "TNTAP (tntap.tn.gov)", null],
-  ["Texas",          6.25, "pct", "0.5% of tax collected for timely filers (max $1,000/month)", "20th of following month", "WebFile (comptroller.texas.gov)", null],
-  ["Utah",           4.85, "none", "", "Last day of following month", "TAP (tap.tax.utah.gov)", null],
-  ["Vermont",        6.00, "none", "", "25th of following month", "myVTax (myvtax.vermont.gov)", null],
+  ["Alabama",        4.00, "none", "", "20th of following month", "MyAlabamaTaxes (revenue.alabama.gov)","https://www.revenue.alabama.gov/", null],
+  ["Alaska",         0.00, "none", "No state sales tax", "Varies by locality", "Contact your local borough","", null],
+  ["Arizona",        5.60, "none", "", "20th of following month", "AZTaxes (aztaxes.gov)","https://aztaxes.gov/", null],
+  ["Arkansas",       6.50, "none", "", "20th of following month", "ATAP (atap.arkansas.gov)","https://atap.arkansas.gov/", null],
+  ["California",     7.25, "pct", "Discount eliminated for most; some districts offer small allowance", "Last day of following month", "CDTFA (cdtfa.ca.gov)","https://www.cdtfa.ca.gov/", null],
+  ["Colorado",       2.90, "none", "Vendor discount eliminated Jan 2026", "20th of following month", "Revenue Online (revenue.colorado.gov)","https://revenue.colorado.gov/", null],
+  ["Connecticut",    6.35, "pct", "1% of first $1,000 tax, 0.5% of remaining (capped)", "Last day of following month", "myconneCT (portal.ct.gov/DRS)","https://portal.ct.gov/DRS", null],
+  ["Delaware",       0.00, "none", "No sales tax", "No return required", "No filing required","", null],
+  ["Florida",        6.00, "pct", "2.5% of tax collected (max $30/month for monthly filers)", "20th of following month", "Florida e-Services (floridarevenue.com)","https://floridarevenue.com/taxes/eservices/", null],
+  ["Georgia",        4.00, "none", "", "20th of following month", "Georgia Tax Center (gtc.dor.ga.gov)","https://gtc.dor.ga.gov/", null],
+  ["Hawaii",         4.00, "none", "", "20th of following month", "Hawaii Tax Online (tax.hawaii.gov)","https://tax.hawaii.gov/", null],
+  ["Idaho",          6.00, "none", "", "20th of following month", "TAP (tap.tax.idaho.gov)","https://tap.tax.idaho.gov/", null],
+  ["Illinois",       6.25, "none", "", "20th of following month", "MyTax Illinois (mytax.illinois.gov)","https://mytax.illinois.gov/", null],
+  ["Indiana",        7.00, "none", "", "Last day of following month", "INTIME (intime.dor.in.gov)","https://intime.dor.in.gov/", null],
+  ["Iowa",           6.00, "none", "", "Last day of following month", "GovConnectIowa (tax.iowa.gov)","https://tax.iowa.gov/", null],
+  ["Kansas",         6.50, "none", "", "25th of following month", "KS Customer Service (ksrevenue.gov)","https://ksrevenue.gov/", null],
+  ["Kentucky",       6.00, "none", "", "20th of following month", "KY Online Gateway (revenue.ky.gov)","https://revenue.ky.gov/", null],
+  ["Louisiana",      5.00, "pct", "Dealer's compensation: vendors may keep a percentage for timely filing", "20th of following month", "LATAP (latap.revenue.louisiana.gov)","https://latap.revenue.louisiana.gov/", null],
+  ["Maine",          5.50, "none", "", "15th of following month", "Maine Tax Portal (portal.maine.gov/mtap)","https://portal.maine.gov/mtap/", null],
+  ["Maryland",       6.00, "pct", "0.87% of tax collected (1.2% if filing electronically)", "20th of following month", "bFile (interactive.marylandtaxes.gov)","https://interactive.marylandtaxes.gov/", null],
+  ["Massachusetts",  6.25, "none", "", "20th of following month", "MassTaxConnect (masstaxconnect.dor.state.ma.us)","https://masstaxconnect.dor.state.ma.us/", null],
+  ["Michigan",       6.00, "pct", "0.75% of gross sales tax — capped at $15,000/year", "20th of following month", "Michigan Treasury Online (michigan.gov/taxes)","https://www.michigan.gov/taxes/", null],
+  ["Minnesota",      6.875,"none", "", "20th of following month", "e-Services (mndor.state.mn.us)","https://www.mndor.state.mn.us/", null],
+  ["Mississippi",    7.00, "none", "", "20th of following month", "TAP (tap.dor.ms.gov)","https://tap.dor.ms.gov/", null],
+  ["Missouri",       4.225,"pct", "2% of first $500 tax, 1.5% of next $500 (capped)", "20th of following month", "MyTax Missouri (mytax.missouri.gov)","https://mytax.missouri.gov/", null],
+  ["Montana",        0.00, "none", "No sales tax", "No return required", "No filing required","", null],
+  ["Nebraska",       5.50, "none", "", "25th of following month", "Nebraska e-File (revenue.nebraska.gov)","https://revenue.nebraska.gov/", null],
+  ["Nevada",         6.85, "none", "", "Last day of following month", "Nevada Tax Center (nevadatax.nv.gov)","https://nevadatax.nv.gov/", null],
+  ["New Hampshire",  0.00, "none", "No sales tax", "No return required", "No filing required","", null],
+  ["New Jersey",     6.625,"none", "", "20th of following month", "NJ Taxation (njportal.com/DOR/Sales)","https://www.njportal.com/DOR/Sales/", null],
+  ["New Mexico",     5.00, "none", "", "25th of following month", "TAP (tap.state.nm.us)","https://tap.state.nm.us/", null],
+  ["New York",       4.00, "none", "", "20th of following month", "NY Business Online (businessexpress.ny.gov)","https://businessexpress.ny.gov/", null],
+  ["North Carolina", 4.75, "none", "", "20th of following month", "e-Business Center (eservices.dor.nc.gov)","https://eservices.dor.nc.gov/", null],
+  ["North Dakota",   5.00, "none", "", "Last day of following month", "TAP (apps.nd.gov/tax/tap)","https://apps.nd.gov/tax/tap/", null],
+  ["Ohio",           5.75, "none", "", "23rd of following month", "Ohio Business Gateway (gateway.ohio.gov)","https://gateway.ohio.gov/", null],
+  ["Oklahoma",       4.50, "none", "", "20th of following month", "OkTAP (oktap.tax.ok.gov)","https://oktap.tax.ok.gov/", null],
+  ["Oregon",         0.00, "none", "No sales tax", "No return required", "No filing required","", null],
+  ["Pennsylvania",   6.00, "none", "", "20th of following month", "myPATH (mypath.pa.gov)","https://mypath.pa.gov/", null],
+  ["Rhode Island",   7.00, "none", "", "20th of following month", "Taxpayer Portal (taxportal.ri.gov)","https://taxportal.ri.gov/", null],
+  ["South Carolina", 6.00, "none", "", "20th of following month", "MyDORWAY (mydorway.dor.sc.gov)","https://mydorway.dor.sc.gov/", null],
+  ["South Dakota",   4.20, "none", "", "Last day of following month", "e-Tax (etax.sd.gov)","https://etax.sd.gov/", null],
+  ["Tennessee",      7.00, "none", "", "20th of following month", "TNTAP (tntap.tn.gov)","https://tntap.tn.gov/", null],
+  ["Texas",          6.25, "pct", "0.5% of tax collected for timely filers (max $1,000/month)", "20th of following month", "WebFile (comptroller.texas.gov)","https://www.comptroller.texas.gov/taxes/sales/", null],
+  ["Utah",           4.85, "none", "", "Last day of following month", "TAP (tap.tax.utah.gov)","https://tap.tax.utah.gov/", null],
+  ["Vermont",        6.00, "none", "", "25th of following month", "myVTax (myvtax.vermont.gov)","https://myvtax.vermont.gov/", null],
   // Virginia has regional rates — select county/region
   ["Virginia",       4.30, "va",
    "Dealer discount: 1% of first $100 tax + 0.6% of remaining tax (for timely filers)",
@@ -373,12 +374,12 @@ const SD = [
      "Hampton Roads (Norfolk, Virginia Beach, Chesapeake, Portsmouth, Suffolk, Hampton, Newport News, Poquoson)": 6.00,
      "Historic Triangle (James City County, York County, Williamsburg)": 6.00,
      "Rest of Virginia (all other localities)": 5.30
-   }],
-  ["Washington",     6.50, "none", "", "25th of following month", "DOR (dor.wa.gov)", null],
-  ["Washington D.C.",6.00, "none", "", "20th of following month", "MyTax DC (mytax.dc.gov)", null],
-  ["West Virginia",  6.00, "none", "", "20th of following month", "MyTaxes (mytaxes.wvtax.gov)", null],
-  ["Wisconsin",      5.00, "none", "", "Last day of following month", "My Tax Account (tap.revenue.wi.gov)", null],
-  ["Wyoming",        4.00, "none", "", "Last day of following month", "e-Services (excise.wy.gov)", null],
+   }, "https://www.tax.virginia.gov/retail-sales-and-use-tax"],
+  ["Washington",     6.50, "none", "", "25th of following month", "DOR (dor.wa.gov)","https://dor.wa.gov/", null],
+  ["Washington D.C.",6.00, "none", "", "20th of following month", "MyTax DC (mytax.dc.gov)","https://mytax.dc.gov/", null],
+  ["West Virginia",  6.00, "none", "", "20th of following month", "MyTaxes (mytaxes.wvtax.gov)","https://mytaxes.wvtax.gov/", null],
+  ["Wisconsin",      5.00, "none", "", "Last day of following month", "My Tax Account (tap.revenue.wi.gov)","https://tap.revenue.wi.gov/", null],
+  ["Wyoming",        4.00, "none", "", "Last day of following month", "e-Services (excise.wy.gov)","https://excise.wy.gov/", null],
 ];
 
 // State index map
@@ -406,7 +407,7 @@ function init() {
       '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px;color:#7a7568">' + (regionNote || (nt ? 'No sales tax' : 'Standard statewide rate')) + '</td>' +
       '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px">' + (s[2] !== 'none' ? '<span style="color:#1e5c33;font-weight:600">Yes</span> — ' + (s[3]||'') : 'No') + '</td>' +
       '<td style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:#7a7568">' + s[4] + '</td>' +
-      '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px;color:#1e5c33">' + s[5] + '</td>';
+      '<td style="font-family:\'DM Sans\',sans-serif;font-size:11px">' + (s[7] ? '<a href="'+s[7]+'" target="_blank" rel="noopener" style="color:#1e5c33;text-decoration:none;font-weight:600" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">🔗 ' + s[5] + ' ↗</a>' : '<span style="color:#7a7568">'+s[5]+'</span>') + '</td>';
     tb.appendChild(tr);
   });
 }
@@ -586,6 +587,19 @@ function calc() {
   document.getElementById('r-c4').textContent = fmt(taxAmt);
   document.getElementById('r-c5').textContent = discount > 0 ? '- ' + fmt(discount) : '$0.00';
   document.getElementById('r-c6').textContent = fmt(taxAmt - discount);
+
+  // Show File Now button if state has a portal URL
+  const fb = document.getElementById('file-btn-st');
+  if(fb){ fb.style.display = SD[i][7] ? 'flex' : 'none'; }
+}
+
+function openPortalST(){
+  const i = parseInt(document.getElementById('state').value);
+  if(isNaN(i)) return;
+  const s = SD[i];
+  const url = s[7] || '';
+  if(url) window.open(url,'_blank','noopener');
+  else alert('Filing portal: ' + s[5]);
 }
 
 function copyRet() {
