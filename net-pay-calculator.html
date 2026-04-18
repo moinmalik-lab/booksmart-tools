@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Net Pay Calculator | Take-Home Pay | BookSmartTools</title>
+<meta name="description" content="Calculate employee net take-home pay after federal taxes, FICA, state taxes, and deductions. For employers and employees.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px}.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+.hero{background:linear-gradient(135deg,#1a2e1a 0%,#2d4a1e 50%,#1a2e1a 100%);color:white;text-align:center;padding:48px 24px 40px}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin:0 4px 8px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin:12px 0 10px}.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}@media(max-width:720px){.layout{grid-template-columns:1fr}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.divider{height:1px;background:#d8d3c5;margin:18px 0}.field{margin-bottom:14px}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:#1e5c33;background:white}
+.pw{position:relative}.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none}.pw input{padding-left:26px}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5}
+.calc-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px}.calc-btn:hover{background:#165228}
+.rc{background:#1a1a18;color:#faf8f3;border:none}.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2}
+.rs{margin-bottom:16px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px}.rr:last-child{border-bottom:none}
+.rl{color:#d0ccbf;flex:1}.rl.b{color:white;font-weight:700}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap}.rv.g{color:#7dd4a0}.rv.a{color:#f0c060}.rv.r{color:#f08070}.rv.w{color:white}
+.grand{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin-bottom:10px}
+.gtl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}.gtv{font-family:'DM Serif Display',serif;font-size:32px;color:white}
+.actions{display:flex;gap:10px;margin-top:12px}.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}.abtn:hover{background:rgba(255,255,255,.08);color:white}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style></head><body><nav class="site-nav"><a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a><ul class="nav-links"><li><a href="/booksmart-tools/tools.html">Tools</a></li><li><a href="/booksmart-tools/about.html">About</a></li><li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li></ul></nav>
+<div class="hero"><span class="tag-pill">PAYROLL & HR</span><span class="tag-pill">TAKE-HOME PAY</span><span class="tag-pill">2026 TAX RATES</span>
+<h1>Net Pay Calculator</h1><p>Calculate an employee's net take-home pay after all federal taxes, FICA, and state income taxes. Shows every deduction line by line.</p></div>
+<div class="container"><div class="layout">
+<div class="card">
+<div class="card-title"><div class="num">1</div>Paycheck Details</div>
+<div class="field"><label class="flbl">Gross Pay This Period</label><div class="pw" data-p="$"><input type="number" id="gross" placeholder="0.00" min="0" step="0.01"></div></div>
+<div class="field"><label class="flbl">Pay Frequency</label>
+<select id="freq"><option value="52">Weekly</option><option value="26" selected>Bi-Weekly</option><option value="24">Semi-Monthly</option><option value="12">Monthly</option></select></div>
+<div class="field"><label class="flbl">Filing Status (W-4)</label>
+<select id="status"><option value="single">Single / MFS</option><option value="mfj">Married Filing Jointly</option><option value="hoh">Head of Household</option></select></div>
+<div class="field"><label class="flbl">State</label>
+<select id="state">
+<option value="0">No State Income Tax (AK, FL, NV, NH, SD, TN, TX, WA, WY)</option>
+<option value="5.0">Alabama — 5.0%</option><option value="2.5">Arizona — 2.5%</option>
+<option value="5.9">Arkansas — 5.9%</option><option value="6.5" selected>California — up to 9.3%</option>
+<option value="4.4">Colorado — 4.4%</option><option value="5.0">Connecticut — 5.0%</option>
+<option value="5.7">Delaware — 5.7%</option><option value="5.75">Georgia — 5.75%</option>
+<option value="4.0">Hawaii — 4.0%</option><option value="6.0">Idaho — 6.0%</option>
+<option value="4.95">Illinois — 4.95%</option><option value="3.15">Indiana — 3.15%</option>
+<option value="6.0">Iowa — 6.0%</option><option value="5.7">Kansas — 5.7%</option>
+<option value="5.0">Kentucky — 4.0%</option><option value="4.25">Louisiana — 4.25%</option>
+<option value="7.15">Maine — 7.15%</option><option value="4.75">Maryland — 4.75%</option>
+<option value="5.0">Massachusetts — 5.0%</option><option value="4.25">Michigan — 4.25%</option>
+<option value="9.85">Minnesota — 9.85%</option><option value="5.0">Mississippi — 5.0%</option>
+<option value="5.4">Missouri — 5.4%</option><option value="6.75">Montana — 6.75%</option>
+<option value="3.99">Nebraska — 3.99%</option><option value="5.0">New Jersey — varies</option>
+<option value="4.9">New Mexico — 4.9%</option><option value="10.9">New York — up to 10.9%</option>
+<option value="4.75">North Carolina — 3.99%</option><option value="2.5">North Dakota — 2.5%</option>
+<option value="3.75">Ohio — 3.75%</option><option value="4.75">Oklahoma — 4.75%</option>
+<option value="9.9">Oregon — 9.9%</option><option value="3.07">Pennsylvania — 3.07%</option>
+<option value="5.99">Rhode Island — 5.99%</option><option value="6.4">South Carolina — 6.4%</option>
+<option value="5.0">Utah — 4.85%</option><option value="3.0">Vermont — 3.0%</option>
+<option value="5.75">Virginia — 5.75%</option><option value="7.0">West Virginia — 6.5%</option>
+<option value="7.65">Wisconsin — 7.65%</option>
+</select></div>
+<div class="field"><label class="flbl">Pre-Tax Deductions (401k, Health, etc.)</label><div class="pw" data-p="$"><input type="number" id="pretax" placeholder="0.00" min="0" step="0.01" value="0"></div><div class="hint">401(k), FSA, HSA, health insurance premiums</div></div>
+<div class="field"><label class="flbl">Post-Tax Deductions</label><div class="pw" data-p="$"><input type="number" id="posttax" placeholder="0.00" min="0" step="0.01" value="0"></div></div>
+<button class="calc-btn" onclick="calcNet()">Calculate Net Pay →</button>
+</div>
+<div class="card rc"><div class="card-title"><div class="num" style="background:#2d4a1e">2</div>Paycheck Breakdown</div>
+<div class="ph" id="ph">Enter pay details to calculate<br>your take-home pay →</div>
+<div id="rc" style="display:none">
+<div class="rs"><div class="rst">DEDUCTIONS</div>
+<div class="rr"><span class="rl">Gross pay</span><span class="rv" id="r-gross"></span></div>
+<div class="rr"><span class="rl">Pre-tax deductions</span><span class="rv r" id="r-pretax"></span></div>
+<div class="rr"><span class="rl">Federal income tax (FIT)</span><span class="rv r" id="r-fit"></span></div>
+<div class="rr"><span class="rl">Social Security (6.2%)</span><span class="rv r" id="r-ss"></span></div>
+<div class="rr"><span class="rl">Medicare (1.45%)</span><span class="rv r" id="r-med"></span></div>
+<div class="rr"><span class="rl">State income tax</span><span class="rv r" id="r-sit"></span></div>
+<div class="rr"><span class="rl">Post-tax deductions</span><span class="rv r" id="r-posttax"></span></div>
+<div class="rr"><span class="rl b">Total deductions</span><span class="rv r" id="r-total-ded"></span></div>
+</div>
+<div class="rs"><div class="rst">TAKE-HOME PAY</div>
+<div class="rr"><span class="rl b">Net pay (this period)</span><span class="rv g" id="r-net"></span></div>
+<div class="rr"><span class="rl">Effective tax rate</span><span class="rv a" id="r-eff-rate"></span></div>
+<div class="rr"><span class="rl">Annual gross</span><span class="rv" id="r-annual-gross"></span></div>
+<div class="rr"><span class="rl">Annual net (est.)</span><span class="rv g" id="r-annual-net"></span></div>
+</div>
+<div class="grand"><span class="gtl">NET TAKE-HOME PAY</span><span class="gtv" id="r-grand"></span></div>
+</div></div></div></div><footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a></footer>
+<script>
+function fmt(n){return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+const FIT_2026 = {
+single:[[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,626350,.35],[626350,1e9,.37]],
+mfj:[[0,23850,.10],[23850,96950,.12],[96950,206700,.22],[206700,394600,.24],[394600,501050,.32],[501050,751600,.35],[751600,1e9,.37]],
+hoh:[[0,17000,.10],[17000,64850,.12],[64850,103350,.22],[103350,197300,.24],[197300,250500,.32],[250500,626350,.35],[626350,1e9,.37]]
+};
+function calcFIT(taxable,status,freq){
+let tax=0; const brackets=FIT_2026[status]||FIT_2026.single;
+const annual=taxable*freq;
+for(const [lo,hi,r] of brackets){if(annual<=lo)break;tax+=(Math.min(annual,hi)-lo)*r;}
+return tax/freq;
+}
+function calcNet(){
+const gross=parseFloat(document.getElementById('gross').value)||0;
+const freq=parseInt(document.getElementById('freq').value)||26;
+const status=document.getElementById('status').value;
+const stateRate=parseFloat(document.getElementById('state').value)||0;
+const pretax=parseFloat(document.getElementById('pretax').value)||0;
+const posttax=parseFloat(document.getElementById('posttax').value)||0;
+if(!gross){alert('Please enter gross pay.');return;}
+const taxableGross=Math.max(0,gross-pretax);
+const fit=calcFIT(taxableGross,status,freq);
+const ssBase=Math.min(taxableGross,184500/freq);
+const ss=ssBase*0.062;
+const med=taxableGross*0.0145;
+const sit=taxableGross*stateRate/100;
+const totalDed=pretax+fit+ss+med+sit+posttax;
+const net=gross-totalDed;
+const effRate=(totalDed/gross)*100;
+document.getElementById('ph').style.display='none';
+document.getElementById('rc').style.display='block';
+document.getElementById('r-gross').textContent=fmt(gross);
+document.getElementById('r-pretax').textContent=fmt(pretax);
+document.getElementById('r-fit').textContent=fmt(fit);
+document.getElementById('r-ss').textContent=fmt(ss);
+document.getElementById('r-med').textContent=fmt(med);
+document.getElementById('r-sit').textContent=fmt(sit);
+document.getElementById('r-posttax').textContent=fmt(posttax);
+document.getElementById('r-total-ded').textContent=fmt(totalDed);
+document.getElementById('r-net').textContent=fmt(net);
+document.getElementById('r-eff-rate').textContent=effRate.toFixed(1)+'%';
+document.getElementById('r-annual-gross').textContent=fmt(gross*freq);
+document.getElementById('r-annual-net').textContent=fmt(net*freq);
+document.getElementById('r-grand').textContent=fmt(net);
+}
+</script></body></html>
