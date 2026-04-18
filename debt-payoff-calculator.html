@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Debt Payoff Calculator | Snowball vs Avalanche | BookSmartTools</title>
+<meta name="description" content="Calculate debt payoff timeline using snowball or avalanche method. See how much interest you save and when you'll be debt-free.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px}.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+.hero{background:linear-gradient(135deg,#1a2e1a 0%,#2d4a1e 50%,#1a2e1a 100%);color:white;text-align:center;padding:48px 24px 40px}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin:0 4px 8px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin:12px 0 10px}.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}@media(max-width:720px){.layout{grid-template-columns:1fr}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.divider{height:1px;background:#d8d3c5;margin:18px 0}.field{margin-bottom:14px}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:#1e5c33;background:white}
+.pw{position:relative}.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none}.pw input{padding-left:26px}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5}
+.calc-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px}.calc-btn:hover{background:#165228}
+.rc{background:#1a1a18;color:#faf8f3;border:none}.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2}
+.rs{margin-bottom:16px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px}.rr:last-child{border-bottom:none}
+.rl{color:#d0ccbf;flex:1}.rl.b{color:white;font-weight:700}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap}.rv.g{color:#7dd4a0}.rv.a{color:#f0c060}.rv.r{color:#f08070}.rv.w{color:white}
+.grand{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin-bottom:10px}
+.gtl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}.gtv{font-family:'DM Serif Display',serif;font-size:32px;color:white}
+.actions{display:flex;gap:10px;margin-top:12px}.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}.abtn:hover{background:rgba(255,255,255,.08);color:white}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style></head><body><nav class="site-nav"><a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a><ul class="nav-links"><li><a href="/booksmart-tools/tools.html">Tools</a></li><li><a href="/booksmart-tools/about.html">About</a></li><li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li></ul></nav>
+<div class="hero"><span class="tag-pill">PERSONAL FINANCE</span><span class="tag-pill">DEBT FREE</span>
+<h1>Debt Payoff Calculator</h1><p>Choose debt snowball (lowest balance first) or debt avalanche (highest interest first) and see exactly when you'll be debt-free.</p></div>
+<div class="container"><div class="layout">
+<div class="card">
+<div class="card-title"><div class="num">1</div>Your Debts</div>
+<div id="debts-container">
+<div class="debt-row" style="border:1px solid #d8d3c5;border-radius:3px;padding:14px;margin-bottom:10px">
+<div class="field"><label class="flbl">Debt Name</label><input type="text" class="d-name" placeholder="e.g. Visa Credit Card" value="Credit Card"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div class="field"><label class="flbl">Balance</label><div class="pw" data-p="$"><input type="number" class="d-bal" placeholder="0.00" value="5000" min="0"></div></div>
+<div class="field"><label class="flbl">APR %</label><div class="pw" data-p="%"><input type="number" class="d-apr" placeholder="0.00" value="19.99" min="0"></div></div>
+</div>
+<div class="field"><label class="flbl">Min. Payment</label><div class="pw" data-p="$"><input type="number" class="d-min" placeholder="0.00" value="100" min="0"></div></div>
+</div></div>
+<button onclick="addDebt()" style="width:100%;height:40px;border:2px dashed #d8d3c5;background:transparent;border-radius:3px;cursor:pointer;font-family:'DM Sans',sans-serif;color:#7a7568;margin-bottom:14px">+ Add Another Debt</button>
+<div class="field"><label class="flbl">Total Extra Monthly Payment</label><div class="pw" data-p="$"><input type="number" id="extra" placeholder="0.00" min="0" step="50" value="200"></div><div class="hint">Amount above minimums you can pay each month</div></div>
+<div class="field"><label class="flbl">Payoff Strategy</label>
+<select id="strategy"><option value="avalanche">Avalanche — Highest Interest First (saves most money)</option><option value="snowball">Snowball — Lowest Balance First (fastest wins)</option></select></div>
+<button class="calc-btn" onclick="calcDebt()">Calculate Payoff Plan →</button>
+</div>
+<div class="card rc"><div class="card-title"><div class="num" style="background:#2d4a1e">2</div>Payoff Plan</div>
+<div class="ph" id="ph">Enter your debts and extra payment<br>to see your payoff plan →</div>
+<div id="rc" style="display:none">
+<div class="rs"><div class="rst">PAYOFF SUMMARY</div>
+<div class="rr"><span class="rl">Total debt</span><span class="rv r" id="r-total-debt"></span></div>
+<div class="rr"><span class="rl">Months to debt-free</span><span class="rv w" id="r-months"></span></div>
+<div class="rr"><span class="rl">Debt-free date</span><span class="rv g" id="r-date"></span></div>
+<div class="rr"><span class="rl">Total interest paid</span><span class="rv a" id="r-interest"></span></div>
+<div class="rr"><span class="rl">Total paid</span><span class="rv" id="r-total-paid"></span></div>
+</div>
+<div class="rs" id="r-order-section"><div class="rst">PAYOFF ORDER</div><div id="r-order"></div></div>
+<div class="grand"><span class="gtl">MONTHS TO DEBT-FREE</span><span class="gtv" id="r-grand"></span></div>
+</div></div></div></div><footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a></footer>
+<script>
+function fmt(n){return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function addDebt(){
+const c=document.getElementById('debts-container');
+const d=document.createElement('div');
+d.className='debt-row';
+d.style.cssText='border:1px solid #d8d3c5;border-radius:3px;padding:14px;margin-bottom:10px;position:relative';
+d.innerHTML=`<button onclick="this.parentElement.remove()" style="position:absolute;top:8px;right:8px;border:none;background:none;cursor:pointer;color:#7a7568;font-size:16px">×</button>
+<div class="field"><label class="flbl">Debt Name</label><input type="text" class="d-name" placeholder="e.g. Student Loan"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div class="field"><label class="flbl">Balance</label><div class="pw" data-p="$"><input type="number" class="d-bal" placeholder="0.00" min="0"></div></div>
+<div class="field"><label class="flbl">APR %</label><div class="pw" data-p="%"><input type="number" class="d-apr" placeholder="0.00" min="0"></div></div>
+</div>
+<div class="field"><label class="flbl">Min. Payment</label><div class="pw" data-p="$"><input type="number" class="d-min" placeholder="0.00" min="0"></div></div>`;
+c.appendChild(d);
+}
+function calcDebt(){
+const rows=document.querySelectorAll('.debt-row');
+const extra=parseFloat(document.getElementById('extra').value)||0;
+const strategy=document.getElementById('strategy').value;
+let debts=[];
+rows.forEach(r=>{
+const bal=parseFloat(r.querySelector('.d-bal').value)||0;
+const apr=parseFloat(r.querySelector('.d-apr').value)||0;
+const min=parseFloat(r.querySelector('.d-min').value)||0;
+const name=r.querySelector('.d-name').value||'Debt';
+if(bal>0)debts.push({name,bal,apr,min,paid:0,interest:0});
+});
+if(!debts.length){alert('Please add at least one debt.');return;}
+// Sort by strategy
+if(strategy==='avalanche')debts.sort((a,b)=>b.apr-a.apr);
+else debts.sort((a,b)=>a.bal-b.bal);
+const order=[...debts];
+let months=0,totalInt=0;
+const maxMonths=600;
+while(debts.some(d=>d.bal>0)&&months<maxMonths){
+months++;
+let extraLeft=extra;
+// Pay minimums + interest
+debts.forEach(d=>{if(d.bal<=0)return;const int=d.bal*d.apr/100/12;d.interest+=int;d.bal+=int;const pay=Math.min(d.bal,d.min);d.bal-=pay;d.paid+=pay;});
+// Apply extra to first debt with balance
+for(const d of debts){if(d.bal<=0||extraLeft<=0)continue;const pay=Math.min(d.bal,extraLeft);d.bal-=pay;d.paid+=pay;extraLeft-=pay;break;}
+}
+const totalDebt=order.reduce((s,d)=>s+d.bal+d.paid,0);
+const totalPaid=debts.reduce((s,d)=>s+d.paid,0)+order.reduce((s,d)=>s+d.interest,0);
+totalInt=order.reduce((s,d)=>s+d.interest,0);
+const freeDate=new Date(Date.now()+months*30.44*24*3600*1000).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+document.getElementById('ph').style.display='none';
+document.getElementById('rc').style.display='block';
+document.getElementById('r-total-debt').textContent=fmt(order.reduce((s,d)=>s+(d.bal+d.paid),0));
+document.getElementById('r-months').textContent=months+' months';
+document.getElementById('r-date').textContent=freeDate;
+document.getElementById('r-interest').textContent=fmt(totalInt);
+document.getElementById('r-total-paid').textContent=fmt(totalPaid);
+document.getElementById('r-grand').textContent=months;
+const orderEl=document.getElementById('r-order');
+orderEl.innerHTML=order.map((d,i)=>`<div class="rr"><span class="rl">#${i+1} ${d.name}</span><span class="rv a">${d.apr}% APR</span></div>`).join('');
+}
+</script></body></html>
