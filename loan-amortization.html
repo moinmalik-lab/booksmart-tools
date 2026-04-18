@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Loan Amortization Calculator | Full Schedule | BookSmartTools</title>
+<meta name="description" content="Generate a complete loan amortization schedule. See every payment broken down into principal and interest with running balance.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}
+.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px}
+.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+.hero{background:linear-gradient(135deg,#1a2e1a 0%,#2d4a1e 50%,#1a2e1a 100%);color:white;text-align:center;padding:48px 24px 40px}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin:0 4px 8px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin:12px 0 10px}
+.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media(max-width:720px){.layout{grid-template-columns:1fr}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.divider{height:1px;background:#d8d3c5;margin:18px 0}
+.field{margin-bottom:14px}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:#1e5c33;background:white}
+.pw{position:relative}
+.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none}
+.pw input{padding-left:26px}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5}
+.calc-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px}
+.calc-btn:hover{background:#165228}
+.rc{background:#1a1a18;color:#faf8f3;border:none}
+.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2}
+.rs{margin-bottom:16px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px}
+.rr:last-child{border-bottom:none}
+.rl{color:#d0ccbf;flex:1}
+.rl.b{color:white;font-weight:700}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap}
+.rv.g{color:#7dd4a0}.rv.a{color:#f0c060}.rv.r{color:#f08070}.rv.w{color:white}
+.grand{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin-bottom:10px}
+.gtl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.gtv{font-family:'DM Serif Display',serif;font-size:32px;color:white}
+.actions{display:flex;gap:10px;margin-top:12px}
+.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}
+.abtn:hover{background:rgba(255,255,255,.08);color:white}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style>
+<style>.tbl{overflow-x:auto;max-height:450px;overflow-y:auto}.tbl table{width:100%;border-collapse:collapse;font-size:11px}.tbl th{background:#f3efe4;padding:7px 8px;text-align:right;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;border-bottom:2px solid #d8d3c5;position:sticky;top:0}.tbl th:first-child{text-align:left}.tbl td{padding:7px 8px;text-align:right;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;font-size:11px}.tbl td:first-child{text-align:left}.tbl tr:hover td{background:#f5f3ee}.tbl tr.yr-end td{background:#fdf8ec;font-weight:700}</style></head><body><nav class="site-nav"><a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a><ul class="nav-links"><li><a href="/booksmart-tools/tools.html">Tools</a></li><li><a href="/booksmart-tools/about.html">About</a></li><li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li></ul></nav>
+<div class="hero"><span class="tag-pill">PERSONAL FINANCE</span><span class="tag-pill">BUSINESS FINANCE</span><span class="tag-pill">FULL SCHEDULE</span>
+<h1>Loan Amortization Calculator</h1><p>Generate a complete payment-by-payment amortization schedule for any loan. Every payment broken down into principal and interest.</p></div>
+<div class="container"><div class="layout">
+<div class="card">
+<div class="card-title"><div class="num">1</div>Loan Information</div>
+<div class="field"><label class="flbl">Loan Amount</label><div class="pw" data-p="$"><input type="number" id="amount" placeholder="0.00" min="0" step="100"></div></div>
+<div class="field"><label class="flbl">Annual Interest Rate</label><div class="pw" data-p="%"><input type="number" id="rate" placeholder="0.00" min="0" max="100" step="0.01"></div></div>
+<div class="field"><label class="flbl">Loan Term</label>
+<select id="term-type"><option value="months">Months</option><option value="years">Years</option></select>
+<input type="number" id="term" placeholder="60" min="1" step="1" value="60" style="margin-top:8px"></div>
+<div class="field"><label class="flbl">First Payment Date</label><input type="month" id="start-date"></div>
+<div class="field"><label class="flbl">Extra Monthly Payment (optional)</label><div class="pw" data-p="$"><input type="number" id="extra" placeholder="0.00" min="0" step="50" value="0"></div><div class="hint">Extra principal payments each month — reduces interest paid and loan term</div></div>
+<button class="calc-btn" onclick="calcAmort()">Generate Schedule →</button>
+</div>
+<div class="card rc"><div class="card-title"><div class="num" style="background:#2d4a1e">2</div>Loan Summary</div>
+<div class="ph" id="ph">Enter loan details to generate<br>your amortization schedule →</div>
+<div id="rc" style="display:none">
+<div class="rs"><div class="rst">PAYMENT</div>
+<div class="rr"><span class="rl">Monthly payment</span><span class="rv w" id="r-monthly"></span></div>
+<div class="rr"><span class="rl">Extra payment</span><span class="rv g" id="r-extra"></span></div>
+<div class="rr"><span class="rl">Actual first month interest</span><span class="rv a" id="r-first-int"></span></div>
+<div class="rr"><span class="rl">Actual first month principal</span><span class="rv g" id="r-first-princ"></span></div>
+</div>
+<div class="rs"><div class="rst">TOTALS</div>
+<div class="rr"><span class="rl">Loan amount</span><span class="rv" id="r-amount"></span></div>
+<div class="rr"><span class="rl">Total interest paid</span><span class="rv r" id="r-total-int"></span></div>
+<div class="rr"><span class="rl">Total paid</span><span class="rv" id="r-total-paid"></span></div>
+<div class="rr"><span class="rl">Payoff date</span><span class="rv g" id="r-payoff"></span></div>
+<div class="rr" id="r-savings-row" style="display:none"><span class="rl">Interest saved (vs no extra)</span><span class="rv g" id="r-savings"></span></div>
+</div>
+<div class="grand"><span class="gtl">MONTHLY PAYMENT</span><span class="gtv" id="r-grand"></span></div>
+</div></div></div>
+<div id="sched-section" style="display:none;margin-top:28px">
+<div class="card"><div class="card-title"><div class="num">3</div>Full Amortization Schedule</div>
+<div class="tbl" id="tbl-wrap"></div>
+<div style="margin-top:14px;display:flex;gap:10px"><button class="calc-btn" style="max-width:200px" onclick="window.print()">🖨 Print Schedule</button></div>
+</div></div></div><footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a></footer>
+<script>
+function fmt(n){return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+document.addEventListener('DOMContentLoaded',()=>{const d=new Date();d.setMonth(d.getMonth()+1);document.getElementById('start-date').value=d.toISOString().slice(0,7);});
+function calcAmort(){
+const P=parseFloat(document.getElementById('amount').value)||0;
+const annRate=parseFloat(document.getElementById('rate').value)||0;
+const extra=parseFloat(document.getElementById('extra').value)||0;
+const termType=document.getElementById('term-type').value;
+let n=parseInt(document.getElementById('term').value)||60;
+if(termType==='years')n*=12;
+const startDate=document.getElementById('start-date').value;
+if(!P||!annRate||!n){alert('Please fill in all fields.');return;}
+const r=annRate/100/12;
+const mp=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+let bal=P,totalInt=0,totalPaid=0,rows='',month=0;
+const baseInt=P*r;
+let sDate=startDate?new Date(startDate+'-01'):new Date();
+while(bal>0.01&&month<n+120){
+month++;
+const int=bal*r;const princ=Math.min(bal,mp-int+extra);
+bal=Math.max(0,bal-princ);totalInt+=int;totalPaid+=mp+extra;
+const d=new Date(sDate);d.setMonth(d.getMonth()+month-1);
+const label=d.toLocaleDateString('en-US',{month:'short',year:'numeric'});
+const isYrEnd=d.getMonth()===11;
+rows+=`<tr class="${isYrEnd?'yr-end':''}"><td>#${month} ${label}</td><td>${fmt(mp+extra)}</td><td>${fmt(princ)}</td><td>${fmt(int)}</td><td>${fmt(totalInt)}</td><td>${fmt(bal)}</td></tr>`;
+}
+const stdInt=mp*n-P;
+const saved=Math.max(0,stdInt-totalInt);
+const payoffDate=new Date(sDate);payoffDate.setMonth(payoffDate.getMonth()+month-1);
+document.getElementById('ph').style.display='none';
+document.getElementById('rc').style.display='block';
+document.getElementById('r-monthly').textContent=fmt(mp);
+document.getElementById('r-extra').textContent=extra>0?'+'+fmt(extra)+'/mo':'None';
+document.getElementById('r-first-int').textContent=fmt(baseInt);
+document.getElementById('r-first-princ').textContent=fmt(mp-baseInt);
+document.getElementById('r-amount').textContent=fmt(P);
+document.getElementById('r-total-int').textContent=fmt(totalInt);
+document.getElementById('r-total-paid').textContent=fmt(totalPaid);
+document.getElementById('r-payoff').textContent=payoffDate.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+document.getElementById('r-savings-row').style.display=saved>0?'flex':'none';
+document.getElementById('r-savings').textContent=fmt(saved);
+document.getElementById('r-grand').textContent=fmt(mp);
+document.getElementById('tbl-wrap').innerHTML='<table><thead><tr><th>Payment</th><th>Amount</th><th>Principal</th><th>Interest</th><th>Total Int.</th><th>Balance</th></tr></thead><tbody>'+rows+'</tbody></table>';
+document.getElementById('sched-section').style.display='block';
+}
+</script></body></html>
