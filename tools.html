@@ -3,342 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Bookkeeping Tools | BookSmartTools</title>
-<meta name="description" content="Free professional bookkeeping calculators for US small businesses — invoice late fee calculator, payroll tax estimator with all 50 states, and more.">
-<link rel="canonical" href="https://booksmartools.com/tools.html">
-<link rel="stylesheet" href="/booksmart-tools/css/style.css">
+<title>Free Accounting & Finance Calculators | BookSmartTools — 30+ Tools</title>
+<meta name="description" content="30+ free accounting, payroll, tax, and finance calculators for small businesses. Sales tax, payroll, profit margin, mortgage, depreciation and more — all free.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-.tools-hero { background:var(--green); color:white; padding:64px 0 56px; }
-.tools-hero h1 { color:white; margin-bottom:14px; }
-.tools-hero p  { color:rgba(255,255,255,.75); font-size:18px; max-width:520px; }
-.tools-hero .eyebrow { color:rgba(255,255,255,.65); background:rgba(255,255,255,.12); }
-.tools-hero .eyebrow::before { background:rgba(255,255,255,.65); }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18;}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none;}
+.nav-logo em{color:#6db88a;font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px;}
+.nav-links a:hover{color:white;}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px;}
 
-.filter-bar {
-  background:var(--cream); border-bottom:1px solid var(--border);
-  padding:16px 0; position:sticky; top:64px; z-index:50;
-}
-.filter-inner { display:flex; gap:10px; flex-wrap:wrap; }
-.filter-btn {
-  padding:8px 18px; border-radius:2px;
-  font-family:'DM Mono',monospace; font-size:12px;
-  border:1px solid var(--border); background:white;
-  cursor:pointer; color:var(--muted); transition:all .15s;
-}
-.filter-btn.active, .filter-btn:hover { background:var(--ink); color:white; border-color:var(--ink); }
+.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:720px){.tool-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.tool-grid{grid-template-columns:1fr;}}
+.tool-card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:20px;text-decoration:none;color:#1a1a18;transition:all .15s;display:block;}
+.tool-card:hover{border-color:#1e5c33;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.tool-icon{font-size:24px;margin-bottom:10px;}
+.tool-name{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:6px;color:#1a1a18;}
+.tool-desc{font-size:12px;color:#7a7568;line-height:1.5;}
 
-.tool-full-card {
-  background:white; border:1px solid var(--border); border-radius:4px;
-  overflow:hidden; transition:box-shadow .2s;
-}
-.tool-full-card:hover { box-shadow:0 8px 32px rgba(0,0,0,.08); }
-.tool-full-top {
-  display:grid; grid-template-columns:1fr auto;
-  gap:20px; padding:28px; border-bottom:1px solid var(--border);
-  align-items:start;
-}
-.tool-full-meta { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.tool-full-name { font-family:'Playfair Display',serif; font-size:24px; margin-bottom:10px; }
-.tool-full-desc { font-size:15px; color:var(--muted); line-height:1.7; }
-.tool-full-actions { display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
-@media(max-width:600px) { .tool-full-top { grid-template-columns:1fr; } .tool-full-actions { flex-direction:row; align-items:flex-start; } }
-.tool-full-features { padding:20px 28px; display:flex; flex-wrap:wrap; gap:8px; }
-.tool-feature { font-size:12px; color:var(--muted); background:var(--cream); padding:5px 12px; border-radius:2px; border:1px solid var(--border); }
-
-.coming-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-@media(max-width:720px) { .coming-grid { grid-template-columns:1fr 1fr; } }
-@media(max-width:480px) { .coming-grid { grid-template-columns:1fr; } }
-.coming-card {
-  background:var(--cream); border:1px dashed var(--border);
-  border-radius:4px; padding:24px;
-}
-.coming-card h3 { font-size:17px; margin-bottom:8px; }
-.coming-card p { font-size:13px; color:var(--muted); line-height:1.6; }
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace;}
+footer a{color:rgba(255,255,255,.6);}
 </style>
 </head>
 <body>
-
 <nav class="site-nav">
-  <div class="nav-inner">
-    <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
-    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-    <ul class="nav-links">
-      <li><a href="/booksmart-tools/tools.html" class="active">Tools</a></li>
-      <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
-      <li><a href="/booksmart-tools/about.html">About</a></li>
-      <li><a href="index.html#newsletter" class="nav-cta">Free Tools →</a></li>
-    </ul>
-  </div>
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/about.html">About</a></li>
+    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
+  </ul>
 </nav>
-
-<!-- HERO -->
-<div class="tools-hero">
-  <div class="wrap">
-    <div class="eyebrow">Free Tools</div>
-    <h1>Bookkeeping tools that work</h1>
-    <p>Professional-grade calculators built for real US bookkeeping work. No account, no software, no installation — open in any browser.</p>
-  </div>
+<div style="background:linear-gradient(135deg,#1a1a18 0%,#2d3a2d 100%);color:white;text-align:center;padding:56px 24px 48px">
+  <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1px;color:rgba(255,255,255,.5);margin-bottom:12px">30+ FREE TOOLS</div>
+  <h1 style="font-family:'DM Serif Display',serif;font-size:40px;font-weight:400;margin-bottom:12px">All Calculators & Tools</h1>
+  <p style="font-size:16px;opacity:.8;max-width:560px;margin:0 auto;line-height:1.6">Free professional tools for accounting, payroll, taxes, business finance, and personal finance. Built for bookkeepers, accountants, and small business owners.</p>
 </div>
 
-<!-- FILTER BAR -->
-<div class="filter-bar">
-  <div class="wrap">
-    <div class="filter-inner">
-      <button class="filter-btn active">All Tools</button>
-      <button class="filter-btn">Invoicing</button>
-      <button class="filter-btn">Payroll & Taxes</button>
-      <button class="filter-btn">Coming Soon</button>
+  <!-- TOOLS GRID -->
+  <div style="max-width:1040px;margin:0 auto;padding:48px 24px 80px">
+
+    <div style="margin-bottom:48px">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px">Business Finance</h2>
+      <p style="color:#7a7568;margin-bottom:24px">Profitability, investment, and business planning tools</p>
+      <div class="tool-grid">
+        <a href="/booksmart-tools/profit-margin-calculator.html" class="tool-card">
+          <div class="tool-icon">📊</div><div class="tool-name">Profit Margin Calculator</div>
+          <div class="tool-desc">Gross margin, net margin, and markup analysis</div></a>
+        <a href="/booksmart-tools/break-even-calculator.html" class="tool-card">
+          <div class="tool-icon">⚖️</div><div class="tool-name">Break-Even Calculator</div>
+          <div class="tool-desc">Units and revenue needed to cover all costs</div></a>
+        <a href="/booksmart-tools/roi-calculator.html" class="tool-card">
+          <div class="tool-icon">📈</div><div class="tool-name">ROI Calculator</div>
+          <div class="tool-desc">Return on investment and payback period</div></a>
+        <a href="/booksmart-tools/business-loan-calculator.html" class="tool-card">
+          <div class="tool-icon">🏦</div><div class="tool-name">Business Loan Calculator</div>
+          <div class="tool-desc">Monthly payments and full loan cost</div></a>
+        <a href="/booksmart-tools/markup-margin-calculator.html" class="tool-card">
+          <div class="tool-icon">🏷️</div><div class="tool-name">Markup vs Margin</div>
+          <div class="tool-desc">Convert between markup % and margin %</div></a>
+        <a href="/booksmart-tools/burn-rate-calculator.html" class="tool-card">
+          <div class="tool-icon">🔥</div><div class="tool-name">Burn Rate & Runway</div>
+          <div class="tool-desc">Monthly burn rate and months of cash left</div></a>
+      </div>
     </div>
+
+    <div style="margin-bottom:48px">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px">Payroll & HR</h2>
+      <p style="color:#7a7568;margin-bottom:24px">Payroll calculations, employee compensation, and benefits</p>
+      <div class="tool-grid">
+        <a href="/booksmart-tools/payroll-tax-estimator.html" class="tool-card">
+          <div class="tool-icon">💵</div><div class="tool-name">Payroll Tax Estimator</div>
+          <div class="tool-desc">Federal, state, FICA withholding — 2026 rates</div></a>
+        <a href="/booksmart-tools/overtime-calculator.html" class="tool-card">
+          <div class="tool-icon">⏰</div><div class="tool-name">Overtime Calculator</div>
+          <div class="tool-desc">FLSA, California, and custom overtime rules</div></a>
+        <a href="/booksmart-tools/net-pay-calculator.html" class="tool-card">
+          <div class="tool-icon">🧾</div><div class="tool-name">Net Pay Calculator</div>
+          <div class="tool-desc">Take-home pay after all taxes and deductions</div></a>
+        <a href="/booksmart-tools/hourly-salary-converter.html" class="tool-card">
+          <div class="tool-icon">🔄</div><div class="tool-name">Hourly ↔ Salary Converter</div>
+          <div class="tool-desc">Convert between hourly, weekly, monthly, annual</div></a>
+        <a href="/booksmart-tools/pto-calculator.html" class="tool-card">
+          <div class="tool-icon">🌴</div><div class="tool-name">PTO & Vacation Accrual</div>
+          <div class="tool-desc">PTO balance, accrual rate, and projections</div></a>
+        <a href="/booksmart-tools/401k-calculator.html" class="tool-card">
+          <div class="tool-icon">🏛️</div><div class="tool-name">401(k) Calculator</div>
+          <div class="tool-desc">Contributions, employer match, retirement projection</div></a>
+      </div>
+    </div>
+
+    <div style="margin-bottom:48px">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px">Tax Tools</h2>
+      <p style="color:#7a7568;margin-bottom:24px">Sales tax, income tax, self-employment, and quarterly estimates</p>
+      <div class="tool-grid">
+        <a href="/booksmart-tools/sales-tax-calculator.html" class="tool-card">
+          <div class="tool-icon">🧮</div><div class="tool-name">Business Sales Tax Return</div>
+          <div class="tool-desc">All 50 states — file-ready return calculator</div></a>
+        <a href="/booksmart-tools/meals-tax-calculator.html" class="tool-card">
+          <div class="tool-icon">🍽️</div><div class="tool-name">Meals Tax Calculator</div>
+          <div class="tool-desc">Restaurant food & beverage tax — all states</div></a>
+        <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html" class="tool-card">
+          <div class="tool-icon">🛒</div><div class="tool-name">E-Commerce Sales Tax</div>
+          <div class="tool-desc">Multi-state, multi-county — Excel upload supported</div></a>
+        <a href="/booksmart-tools/self-employment-tax.html" class="tool-card">
+          <div class="tool-icon">💼</div><div class="tool-name">Self-Employment Tax</div>
+          <div class="tool-desc">SE tax, deductions, and quarterly estimates</div></a>
+        <a href="/booksmart-tools/quarterly-tax-calculator.html" class="tool-card">
+          <div class="tool-icon">📅</div><div class="tool-name">Quarterly Tax Calculator</div>
+          <div class="tool-desc">2026 estimated quarterly payments — Form 1040-ES</div></a>
+        <a href="/booksmart-tools/1099-vs-w2-calculator.html" class="tool-card">
+          <div class="tool-icon">⚖️</div><div class="tool-name">1099 vs W-2 Calculator</div>
+          <div class="tool-desc">True cost comparison for employers and workers</div></a>
+      </div>
+    </div>
+
+    <div style="margin-bottom:48px">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px">Bookkeeping & Accounting</h2>
+      <p style="color:#7a7568;margin-bottom:24px">Daily bookkeeping tools for small business owners and accountants</p>
+      <div class="tool-grid">
+        <a href="/booksmart-tools/invoice-late-fee-calculator.html" class="tool-card">
+          <div class="tool-icon">📄</div><div class="tool-name">Invoice Late Fee Calculator</div>
+          <div class="tool-desc">Late fees, interest, and payment terms</div></a>
+        <a href="/booksmart-tools/ar-aging-calculator.html" class="tool-card">
+          <div class="tool-icon">📋</div><div class="tool-name">AR Aging Calculator</div>
+          <div class="tool-desc">Accounts receivable aging report and bad debt reserve</div></a>
+        <a href="/booksmart-tools/cash-flow-calculator.html" class="tool-card">
+          <div class="tool-icon">💧</div><div class="tool-name">Cash Flow Calculator</div>
+          <div class="tool-desc">Operating, investing, and financing cash flows</div></a>
+        <a href="/booksmart-tools/depreciation-calculator.html" class="tool-card">
+          <div class="tool-icon">📉</div><div class="tool-name">Depreciation Calculator</div>
+          <div class="tool-desc">MACRS, straight-line, Section 179 — full schedule</div></a>
+      </div>
+    </div>
+
+    <div style="margin-bottom:48px">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px">Personal Finance</h2>
+      <p style="color:#7a7568;margin-bottom:24px">Personal money tools for everyday financial decisions</p>
+      <div class="tool-grid">
+        <a href="/booksmart-tools/mortgage-calculator.html" class="tool-card">
+          <div class="tool-icon">🏠</div><div class="tool-name">Mortgage Calculator</div>
+          <div class="tool-desc">Monthly payment, PMI, tax, insurance breakdown</div></a>
+        <a href="/booksmart-tools/loan-amortization.html" class="tool-card">
+          <div class="tool-icon">📊</div><div class="tool-name">Loan Amortization</div>
+          <div class="tool-desc">Full month-by-month amortization schedule</div></a>
+        <a href="/booksmart-tools/compound-interest.html" class="tool-card">
+          <div class="tool-icon">📈</div><div class="tool-name">Compound Interest</div>
+          <div class="tool-desc">Investment growth with contributions over time</div></a>
+        <a href="/booksmart-tools/savings-goal-calculator.html" class="tool-card">
+          <div class="tool-icon">🎯</div><div class="tool-name">Savings Goal Calculator</div>
+          <div class="tool-desc">Monthly savings needed to reach any goal</div></a>
+        <a href="/booksmart-tools/budget-planner.html" class="tool-card">
+          <div class="tool-icon">📝</div><div class="tool-name">Budget Planner</div>
+          <div class="tool-desc">Monthly budget with 50/30/20 rule analysis</div></a>
+        <a href="/booksmart-tools/debt-payoff-calculator.html" class="tool-card">
+          <div class="tool-icon">🏃</div><div class="tool-name">Debt Payoff Calculator</div>
+          <div class="tool-desc">Avalanche vs snowball — fastest path to debt freedom</div></a>
+      </div>
+    </div>
+
   </div>
-</div>
 
-<!-- LIVE TOOLS -->
-<section class="section">
-  <div class="wrap">
-    <div class="eyebrow">Available Now</div>
-    <h2 style="margin-bottom:36px">Free to use — no sign-up</h2>
-
-    <div style="display:flex;flex-direction:column;gap:24px">
-
-      <!-- Tool 1 -->
-      <div class="tool-full-card reveal">
-        <div class="tool-full-top">
-          <div>
-            <div class="tool-full-meta">
-              <span class="tool-badge free">Free</span>
-              <span class="tag">Invoicing</span>
-            </div>
-            <div class="tool-full-name">Invoice Late Fee Calculator</div>
-            <p class="tool-full-desc">Calculate the exact late fee to charge on any overdue invoice. Supports monthly percentage rates or flat fees, configurable grace periods, and simple or compounding interest. Generates a month-by-month breakdown you can paste directly into a client email or new invoice.</p>
-          </div>
-          <div class="tool-full-actions">
-            <a href="/booksmart-tools/invoice-late-fee-calculator.html" class="btn btn-primary">Open Tool →</a>
-            <a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html" class="btn btn-ghost btn-sm">Learn More</a>
-          </div>
-        </div>
-        <div class="tool-full-features">
-          <span class="tool-feature">Monthly % rate or flat fee</span>
-          <span class="tool-feature">Grace period support</span>
-          <span class="tool-feature">Simple & compounding interest</span>
-          <span class="tool-feature">Month-by-month breakdown</span>
-          <span class="tool-feature">Copy-ready summary</span>
-          <span class="tool-feature">Works offline</span>
-        </div>
-      </div>
-
-      <!-- Tool 2 -->
-      <div class="tool-full-card reveal">
-        <div class="tool-full-top">
-          <div>
-            <div class="tool-full-meta">
-              <span class="tool-badge free">Free</span>
-              <span class="tool-badge new">2025 & 2026</span>
-              <span class="tag">Payroll & Taxes</span>
-            </div>
-            <div class="tool-full-name">Payroll Tax Estimator</div>
-            <p class="tool-full-desc">Calculate complete federal and state payroll taxes for any W-2 employee. Switch between 2025 and 2026 tax years instantly. Covers Social Security (updated to $184,500 for 2026), Medicare, FUTA, SUTA, federal income tax withholding, and state income tax for all 50 states. Shows employer cost and employee withholding separately — matches your W-2 boxes.</p>
-          </div>
-          <div class="tool-full-actions">
-            <a href="/booksmart-tools/payroll-tax-estimator.html" class="btn btn-primary">Open Tool →</a>
-            <a href="/booksmart-tools/blog/1099-vs-w2.html" class="btn btn-ghost btn-sm">1099 vs W-2 Guide</a>
-          </div>
-        </div>
-        <div class="tool-full-features">
-          <span class="tool-feature">2025 & 2026 rates</span>
-          <span class="tool-feature">All 50 states + D.C.</span>
-          <span class="tool-feature">Federal income tax (Box 2)</span>
-          <span class="tool-feature">State income tax (all 50)</span>
-          <span class="tool-feature">IRS-verified FICA / FUTA / SUTA</span>
-          <span class="tool-feature">W-4 withholding method selector</span>
-          <span class="tool-feature">Year-over-year comparison</span>
-          <span class="tool-feature">Copy-ready W-2 summary</span>
-        </div>
-      </div>
-
-      <!-- Tool 3 — Sales Tax -->
-      <div class="tool-full-card reveal">
-        <div class="tool-full-top">
-          <div>
-            <div class="tool-full-meta">
-              <span class="tool-badge free">Free</span>
-              <span class="tool-badge new">2025 Rates</span>
-              <span class="tag">Sales Tax</span>
-            </div>
-            <div class="tool-full-name">Sales Tax Calculator by State</div>
-            <p class="tool-full-desc">Calculate exact sales tax for any purchase across all 50 US states. Shows the state base rate plus population-weighted average local rate side by side. Includes a full reference table with every state's rate, highlights no-tax states, and lets you enter a custom combined rate for your exact county or city.</p>
-          </div>
-          <div class="tool-full-actions">
-            <a href="/booksmart-tools/sales-tax-calculator.html" class="btn btn-primary">Open Tool →</a>
-          </div>
-        </div>
-        <div class="tool-full-features">
-          <span class="tool-feature">All 50 states + D.C.</span>
-          <span class="tool-feature">State + avg local rate</span>
-          <span class="tool-feature">Custom combined rate option</span>
-          <span class="tool-feature">5 no-tax states highlighted</span>
-          <span class="tool-feature">Tax Foundation 2025 data</span>
-          <span class="tool-feature">Full state reference table</span>
-          <span class="tool-feature">Copy-ready summary</span>
-          <span class="tool-feature">Works offline</span>
-        </div>
-      </div>
-
-      <!-- Tool 4 — Meals Tax -->
-      <div class="tool-full-card reveal">
-        <div class="tool-full-top">
-          <div>
-            <div class="tool-full-meta">
-              <span class="tool-badge free">Free</span>
-              <span class="tool-badge new">County-Level</span>
-              <span class="tag">Meals & Restaurant Tax</span>
-            </div>
-            <div class="tool-full-name">Meals Tax Calculator — State & County</div>
-            <p class="tool-full-desc">Calculate restaurant and prepared food tax by state and county. Many states charge a higher rate on meals than on general goods — this tool accounts for local meals taxes that stack on top of the standard sales tax. Covers Virginia counties, Massachusetts cities, New Hampshire's 8.5% meals & rooms tax, Vermont's 9% statewide rate, Maine's 8% rate, Connecticut's 7.35% surcharge, and all other states.</p>
-          </div>
-          <div class="tool-full-actions">
-            <a href="/booksmart-tools/meals-tax-calculator.html" class="btn btn-primary">Open Tool →</a>
-          </div>
-        </div>
-        <div class="tool-full-features">
-          <span class="tool-feature">All 50 states + D.C.</span>
-          <span class="tool-feature">County / city level for VA, MA, VT</span>
-          <span class="tool-feature">Local meals tax stacked on state rate</span>
-          <span class="tool-feature">NH 8.5% meals & rooms tax</span>
-          <span class="tool-feature">Tip calculator (tips not taxed)</span>
-          <span class="tool-feature">Full state-by-state guide</span>
-          <span class="tool-feature">Copy-ready summary</span>
-          <span class="tool-feature">Works offline</span>
-        </div>
-      </div>
-
-    </div>
-
-    
-      <!-- Tool 5 — E-Commerce Multi-County Tax -->
-      <div class="tool-full-card reveal">
-        <div class="tool-full-top">
-          <div>
-            <div class="tool-full-meta">
-              <span class="tool-badge free">Free</span>
-              <span class="tool-badge new">Amazon / Shopify</span>
-              <span class="tag">E-Commerce Tax</span>
-            </div>
-            <div class="tool-full-name">Multi-County E-Commerce Sales Tax Calculator</div>
-            <p class="tool-full-desc">Built for Amazon, Shopify, eBay, and WooCommerce sellers who sell to multiple counties in the same state. Add unlimited county rows — each with its own rate — and get one combined sales tax total for your state return. Covers Virginia (NoVA 6% vs 5.3%), California, Texas, New York, Florida, Washington and more. Includes dealer discounts automatically.</p>
-          </div>
-          <div class="tool-full-actions">
-            <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html" class="btn btn-primary">Open Tool →</a>
-          </div>
-        </div>
-        <div class="tool-full-features">
-          <span class="tool-feature">13 states with county-level rates</span>
-          <span class="tool-feature">Unlimited county rows</span>
-          <span class="tool-feature">Virginia NoVA &amp; Hampton Roads 6.0%</span>
-          <span class="tool-feature">Live tax calculation per county</span>
-          <span class="tool-feature">Dealer discount (VA, TX, FL, MD)</span>
-          <span class="tool-feature">Exempt sales deduction</span>
-          <span class="tool-feature">Combined return total</span>
-          <span class="tool-feature">Amazon / Shopify / eBay ready</span>
-        </div>
-      </div>
-
-    <!-- COMING SOON -->
-    <div style="margin-top:64px">
-      <div class="eyebrow">Coming Soon</div>
-      <h2 style="margin-bottom:8px">More tools in development</h2>
-      <p style="margin-bottom:36px;max-width:480px">Subscribe to the newsletter to be notified when new tools launch — usually before they're listed here.</p>
-
-      <div class="coming-grid">
-        <div class="coming-card reveal">
-          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
-          <h3>Quarterly Tax Calculator</h3>
-          <p>Estimate quarterly estimated payments for self-employed individuals and freelancers based on projected income and deductions.</p>
-        </div>
-        <div class="coming-card reveal delay-1">
-          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
-          <h3>Mileage Deduction Tracker</h3>
-          <p>Track business miles at the IRS standard mileage rate. Calculate deductions and export a log for tax preparation.</p>
-        </div>
-        <div class="coming-card reveal delay-2">
-          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
-          <h3>Expense Category Checker</h3>
-          <p>Enter any business expense description and get the correct QuickBooks category and IRS tax treatment instantly.</p>
-        </div>
-        <div class="coming-card reveal">
-          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
-          <h3>Cash Flow Forecast Builder</h3>
-          <p>Build a 12-month cash flow projection. Enter expected income and expenses, spot shortfalls before they happen.</p>
-        </div>
-        <div class="coming-card reveal delay-1">
-          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
-          <h3>Break-Even Calculator</h3>
-          <p>Calculate the revenue needed to cover fixed and variable costs. Useful for pricing decisions and financial planning.</p>
-        </div>
-        <div class="coming-card reveal delay-2">
-          <div class="tool-badge soon" style="margin-bottom:12px">Coming Soon</div>
-          <h3>1099 Threshold Tracker</h3>
-          <p>Track payments to contractors throughout the year and get alerts when any vendor crosses the $600 1099-NEC threshold.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- EMAIL CAPTURE -->
-<section class="capture-section">
-  <div class="capture-inner">
-    <div class="eyebrow" style="justify-content:center;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)">Get Notified</div>
-    <h2>New tools straight to your inbox</h2>
-    <p>Subscribe and be the first to know when a new tool launches — plus monthly bookkeeping tips from a working US bookkeeper.</p>
-    <form class="email-form" novalidate>
-      <input type="email" placeholder="your@email.com" aria-label="Email address">
-      <button type="submit">Subscribe Free →</button>
-    </form>
-    <div class="capture-success">✓ You're subscribed! Watch your inbox.</div>
-    <div class="capture-small">No spam. Unsubscribe any time.</div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">Book<em>Smart</em>Tools</div>
-        <p class="footer-tagline">Free professional bookkeeping tools and guides for US small business owners.</p>
-      </div>
-      <div class="footer-col"><h4>Tools</h4><ul>
-        <li><a href="/booksmart-tools/invoice-late-fee-calculator.html">Invoice Late Fee Calculator</a></li>
-        <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
-      </ul></div>
-      <div class="footer-col"><h4>Blog</h4><ul>
-        <li><a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html">Invoice Late Fees</a></li>
-        <li><a href="/booksmart-tools/blog/quickbooks-bank-reconciliation.html">QuickBooks Reconciliation</a></li>
-        <li><a href="/booksmart-tools/blog/1099-vs-w2.html">1099 vs W-2</a></li>
-        <li><a href="/booksmart-tools/blog/index.html">All Articles</a></li>
-      </ul></div>
-      <div class="footer-col"><h4>Site</h4><ul>
-        <li><a href="/booksmart-tools/">Home</a></li>
-        <li><a href="/booksmart-tools/about.html">About</a></li>
-        <li><a href="sitemap.xml">Sitemap</a></li>
-      </ul></div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">© 2025 BookSmartTools — Free bookkeeping tools for US small businesses</div>
-      <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Disclaimer</a></div>
-    </div>
-  </div>
-</footer>
-
+<footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/blog/index.html">Blog</a> &nbsp;|&nbsp; Free professional finance tools for everyone.</footer>
 <script src="/booksmart-tools/js/main.js"></script>
-<script>
-// Filter buttons
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
-</script>
 </body>
 </html>
