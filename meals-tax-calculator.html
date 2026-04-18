@@ -311,6 +311,62 @@ const MEALS = {
   "Wyoming":    {state:4.00, local:true,  note:"State 4% on restaurant meals. Counties add up to 2% local tax. Teton County (Jackson) is highest.", portal:"e-Services (excise.wy.gov)", localities:{"Teton County (Jackson)":2.00,"Laramie County (Cheyenne)":2.00,"Natrona County (Casper)":2.00,"All Other Wyoming":1.00}},
 };
 
+// ── STATE FILING PORTAL URLs ─────────────────────────────
+const PORTAL_URLS = {
+  "Alabama":"https://www.revenue.alabama.gov/","Alaska":"https://www.commerce.alaska.gov/web/dcra/",
+  "Arizona":"https://aztaxes.gov/","Arkansas":"https://atap.arkansas.gov/",
+  "California":"https://www.cdtfa.ca.gov/","Colorado":"https://revenue.colorado.gov/",
+  "Connecticut":"https://portal.ct.gov/DRS","Delaware":"https://revenue.delaware.gov/",
+  "Florida":"https://floridarevenue.com/taxes/eservices/","Georgia":"https://gtc.dor.ga.gov/",
+  "Hawaii":"https://tax.hawaii.gov/","Idaho":"https://tap.tax.idaho.gov/",
+  "Illinois":"https://mytax.illinois.gov/","Indiana":"https://intime.dor.in.gov/",
+  "Iowa":"https://tax.iowa.gov/","Kansas":"https://ksrevenue.gov/",
+  "Kentucky":"https://revenue.ky.gov/","Louisiana":"https://latap.revenue.louisiana.gov/",
+  "Maine":"https://portal.maine.gov/mtap/","Maryland":"https://interactive.marylandtaxes.gov/",
+  "Massachusetts":"https://masstaxconnect.dor.state.ma.us/","Michigan":"https://www.michigan.gov/taxes/",
+  "Minnesota":"https://www.mndor.state.mn.us/","Mississippi":"https://tap.dor.ms.gov/",
+  "Missouri":"https://mytax.missouri.gov/","Montana":"","Nebraska":"https://revenue.nebraska.gov/",
+  "Nevada":"https://nevadatax.nv.gov/","New Hampshire":"https://www.revenue.nh.gov/",
+  "New Jersey":"https://www.njportal.com/DOR/Sales/","New Mexico":"https://tap.state.nm.us/",
+  "New York":"https://businessexpress.ny.gov/","North Carolina":"https://eservices.dor.nc.gov/",
+  "North Dakota":"https://apps.nd.gov/tax/tap/","Ohio":"https://gateway.ohio.gov/",
+  "Oklahoma":"https://oktap.tax.ok.gov/","Oregon":"","Pennsylvania":"https://mypath.pa.gov/",
+  "Rhode Island":"https://taxportal.ri.gov/","South Carolina":"https://mydorway.dor.sc.gov/",
+  "South Dakota":"https://etax.sd.gov/","Tennessee":"https://tntap.tn.gov/",
+  "Texas":"https://www.comptroller.texas.gov/taxes/sales/","Utah":"https://tap.tax.utah.gov/",
+  "Vermont":"https://myvtax.vermont.gov/","Virginia":"https://www.tax.virginia.gov/retail-sales-and-use-tax",
+  "Washington":"https://dor.wa.gov/","Washington D.C.":"https://mytax.dc.gov/",
+  "West Virginia":"https://mytaxes.wvtax.gov/","Wisconsin":"https://tap.revenue.wi.gov/",
+  "Wyoming":"https://excise.wy.gov/"
+};
+const VA_COUNTY_URLS = {
+  "Prince William County":"https://www.pwcva.gov/department/tax-administration",
+  "Manassas Park City":"https://www.pwcva.gov/department/tax-administration",
+  "Fairfax County":"https://www.fairfaxcounty.gov/finance/tax/business/meals-tax",
+  "Fairfax City":"https://www.fairfaxva.gov/government/finance/taxes/meals-tax",
+  "Arlington County":"https://www.arlingtonva.us/Government/Departments/DHS/Finance/Taxes/Business-Taxes/Meals-Tax",
+  "Alexandria City":"https://www.alexandriava.gov/finance",
+  "Loudoun County":"https://www.loudoun.gov/1049/Food-Beverage-Tax",
+  "Virginia Beach City":"https://www.vbgov.com/government/departments/finance/business-license-taxes/Pages/meal-tax.aspx",
+  "Norfolk City":"https://www.norfolk.gov/1043/Meals-Tax",
+  "Richmond City":"https://www.rva.gov/finance/taxes/meals-tax",
+  "Chesapeake City":"https://www.cityofchesapeake.net/government/city-departments/departments/finance/",
+  "Hampton City":"https://www.hampton.gov/1104/Meals-Tax",
+  "Newport News City":"https://www.nnva.gov/2247/Meals-Tax",
+  "Roanoke City":"https://www.roanokeva.gov/2155/Meals-Tax",
+  "Charlottesville City":"https://www.charlottesville.gov/1263/Meals-Tax",
+  "Fredericksburg City":"https://www.fredericksburgva.gov/225/Meals-Tax"
+};
+function getPortalUrl(stateName, localName) {
+  if(stateName === 'Virginia' && localName && VA_COUNTY_URLS[localName]) return VA_COUNTY_URLS[localName];
+  return PORTAL_URLS[stateName] || '';
+}
+function openStatePortal(stateName, localName) {
+  const url = getPortalUrl(stateName, localName);
+  if(url) window.open(url,'_blank','noopener');
+  else alert('Visit your state Department of Revenue website to file online.');
+}
+
 function init(){
   const sel = document.getElementById('state');
   const tb  = document.getElementById('rtbody');
@@ -523,33 +579,14 @@ function calc(){
   // Show File Now button
   const fileBtn = document.getElementById('file-btn');
   const m = MEALS[stateName];
-  if(fileBtn) fileBtn.style.display = (m && (m.url || m.vatax)) ? 'flex' : 'none';
+  if(fileBtn) fileBtn.style.display = (getPortalUrl(stateName, '') || (m && m.vatax)) ? 'inline-flex' : 'none';
 }
 
 function openPortal(){
-  const name = document.getElementById('state').value;
-  const m = name ? MEALS[name] : null;
-  if(!m) return;
-  // For Virginia, use county portal if available
+  const stateName = document.getElementById('state').value;
   const sel = document.getElementById('locality');
-  let url = m.url || '';
-  if(m.vatax && sel && sel.value){
-    const locName = sel.options[sel.selectedIndex]?.dataset?.loc || '';
-    const countyUrls = {
-      'Prince William County':  'https://www.pwcva.gov/department/tax-administration',
-      'Manassas Park City':     'https://www.pwcva.gov/department/tax-administration',
-      'Fairfax County':         'https://www.fairfaxcounty.gov/finance/tax/business/',
-      'Arlington County':       'https://www.arlingtonva.us/Government/Departments/DHS/Finance/Taxes/Business-Taxes/Meals-Tax',
-      'Alexandria City':        'https://www.alexandriava.gov/finance/info/default.aspx?id=34374',
-      'Loudoun County':         'https://www.loudoun.gov/1049/Food-Beverage-Tax',
-      'Virginia Beach City':    'https://www.vbgov.com/government/departments/finance/business-license-taxes/Pages/meal-tax.aspx',
-      'Norfolk City':           'https://www.norfolk.gov/index.aspx?NID=1043',
-      'Richmond City':          'https://www.rva.gov/finance/taxes',
-    };
-    if(countyUrls[locName]) url = countyUrls[locName];
-  }
-  if(url) window.open(url,'_blank','noopener');
-  else alert('Filing portal: ' + (m.portal || 'Check your state DOR website'));
+  const locName = sel?.options[sel.selectedIndex]?.dataset?.loc || '';
+  openStatePortal(stateName, locName);
 }
 
 function copyRet(){
