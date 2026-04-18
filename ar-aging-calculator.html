@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Accounts Receivable Aging Calculator | AR Aging Report | BookSmartTools</title>
+<meta name="description" content="Create an accounts receivable aging report. Track overdue invoices and see your AR aging buckets: current, 30, 60, 90+ days.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px}.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+.hero{background:linear-gradient(135deg,#1a2e1a 0%,#2d4a1e 50%,#1a2e1a 100%);color:white;text-align:center;padding:48px 24px 40px}
+.tag-pill{background:rgba(255,255,255,.15);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin:0 4px 8px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;margin:12px 0 10px}.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6}
+.container{max-width:1040px;margin:0 auto;padding:36px 24px 60px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}@media(max-width:720px){.layout{grid-template-columns:1fr}}
+.card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:28px}
+.card-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.divider{height:1px;background:#d8d3c5;margin:18px 0}.field{margin-bottom:14px}
+.flbl{display:block;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+input,select{width:100%;height:44px;border:1px solid #d8d3c5;border-radius:3px;padding:0 14px;font-family:'DM Mono',monospace;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:#1e5c33;background:white}
+.pw{position:relative}.pw::before{content:attr(data-p);position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:13px;color:#7a7568;pointer-events:none}.pw input{padding-left:26px}
+.hint{font-size:11px;color:#7a7568;margin-top:4px;line-height:1.5}
+.calc-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:10px}.calc-btn:hover{background:#165228}
+.rc{background:#1a1a18;color:#faf8f3;border:none}.rc .card-title{color:#faf8f3;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px;margin-bottom:20px}
+.ph{text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;line-height:2.2}
+.rs{margin-bottom:16px;background:rgba(255,255,255,.05);border-radius:4px;padding:14px 16px}
+.rst{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;font-family:'DM Mono',monospace;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px}.rr:last-child{border-bottom:none}
+.rl{color:#d0ccbf;flex:1}.rl.b{color:white;font-weight:700}
+.rv{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap}.rv.g{color:#7dd4a0}.rv.a{color:#f0c060}.rv.r{color:#f08070}.rv.w{color:white}
+.grand{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin-bottom:10px}
+.gtl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}.gtv{font-family:'DM Serif Display',serif;font-size:32px;color:white}
+.actions{display:flex;gap:10px;margin-top:12px}.abtn{flex:1;padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}.abtn:hover{background:rgba(255,255,255,.08);color:white}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style>
+<style>.inv-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px}</style></head><body><nav class="site-nav"><a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a><ul class="nav-links"><li><a href="/booksmart-tools/tools.html">Tools</a></li><li><a href="/booksmart-tools/about.html">About</a></li><li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li></ul></nav>
+<div class="hero"><span class="tag-pill">BOOKKEEPING</span><span class="tag-pill">ACCOUNTS RECEIVABLE</span>
+<h1>Accounts Receivable Aging</h1><p>Track overdue invoices and create an AR aging report. See how much you're owed in current, 30, 60, and 90+ day buckets.</p></div>
+<div class="container">
+<div class="card" style="margin-bottom:28px">
+<div class="card-title"><div class="num">1</div>Enter Invoices</div>
+<div style="display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-bottom:6px">
+<span class="flbl">Customer / Invoice</span><span class="flbl">Amount</span><span class="flbl">Invoice Date</span><span></span>
+</div>
+<div id="inv-container">
+<div class="inv-row">
+<input type="text" class="i-cust" placeholder="Customer name / Invoice #" value="ACME Corp - INV-001">
+<div class="pw" data-p="$"><input type="number" class="i-amt" placeholder="0.00" value="5000" min="0"></div>
+<input type="date" class="i-date">
+<button onclick="this.closest('.inv-row').remove()" style="height:44px;width:36px;border:1px solid #d8d3c5;background:white;border-radius:3px;cursor:pointer;color:#7a7568">×</button>
+</div>
+</div>
+<button onclick="addInv()" style="width:100%;height:40px;border:2px dashed #d8d3c5;background:transparent;border-radius:3px;cursor:pointer;font-family:'DM Sans',sans-serif;color:#7a7568;margin-top:8px;margin-bottom:16px">+ Add Invoice</button>
+<button class="calc-btn" onclick="calcAR()">Generate AR Aging Report →</button>
+</div>
+<div id="results" style="display:none">
+<div class="layout">
+<div class="card rc"><div class="card-title"><div class="num" style="background:#2d4a1e">2</div>AR Aging Summary</div>
+<div class="rs"><div class="rst">AGING BUCKETS</div>
+<div class="rr"><span class="rl">Current (0-30 days)</span><span class="rv g" id="r-current"></span></div>
+<div class="rr"><span class="rl">31-60 Days Past Due</span><span class="rv a" id="r-30"></span></div>
+<div class="rr"><span class="rl">61-90 Days Past Due</span><span class="rv a" id="r-60"></span></div>
+<div class="rr"><span class="rl">91+ Days Past Due</span><span class="rv r" id="r-90"></span></div>
+<div class="rr"><span class="rl b">Total Outstanding AR</span><span class="rv w" id="r-total"></span></div>
+</div>
+<div class="rs"><div class="rst">METRICS</div>
+<div class="rr"><span class="rl">Number of invoices</span><span class="rv" id="r-count"></span></div>
+<div class="rr"><span class="rl">% Current</span><span class="rv g" id="r-pct-current"></span></div>
+<div class="rr"><span class="rl">% Overdue (31+ days)</span><span class="rv r" id="r-pct-overdue"></span></div>
+</div>
+<div class="grand"><span class="gtl">TOTAL AR OUTSTANDING</span><span class="gtv" id="r-grand"></span></div>
+<div class="actions"><button class="abtn" onclick="window.print()">🖨 Print Report</button></div>
+</div>
+<div class="card"><div class="card-title"><div class="num">3</div>Invoice Detail</div><div id="inv-detail"></div></div>
+</div></div></div><footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a></footer>
+<script>
+function fmt(n){return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+// Set default dates
+document.querySelectorAll('.i-date').forEach(el=>{el.value=new Date().toISOString().split('T')[0];});
+function addInv(){
+const c=document.getElementById('inv-container');
+const today=new Date().toISOString().split('T')[0];
+const d=document.createElement('div');
+d.className='inv-row';
+d.innerHTML=`<input type="text" class="i-cust" placeholder="Customer / Invoice #"><div class="pw" data-p="$"><input type="number" class="i-amt" placeholder="0.00" min="0"></div><input type="date" class="i-date" value="${today}"><button onclick="this.closest('.inv-row').remove()" style="height:44px;width:36px;border:1px solid #d8d3c5;background:white;border-radius:3px;cursor:pointer;color:#7a7568">×</button>`;
+c.appendChild(d);
+}
+function calcAR(){
+const today=new Date();
+const rows=document.querySelectorAll('.inv-row');
+let buckets=[0,0,0,0],invs=[],total=0;
+rows.forEach(r=>{
+const cust=r.querySelector('.i-cust').value||'Unknown';
+const amt=parseFloat(r.querySelector('.i-amt').value)||0;
+const dateVal=r.querySelector('.i-date').value;
+if(!amt||!dateVal)return;
+const invDate=new Date(dateVal);
+const days=Math.floor((today-invDate)/(24*3600*1000));
+let bucket=days<=30?0:days<=60?1:days<=90?2:3;
+buckets[bucket]+=amt;total+=amt;
+invs.push({cust,amt,days,bucket});
+});
+if(!invs.length){alert('Please add at least one invoice with an amount and date.');return;}
+document.getElementById('r-current').textContent=fmt(buckets[0]);
+document.getElementById('r-30').textContent=fmt(buckets[1]);
+document.getElementById('r-60').textContent=fmt(buckets[2]);
+document.getElementById('r-90').textContent=fmt(buckets[3]);
+document.getElementById('r-total').textContent=fmt(total);
+document.getElementById('r-count').textContent=invs.length;
+document.getElementById('r-pct-current').textContent=total>0?(buckets[0]/total*100).toFixed(1)+'%':'0%';
+document.getElementById('r-pct-overdue').textContent=total>0?((total-buckets[0])/total*100).toFixed(1)+'%':'0%';
+document.getElementById('r-grand').textContent=fmt(total);
+const labels=['Current','31-60 days','61-90 days','91+ days'];
+const colors=['#7dd4a0','#f0c060','#f09040','#f08070'];
+document.getElementById('inv-detail').innerHTML=invs.map(i=>
+`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #d8d3c5;font-size:13px">
+<div><div style="font-weight:600">${i.cust}</div><div style="font-size:11px;color:#7a7568">${i.days} days old</div></div>
+<div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-weight:700">${fmt(i.amt)}</div><div style="font-size:11px;font-weight:600;color:${colors[i.bucket]}">${labels[i.bucket]}</div></div>
+</div>`).join('');
+document.getElementById('results').style.display='block';
+document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+</script></body></html>
