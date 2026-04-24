@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Convert PDF to Word, Excel, JPG, PNG Free | BookSmartTools</title>
+<meta name="description" content="Convert PDF files to Word, Excel, JPG images, PNG images, or plain text — free, no signup, no file size limit. All processing in your browser.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1a1a18}
+.site-nav{background:#1a1a18;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}
+.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px}
+.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+.hero{background:linear-gradient(135deg,#1a2030 0%,#1e3050 50%,#1a2030 100%);color:white;text-align:center;padding:52px 24px 44px}
+.tag-pill{background:rgba(255,255,255,.12);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin:0 4px 8px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:38px;font-weight:400;margin:12px 0 10px}
+.hero p{font-size:15px;opacity:.88;max-width:580px;margin:0 auto;line-height:1.6}
+.badges{display:flex;justify-content:center;gap:20px;margin-top:20px;flex-wrap:wrap}
+.badge{display:flex;align-items:center;gap:6px;font-size:12px;opacity:.8;font-family:'DM Mono',monospace}
+.container{max-width:820px;margin:0 auto;padding:40px 24px 80px}
+/* Format selector */
+.format-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:32px}
+@media(max-width:600px){.format-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:380px){.format-grid{grid-template-columns:repeat(2,1fr)}}
+.fmt-btn{border:2px solid #d8d3c5;border-radius:6px;padding:14px 8px;text-align:center;cursor:pointer;background:white;transition:all .15s}
+.fmt-btn:hover{border-color:#1e5c33;background:#f0f7f2}
+.fmt-btn.active{border-color:#1e5c33;background:#1e5c33;color:white}
+.fmt-btn .fmt-icon{font-size:26px;margin-bottom:6px}
+.fmt-btn .fmt-name{font-size:12px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.5px}
+.fmt-btn .fmt-ext{font-size:10px;opacity:.7;margin-top:2px}
+.fmt-btn.active .fmt-ext{opacity:.8}
+/* Drop zone */
+.drop-zone{border:2px dashed #c8c3b5;border-radius:8px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;background:white;position:relative;margin-bottom:20px}
+.drop-zone:hover,.drop-zone.over{border-color:#1e5c33;background:#f0f7f2}
+.drop-zone.has-file{border-color:#1e5c33;background:#f0f7f2;border-style:solid}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{font-size:50px;margin-bottom:14px}
+.drop-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px}
+.drop-sub{font-size:13px;color:#7a7568}
+/* File info */
+.file-info{background:white;border:1px solid #1e5c33;border-radius:4px;padding:14px 18px;display:none;align-items:center;gap:12px;margin-bottom:16px}
+.fi-icon{font-size:28px}
+.fi-details{flex:1}
+.fi-name{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fi-meta{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace;margin-top:3px}
+.fi-remove{background:none;border:none;cursor:pointer;color:#c8c3b5;font-size:22px;padding:0 4px}
+.fi-remove:hover{color:#c0392b}
+/* Output options */
+.out-options{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:18px;margin-bottom:16px;display:none}
+.out-title{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;margin-bottom:12px;font-family:'DM Mono',monospace}
+.out-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.out-row:last-child{margin-bottom:0}
+.out-label{font-size:13px;color:#1a1a18}
+select{height:38px;border:1px solid #d8d3c5;border-radius:3px;padding:0 10px;font-family:'DM Mono',monospace;font-size:13px;color:#1a1a18;background:#faf8f3;outline:none}
+select:focus{border-color:#1e5c33;background:white}
+/* Convert button */
+.btn-convert{width:100%;height:56px;background:#1e5c33;color:white;border:none;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .15s;margin-bottom:14px}
+.btn-convert:hover{background:#165228}
+.btn-convert:disabled{background:#a0b8a4;cursor:not-allowed}
+/* Progress */
+.progress-wrap{margin-bottom:14px;display:none}
+.progress-bar{height:8px;background:#e0ddd6;border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1e5c33,#7dd4a0);border-radius:4px;transition:width .4s}
+.progress-label{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace;margin-top:7px;text-align:center}
+/* Preview */
+.preview-section{display:none;margin-bottom:20px}
+.preview-title{font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;margin-bottom:10px;font-family:'DM Mono',monospace}
+.preview-pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.preview-page{border:1px solid #d8d3c5;border-radius:4px;overflow:hidden;background:white}
+.preview-page canvas{width:100%;display:block}
+.preview-page-num{font-size:11px;font-family:'DM Mono',monospace;color:#7a7568;text-align:center;padding:5px;border-top:1px solid #ede9e1}
+/* Download */
+.download-card{background:#1a1a18;border-radius:6px;padding:26px;display:none;text-align:center}
+.dl-check{font-size:44px;margin-bottom:10px}
+.dl-title{font-family:'DM Serif Display',serif;font-size:22px;color:white;margin-bottom:6px}
+.dl-meta{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:20px;font-family:'DM Mono',monospace;line-height:1.7}
+.dl-buttons{display:flex;flex-direction:column;align-items:center;gap:10px}
+.btn-dl{display:inline-flex;align-items:center;gap:8px;background:#1e5c33;color:white;padding:13px 32px;border-radius:4px;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%;justify-content:center;max-width:320px}
+.btn-dl:hover{background:#165228}
+/* Limitation notice */
+.limit-note{background:#fff8e8;border:1px solid #f0c84a;border-radius:4px;padding:13px 16px;font-size:13px;color:#5a4000;margin-bottom:20px;display:none;line-height:1.6}
+.limit-note strong{color:#3a2800}
+/* Info */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
+@media(max-width:580px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:18px}
+.info-icon{font-size:26px;margin-bottom:8px}
+.info-title{font-weight:700;font-size:14px;margin-bottom:5px}
+.info-text{font-size:12px;color:#7a7568;line-height:1.6}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/convert-to-pdf.html">Files→PDF</a></li>
+    <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge</a></li>
+    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <span class="tag-pill">FREE</span><span class="tag-pill">NO SIGNUP</span><span class="tag-pill">BROWSER-BASED</span>
+  <h1>Convert PDF to Any Format</h1>
+  <p>Convert your PDF to Word, Excel, JPG images, PNG images, or plain text — instantly, free, and completely private.</p>
+  <div class="badges">
+    <div class="badge">🔒 100% Private</div>
+    <div class="badge">⚡ Instant</div>
+    <div class="badge">💯 Free Forever</div>
+    <div class="badge">📄 Multiple Formats</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Format selector -->
+  <div style="margin-bottom:10px">
+    <div style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;margin-bottom:12px;font-family:'DM Mono',monospace">
+      1. Choose output format
+    </div>
+    <div class="format-grid" id="format-grid">
+      <div class="fmt-btn active" data-fmt="jpg" onclick="selectFmt(this,'jpg')">
+        <div class="fmt-icon">🖼️</div><div class="fmt-name">JPG</div><div class="fmt-ext">Image per page</div>
+      </div>
+      <div class="fmt-btn" data-fmt="png" onclick="selectFmt(this,'png')">
+        <div class="fmt-icon">🎨</div><div class="fmt-name">PNG</div><div class="fmt-ext">Lossless image</div>
+      </div>
+      <div class="fmt-btn" data-fmt="txt" onclick="selectFmt(this,'txt')">
+        <div class="fmt-icon">📄</div><div class="fmt-name">TEXT</div><div class="fmt-ext">Plain .txt file</div>
+      </div>
+      <div class="fmt-btn" data-fmt="docx" onclick="selectFmt(this,'docx')">
+        <div class="fmt-icon">📝</div><div class="fmt-name">WORD</div><div class="fmt-ext">.docx file</div>
+      </div>
+      <div class="fmt-btn" data-fmt="xlsx" onclick="selectFmt(this,'xlsx')">
+        <div class="fmt-icon">📊</div><div class="fmt-name">EXCEL</div><div class="fmt-ext">.xlsx file</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Limitation notice (shown for Word/Excel) -->
+  <div class="limit-note" id="limit-note"></div>
+
+  <!-- Drop zone -->
+  <div style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;margin-bottom:10px;font-family:'DM Mono',monospace">
+    2. Upload your PDF
+  </div>
+  <div class="drop-zone" id="drop-zone">
+    <input type="file" id="file-input" accept=".pdf" onchange="loadPDF(this.files[0])">
+    <div class="drop-icon" id="dz-icon">📕</div>
+    <div class="drop-title" id="dz-title">Drop your PDF here or click to browse</div>
+    <div class="drop-sub" id="dz-sub">Only PDF files accepted</div>
+  </div>
+
+  <!-- File info -->
+  <div class="file-info" id="file-info">
+    <div class="fi-icon">📕</div>
+    <div class="fi-details">
+      <div class="fi-name" id="fi-name"></div>
+      <div class="fi-meta" id="fi-meta"></div>
+    </div>
+    <button class="fi-remove" onclick="clearFile()">×</button>
+  </div>
+
+  <!-- Output options -->
+  <div class="out-options" id="out-options">
+    <div class="out-title">⚙ Output Options</div>
+    <div class="out-row" id="opt-quality-row">
+      <div class="out-label">Image Quality</div>
+      <select id="opt-quality">
+        <option value="2">High (2× scale — larger file)</option>
+        <option value="1.5" selected>Medium (1.5× scale — balanced)</option>
+        <option value="1">Standard (1× scale — smaller file)</option>
+      </select>
+    </div>
+    <div class="out-row" id="opt-pages-row">
+      <div class="out-label">Pages to Convert</div>
+      <select id="opt-pages">
+        <option value="all">All pages</option>
+        <option value="first">First page only</option>
+        <option value="range">Page range</option>
+      </select>
+    </div>
+    <div class="out-row" id="opt-range-row" style="display:none">
+      <div class="out-label">Page range (e.g. 1-5)</div>
+      <input type="text" id="opt-range" placeholder="1-5" style="width:120px;height:38px;border:1px solid #d8d3c5;border-radius:3px;padding:0 10px;font-family:'DM Mono',monospace;font-size:13px;background:#faf8f3;outline:none">
+    </div>
+  </div>
+
+  <!-- Convert button -->
+  <button class="btn-convert" id="btn-convert" onclick="convert()" disabled>
+    <span id="btn-icon">🔄</span>
+    <span id="btn-label">Convert PDF →</span>
+  </button>
+
+  <!-- Progress -->
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-label" id="progress-label">Loading PDF...</div>
+  </div>
+
+  <!-- Preview (for image formats) -->
+  <div class="preview-section" id="preview-section">
+    <div class="preview-title" id="preview-title">Preview</div>
+    <div class="preview-pages" id="preview-pages"></div>
+  </div>
+
+  <!-- Download -->
+  <div class="download-card" id="download-card">
+    <div class="dl-check">✅</div>
+    <div class="dl-title" id="dl-title">Conversion Complete!</div>
+    <div class="dl-meta" id="dl-meta"></div>
+    <div class="dl-buttons" id="dl-buttons"></div>
+  </div>
+
+  <!-- Info cards -->
+  <div class="info-grid">
+    <div class="info-card"><div class="info-icon">🖼️</div><div class="info-title">PDF to Images</div><div class="info-text">Converts each PDF page to a high-quality JPG or PNG image. Download individually or all at once as a ZIP file.</div></div>
+    <div class="info-card"><div class="info-icon">📝</div><div class="info-title">PDF to Word/Excel</div><div class="info-text">Extracts text content from your PDF and creates a Word or Excel file. Best for text-based PDFs — not scanned documents.</div></div>
+    <div class="info-card"><div class="info-icon">🔒</div><div class="info-title">100% Private</div><div class="info-text">All conversion happens in your browser using JavaScript. Your files are never sent to any server or stored anywhere.</div></div>
+  </div>
+</div>
+
+<footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp; Files never leave your browser.</footer>
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- JSZip for image downloads -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<!-- SheetJS for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+let currentFmt = 'jpg';
+let pdfDoc = null;
+let currentFile = null;
+let outputBlobs = [];  // { name, blob }
+
+// ── Format selector ───────────────────────────────────────────────────────
+function selectFmt(el, fmt) {
+  document.querySelectorAll('.fmt-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentFmt = fmt;
+  updateOptionsUI();
+  resetOutput();
+}
+
+const LIMIT_MSGS = {
+  docx: '<strong>Word (.docx) conversion:</strong> Our tool extracts the text content from your PDF and saves it as an editable Word document. Formatting, images, and tables may not be preserved — this works best for text-heavy PDFs like reports, contracts, and articles.',
+  xlsx: '<strong>Excel (.xlsx) conversion:</strong> Our tool extracts text and detected tables from your PDF. For best results, use with PDFs that have clearly structured tabular data. Complex formatting may not transfer exactly.'
+};
+
+function updateOptionsUI() {
+  const isImg = currentFmt === 'jpg' || currentFmt === 'png';
+  const note = document.getElementById('limit-note');
+  note.style.display = (currentFmt === 'docx' || currentFmt === 'xlsx') ? 'block' : 'none';
+  note.innerHTML = LIMIT_MSGS[currentFmt] || '';
+  document.getElementById('opt-quality-row').style.display = isImg ? 'flex' : 'none';
+  document.getElementById('opt-pages-row').style.display = 'flex';
+}
+
+document.getElementById('opt-pages').addEventListener('change', function() {
+  document.getElementById('opt-range-row').style.display = this.value === 'range' ? 'flex' : 'none';
+});
+
+// ── Drag & Drop ───────────────────────────────────────────────────────────
+const dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); if(e.dataTransfer.files[0]) loadPDF(e.dataTransfer.files[0]); });
+
+// ── Load PDF ──────────────────────────────────────────────────────────────
+async function loadPDF(file) {
+  if (!file || !file.name.toLowerCase().endsWith('.pdf')) { alert('Please select a PDF file.'); return; }
+  currentFile = file;
+  resetOutput();
+  document.getElementById('progress-wrap').style.display = 'block';
+  setProgress(10, 'Loading PDF...');
+  try {
+    const ab = await readAsAB(file);
+    pdfDoc = await pdfjsLib.getDocument({ data: ab }).promise;
+    const pages = pdfDoc.numPages;
+    setProgress(100, 'Loaded!');
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('drop-zone').style.display = 'none';
+    const fi = document.getElementById('file-info');
+    fi.style.display = 'flex';
+    document.getElementById('fi-name').textContent = file.name;
+    document.getElementById('fi-meta').textContent = `${pages} page${pages!==1?'s':''} · ${fmtSize(file.size)}`;
+    document.getElementById('out-options').style.display = 'block';
+    document.getElementById('btn-convert').disabled = false;
+    updateOptionsUI();
+  } catch(e) {
+    document.getElementById('progress-wrap').style.display = 'none';
+    alert('Could not read PDF: ' + e.message);
+  }
+}
+
+function clearFile() {
+  pdfDoc = null; currentFile = null; outputBlobs = [];
+  document.getElementById('file-info').style.display = 'none';
+  document.getElementById('drop-zone').style.display = 'block';
+  document.getElementById('out-options').style.display = 'none';
+  document.getElementById('btn-convert').disabled = true;
+  document.getElementById('download-card').style.display = 'none';
+  document.getElementById('preview-section').style.display = 'none';
+  document.getElementById('file-input').value = '';
+}
+
+function resetOutput() {
+  outputBlobs = [];
+  document.getElementById('download-card').style.display = 'none';
+  document.getElementById('preview-section').style.display = 'none';
+}
+
+// ── Get page range ────────────────────────────────────────────────────────
+function getPageRange() {
+  const opt = document.getElementById('opt-pages').value;
+  const total = pdfDoc.numPages;
+  if (opt === 'first') return [1];
+  if (opt === 'range') {
+    const val = document.getElementById('opt-range').value.trim();
+    const parts = val.split('-');
+    if (parts.length === 2) {
+      const s = parseInt(parts[0]), e = parseInt(parts[1]);
+      if (!isNaN(s) && !isNaN(e) && s >= 1 && e <= total && s <= e) {
+        return Array.from({ length: e-s+1 }, (_,i) => s+i);
+      }
+    }
+    alert('Invalid page range. Enter format: 1-5');
+    return null;
+  }
+  return Array.from({ length: total }, (_,i) => i+1);
+}
+
+// ── Main convert ──────────────────────────────────────────────────────────
+async function convert() {
+  if (!pdfDoc) return;
+  const pages = getPageRange();
+  if (!pages) return;
+  const btn = document.getElementById('btn-convert');
+  btn.disabled = true;
+  outputBlobs = [];
+  document.getElementById('progress-wrap').style.display = 'block';
+  document.getElementById('download-card').style.display = 'none';
+  document.getElementById('preview-section').style.display = 'none';
+
+  try {
+    if (currentFmt === 'jpg' || currentFmt === 'png') {
+      await convertToImages(pages);
+    } else if (currentFmt === 'txt') {
+      await convertToText(pages);
+    } else if (currentFmt === 'docx') {
+      await convertToDocx(pages);
+    } else if (currentFmt === 'xlsx') {
+      await convertToXlsx(pages);
+    }
+  } catch(e) {
+    alert('Conversion error: ' + e.message);
+  }
+  document.getElementById('progress-wrap').style.display = 'none';
+  btn.disabled = false;
+}
+
+// ── PDF → Images ──────────────────────────────────────────────────────────
+async function convertToImages(pages) {
+  const scale  = parseFloat(document.getElementById('opt-quality').value) || 1.5;
+  const fmt    = currentFmt;
+  const mtype  = fmt === 'jpg' ? 'image/jpeg' : 'image/png';
+  const q      = fmt === 'jpg' ? 0.92 : 1.0;
+  const previewWrap = document.getElementById('preview-pages');
+  previewWrap.innerHTML = '';
+
+  for (let idx = 0; idx < pages.length; idx++) {
+    const pNum = pages[idx];
+    setProgress(Math.round((idx/pages.length)*90), `Rendering page ${pNum} of ${pdfDoc.numPages}...`);
+    const page = await pdfDoc.getPage(pNum);
+    const vp   = page.getViewport({ scale });
+    const canvas = document.createElement('canvas');
+    canvas.width  = vp.width;
+    canvas.height = vp.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+
+    const dataUrl = canvas.toDataURL(mtype, q);
+    const blob = await (await fetch(dataUrl)).blob();
+    const name = pages.length === 1
+      ? currentFile.name.replace(/\.pdf$/i, '') + '.' + fmt
+      : currentFile.name.replace(/\.pdf$/i,'') + `_page${pNum}.${fmt}`;
+    outputBlobs.push({ name, blob });
+
+    // Preview card
+    const card = document.createElement('div');
+    card.className = 'preview-page';
+    const preCanvas = document.createElement('canvas');
+    const preScale = Math.min(200/vp.width, 1);
+    preCanvas.width  = vp.width  * preScale;
+    preCanvas.height = vp.height * preScale;
+    preCanvas.getContext('2d').drawImage(canvas, 0, 0, preCanvas.width, preCanvas.height);
+    card.appendChild(preCanvas);
+    const num = document.createElement('div');
+    num.className = 'preview-page-num';
+    num.textContent = `Page ${pNum}`;
+    card.appendChild(num);
+    previewWrap.appendChild(card);
+  }
+
+  setProgress(100, 'Done!');
+  document.getElementById('preview-section').style.display = 'block';
+  document.getElementById('preview-title').textContent = `Preview — ${pages.length} page${pages.length!==1?'s':''}`;
+  renderDownloadSection();
+}
+
+// ── PDF → Text ────────────────────────────────────────────────────────────
+async function convertToText(pages) {
+  let fullText = '';
+  for (let idx = 0; idx < pages.length; idx++) {
+    const pNum = pages[idx];
+    setProgress(Math.round((idx/pages.length)*90), `Extracting text from page ${pNum}...`);
+    const page    = await pdfDoc.getPage(pNum);
+    const content = await page.getTextContent();
+    const pageText = content.items.map(i => i.str).join(' ');
+    fullText += `\n\n--- PAGE ${pNum} ---\n\n${pageText}`;
+  }
+  const blob = new Blob([fullText.trim()], { type: 'text/plain' });
+  outputBlobs.push({ name: currentFile.name.replace(/\.pdf$/i, '.txt'), blob });
+  setProgress(100, 'Done!');
+  renderDownloadSection();
+}
+
+// ── PDF → Word (.docx) ────────────────────────────────────────────────────
+async function convertToDocx(pages) {
+  // Extract text and build a simple .docx using raw XML (no library needed)
+  let sections = [];
+  for (let idx = 0; idx < pages.length; idx++) {
+    const pNum = pages[idx];
+    setProgress(Math.round((idx/pages.length)*85), `Extracting page ${pNum}...`);
+    const page    = await pdfDoc.getPage(pNum);
+    const content = await page.getTextContent();
+    // Group by line (items with similar y position)
+    const lines = [];
+    let lastY = null;
+    let currentLine = '';
+    content.items.forEach(item => {
+      const y = Math.round(item.transform[5]);
+      if (lastY === null) lastY = y;
+      if (Math.abs(y - lastY) > 5) {
+        if (currentLine.trim()) lines.push(currentLine.trim());
+        currentLine = item.str;
+        lastY = y;
+      } else {
+        currentLine += item.str;
+      }
+    });
+    if (currentLine.trim()) lines.push(currentLine.trim());
+    sections.push({ page: pNum, lines });
+  }
+
+  // Build docx XML
+  const escXml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const paras = sections.flatMap(s => {
+    const header = `<w:p><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t>Page ${s.page}</w:t></w:r></w:p>`;
+    const lines  = s.lines.map(l =>
+      `<w:p><w:r><w:t xml:space="preserve">${escXml(l)}</w:t></w:r></w:p>`
+    ).join('');
+    const sep = `<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="4" w:space="1" w:color="CCCCCC"/></w:pBdr></w:pPr></w:p>`;
+    return [header, lines, sep];
+  });
+
+  const docXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas"
+  xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+<w:body>
+${paras.join('\n')}
+<w:sectPr><w:pgSz w:w="12240" w:h="15840"/></w:sectPr>
+</w:body></w:document>`;
+
+  const relXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+</Relationships>`;
+
+  const wordRelXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>`;
+
+  const contentTypesXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+<Default Extension="xml" ContentType="application/xml"/>
+<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+</Types>`;
+
+  setProgress(92, 'Packaging Word document...');
+  const zip = new JSZip();
+  zip.file('[Content_Types].xml', contentTypesXml);
+  zip.file('_rels/.rels', relXml);
+  zip.file('word/document.xml', docXml);
+  zip.file('word/_rels/document.xml.rels', wordRelXml);
+  const blob = await zip.generateAsync({ type:'blob', mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+  outputBlobs.push({ name: currentFile.name.replace(/\.pdf$/i, '.docx'), blob });
+  setProgress(100, 'Done!');
+  renderDownloadSection();
+}
+
+// ── PDF → Excel (.xlsx) ───────────────────────────────────────────────────
+async function convertToXlsx(pages) {
+  const wb = XLSX.utils.book_new();
+  for (let idx = 0; idx < pages.length; idx++) {
+    const pNum = pages[idx];
+    setProgress(Math.round((idx/pages.length)*85), `Extracting page ${pNum}...`);
+    const page    = await pdfDoc.getPage(pNum);
+    const content = await page.getTextContent();
+    // Group items by y-position to form rows
+    const rowMap = {};
+    content.items.forEach(item => {
+      const y = Math.round(item.transform[5] / 5) * 5; // snap to 5px grid
+      if (!rowMap[y]) rowMap[y] = [];
+      rowMap[y].push({ x: item.transform[4], text: item.str });
+    });
+    const sortedYs = Object.keys(rowMap).map(Number).sort((a,b) => b-a);
+    const sheetData = sortedYs.map(y => {
+      const cells = rowMap[y].sort((a,b) => a.x - b.x);
+      return cells.map(c => c.text.trim()).filter(t => t !== '');
+    }).filter(row => row.length > 0);
+
+    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+    XLSX.utils.book_append_sheet(wb, ws, `Page ${pNum}`);
+  }
+  setProgress(95, 'Saving Excel file...');
+  const ab = XLSX.write(wb, { bookType:'xlsx', type:'array' });
+  const blob = new Blob([ab], { type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  outputBlobs.push({ name: currentFile.name.replace(/\.pdf$/i, '.xlsx'), blob });
+  setProgress(100, 'Done!');
+  renderDownloadSection();
+}
+
+// ── Render download section ───────────────────────────────────────────────
+async function renderDownloadSection() {
+  const card = document.getElementById('download-card');
+  card.style.display = 'block';
+  const totalSize = outputBlobs.reduce((s,b) => s + b.blob.size, 0);
+  document.getElementById('dl-title').textContent = 'Conversion Complete!';
+
+  const fmtLabels = { jpg:'JPG Images', png:'PNG Images', txt:'Text File', docx:'Word Document', xlsx:'Excel Spreadsheet' };
+  document.getElementById('dl-meta').innerHTML =
+    `${outputBlobs.length} file${outputBlobs.length!==1?'s':''} · ${fmtSize(totalSize)} · ${fmtLabels[currentFmt]}<br>` +
+    `<span style="opacity:.6">${currentFile.name} → ${currentFmt.toUpperCase()}</span>`;
+
+  const btns = document.getElementById('dl-buttons');
+  btns.innerHTML = '';
+
+  if (outputBlobs.length === 1) {
+    const b = document.createElement('button');
+    b.className = 'btn-dl';
+    b.innerHTML = `⬇ Download ${currentFmt.toUpperCase()} File`;
+    b.onclick = () => triggerDownload(outputBlobs[0].blob, outputBlobs[0].name);
+    btns.appendChild(b);
+  } else {
+    // Individual downloads
+    outputBlobs.forEach(ob => {
+      const b = document.createElement('button');
+      b.className = 'btn-dl';
+      b.style.cssText = 'font-size:13px;padding:10px 20px;margin-bottom:4px';
+      b.innerHTML = `⬇ ${ob.name}`;
+      b.onclick = () => triggerDownload(ob.blob, ob.name);
+      btns.appendChild(b);
+    });
+    // Download all as ZIP
+    const bAll = document.createElement('button');
+    bAll.className = 'btn-dl';
+    bAll.style.cssText = 'background:#0a3a20;margin-top:8px';
+    bAll.innerHTML = `📦 Download All as ZIP (${outputBlobs.length} files)`;
+    bAll.onclick = downloadAllZip;
+    btns.appendChild(bAll);
+  }
+
+  const restart = document.createElement('button');
+  restart.style.cssText = 'background:none;border:none;color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;font-family:\'DM Sans\',sans-serif;margin-top:12px';
+  restart.textContent = 'Convert another PDF →';
+  restart.onclick = clearFile;
+  btns.appendChild(restart);
+}
+
+async function downloadAllZip() {
+  const zip = new JSZip();
+  outputBlobs.forEach(ob => zip.file(ob.name, ob.blob));
+  const zipBlob = await zip.generateAsync({ type:'blob' });
+  const baseName = currentFile.name.replace(/\.pdf$/i,'');
+  triggerDownload(zipBlob, `${baseName}-${currentFmt}-files.zip`);
+}
+
+function triggerDownload(blob, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+}
+
+function setProgress(pct, label) {
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = label;
+}
+
+function fmtSize(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(1) + ' MB';
+}
+
+function readAsAB(file) {
+  return new Promise((res,rej) => {
+    const r = new FileReader();
+    r.onload = e => res(e.target.result);
+    r.onerror = rej;
+    r.readAsArrayBuffer(file);
+  });
+}
+
+// Init
+updateOptionsUI();
+</script>
+</body>
+</html>
