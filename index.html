@@ -3,403 +3,987 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BookSmartTools — Free Bookkeeping Tools for US Small Businesses</title>
-<meta name="description" content="Free professional bookkeeping calculators and guides for US small business owners. Invoice late fee calculator, payroll tax estimator, and expert bookkeeping articles.">
-<meta name="keywords" content="bookkeeping tools, invoice late fee calculator, payroll tax estimator, small business accounting, QuickBooks tips">
-<meta property="og:title" content="BookSmartTools — Free Bookkeeping Tools">
-<meta property="og:description" content="Free professional bookkeeping calculators built by a real US bookkeeper. No signup required.">
-<meta property="og:type" content="website">
+<title>BookSmartTools — 35+ Free Finance, Bookkeeping & PDF Tools</title>
+<meta name="description" content="Free professional bookkeeping, payroll, tax, amortization and PDF tools. Built by a real US bookkeeper with 17+ years experience. No signup, always free.">
 <link rel="canonical" href="https://booksmartools.com/">
-<link rel="stylesheet" href="/booksmart-tools/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ── HOME-SPECIFIC ── */
-.hero-section {
-  padding:90px 0 80px;
-  background:var(--paper);
-  overflow:hidden;
-  position:relative;
-}
-.hero-section::before {
-  content:'';
-  position:absolute; top:-120px; right:-80px;
-  width:500px; height:500px;
-  border:80px solid var(--green-lt);
-  border-radius:50%; opacity:.5;
-}
-.hero-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:64px; align-items:center; position:relative;
-}
-@media(max-width:800px) { .hero-grid { grid-template-columns:1fr; } .mock-browser { display:none; } }
+/* ═══════════════════════════════════════════════════════
+   BookSmartTools — Grand Redesign v2
+   Palette: Warm cream · Forest green · Soft amber · Slate
+   Philosophy: easy on eyes for 4+ hrs, premium but friendly
+   ═══════════════════════════════════════════════════════ */
 
-.hero-text h1 { margin-bottom:20px; }
-.hero-text h1 em { font-style:italic; color:var(--green); }
-.hero-sub { font-size:18px; color:var(--muted); margin-bottom:36px; line-height:1.7; max-width:460px; }
-.hero-actions { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+:root {
+  --cream:    #f6f4ef;
+  --cream2:   #efece5;
+  --cream3:   #e8e4db;
+  --white:    #ffffff;
+  --ink:      #1b1b19;
+  --ink2:     #353532;
+  --muted:    #6a6a67;
+  --subtle:   #9c9c99;
+
+  --forest:   #143d24;
+  --green:    #1c5430;
+  --green2:   #26714a;
+  --green3:   #3a9062;
+  --green-lt: #d8eedf;
+  --green-xl: #eef7f1;
+
+  --sage:     #7aab8c;
+  --sage-lt:  #c8dfd0;
+
+  --amber:    #b86e0c;
+  --amber-lt: #fdf0de;
+  --amber-md: #e8960a;
+
+  --blue:     #1e5490;
+  --blue-lt:  #deeaf8;
+
+  --coral:    #b83428;
+  --coral-lt: #fde8e6;
+
+  --border:   #dedad2;
+  --border2:  #ccc8be;
+
+  --sh-sm: 0 2px 10px rgba(0,0,0,.055);
+  --sh-md: 0 8px 32px rgba(0,0,0,.08);
+  --sh-lg: 0 20px 60px rgba(0,0,0,.11);
+  --sh-xl: 0 32px 80px rgba(0,0,0,.14);
+
+  --r:  6px;
+  --r2: 10px;
+  --nav-h: 64px;
+  --max:  1080px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a { text-decoration:none; color:inherit; }
+img { max-width:100%; display:block; }
+
+/* ── TYPOGRAPHY ────────────────────────────────────────── */
+h1 { font-family:'Playfair Display',serif; font-size:clamp(32px,4.5vw,58px); line-height:1.08; font-weight:700; }
+h2 { font-family:'Playfair Display',serif; font-size:clamp(24px,3vw,40px); line-height:1.15; font-weight:700; }
+h3 { font-family:'Playfair Display',serif; font-size:clamp(18px,2.2vw,24px); line-height:1.25; font-weight:700; }
+p  { font-size:15px; line-height:1.8; color:var(--muted); }
+
+.eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'DM Mono',monospace; font-size:10.5px;
+  font-weight:500; letter-spacing:1.8px; text-transform:uppercase;
+  color:var(--green); background:var(--green-xl);
+  border:1px solid var(--green-lt);
+  padding:5px 13px; border-radius:20px; margin-bottom:18px;
+}
+.eyebrow .dot { width:5px; height:5px; background:var(--green3); border-radius:50%; animation:blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── LAYOUT ────────────────────────────────────────────── */
+.wrap { max-width:var(--max); margin:0 auto; padding:0 28px; }
+.section  { padding:88px 0; }
+.section-sm { padding:60px 0; }
+@media(max-width:640px) { .section { padding:60px 0; } .section-sm { padding:44px 0; } .wrap { padding:0 20px; } }
+
+/* ── BUTTONS ───────────────────────────────────────────── */
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'DM Sans',sans-serif; font-weight:600;
+  border-radius:var(--r); cursor:pointer; border:none;
+  transition:all .22s cubic-bezier(.22,1,.36,1); white-space:nowrap;
+}
+.btn-xl  { font-size:16px; padding:16px 30px; }
+.btn-lg  { font-size:15px; padding:13px 26px; }
+.btn-md  { font-size:13px; padding:10px 20px; }
+.btn-primary { background:var(--green); color:#fff; box-shadow:0 4px 18px rgba(28,84,48,.28); }
+.btn-primary:hover { background:var(--green2); box-shadow:0 6px 24px rgba(28,84,48,.38); transform:translateY(-2px); }
+.btn-outline { background:transparent; color:var(--green); border:2px solid var(--green); }
+.btn-outline:hover { background:var(--green-xl); }
+.btn-white  { background:#fff; color:var(--green); box-shadow:var(--sh-sm); }
+.btn-white:hover { background:var(--green-xl); transform:translateY(-1px); }
+.btn-ghost-w { background:rgba(255,255,255,.12); color:#fff; border:1.5px solid rgba(255,255,255,.28); }
+.btn-ghost-w:hover { background:rgba(255,255,255,.2); }
+
+/* ── ANNOUNCEMENT BAR ──────────────────────────────────── */
+.announce {
+  background:var(--forest); color:rgba(255,255,255,.9);
+  padding:9px 28px; font-size:12.5px; font-family:'DM Mono',monospace;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  letter-spacing:.3px;
+}
+.announce strong { color:#7dd4a0; }
+.announce a { color:#a8e8c0; text-decoration:underline; }
+
+/* ── NAVIGATION ────────────────────────────────────────── */
+.site-nav {
+  background:var(--forest);
+  height:var(--nav-h);
+  position:sticky; top:0; z-index:999;
+  transition:box-shadow .3s;
+}
+.site-nav.scrolled { box-shadow:0 4px 24px rgba(0,0,0,.22); }
+.nav-inner {
+  max-width:var(--max); margin:0 auto; padding:0 28px;
+  height:100%; display:flex; align-items:center; justify-content:space-between; gap:20px;
+}
+.nav-logo {
+  font-family:'Playfair Display',serif; font-size:21px;
+  color:#fff; font-weight:700; letter-spacing:-.3px; flex-shrink:0;
+}
+.nav-logo em { color:#7dd4a0; font-style:normal; }
+.nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+.nav-links a {
+  color:rgba(255,255,255,.72); font-size:14px; font-weight:500;
+  padding:7px 14px; border-radius:5px; transition:all .16s;
+}
+.nav-links a:hover { color:#fff; background:rgba(255,255,255,.1); }
+.nav-links .cta-btn { background:var(--green); color:#fff!important; padding:8px 18px; margin-left:4px; }
+.nav-links .cta-btn:hover { background:var(--green2); }
+.nav-toggle { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+.nav-toggle span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; transition:all .25s; }
+/* Dropdown */
+.nav-item { position:relative; }
+.nav-item:hover .nav-drop { opacity:1; visibility:visible; transform:translateY(0); }
+.nav-drop {
+  position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%) translateY(-6px);
+  background:#fff; border:1px solid var(--border); border-radius:var(--r2);
+  box-shadow:var(--sh-xl); min-width:210px; padding:8px; list-style:none;
+  opacity:0; visibility:hidden; transition:all .2s; z-index:100;
+}
+.nav-drop a { color:var(--ink)!important; display:block; padding:10px 13px; border-radius:5px; font-size:13px; }
+.nav-drop a:hover { background:var(--green-xl); color:var(--green)!important; }
+@media(max-width:800px) {
+  .nav-toggle { display:flex; }
+  .nav-links {
+    display:none; flex-direction:column; align-items:stretch;
+    position:fixed; top:var(--nav-h); left:0; right:0;
+    background:var(--forest); padding:16px 24px 28px;
+    border-top:1px solid rgba(255,255,255,.1); gap:2px;
+  }
+  .nav-links.open { display:flex; }
+  .nav-drop { display:none!important; }
+}
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero {
+  background:linear-gradient(150deg, #0e2818 0%, #153220 35%, #1c3d28 65%, #1a3422 100%);
+  padding:78px 0 86px; position:relative; overflow:hidden;
+}
+/* Animated mesh gradient */
+.hero-mesh {
+  position:absolute; inset:0; pointer-events:none; overflow:hidden;
+}
+.mesh-circle {
+  position:absolute; border-radius:50%;
+  filter:blur(70px); opacity:.18;
+  animation:meshFloat 12s ease-in-out infinite;
+}
+.mc1 { width:500px; height:500px; background:radial-gradient(#3a9062,transparent); left:-10%; top:-20%; animation-delay:0s; }
+.mc2 { width:400px; height:400px; background:radial-gradient(#7aab8c,transparent); right:5%; top:30%; animation-delay:-4s; }
+.mc3 { width:350px; height:350px; background:radial-gradient(#2d8050,transparent); left:40%; bottom:-10%; animation-delay:-8s; }
+@keyframes meshFloat {
+  0%,100% { transform:translate(0,0) scale(1); }
+  33%      { transform:translate(20px,-15px) scale(1.05); }
+  66%      { transform:translate(-15px,20px) scale(.95); }
+}
+/* Grid overlay */
+.hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:52px 52px;
+  animation:gridDrift 25s linear infinite;
+}
+@keyframes gridDrift { to { background-position:52px 52px; } }
+
+.hero-inner {
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+}
+@media(max-width:820px) { .hero-inner { grid-template-columns:1fr; } .hero-right { display:none; } }
+
+/* Left / text */
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(122,171,140,.18); border:1px solid rgba(122,171,140,.3);
+  color:#a8dfc0; font-family:'DM Mono',monospace; font-size:11px;
+  letter-spacing:1.2px; text-transform:uppercase; padding:6px 15px;
+  border-radius:20px; margin-bottom:26px;
+}
+.hb-dot { width:6px; height:6px; background:#7dd4a0; border-radius:50%; animation:blink 2s infinite; }
+.hero h1 { color:#fff; margin-bottom:22px; }
+.hero h1 em { color:#7dd4a0; font-style:italic; }
+.h1-line { display:block; overflow:hidden; }
+.h1-word {
+  display:inline-block;
+  animation:wordUp .7s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes wordUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.hero-sub { font-size:16px; color:rgba(255,255,255,.68); line-height:1.8; margin-bottom:36px; max-width:460px; }
+.hero-btns { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:40px; }
 .hero-trust {
-  display:flex; flex-wrap:wrap; gap:20px;
-  margin-top:32px; padding-top:28px;
-  border-top:1px solid var(--border);
+  display:flex; flex-wrap:wrap; gap:18px;
+  padding-top:26px; border-top:1px solid rgba(255,255,255,.1);
 }
-.trust-item {
-  display:flex; align-items:center; gap:7px;
-  font-size:13px; color:var(--muted);
-}
-.trust-dot { width:6px; height:6px; background:var(--green); border-radius:50%; flex-shrink:0; }
-
-/* Browser mockup */
-.mock-browser {
-  background:white; border:1px solid var(--border);
-  border-radius:10px; overflow:hidden;
-  box-shadow:0 24px 60px rgba(0,0,0,.09);
-  transform:perspective(900px) rotateY(-4deg) rotateX(2deg);
-  transition:transform .5s ease;
-}
-.mock-browser:hover { transform:perspective(900px) rotateY(0) rotateX(0); }
-.mock-bar {
-  background:var(--cream); padding:12px 16px;
+.trust-tag {
   display:flex; align-items:center; gap:6px;
-  border-bottom:1px solid var(--border);
+  font-family:'DM Mono',monospace; font-size:11.5px; color:rgba(255,255,255,.55);
 }
-.mock-dot { width:11px; height:11px; border-radius:50%; }
-.mock-url {
-  flex:1; background:white; border-radius:20px;
-  padding:5px 14px; font-family:'DM Mono',monospace;
-  font-size:11px; color:var(--muted); border:1px solid var(--border);
-  margin:0 8px;
-}
-.mock-top { background:var(--ink); padding:14px 20px; }
-.mock-brand { font-family:'Playfair Display',serif; font-size:16px; color:white; }
-.mock-brand em { color:#6db88a; font-style:normal; }
-.mock-body { padding:20px; }
-.mock-field { margin-bottom:12px; }
-.mock-lbl { font-size:9px; letter-spacing:.8px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; font-weight:600; }
-.mock-inp {
-  height:34px; border:1px solid var(--border); border-radius:3px;
-  padding:0 12px; font-family:'DM Mono',monospace; font-size:12px;
-  color:var(--ink); width:100%; display:flex; align-items:center;
-  background:var(--paper);
-}
-.mock-result {
-  background:var(--ink); border-radius:4px; padding:16px; margin-top:16px; color:white;
-}
-.mock-r-row { display:flex; justify-content:space-between; font-size:11px; margin-bottom:7px; opacity:.7; font-family:'DM Mono',monospace; }
-.mock-r-total { display:flex; justify-content:space-between; align-items:baseline; padding-top:10px; margin-top:8px; border-top:1px solid rgba(255,255,255,.15); }
-.mock-r-lbl { font-size:10px; opacity:.5; letter-spacing:.5px; text-transform:uppercase; }
-.mock-r-amt { font-family:'Playfair Display',serif; font-size:26px; color:white; }
+.trust-tag::before { content:'✓'; color:#7dd4a0; font-weight:700; }
 
-/* Features */
-.features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-@media(max-width:720px) { .features-grid { grid-template-columns:1fr; } }
-.feature-card { padding:28px; }
-.feature-icon {
-  width:44px; height:44px; border-radius:4px;
-  background:var(--green-lt); display:flex; align-items:center;
-  justify-content:center; margin-bottom:16px; font-size:20px;
+/* Right / visual */
+.hero-right { display:flex; flex-direction:column; gap:12px; }
+.hv-card {
+  background:rgba(255,255,255,.075);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:10px; padding:18px 20px;
+  animation:cardIn .5s cubic-bezier(.22,1,.36,1) both;
 }
-.feature-title { font-family:'Playfair Display',serif; font-size:18px; margin-bottom:8px; }
-.feature-desc { font-size:14px; color:var(--muted); line-height:1.65; }
+@keyframes cardIn { from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:translateX(0)} }
+.hv-title {
+  font-family:'DM Mono',monospace; font-size:9.5px;
+  letter-spacing:1.2px; text-transform:uppercase; color:rgba(255,255,255,.45);
+  margin-bottom:12px; display:flex; justify-content:space-between;
+}
+.hv-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,.07); }
+.hv-row:last-child { border-bottom:none; }
+.hv-lbl { font-size:12.5px; color:rgba(255,255,255,.65); font-family:'DM Mono',monospace; }
+.hv-val { font-family:'DM Mono',monospace; font-weight:600; font-size:13px; }
+.hv-val.w { color:#fff; }
+.hv-val.g { color:#7dd4a0; }
+.hv-val.a { color:#f0c060; }
+.hv-val.r { color:#f08070; }
+.hv-grand {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,.13);
+}
+.hv-grand-lbl { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,.5); }
+.hv-grand-val { font-family:'Playfair Display',serif; font-size:30px; color:#fff; }
+.hv-blink { animation:valBlink 3.5s ease-in-out infinite; }
+@keyframes valBlink { 0%,90%,100%{opacity:1} 93%{opacity:.3} 96%{opacity:1} }
 
-/* Credibility strip */
-.cred-strip {
-  background:var(--cream); border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border); padding:24px 0;
+.hv-pill-row { display:flex; gap:6px; flex-wrap:wrap; }
+.hv-pill {
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
+  border-radius:3px; padding:5px 11px;
+  font-family:'DM Mono',monospace; font-size:11px; color:rgba(255,255,255,.8);
+  display:flex; align-items:center; gap:6px;
 }
-.cred-inner {
-  display:flex; justify-content:center; gap:48px;
-  flex-wrap:wrap;
-}
-.cred-item { text-align:center; }
-.cred-num { font-family:'Playfair Display',serif; font-size:32px; color:var(--ink); }
-.cred-label { font-size:12px; color:var(--muted); margin-top:4px; }
+.hv-pill .pct { color:#7dd4a0; font-weight:700; }
 
-/* FAQ */
+/* ── STATS BAR ─────────────────────────────────────────── */
+.stats-bar { background:#fff; border-bottom:1px solid var(--border); }
+.stats-inner { display:grid; grid-template-columns:repeat(4,1fr); }
+@media(max-width:600px) { .stats-inner { grid-template-columns:repeat(2,1fr); } }
+.stat-item {
+  padding:28px 16px; text-align:center; position:relative;
+  transition:background .18s;
+}
+.stat-item:hover { background:var(--green-xl); }
+.stat-item + .stat-item::before {
+  content:''; position:absolute; left:0; top:20%; height:60%;
+  width:1px; background:var(--border);
+}
+@media(max-width:600px) { .stat-item + .stat-item::before { display:none; } }
+.stat-num {
+  font-family:'Playfair Display',serif; font-size:clamp(30px,3.5vw,44px);
+  color:var(--green); font-weight:700; line-height:1; display:block;
+}
+.stat-lbl { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); margin-top:6px; letter-spacing:.3px; }
+
+/* ── CAT NAV ───────────────────────────────────────────── */
+.cat-nav {
+  background:#fff; border-bottom:2px solid var(--border);
+  position:sticky; top:var(--nav-h); z-index:50;
+}
+.cat-nav-inner {
+  max-width:var(--max); margin:0 auto; padding:0 28px;
+  display:flex; gap:0; overflow-x:auto; scrollbar-width:none;
+}
+.cat-nav-inner::-webkit-scrollbar { display:none; }
+.cat-btn {
+  flex-shrink:0; padding:15px 20px; font-size:13px; font-weight:600;
+  color:var(--muted); background:none; border:none; cursor:pointer;
+  border-bottom:3px solid transparent; margin-bottom:-2px;
+  transition:all .18s; white-space:nowrap;
+  display:flex; align-items:center; gap:7px;
+}
+.cat-btn .cb-icon { font-size:15px; }
+.cat-btn:hover { color:var(--green); }
+.cat-btn.active { color:var(--green); border-bottom-color:var(--green); }
+
+/* ── TOOLS SECTION ─────────────────────────────────────── */
+.tools-section { background:var(--cream); }
+.section-hd { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:28px; flex-wrap:wrap; gap:12px; }
+.section-hd p { font-size:14px; max-width:460px; }
+
+.tools-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
+@media(max-width:860px) { .tools-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:500px) { .tools-grid { grid-template-columns:1fr; } }
+.tab-panel { display:none; }
+.tab-panel.active { display:grid; }
+
+.tool-card {
+  background:#fff; border:1px solid var(--border); border-radius:var(--r2);
+  padding:22px; text-decoration:none; color:var(--ink);
+  transition:all .22s cubic-bezier(.22,1,.36,1); display:block;
+  position:relative; overflow:hidden;
+}
+.tool-card::after {
+  content:''; position:absolute; left:0; top:0; bottom:0;
+  width:0; background:linear-gradient(to bottom,var(--green-xl),var(--cream));
+  transition:width .3s; z-index:0;
+}
+.tool-card > * { position:relative; z-index:1; }
+.tool-card:hover { border-color:var(--sage); box-shadow:var(--sh-md); transform:translateY(-3px); }
+.tool-card:hover::after { width:5px; }
+.tool-card.pop { border-color:var(--green-lt); background:linear-gradient(135deg,#fff 70%,var(--green-xl)); }
+.pop-badge {
+  position:absolute; top:12px; right:12px;
+  font-family:'DM Mono',monospace; font-size:9px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  color:var(--green); background:var(--green-xl); border:1px solid var(--green-lt);
+  padding:3px 8px; border-radius:3px;
+}
+.tc-icon { font-size:28px; margin-bottom:14px; display:block; }
+.tc-name { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; margin-bottom:6px; color:var(--ink); }
+.tc-desc { font-size:12.5px; color:var(--muted); line-height:1.6; }
+.tc-link { display:flex; align-items:center; gap:5px; font-size:12px; font-weight:700; color:var(--green); margin-top:14px; transition:gap .15s; }
+.tool-card:hover .tc-link { gap:8px; }
+
+/* ── FEATURE BAND ──────────────────────────────────────── */
+.feature-band {
+  background:linear-gradient(135deg, var(--forest) 0%, #0e2e1c 50%, #152c1a 100%);
+  padding:68px 0;
+}
+.feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.07); }
+@media(max-width:720px) { .feat-grid { grid-template-columns:1fr; } }
+.feat-item {
+  background:transparent; padding:38px 32px;
+  transition:background .2s;
+}
+.feat-item:hover { background:rgba(255,255,255,.04); }
+.feat-icon { font-size:38px; margin-bottom:16px; display:block; }
+.feat-title { font-family:'Playfair Display',serif; font-size:20px; color:#fff; margin-bottom:10px; }
+.feat-text { font-size:13.5px; color:rgba(255,255,255,.58); line-height:1.75; }
+
+/* ── QUICK ACCESS ──────────────────────────────────────── */
+.qa-section { background:var(--cream2); }
+.qa-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media(max-width:860px) { .qa-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:460px) { .qa-grid { grid-template-columns:1fr; } }
+.qa-card {
+  background:#fff; border:1px solid var(--border); border-radius:var(--r2);
+  padding:18px 16px; text-decoration:none; color:var(--ink);
+  transition:all .18s; display:flex; align-items:flex-start; gap:12px;
+}
+.qa-card:hover { border-color:var(--sage); box-shadow:var(--sh-sm); transform:translateY(-2px); }
+.qa-ico {
+  width:42px; height:42px; border-radius:var(--r); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:20px;
+}
+.ico-g { background:var(--green-xl); }
+.ico-a { background:var(--amber-lt); }
+.ico-b { background:var(--blue-lt); }
+.ico-c { background:var(--coral-lt); }
+.qa-title { font-size:13px; font-weight:700; margin-bottom:3px; }
+.qa-sub   { font-size:11px; color:var(--muted); line-height:1.5; }
+
+/* ── HOW IT WORKS ──────────────────────────────────────── */
+.hiw-section { background:#fff; }
+.steps { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; position:relative; }
+@media(max-width:720px) { .steps { grid-template-columns:repeat(2,1fr); } }
+.steps::before {
+  content:''; position:absolute; top:36px; left:10%; right:10%;
+  height:2px; background:linear-gradient(90deg,var(--green-lt),var(--sage-lt),var(--green-lt));
+  z-index:0; border-radius:2px;
+}
+@media(max-width:720px) { .steps::before { display:none; } }
+.step { text-align:center; position:relative; z-index:1; }
+.step-num {
+  width:60px; height:60px; border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#fff; font-family:'Playfair Display',serif; font-size:24px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 18px; box-shadow:0 6px 20px rgba(28,84,48,.3);
+  transition:transform .25s;
+}
+.step:hover .step-num { transform:scale(1.1); }
+.step-title { font-size:15px; font-weight:700; margin-bottom:6px; }
+.step-desc  { font-size:13px; color:var(--muted); line-height:1.65; }
+
+/* ── ARTICLES ──────────────────────────────────────────── */
+.articles-section { background:var(--cream); }
+.article-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+@media(max-width:860px) { .article-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:560px) { .article-grid { grid-template-columns:1fr; } }
+.art-card {
+  background:#fff; border:1px solid var(--border); border-radius:var(--r2);
+  overflow:hidden; text-decoration:none; color:var(--ink);
+  display:flex; flex-direction:column; transition:all .22s;
+}
+.art-card:hover { transform:translateY(-5px); box-shadow:var(--sh-lg); border-color:var(--border2); }
+.art-banner {
+  height:148px; display:flex; align-items:center; justify-content:center;
+  font-size:56px; position:relative; overflow:hidden;
+}
+.bg-forest  { background:linear-gradient(135deg,#0e2818 0%,#1c5430 100%); }
+.bg-amber   { background:linear-gradient(135deg,#4a2800 0%,#a0580a 100%); }
+.bg-slate   { background:linear-gradient(135deg,#1a2540 0%,#1e4a8a 100%); }
+.bg-coral   { background:linear-gradient(135deg,#3a0a08 0%,#a02020 100%); }
+.bg-sage    { background:linear-gradient(135deg,#1a3a22 0%,#3a8060 100%); }
+.bg-indigo  { background:linear-gradient(135deg,#1e1a40 0%,#4040a0 100%); }
+/* Animated banner shine */
+.art-banner::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(130deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);
+  animation:shine 4s ease-in-out infinite;
+}
+@keyframes shine { 0%,100%{transform:translateX(-100%)} 60%{transform:translateX(100%)} }
+.art-body { padding:20px; flex:1; display:flex; flex-direction:column; }
+.art-meta { display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+.art-tag {
+  font-family:'DM Mono',monospace; font-size:9.5px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase; padding:3px 9px;
+  border-radius:3px;
+}
+.tag-g { background:var(--green-xl); color:var(--green); }
+.tag-a { background:var(--amber-lt); color:var(--amber); }
+.tag-b { background:var(--blue-lt); color:var(--blue); }
+.tag-c { background:var(--coral-lt); color:var(--coral); }
+.art-min { font-family:'DM Mono',monospace; font-size:10.5px; color:var(--subtle); }
+.art-title { font-family:'Playfair Display',serif; font-size:17px; line-height:1.38; margin-bottom:10px; color:var(--ink); }
+.art-excerpt { font-size:12.5px; color:var(--muted); line-height:1.7; flex:1; }
+.art-cta {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:12px; font-weight:700; color:var(--green);
+  margin-top:16px; transition:gap .15s;
+}
+.art-card:hover .art-cta { gap:8px; }
+
+/* ── TESTIMONIALS ──────────────────────────────────────── */
+.testi-section { background:var(--green-xl); border-top:1px solid var(--green-lt); border-bottom:1px solid var(--green-lt); padding:56px 0; }
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+@media(max-width:720px) { .testi-grid { grid-template-columns:1fr; } }
+.testi-card { background:#fff; border-radius:var(--r2); padding:26px; border:1px solid var(--border); }
+.testi-stars { color:#f0a030; font-size:14px; margin-bottom:12px; letter-spacing:1px; }
+.testi-quote { font-size:14px; color:var(--ink2); line-height:1.75; font-style:italic; margin-bottom:16px; }
+.testi-who { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); }
+
+/* ── FAQ ───────────────────────────────────────────────── */
+.faq-section { background:#fff; }
+.faq-wrap { max-width:720px; margin:0 auto; }
 .faq-item { border-bottom:1px solid var(--border); }
 .faq-q {
   width:100%; text-align:left; background:none; border:none;
-  padding:20px 0; font-family:'DM Sans',sans-serif; font-size:16px;
+  padding:20px 0; font-family:'DM Sans',sans-serif; font-size:15.5px;
   font-weight:600; color:var(--ink); cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center;
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  transition:color .15s;
 }
-.faq-icon { font-size:22px; color:var(--muted); transition:transform .2s; flex-shrink:0; }
-.faq-item.open .faq-icon { transform:rotate(45deg); }
+.faq-q:hover { color:var(--green); }
+.faq-icon { font-size:22px; color:var(--muted); transition:transform .25s, color .15s; flex-shrink:0; }
+.faq-item.open .faq-icon { transform:rotate(45deg); color:var(--green); }
 .faq-a {
-  font-size:15px; color:var(--muted); line-height:1.75;
-  max-height:0; overflow:hidden; transition:max-height .3s, padding .3s;
+  font-size:14.5px; color:var(--muted); line-height:1.8;
+  max-height:0; overflow:hidden; transition:max-height .38s ease, padding .38s;
 }
-.faq-item.open .faq-a { max-height:200px; padding-bottom:20px; }
+.faq-item.open .faq-a { max-height:400px; padding-bottom:22px; }
+
+/* ── EMAIL CAPTURE ─────────────────────────────────────── */
+.capture {
+  background:linear-gradient(150deg,var(--forest) 0%,#0e2818 60%,#152e1c 100%);
+  padding:76px 0; text-align:center; position:relative; overflow:hidden;
+}
+.capture::before {
+  content:''; position:absolute; inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.capture > * { position:relative; z-index:1; }
+.capture h2 { color:#fff; margin-bottom:10px; }
+.capture p { color:rgba(255,255,255,.62); max-width:440px; margin:0 auto 32px; }
+.email-form { display:flex; gap:10px; max-width:440px; margin:0 auto; flex-wrap:wrap; }
+.email-form input {
+  flex:1; min-width:200px; height:50px;
+  border:1.5px solid rgba(255,255,255,.25); border-radius:var(--r);
+  background:rgba(255,255,255,.09); color:#fff;
+  padding:0 16px; font-family:'DM Sans',sans-serif; font-size:15px; outline:none;
+  transition:border-color .2s, background .2s;
+}
+.email-form input::placeholder { color:rgba(255,255,255,.38); }
+.email-form input:focus { border-color:rgba(255,255,255,.5); background:rgba(255,255,255,.13); }
+.email-form button {
+  height:50px; padding:0 24px; background:var(--green); color:#fff;
+  border:none; border-radius:var(--r); font-size:15px; font-weight:700;
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .2s; white-space:nowrap;
+}
+.email-form button:hover { background:var(--green2); }
+.cap-success { color:#7dd4a0; font-size:15px; margin-top:16px; display:none; }
+.cap-note { color:rgba(255,255,255,.3); font-size:11.5px; margin-top:11px; font-family:'DM Mono',monospace; }
+
+/* ── FOOTER ────────────────────────────────────────────── */
+.site-footer { background:var(--ink); padding:60px 0 0; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; padding-bottom:48px; }
+@media(max-width:820px) { .footer-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:480px) { .footer-grid { grid-template-columns:1fr; } }
+.footer-brand { font-family:'Playfair Display',serif; font-size:22px; color:#fff; margin-bottom:12px; }
+.footer-brand em { color:#7dd4a0; font-style:normal; }
+.footer-tagline { font-size:13px; color:rgba(255,255,255,.48); line-height:1.75; max-width:270px; margin-bottom:22px; }
+.footer-badges { display:flex; flex-direction:column; gap:8px; }
+.fbadge { display:flex; align-items:center; gap:8px; font-size:12px; color:rgba(255,255,255,.55); font-family:'DM Mono',monospace; }
+.fbadge::before { content:'✓'; color:#7dd4a0; }
+.fcol h4 { font-size:10.5px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:rgba(255,255,255,.38); margin-bottom:14px; }
+.fcol ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.fcol a { font-size:13px; color:rgba(255,255,255,.58); transition:color .15s; }
+.fcol a:hover { color:#fff; }
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:20px 0; display:flex; justify-content:space-between;
+  align-items:center; flex-wrap:wrap; gap:12px;
+}
+.footer-copy { font-size:12px; color:rgba(255,255,255,.3); font-family:'DM Mono',monospace; }
+.footer-legal { display:flex; gap:20px; }
+.footer-legal a { font-size:12px; color:rgba(255,255,255,.3); }
+.footer-legal a:hover { color:rgba(255,255,255,.7); }
+
+/* ── SCROLL REVEAL ─────────────────────────────────────── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1); }
+.reveal.in { opacity:1; transform:none; }
+.d1 { transition-delay:.08s; } .d2 { transition-delay:.16s; } .d3 { transition-delay:.24s; } .d4 { transition-delay:.32s; }
+
+/* ── PDF STRIP ─────────────────────────────────────────── */
+.pdf-strip { background:var(--cream2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:40px 0; }
+.pdf-strip-inner { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:32px; }
+@media(max-width:720px) { .pdf-strip-inner { grid-template-columns:1fr; text-align:center; } }
+.pdf-strip h3 { font-size:22px; margin-bottom:6px; }
+.pdf-tools-row { display:flex; gap:10px; flex-wrap:wrap; }
+@media(max-width:720px) { .pdf-tools-row { justify-content:center; } }
+.pdf-tool-chip {
+  display:flex; align-items:center; gap:8px;
+  background:#fff; border:1px solid var(--border); border-radius:var(--r);
+  padding:10px 15px; text-decoration:none; color:var(--ink);
+  font-size:13px; font-weight:600; transition:all .18s;
+}
+.pdf-tool-chip:hover { border-color:var(--sage); box-shadow:var(--sh-sm); transform:translateY(-2px); }
+.pdf-tool-chip .chip-icon { font-size:18px; }
 </style>
 </head>
 <body>
 
+<!-- ANNOUNCE BAR -->
+<div class="announce">
+  <strong>New:</strong> PDF Tools — Convert, Merge &amp; Split PDFs free, no page limits.
+  <a href="/booksmart-tools/pdf-merge.html">Try PDF Merge →</a>
+</div>
+
 <!-- NAV -->
-<nav class="site-nav" role="navigation" aria-label="Main navigation">
+<nav class="site-nav" id="nav">
   <div class="nav-inner">
     <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="nav-links">
+      <li class="nav-item">
+        <a href="/booksmart-tools/tools.html">Calculators ▾</a>
+        <ul class="nav-drop">
+          <li><a href="/booksmart-tools/payroll-tax-estimator.html">💼 Payroll Tax Estimator</a></li>
+          <li><a href="/booksmart-tools/profit-margin-calculator.html">📈 Profit Margin</a></li>
+          <li><a href="/booksmart-tools/loan-amortization.html">📊 Loan Amortization</a></li>
+          <li><a href="/booksmart-tools/quarterly-tax-calculator.html">📅 Quarterly Taxes</a></li>
+          <li><a href="/booksmart-tools/mortgage-calculator.html">🏠 Mortgage Calculator</a></li>
+          <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a href="/booksmart-tools/pdf-merge.html">PDF Tools ▾</a>
+        <ul class="nav-drop">
+          <li><a href="/booksmart-tools/convert-to-pdf.html">📂 Files → PDF</a></li>
+          <li><a href="/booksmart-tools/pdf-merge.html">📑 PDF Merge (Free)</a></li>
+          <li><a href="/booksmart-tools/pdf-converter.html">🔄 PDF → Word / Excel</a></li>
+        </ul>
+      </li>
       <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
       <li><a href="/booksmart-tools/about.html">About</a></li>
-      <li><a href="#newsletter" class="nav-cta">Free Tools →</a></li>
+      <li><a href="/booksmart-tools/tools.html" class="cta-btn">All Free Tools →</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero-section">
+<section class="hero">
+  <div class="hero-mesh"><div class="mesh-circle mc1"></div><div class="mesh-circle mc2"></div><div class="mesh-circle mc3"></div></div>
   <div class="wrap">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <div class="eyebrow">Free for US small businesses</div>
-        <h1>Bookkeeping tools that <em>actually</em> save you time</h1>
-        <p class="hero-sub">Professional-grade calculators and guides — built by a real bookkeeper working with US clients every day. No fluff, no account required.</p>
-        <div class="hero-actions">
-          <a href="/booksmart-tools/tools.html" class="btn btn-primary">Browse Free Tools →</a>
-          <a href="/booksmart-tools/blog/index.html" class="btn btn-ghost">Read the Blog</a>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge"><div class="hb-dot"></div>35+ Free Professional Tools — 2026</div>
+        <h1>
+          <span class="h1-line"><span class="h1-word" style="animation-delay:.05s">Bookkeeping</span>
+          <span class="h1-word" style="animation-delay:.15s">&nbsp;&amp;</span>
+          <span class="h1-word" style="animation-delay:.22s">&nbsp;Finance</span></span>
+          <span class="h1-line"><span class="h1-word" style="animation-delay:.3s">Tools</span>
+          <span class="h1-word" style="animation-delay:.38s">&nbsp;that</span>
+          <span class="h1-word" style="animation-delay:.46s">&nbsp;<em>actually</em></span></span>
+          <span class="h1-line"><span class="h1-word" style="animation-delay:.54s">save</span>
+          <span class="h1-word" style="animation-delay:.62s">&nbsp;you</span>
+          <span class="h1-word" style="animation-delay:.70s">&nbsp;time</span></span>
+        </h1>
+        <p class="hero-sub">Professional calculators for payroll, taxes, amortization, margins, and PDF tools. Built by a real US bookkeeper with 17+ years experience. Free, forever, no signup.</p>
+        <div class="hero-btns">
+          <a href="/booksmart-tools/tools.html" class="btn btn-primary btn-xl">Explore All 35+ Tools →</a>
+          <a href="/booksmart-tools/payroll-tax-estimator.html" class="btn btn-ghost-w btn-xl">Try Payroll Calculator</a>
         </div>
         <div class="hero-trust">
-          <div class="trust-item"><div class="trust-dot"></div>100% free to use</div>
-          <div class="trust-item"><div class="trust-dot"></div>No account needed</div>
-          <div class="trust-item"><div class="trust-dot"></div>2025 & 2026 rates</div>
-          <div class="trust-item"><div class="trust-dot"></div>Built by bookkeepers</div>
+          <div class="trust-tag">100% Free, always</div>
+          <div class="trust-tag">No signup required</div>
+          <div class="trust-tag">2026 tax rates</div>
+          <div class="trust-tag">Browser-based, private</div>
         </div>
       </div>
 
-      <!-- Browser mockup -->
-      <div class="mock-browser" aria-hidden="true">
-        <div class="mock-bar">
-          <div class="mock-dot" style="background:#ff5f57"></div>
-          <div class="mock-dot" style="background:#febc2e"></div>
-          <div class="mock-dot" style="background:#28c840"></div>
-          <div class="mock-url">booksmartools.com/invoice-late-fee-calculator.html</div>
+      <div class="hero-right">
+        <!-- Card 1: Payroll preview -->
+        <div class="hv-card" style="animation-delay:.35s">
+          <div class="hv-title"><span>Payroll Tax Estimator — 2026</span><span style="color:#7dd4a0">LIVE</span></div>
+          <div class="hv-row"><span class="hv-lbl">Gross Pay</span><span class="hv-val w">$4,800.00</span></div>
+          <div class="hv-row"><span class="hv-lbl">Federal Income Tax</span><span class="hv-val r">−$576.00</span></div>
+          <div class="hv-row"><span class="hv-lbl">Social Security (6.2%)</span><span class="hv-val r">−$297.60</span></div>
+          <div class="hv-row"><span class="hv-lbl">Medicare (1.45%)</span><span class="hv-val r">−$69.60</span></div>
+          <div class="hv-row"><span class="hv-lbl">State Tax (VA 5.75%)</span><span class="hv-val r">−$276.00</span></div>
+          <div class="hv-grand"><span class="hv-grand-lbl">NET TAKE-HOME</span><span class="hv-grand-val hv-blink" id="hero-net">$3,580.80</span></div>
         </div>
-        <div class="mock-top"><div class="mock-brand">Book<em>Smart</em>Tools — Invoice Late Fee Calculator</div></div>
-        <div class="mock-body">
-          <div class="mock-field"><div class="mock-lbl">Invoice Amount</div><div class="mock-inp">$ 4,750.00</div></div>
-          <div class="mock-field"><div class="mock-lbl">Due Date</div><div class="mock-inp">January 1, 2025</div></div>
-          <div class="mock-field"><div class="mock-lbl">Monthly Rate</div><div class="mock-inp">% 1.5</div></div>
-          <div class="mock-result">
-            <div class="mock-r-row"><span>Original invoice</span><span>$4,750.00</span></div>
-            <div class="mock-r-row"><span>Late fee (47 days)</span><span style="color:#f0a070">+ $111.63</span></div>
-            <div class="mock-r-total">
-              <span class="mock-r-lbl">Total Due</span>
-              <span class="mock-r-amt">$4,861.63</span>
-            </div>
+
+        <!-- Card 2: Quick tools -->
+        <div class="hv-card" style="animation-delay:.55s">
+          <div class="hv-title"><span>Quick Jump — Most Used</span></div>
+          <div class="hv-pill-row">
+            <a href="/booksmart-tools/profit-margin-calculator.html" class="hv-pill" style="text-decoration:none">📈 <span>Profit Margin</span></a>
+            <a href="/booksmart-tools/loan-amortization.html" class="hv-pill" style="text-decoration:none">📊 <span>Amortization</span></a>
+            <a href="/booksmart-tools/quarterly-tax-calculator.html" class="hv-pill" style="text-decoration:none">📅 <span>Quarterly Tax</span></a>
+            <a href="/booksmart-tools/mortgage-calculator.html" class="hv-pill" style="text-decoration:none">🏠 <span>Mortgage</span></a>
+            <a href="/booksmart-tools/pdf-merge.html" class="hv-pill" style="text-decoration:none">📑 <span>PDF Merge</span></a>
+            <a href="/booksmart-tools/tools.html" class="hv-pill" style="text-decoration:none;color:#7dd4a0">→ <span style="color:#7dd4a0">All Tools</span></a>
           </div>
         </div>
+
+        <!-- Card 3: Break-even preview -->
+        <div class="hv-card" style="animation-delay:.72s">
+          <div class="hv-title"><span>Break-Even Analysis</span></div>
+          <div class="hv-row"><span class="hv-lbl">Fixed Costs/month</span><span class="hv-val w">$8,000</span></div>
+          <div class="hv-row"><span class="hv-lbl">Contribution Margin</span><span class="hv-val g">$25.00/unit</span></div>
+          <div class="hv-row"><span class="hv-lbl">Break-Even Units</span><span class="hv-val a">320 units</span></div>
+          <div class="hv-row"><span class="hv-lbl">Break-Even Revenue</span><span class="hv-val g">$16,000/mo</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Invoice Late Fee Calculator</span><span class="sep">◆</span>
-    <span>Payroll Tax Estimator 2025 & 2026</span><span class="sep">◆</span>
-    <span>QuickBooks Reconciliation Guide</span><span class="sep">◆</span>
-    <span>1099 vs W-2 Explained</span><span class="sep">◆</span>
-    <span>All 50 States SUTA Rates</span><span class="sep">◆</span>
-    <span>IRS-Verified Tax Rates</span><span class="sep">◆</span>
-    <span>Invoice Late Fee Calculator</span><span class="sep">◆</span>
-    <span>Payroll Tax Estimator 2025 & 2026</span><span class="sep">◆</span>
-    <span>QuickBooks Reconciliation Guide</span><span class="sep">◆</span>
-    <span>1099 vs W-2 Explained</span><span class="sep">◆</span>
-    <span>All 50 States SUTA Rates</span><span class="sep">◆</span>
-    <span>IRS-Verified Tax Rates</span><span class="sep">◆</span>
-  </div>
-</div>
-
-<!-- CREDIBILITY STRIP -->
-<div class="cred-strip">
+<!-- STATS BAR -->
+<div class="stats-bar">
   <div class="wrap">
-    <div class="cred-inner">
-      <div class="cred-item reveal"><div class="cred-num">6+</div><div class="cred-label">Years US bookkeeping experience</div></div>
-      <div class="cred-item reveal delay-1"><div class="cred-num">50+</div><div class="cred-label">US small business clients</div></div>
-      <div class="cred-item reveal delay-2"><div class="cred-num">2</div><div class="cred-label">Free professional tools</div></div>
-      <div class="cred-item reveal delay-3"><div class="cred-num">0</div><div class="cred-label">Ads, spam or upsells</div></div>
+    <div class="stats-inner">
+      <div class="stat-item reveal"><span class="stat-num" data-target="35" data-suffix="+">35+</span><div class="stat-lbl">Free Tools</div></div>
+      <div class="stat-item reveal d1"><span class="stat-num" data-target="17" data-suffix=" yrs">17 yrs</span><div class="stat-lbl">Bookkeeper Experience</div></div>
+      <div class="stat-item reveal d2"><span class="stat-num" data-target="2026">2026</span><div class="stat-lbl">Tax Rates Updated</div></div>
+      <div class="stat-item reveal d3"><span class="stat-num">$0</span><div class="stat-lbl">Cost — Forever Free</div></div>
     </div>
   </div>
 </div>
 
-<!-- TOOLS SECTION -->
-<section class="section" id="tools">
-  <div class="wrap">
-    <div class="text-center mb-8">
-      <div class="eyebrow" style="justify-content:center">Free Tools</div>
-      <h2>Built for the real work of bookkeeping</h2>
-      <p style="max-width:520px;margin:12px auto 0">Every tool on this site solves a problem I encounter daily with real US clients. No bloat, no subscriptions, no tricks.</p>
+<!-- CATEGORY NAV + TOOLS -->
+<section class="tools-section section">
+  <div class="cat-nav">
+    <div class="cat-nav-inner">
+      <button class="cat-btn active" onclick="showCat('all',this)"><span class="cb-icon">⭐</span> Featured</button>
+      <button class="cat-btn" onclick="showCat('payroll',this)"><span class="cb-icon">💼</span> Payroll & HR</button>
+      <button class="cat-btn" onclick="showCat('tax',this)"><span class="cb-icon">🧾</span> Tax Tools</button>
+      <button class="cat-btn" onclick="showCat('finance',this)"><span class="cb-icon">📈</span> Business Finance</button>
+      <button class="cat-btn" onclick="showCat('bookkeeping',this)"><span class="cb-icon">📋</span> Bookkeeping</button>
+      <button class="cat-btn" onclick="showCat('personal',this)"><span class="cb-icon">🏠</span> Personal Finance</button>
+      <button class="cat-btn" onclick="showCat('pdf',this)"><span class="cb-icon">📄</span> PDF Tools</button>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:36px">
+    <div class="section-hd reveal">
+      <div><h2 id="cat-heading">Featured Tools</h2><p id="cat-subhead">Our most popular calculators — trusted by bookkeepers and small business owners</p></div>
+      <a href="/booksmart-tools/tools.html" class="btn btn-outline btn-md">View all 35+ tools →</a>
     </div>
 
-    <div class="grid-3" style="margin-top:48px">
-      <div class="tool-card reveal">
-        <div class="tool-badge free">Free</div>
-        <div class="tool-name">Invoice Late Fee Calculator</div>
-        <p class="tool-desc">Calculate exact late fees with monthly compounding, grace periods, and a full breakdown by month — ready to paste into a client email.</p>
-        <a href="/booksmart-tools/invoice-late-fee-calculator.html" class="tool-link">Open Calculator</a>
-      </div>
-      <div class="tool-card reveal delay-1">
-        <div class="tool-badge free">Free</div>
-        <div class="tool-name">Payroll Tax Estimator</div>
-        <p class="tool-desc">2025 & 2026 federal and state payroll taxes for W-2 employees. FICA, FUTA, SUTA, federal income tax, and state income tax — all 50 states.</p>
-        <a href="/booksmart-tools/payroll-tax-estimator.html" class="tool-link">Open Estimator</a>
-      </div>
-      <div class="tool-card reveal delay-2">
-        <div class="tool-badge free">Free</div>
-        <div class="tool-name">Sales Tax Calculator</div>
-        <p class="tool-desc">Calculate sales tax for any purchase in all 50 US states. State base rate plus average local rate — sourced from Tax Foundation 2025 data.</p>
-        <a href="/booksmart-tools/sales-tax-calculator.html" class="tool-link">Open Calculator</a>
-      </div>
-      <div class="tool-card reveal">
-        <div class="tool-badge free">Free</div>
-        <div class="tool-name">Meals Tax Calculator</div>
-        <p class="tool-desc">Calculate restaurant and prepared food tax by state and county. Covers Virginia, Massachusetts, Vermont, New Hampshire, Maine, and all 50 states.</p>
-        <a href="/booksmart-tools/meals-tax-calculator.html" class="tool-link">Open Calculator</a>
-      </div>
-      <div class="tool-card reveal delay-1">
-        <div class="tool-badge soon">Coming Soon</div>
-        <div class="tool-name">Mileage Deduction Tracker</div>
-        <p class="tool-desc">Track business miles at the 2025 IRS standard mileage rate. Calculate your deduction and export a report for tax preparation.</p>
-        <a href="#newsletter" class="tool-link" style="color:var(--muted)">Get notified</a>
-      </div>
-      <div class="tool-card reveal delay-2">
-        <div class="tool-badge soon">Coming Soon</div>
-        <div class="tool-name">Quarterly Tax Calculator</div>
-        <p class="tool-desc">Estimate quarterly estimated tax payments for self-employed individuals based on projected income, deductions, and filing status.</p>
-        <a href="#newsletter" class="tool-link" style="color:var(--muted)">Get notified</a>
-      </div>
+    <!-- FEATURED -->
+    <div class="tools-grid tab-panel active" id="cat-all">
+      <a href="/booksmart-tools/payroll-tax-estimator.html" class="tool-card pop reveal"><div class="pop-badge">Popular</div><div class="tc-icon">💼</div><div class="tc-name">Payroll Tax Estimator</div><div class="tc-desc">Calculate employee paychecks with 2026 federal brackets, FICA, and all 50 state taxes.</div><div class="tc-link">Calculate → <span>→</span></div></a>
+      <a href="/booksmart-tools/loan-amortization.html" class="tool-card pop reveal d1"><div class="pop-badge">Popular</div><div class="tc-icon">📊</div><div class="tc-name">Loan Amortization</div><div class="tc-desc">Full payment schedule with exact dates, odd-days interest, and bank-matching accuracy.</div><div class="tc-link">Calculate → <span>→</span></div></a>
+      <a href="/booksmart-tools/quarterly-tax-calculator.html" class="tool-card pop reveal d2"><div class="pop-badge">Popular</div><div class="tc-icon">📅</div><div class="tc-name">Quarterly Tax Calculator</div><div class="tc-desc">IRS Form 1040-ES estimated payments for 2026. Covers all filing statuses and SE income.</div><div class="tc-link">Calculate → <span>→</span></div></a>
+      <a href="/booksmart-tools/profit-margin-calculator.html" class="tool-card reveal d1"><div class="tc-icon">📈</div><div class="tc-name">Profit Margin Calculator</div><div class="tc-desc">Gross, operating, and net margins with markup percentage — all in one view.</div><div class="tc-link">Calculate → <span>→</span></div></a>
+      <a href="/booksmart-tools/mortgage-calculator.html" class="tool-card reveal d2"><div class="tc-icon">🏠</div><div class="tc-name">Mortgage Calculator</div><div class="tc-desc">Full PITI payment breakdown with PMI, property tax, and insurance.</div><div class="tc-link">Calculate → <span>→</span></div></a>
+      <a href="/booksmart-tools/pdf-merge.html" class="tool-card reveal d3"><div class="tc-icon">📑</div><div class="tc-name">PDF Merge — Free</div><div class="tc-desc">Combine unlimited PDFs into one file. No page limits. Drag to reorder. No watermarks.</div><div class="tc-link">Merge PDFs → <span>→</span></div></a>
+    </div>
+
+    <!-- PAYROLL -->
+    <div class="tools-grid tab-panel" id="cat-payroll">
+      <a href="/booksmart-tools/payroll-tax-estimator.html" class="tool-card pop reveal"><div class="pop-badge">Popular</div><div class="tc-icon">💼</div><div class="tc-name">Payroll Tax Estimator</div><div class="tc-desc">Full paycheck calculation with 2026 brackets, all 50 states, FICA, and pre/post-tax deductions.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/overtime-calculator.html" class="tool-card reveal d1"><div class="tc-icon">⏰</div><div class="tc-name">Overtime Calculator</div><div class="tc-desc">Regular, overtime (1.5×), and double time pay. FLSA compliant with California rules.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/net-pay-calculator.html" class="tool-card reveal d2"><div class="tc-icon">💵</div><div class="tc-name">Net Pay Calculator</div><div class="tc-desc">Gross to take-home pay with all taxes, deductions, and state income tax.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/hourly-salary-converter.html" class="tool-card reveal d1"><div class="tc-icon">🔄</div><div class="tc-name">Hourly ↔ Salary Converter</div><div class="tc-desc">Convert hourly to annual salary across all pay periods.</div><div class="tc-link">Convert →</div></a>
+      <a href="/booksmart-tools/pto-calculator.html" class="tool-card reveal d2"><div class="tc-icon">🌴</div><div class="tc-name">PTO Calculator</div><div class="tc-desc">PTO accrual balance and payout value by any accrual method.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/401k-calculator.html" class="tool-card reveal d3"><div class="tc-icon">🏦</div><div class="tc-name">401(k) Calculator</div><div class="tc-desc">2026 contribution limits, employer match, and projected retirement balance.</div><div class="tc-link">Calculate →</div></a>
+    </div>
+
+    <!-- TAX -->
+    <div class="tools-grid tab-panel" id="cat-tax">
+      <a href="/booksmart-tools/sales-tax-calculator.html" class="tool-card pop reveal"><div class="pop-badge">Popular</div><div class="tc-icon">🧾</div><div class="tc-name">Sales Tax Return</div><div class="tc-desc">Business sales tax with Virginia regional rates and dealer discount.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/quarterly-tax-calculator.html" class="tool-card pop reveal d1"><div class="pop-badge">Popular</div><div class="tc-icon">📅</div><div class="tc-name">Quarterly Tax (1040-ES)</div><div class="tc-desc">2026 estimated quarterly payments for freelancers and self-employed.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/self-employment-tax.html" class="tool-card reveal d2"><div class="tc-icon">📋</div><div class="tc-name">Self-Employment Tax</div><div class="tc-desc">SE tax 15.3%, deductible half, and quarterly schedule for 1099 workers.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/1099-vs-w2-calculator.html" class="tool-card reveal d1"><div class="tc-icon">⚖️</div><div class="tc-name">1099 vs W-2 Calculator</div><div class="tc-desc">True employer cost comparison including FICA, benefits, and PTO cost.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/meals-tax-calculator.html" class="tool-card reveal d2"><div class="tc-icon">🍽️</div><div class="tc-name">Meals Tax Calculator</div><div class="tc-desc">Restaurant meals tax for all 51 states with county-level Virginia rates.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html" class="tool-card reveal d3"><div class="tc-icon">🛒</div><div class="tc-name">E-Commerce Sales Tax</div><div class="tc-desc">Multi-county e-commerce tax with Excel upload support.</div><div class="tc-link">Calculate →</div></a>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="tools-grid tab-panel" id="cat-finance">
+      <a href="/booksmart-tools/profit-margin-calculator.html" class="tool-card pop reveal"><div class="pop-badge">Popular</div><div class="tc-icon">📈</div><div class="tc-name">Profit Margin Calculator</div><div class="tc-desc">Gross, operating, and net margins with markup analysis.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/break-even-calculator.html" class="tool-card pop reveal d1"><div class="pop-badge">Popular</div><div class="tc-icon">⚖️</div><div class="tc-name">Break-Even Calculator</div><div class="tc-desc">Units and revenue needed to cover all fixed and variable costs.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/roi-calculator.html" class="tool-card reveal d2"><div class="tc-icon">📊</div><div class="tc-name">ROI Calculator</div><div class="tc-desc">Return on investment, annualized ROI, payback period.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/business-loan-calculator.html" class="tool-card reveal d1"><div class="tc-icon">🏛️</div><div class="tc-name">Business Loan Calculator</div><div class="tc-desc">Monthly payment, total cost, and full amortization schedule.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/burn-rate-calculator.html" class="tool-card reveal d2"><div class="tc-icon">🔥</div><div class="tc-name">Burn Rate &amp; Runway</div><div class="tc-desc">Monthly burn rate and months of cash remaining for startups.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/markup-margin-calculator.html" class="tool-card reveal d3"><div class="tc-icon">🏷️</div><div class="tc-name">Markup vs Margin</div><div class="tc-desc">Convert between markup % and margin %. 3 calculation modes.</div><div class="tc-link">Calculate →</div></a>
+    </div>
+
+    <!-- BOOKKEEPING -->
+    <div class="tools-grid tab-panel" id="cat-bookkeeping">
+      <a href="/booksmart-tools/invoice-late-fee-calculator.html" class="tool-card pop reveal"><div class="pop-badge">Popular</div><div class="tc-icon">📄</div><div class="tc-name">Invoice Late Fee Calculator</div><div class="tc-desc">Late fees, interest charges, and payment terms by state.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/ar-aging-calculator.html" class="tool-card pop reveal d1"><div class="pop-badge">Popular</div><div class="tc-icon">📋</div><div class="tc-name">AR Aging Calculator</div><div class="tc-desc">Accounts receivable report — current, 30, 60, 90+ day buckets.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/cash-flow-calculator.html" class="tool-card reveal d2"><div class="tc-icon">💧</div><div class="tc-name">Cash Flow Calculator</div><div class="tc-desc">Operating, investing, and financing cash flow statement.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/depreciation-calculator.html" class="tool-card reveal d1"><div class="tc-icon">📉</div><div class="tc-name">Depreciation Calculator</div><div class="tc-desc">Straight-line, DDB, SYD with full depreciation schedule.</div><div class="tc-link">Calculate →</div></a>
+    </div>
+
+    <!-- PERSONAL -->
+    <div class="tools-grid tab-panel" id="cat-personal">
+      <a href="/booksmart-tools/mortgage-calculator.html" class="tool-card pop reveal"><div class="pop-badge">Popular</div><div class="tc-icon">🏠</div><div class="tc-name">Mortgage Calculator</div><div class="tc-desc">Full PITI payment with PMI, taxes, and insurance breakdown.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/loan-amortization.html" class="tool-card pop reveal d1"><div class="pop-badge">Popular</div><div class="tc-icon">📊</div><div class="tc-name">Loan Amortization</div><div class="tc-desc">Full schedule with exact dates, odd-days interest, CSV export.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/compound-interest.html" class="tool-card reveal d2"><div class="tc-icon">📈</div><div class="tc-name">Compound Interest</div><div class="tc-desc">Investment growth with monthly contributions over time.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/debt-payoff-calculator.html" class="tool-card reveal d1"><div class="tc-icon">🏃</div><div class="tc-name">Debt Payoff Calculator</div><div class="tc-desc">Avalanche vs snowball — fastest path to debt freedom.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/budget-planner.html" class="tool-card reveal d2"><div class="tc-icon">📝</div><div class="tc-name">Budget Planner</div><div class="tc-desc">50/30/20 rule analysis for needs, wants, and savings.</div><div class="tc-link">Calculate →</div></a>
+      <a href="/booksmart-tools/savings-goal-calculator.html" class="tool-card reveal d3"><div class="tc-icon">🎯</div><div class="tc-name">Savings Goal Calculator</div><div class="tc-desc">Monthly savings needed to reach any goal by a target date.</div><div class="tc-link">Calculate →</div></a>
+    </div>
+
+    <!-- PDF -->
+    <div class="tools-grid tab-panel" id="cat-pdf">
+      <a href="/booksmart-tools/convert-to-pdf.html" class="tool-card pop reveal"><div class="pop-badge">Popular</div><div class="tc-icon">📂</div><div class="tc-name">Convert Files to PDF</div><div class="tc-desc">JPG, PNG, Word, Excel, and text files → PDF. Multiple files into one document.</div><div class="tc-link">Convert →</div></a>
+      <a href="/booksmart-tools/pdf-merge.html" class="tool-card pop reveal d1"><div class="pop-badge">Popular</div><div class="tc-icon">📑</div><div class="tc-name">PDF Merge — Unlimited</div><div class="tc-desc">Merge unlimited PDFs with no page limits. Drag to reorder. 100% free, no watermarks ever.</div><div class="tc-link">Merge →</div></a>
+      <a href="/booksmart-tools/pdf-converter.html" class="tool-card reveal d2"><div class="tc-icon">🔄</div><div class="tc-name">PDF → Word / Excel / JPG</div><div class="tc-desc">Convert PDF pages to images or extract text to Word and Excel files.</div><div class="tc-link">Convert →</div></a>
     </div>
   </div>
 </section>
 
-<!-- WHY US -->
-<section class="section" style="background:var(--ink);color:white;padding:80px 0">
+<!-- FEATURE BAND -->
+<div class="feature-band">
   <div class="wrap">
-    <div class="text-center mb-8">
-      <div class="eyebrow" style="justify-content:center;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1)">Why BookSmartTools</div>
-      <h2 style="color:white">Everything you get, for free</h2>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon">📊</div>
-        <div class="feature-title" style="color:white">IRS-Verified Rates</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Every rate is sourced directly from IRS Publication 15, the SSA, and state DOL data — and updated for both 2025 and 2026.</p>
-      </div>
-      <div class="feature-card reveal delay-1">
-        <div class="feature-icon">🔒</div>
-        <div class="feature-title" style="color:white">No Account, No Data</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">All tools work 100% in your browser. Nothing is sent to a server. Your numbers stay on your screen.</p>
-      </div>
-      <div class="feature-card reveal delay-2">
-        <div class="feature-icon">📥</div>
-        <div class="feature-title" style="color:white">Works Offline</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Download any tool and use it without internet. Perfect for client meetings, travel, and areas with poor connectivity.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🇺🇸</div>
-        <div class="feature-title" style="color:white">Built for US Clients</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Everything is built around US tax law — federal payroll tax, all 50-state SUTA, IRS filing requirements, and QuickBooks workflows.</p>
-      </div>
-      <div class="feature-card reveal delay-1">
-        <div class="feature-icon">✍️</div>
-        <div class="feature-title" style="color:white">Real Expertise</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">Written and built by a working bookkeeper — not a content farm. Every article and tool reflects actual daily client work.</p>
-      </div>
-      <div class="feature-card reveal delay-2">
-        <div class="feature-icon">🚫</div>
-        <div class="feature-title" style="color:white">Zero Ads, Zero Upsells</div>
-        <p class="feature-desc" style="color:rgba(255,255,255,.6)">No banner ads, no pop-ups, no "upgrade to Pro." The tools are free because useful tools are the whole point.</p>
-      </div>
+    <div class="feat-grid">
+      <div class="feat-item reveal"><span class="feat-icon">🔒</span><div class="feat-title">100% Private &amp; Browser-Based</div><div class="feat-text">Every tool runs entirely in your browser. Your financial data and PDF files never touch a server. No accounts, no tracking, no risk — ever.</div></div>
+      <div class="feat-item reveal d1"><span class="feat-icon">✅</span><div class="feat-title">2026 Tax Rates — Always Current</div><div class="feat-text">Every rate is sourced directly from IRS Publication 15, the SSA, and state revenue departments. Rates are updated every January to match the current tax year.</div></div>
+      <div class="feat-item reveal d2"><span class="feat-icon">🧑‍💼</span><div class="feat-title">Built by a Real Bookkeeper</div><div class="feat-text">Not a tech company — these tools are built and maintained by a US bookkeeper with 17+ years of hands-on experience with QuickBooks and real small business clients.</div></div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- BLOG PREVIEW -->
-<section class="section" style="background:var(--cream)">
+<!-- PDF STRIP -->
+<div class="pdf-strip">
   <div class="wrap">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:16px;">
+    <div class="pdf-strip-inner">
       <div>
-        <div class="eyebrow">From the Blog</div>
-        <h2>Practical bookkeeping guides</h2>
+        <div class="eyebrow"><div class="dot"></div>PDF Tools — Free Forever</div>
+        <h3>Convert &amp; Merge PDFs — No Signup, No Limits</h3>
+        <p style="font-size:13.5px;margin-top:6px">All processing happens in your browser. Files never leave your device.</p>
       </div>
-      <a href="/booksmart-tools/blog/index.html" class="btn btn-ghost btn-sm">All Articles →</a>
+      <div class="pdf-tools-row">
+        <a href="/booksmart-tools/convert-to-pdf.html" class="pdf-tool-chip"><span class="chip-icon">📂</span>Files → PDF</a>
+        <a href="/booksmart-tools/pdf-merge.html" class="pdf-tool-chip"><span class="chip-icon">📑</span>PDF Merge</a>
+        <a href="/booksmart-tools/pdf-converter.html" class="pdf-tool-chip"><span class="chip-icon">🔄</span>PDF → Word/Excel</a>
+      </div>
+      <a href="/booksmart-tools/pdf-merge.html" class="btn btn-primary btn-lg">Try Free →</a>
     </div>
-    <div class="grid-3">
-      <div class="blog-card reveal">
-        <div class="blog-card-top"><span class="blog-cat">Invoicing</span><span class="blog-time">5 min read</span></div>
-        <div class="blog-card-body">
-          <div class="blog-card-title">How to calculate invoice late fees (with the right rate)</div>
-          <p class="blog-card-excerpt">Most US states allow 1.5% per month. Here's how to calculate it correctly, state your terms, and handle clients who push back.</p>
-          <a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html" class="blog-read">Read article</a>
-        </div>
+  </div>
+</div>
+
+<!-- QUICK ACCESS -->
+<section class="qa-section section-sm">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:30px" class="reveal">
+      <div class="eyebrow"><div class="dot"></div>Quick Access</div>
+      <h2>Jump to what you need</h2>
+    </div>
+    <div class="qa-grid">
+      <a href="/booksmart-tools/payroll-tax-estimator.html" class="qa-card reveal"><div class="qa-ico ico-g">💼</div><div><div class="qa-title">Payroll Taxes</div><div class="qa-sub">Calculate employee paychecks with all deductions</div></div></a>
+      <a href="/booksmart-tools/quarterly-tax-calculator.html" class="qa-card reveal d1"><div class="qa-ico ico-a">📅</div><div><div class="qa-title">Quarterly Taxes</div><div class="qa-sub">Estimated payments for self-employed 1099 workers</div></div></a>
+      <a href="/booksmart-tools/loan-amortization.html" class="qa-card reveal d2"><div class="qa-ico ico-b">📊</div><div><div class="qa-title">Loan Amortization</div><div class="qa-sub">Full payment schedule with exact dates</div></div></a>
+      <a href="/booksmart-tools/profit-margin-calculator.html" class="qa-card reveal d3"><div class="qa-ico ico-g">📈</div><div><div class="qa-title">Profit Margin</div><div class="qa-sub">Gross, operating, net margin analysis</div></div></a>
+      <a href="/booksmart-tools/mortgage-calculator.html" class="qa-card reveal"><div class="qa-ico ico-c">🏠</div><div><div class="qa-title">Mortgage Calculator</div><div class="qa-sub">Full PITI with PMI estimate</div></div></a>
+      <a href="/booksmart-tools/break-even-calculator.html" class="qa-card reveal d1"><div class="qa-ico ico-a">⚖️</div><div><div class="qa-title">Break-Even Point</div><div class="qa-sub">Units and revenue to cover all costs</div></div></a>
+      <a href="/booksmart-tools/self-employment-tax.html" class="qa-card reveal d2"><div class="qa-ico ico-b">📋</div><div><div class="qa-title">SE Tax Calculator</div><div class="qa-sub">Self-employment tax and quarterly estimates</div></div></a>
+      <a href="/booksmart-tools/debt-payoff-calculator.html" class="qa-card reveal d3"><div class="qa-ico ico-c">🏃</div><div><div class="qa-title">Debt Payoff</div><div class="qa-sub">Avalanche vs snowball comparison</div></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw-section section-sm">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:36px" class="reveal">
+      <div class="eyebrow"><div class="dot"></div>How It Works</div>
+      <h2>Get your answer in 30 seconds</h2>
+      <p style="max-width:440px;margin:10px auto 0">No software to install, no signup, no learning curve. Just type your numbers and get professional results.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-num">1</div><div class="step-title">Pick a Tool</div><div class="step-desc">Browse by category or use Quick Jump. 35+ tools organized clearly.</div></div>
+      <div class="step reveal d1"><div class="step-num">2</div><div class="step-title">Enter Numbers</div><div class="step-desc">Type your salary, loan amount, costs, or whatever the tool needs.</div></div>
+      <div class="step reveal d2"><div class="step-num">3</div><div class="step-title">Click Calculate</div><div class="step-desc">Results appear instantly — broken down line by line with color coding.</div></div>
+      <div class="step reveal d3"><div class="step-num">4</div><div class="step-title">Print or Export</div><div class="step-desc">Print your results or export to CSV. Share with clients or your accountant.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="articles-section section">
+  <div class="wrap">
+    <div class="section-hd reveal">
+      <div>
+        <div class="eyebrow"><div class="dot"></div>Guides &amp; How-To Articles</div>
+        <h2>Learn how to use the tools</h2>
+        <p>Step-by-step guides for the finance calculators that can be tricky to use correctly.</p>
       </div>
-      <div class="blog-card reveal delay-1">
-        <div class="blog-card-top"><span class="blog-cat">QuickBooks</span><span class="blog-time">7 min read</span></div>
-        <div class="blog-card-body">
-          <div class="blog-card-title">How to reconcile a bank account in QuickBooks Online</div>
-          <p class="blog-card-excerpt">Step-by-step walkthrough including how to fix the most common errors that throw off your ending balance.</p>
-          <a href="/booksmart-tools/blog/quickbooks-bank-reconciliation.html" class="blog-read">Read article</a>
+      <a href="/booksmart-tools/blog/index.html" class="btn btn-outline btn-md">All Articles →</a>
+    </div>
+    <div class="article-grid">
+      <a href="/booksmart-tools/blog/how-to-use-loan-amortization.html" class="art-card reveal">
+        <div class="art-banner bg-forest">📊</div>
+        <div class="art-body">
+          <div class="art-meta"><span class="art-tag tag-g">LOAN &amp; MORTGAGE</span><span class="art-min">8 min read</span></div>
+          <div class="art-title">How to Read a Loan Amortization Schedule — And Why It Matters</div>
+          <div class="art-excerpt">Learn how each payment splits between principal and interest, what odd-days interest means, and how extra payments can save thousands.</div>
+          <div class="art-cta">Read Guide <span>→</span></div>
         </div>
+      </a>
+      <a href="/booksmart-tools/blog/quarterly-tax-guide.html" class="art-card reveal d1">
+        <div class="art-banner bg-amber">📅</div>
+        <div class="art-body">
+          <div class="art-meta"><span class="art-tag tag-a">TAXES</span><span class="art-min">10 min read</span></div>
+          <div class="art-title">Quarterly Estimated Taxes 2026: The Self-Employed Person's Complete Guide</div>
+          <div class="art-excerpt">Who needs to pay, how to calculate, the 4 due dates, and how to avoid underpayment penalties — explained step by step.</div>
+          <div class="art-cta">Read Guide <span>→</span></div>
+        </div>
+      </a>
+      <a href="/booksmart-tools/blog/1099-vs-w2.html" class="art-card reveal d2">
+        <div class="art-banner bg-slate">⚖️</div>
+        <div class="art-body">
+          <div class="art-meta"><span class="art-tag tag-b">PAYROLL</span><span class="art-min">7 min read</span></div>
+          <div class="art-title">1099 vs W-2: What It Really Costs to Hire an Employee vs Contractor</div>
+          <div class="art-excerpt">The true cost difference is often 25-35% more for W-2 employees. Here's exactly how to calculate it and make the right hiring decision.</div>
+          <div class="art-cta">Read Guide <span>→</span></div>
+        </div>
+      </a>
+      <a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html" class="art-card reveal">
+        <div class="art-banner bg-coral">📄</div>
+        <div class="art-body">
+          <div class="art-meta"><span class="art-tag tag-c">BOOKKEEPING</span><span class="art-min">6 min read</span></div>
+          <div class="art-title">How to Calculate Invoice Late Fees (And Collect Them)</div>
+          <div class="art-excerpt">State-by-state rules for late payment interest, how to write your payment terms, and scripts for following up on overdue invoices.</div>
+          <div class="art-cta">Read Guide <span>→</span></div>
+        </div>
+      </a>
+      <a href="/booksmart-tools/blog/ar-aging-guide.html" class="art-card reveal d1">
+        <div class="art-banner bg-sage">📋</div>
+        <div class="art-body">
+          <div class="art-meta"><span class="art-tag tag-g">BOOKKEEPING</span><span class="art-min">7 min read</span></div>
+          <div class="art-title">Understanding Your AR Aging Report: What Each Bucket Means</div>
+          <div class="art-excerpt">How to read accounts receivable aging, what the 30/60/90 day buckets mean for cash flow, and when to send invoices to collections.</div>
+          <div class="art-cta">Read Guide <span>→</span></div>
+        </div>
+      </a>
+      <a href="/booksmart-tools/blog/quickbooks-bank-reconciliation.html" class="art-card reveal d2">
+        <div class="art-banner bg-indigo">🏦</div>
+        <div class="art-body">
+          <div class="art-meta"><span class="art-tag tag-b">QUICKBOOKS</span><span class="art-min">9 min read</span></div>
+          <div class="art-title">QuickBooks Bank Reconciliation: Step-by-Step Guide for Small Business</div>
+          <div class="art-excerpt">How to reconcile your bank account in QuickBooks Online — common errors, what to do when it doesn't balance, and best practices.</div>
+          <div class="art-cta">Read Guide <span>→</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="testi-section">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:32px" class="reveal">
+      <div class="eyebrow"><div class="dot"></div>From Our Users</div>
+      <h2>Trusted by bookkeepers &amp; business owners</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><div class="testi-quote">"The payroll tax estimator saved me hours every week. I used to do this in Excel — now it takes 30 seconds and I know it's right."</div><div class="testi-who">— Small business owner, Texas</div></div>
+      <div class="testi-card reveal d1"><div class="testi-stars">★★★★★</div><div class="testi-quote">"Finally a loan amortization tool that matches my bank's exact numbers. The odd-days interest feature is something I've never seen anywhere else."</div><div class="testi-who">— Bookkeeper, Virginia</div></div>
+      <div class="testi-card reveal d2"><div class="testi-stars">★★★★★</div><div class="testi-quote">"The PDF merge tool alone is worth bookmarking this site. No watermarks, no limits, and it actually works with large files."</div><div class="testi-who">— Accountant, California</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section section">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:44px" class="reveal">
+      <div class="eyebrow"><div class="dot"></div>FAQ</div>
+      <h2>Common questions</h2>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item">
+        <button class="faq-q">Are these tools really free — forever?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes, completely. No freemium, no credit card, no "upgrade to unlock." Every tool on this site is free and will stay free. This site is maintained by a working bookkeeper who uses these tools daily and believes everyone deserves access to professional financial calculators.</div>
       </div>
-      <div class="blog-card reveal delay-2">
-        <div class="blog-card-top"><span class="blog-cat">Taxes</span><span class="blog-time">6 min read</span></div>
-        <div class="blog-card-body">
-          <div class="blog-card-title">1099-NEC vs W-2: what every small business owner needs to know</div>
-          <p class="blog-card-excerpt">Misclassifying a worker is one of the most expensive mistakes a small business can make. Here's how to get it right.</p>
-          <a href="/booksmart-tools/blog/1099-vs-w2.html" class="blog-read">Read article</a>
-        </div>
+      <div class="faq-item">
+        <button class="faq-q">Are the 2026 tax rates accurate?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes. Federal rates come from IRS Revenue Procedure 2025-32 (the official 2026 inflation adjustments). The Social Security wage base ($184,500 for 2026) comes from the SSA. State rates are sourced from each state's revenue department. That said, always verify critical figures with a CPA for actual tax filing.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is my data private? Are files uploaded anywhere?<span class="faq-icon">+</span></button>
+        <div class="faq-a">All calculations and PDF operations run entirely in your browser using JavaScript. Nothing is sent to any server. The PDF tools process files locally — your documents never leave your computer. We collect zero personal data from tool usage.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Why does my loan calculator result differ from my bank's number?<span class="faq-icon">+</span></button>
+        <div class="faq-a">The most common reason is odd-days interest (the stub period between loan origination and first payment) and the day-count convention (Actual/360 vs Actual/365). Our Loan Amortization calculator has a "Capitalize odd-days" toggle, a day-count selector, and a payment override field so you can match your bank's exact TILA figures.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I share these tools with my clients?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Absolutely — share freely. These tools are designed to be shared. If you're a bookkeeper or accountant, send clients directly to any calculator. No attribution required, though appreciated.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- EMAIL CAPTURE -->
-<section class="capture-section" id="newsletter">
-  <div class="capture-inner">
-    <div class="eyebrow" style="justify-content:center;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)">Stay Updated</div>
-    <h2>New tools before anyone else</h2>
-    <p>Join bookkeepers and small business owners who get free tools, QuickBooks tips, and tax guides delivered to their inbox. No spam, ever.</p>
-    <form class="email-form" novalidate>
-      <input type="email" placeholder="your@email.com" aria-label="Email address">
-      <button type="submit">Get Free Tools →</button>
+<section class="capture" id="newsletter">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;color:#a8dfc0;border-color:rgba(122,171,140,.3);background:rgba(122,171,140,.12)"><div class="dot"></div>Stay Updated</div>
+    <h2 style="color:#fff;margin-bottom:10px">Get notified when new tools launch</h2>
+    <p>New calculators, updated tax rates, and finance guides — delivered to your inbox. No spam, unsubscribe anytime.</p>
+    <form class="email-form" id="email-form" style="margin-top:28px">
+      <input type="email" placeholder="your@email.com" required>
+      <button type="submit">Subscribe Free →</button>
     </form>
-    <div class="capture-success">✓ You're in! Watch your inbox for your first free resource.</div>
-    <div class="capture-small">No spam. No credit card. Unsubscribe any time.</div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="section">
-  <div class="wrap" style="max-width:680px">
-    <div class="text-center mb-8">
-      <div class="eyebrow" style="justify-content:center">FAQ</div>
-      <h2>Frequently asked</h2>
-    </div>
-    <div>
-      <div class="faq-item">
-        <button class="faq-q">Are these tools really free? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Yes — completely free. No account, no credit card, no trial period. Use them as much as you like and share them with clients or colleagues.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Are the tax rates accurate? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Every federal rate is sourced from IRS Publication 15 (Circular E) and the Social Security Administration. SUTA rates come from Department of Labor and Patriot Software data. The payroll tool covers both 2025 and 2026. That said, always confirm with your CPA for complex situations.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Can I share these tools with my clients? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Absolutely. Share the links freely, or download the HTML files and add them to your own website. No attribution required, though it's appreciated.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Do you offer bookkeeping services? <span class="faq-icon">+</span></button>
-        <div class="faq-a">I have limited availability for US small business clients. If you're looking for a remote bookkeeper with QuickBooks experience, reach out via the About page and I'll let you know if I have capacity.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">How often are the tools updated? <span class="faq-icon">+</span></button>
-        <div class="faq-a">Tax rates are reviewed at the start of each calendar year and updated as soon as the IRS and SSA publish new figures. Subscribe to the newsletter to be notified when anything changes.</div>
-      </div>
-    </div>
+    <p class="cap-success" id="cap-success">✓ You're subscribed! We'll notify you when new tools launch.</p>
+    <p class="cap-note">No spam · No selling your email · Unsubscribe anytime</p>
   </div>
 </section>
 
@@ -409,67 +993,149 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">Book<em>Smart</em>Tools</div>
-        <p class="footer-tagline">Free professional bookkeeping tools and guides for US small business owners. Built by a real bookkeeper.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Tools</h4>
-        <ul>
-          <li><a href="/booksmart-tools/invoice-late-fee-calculator.html">Invoice Late Fee Calculator</a></li>
-          <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
-
-        <!-- PDF Tools row -->
-        <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:24px;margin-top:8px">
-          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:16px">PDF TOOLS — FREE, NO SIGNUP</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-            <a href="/booksmart-tools/convert-to-pdf.html" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:14px;text-decoration:none;color:white;display:block;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">
-              <div style="font-size:20px;margin-bottom:6px">📂</div>
-              <div style="font-size:13px;font-weight:700">Files → PDF</div>
-              <div style="font-size:11px;opacity:.6;margin-top:3px">JPG, PNG, Word, Excel</div>
-            </a>
-            <a href="/booksmart-tools/pdf-merge.html" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:14px;text-decoration:none;color:white;display:block;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">
-              <div style="font-size:20px;margin-bottom:6px">📑</div>
-              <div style="font-size:13px;font-weight:700">PDF Merge</div>
-              <div style="font-size:11px;opacity:.6;margin-top:3px">No page limits, free</div>
-            </a>
-            <a href="/booksmart-tools/pdf-converter.html" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:14px;text-decoration:none;color:white;display:block;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">
-              <div style="font-size:20px;margin-bottom:6px">🔄</div>
-              <div style="font-size:13px;font-weight:700">PDF → Word / Excel</div>
-              <div style="font-size:11px;opacity:.6;margin-top:3px">Extract & convert</div>
-            </a>
-          </div>
+        <p class="footer-tagline">Free professional bookkeeping, finance, payroll, tax calculators and PDF tools. Built by a real US bookkeeper with 17+ years experience.</p>
+        <div class="footer-badges">
+          <div class="fbadge">100% Free, always — no signup</div>
+          <div class="fbadge">2026 tax rates — always current</div>
+          <div class="fbadge">Files never leave your browser</div>
         </div>
-
-          <li><a href="/booksmart-tools/tools.html">All Tools</a></li>
-        </ul>
       </div>
-      <div class="footer-col">
-        <h4>Blog</h4>
+      <div class="fcol">
+        <h4>Top Calculators</h4>
         <ul>
-          <li><a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html">Invoice Late Fees</a></li>
-          <li><a href="/booksmart-tools/blog/quickbooks-bank-reconciliation.html">QuickBooks Reconciliation</a></li>
-          <li><a href="/booksmart-tools/blog/1099-vs-w2.html">1099 vs W-2</a></li>
-          <li><a href="/booksmart-tools/blog/index.html">All Articles</a></li>
+          <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+          <li><a href="/booksmart-tools/loan-amortization.html">Loan Amortization</a></li>
+          <li><a href="/booksmart-tools/quarterly-tax-calculator.html">Quarterly Tax</a></li>
+          <li><a href="/booksmart-tools/mortgage-calculator.html">Mortgage Calculator</a></li>
+          <li><a href="/booksmart-tools/profit-margin-calculator.html">Profit Margin</a></li>
+          <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+      <div class="fcol">
+        <h4>PDF Tools</h4>
+        <ul>
+          <li><a href="/booksmart-tools/convert-to-pdf.html">Files → PDF</a></li>
+          <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge (Free)</a></li>
+          <li><a href="/booksmart-tools/pdf-converter.html">PDF → Word / Excel</a></li>
+        </ul>
+        <h4 style="margin-top:22px">Blog &amp; Guides</h4>
+        <ul>
+          <li><a href="/booksmart-tools/blog/how-to-use-loan-amortization.html">Loan Amortization Guide</a></li>
+          <li><a href="/booksmart-tools/blog/quarterly-tax-guide.html">Quarterly Tax Guide</a></li>
+          <li><a href="/booksmart-tools/blog/1099-vs-w2.html">1099 vs W-2 Guide</a></li>
+          <li><a href="/booksmart-tools/blog/index.html">All Articles →</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
         <h4>Site</h4>
         <ul>
+          <li><a href="/booksmart-tools/">Home</a></li>
+          <li><a href="/booksmart-tools/tools.html">All Tools</a></li>
+          <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
           <li><a href="/booksmart-tools/about.html">About</a></li>
-          <li><a href="#newsletter">Newsletter</a></li>
-          <li><a href="sitemap.xml">Sitemap</a></li>
+          <li><a href="/booksmart-tools/sitemap.xml">Sitemap</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2025 BookSmartTools — Free bookkeeping tools for US small businesses</div>
-      <div class="footer-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Disclaimer</a>
-      </div>
+      <div class="footer-copy">© 2026 BookSmartTools — Free bookkeeping &amp; finance tools for everyone</div>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Disclaimer</a></div>
     </div>
   </div>
 </footer>
 
-<script src="/booksmart-tools/js/main.js"></script>
+<script>
+/* NAV scroll shadow */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive:true });
+
+/* Mobile nav */
+document.getElementById('nav-toggle').addEventListener('click', function() {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+
+/* Category tabs */
+const CAT_TITLES = {
+  all:        ['Featured Tools', 'Our most popular calculators — trusted by bookkeepers and small business owners'],
+  payroll:    ['Payroll & HR Tools', 'Payroll calculations, employee compensation, and benefits tracking'],
+  tax:        ['Tax Tools', 'Sales tax, quarterly estimates, self-employment, and 1099 calculators'],
+  finance:    ['Business Finance', 'Profitability, investment analysis, and business planning tools'],
+  bookkeeping:['Bookkeeping & Accounting', 'Daily bookkeeping tools for small business owners and accountants'],
+  personal:   ['Personal Finance', 'Mortgage, loans, savings, budgeting, and debt payoff tools'],
+  pdf:        ['PDF Tools — Free, No Limits', 'Convert, merge, and split PDFs entirely in your browser']
+};
+function showCat(cat, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('cat-' + cat).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('cat-heading').textContent = CAT_TITLES[cat][0];
+  document.getElementById('cat-subhead').textContent = CAT_TITLES[cat][1];
+  /* Re-trigger reveal */
+  document.querySelectorAll('#cat-' + cat + ' .reveal').forEach(el => {
+    el.classList.remove('in');
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('in')));
+  });
+}
+
+/* Scroll reveal */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold:.1, rootMargin:'0px 0px -44px 0px' });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* Animated counters */
+const co = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = parseInt(el.dataset.target) || 0;
+    const suffix = el.dataset.suffix || '', prefix = el.dataset.prefix || '';
+    if (!target || target === 2026) { el.textContent = (target === 2026 ? '2026' : prefix + '0' + suffix); co.unobserve(el); return; }
+    let start = 0;
+    const step = ts => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / 1400, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + Math.floor(ease * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + target + suffix;
+    };
+    requestAnimationFrame(step);
+    co.unobserve(el);
+  });
+}, { threshold:.5 });
+document.querySelectorAll('.stat-num[data-target]').forEach(el => co.observe(el));
+
+/* FAQ accordion */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+/* Email form */
+document.getElementById('email-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  this.style.display = 'none';
+  document.getElementById('cap-success').style.display = 'block';
+});
+
+/* Animate hero net pay number */
+setTimeout(() => {
+  const el = document.getElementById('hero-net');
+  if (!el) return;
+  const vals = ['$3,580.80','$4,212.44','$2,871.93','$5,640.18','$3,580.80'];
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % vals.length;
+    el.style.opacity = '0.3';
+    setTimeout(() => { el.textContent = vals[i]; el.style.opacity = '1'; }, 350);
+    el.style.transition = 'opacity .35s';
+  }, 3500);
+}, 2000);
+</script>
 </body>
 </html>
