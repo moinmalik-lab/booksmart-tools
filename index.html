@@ -578,7 +578,41 @@ p  { font-size:15px; line-height:1.8; color:var(--muted); }
 }
 .pdf-tool-chip:hover { border-color:var(--sage); box-shadow:var(--sh-sm); transform:translateY(-2px); }
 .pdf-tool-chip .chip-icon { font-size:18px; }
+
+/* ── PWA INSTALL BANNER ─────────────────────────────── */
+#pwa-banner {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  background:#1a1a18; color:white; border-radius:14px;
+  padding:16px 20px; display:flex; align-items:center; gap:14px;
+  box-shadow:0 8px 40px rgba(0,0,0,.45); z-index:9999;
+  max-width:380px; width:calc(100% - 32px);
+  animation:bannerSlide .4s cubic-bezier(.22,1,.36,1);
+  border:1px solid rgba(255,255,255,.12);
+}
+@keyframes bannerSlide{from{opacity:0;transform:translateX(-50%) translateY(30px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+#pwa-banner .ban-icon{font-size:36px;flex-shrink:0}
+#pwa-banner .ban-text{flex:1}
+#pwa-banner .ban-title{font-weight:700;font-size:14px;margin-bottom:3px}
+#pwa-banner .ban-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.4}
+#pwa-banner .ban-btn{background:#1e5c33;color:white;border:none;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;flex-shrink:0}
+#pwa-banner .ban-btn:hover{background:#165228}
+#pwa-banner .ban-close{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:20px;padding:4px;flex-shrink:0;line-height:1}
+#pwa-banner .ban-close:hover{color:white}
+
 </style>
+  <!-- PWA / App Configuration -->
+  <link rel="manifest" href="/booksmart-tools/manifest.json">
+  <meta name="theme-color" content="#143d24">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BookSmartTools">
+  <link rel="apple-touch-icon" href="/booksmart-tools/icons/icon-152x152.svg">
+  <link rel="apple-touch-icon" sizes="152x152" href="/booksmart-tools/icons/icon-152x152.svg">
+  <link rel="apple-touch-icon" sizes="192x192" href="/booksmart-tools/icons/icon-192x192.svg">
+  <link rel="icon" type="image/svg+xml" href="/booksmart-tools/favicon.svg">
+  <meta name="msapplication-TileImage" content="/booksmart-tools/icons/icon-144x144.svg">
+  <meta name="msapplication-TileColor" content="#143d24">
 </head>
 <body>
 
@@ -1137,5 +1171,105 @@ setTimeout(() => {
   }, 3500);
 }, 2000);
 </script>
+
+<!-- PWA Install Banner -->
+<div id="pwa-banner" style="display:none">
+  <div class="ban-icon">📱</div>
+  <div class="ban-text">
+    <div class="ban-title">Install BookSmartTools</div>
+    <div class="ban-sub">Add to home screen — works offline, opens like an app</div>
+  </div>
+  <button class="ban-btn" id="pwa-install-btn">Install</button>
+  <button class="ban-close" id="pwa-dismiss" title="Dismiss">×</button>
+</div>
+
+<!-- Service Worker Registration + PWA Install Logic -->
+<script>
+// ── Register service worker ───────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/booksmart-tools/sw.js')
+      .then(reg => {
+        console.log('[BookSmartTools] SW registered:', reg.scope);
+        // Check for updates
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('[BookSmartTools] New version available');
+            }
+          });
+        });
+      })
+      .catch(err => console.warn('[BookSmartTools] SW registration failed:', err));
+  });
+}
+
+// ── PWA Install prompt ────────────────────────────────────────────────────
+let deferredPrompt = null;
+const banner   = document.getElementById('pwa-banner');
+const installBtn = document.getElementById('pwa-install-btn');
+const dismissBtn = document.getElementById('pwa-dismiss');
+
+// Check if already installed
+const isInstalled = window.matchMedia('(display-mode: standalone)').matches
+  || window.navigator.standalone
+  || document.referrer.includes('android-app://');
+
+if (!isInstalled && !localStorage.getItem('pwa-dismissed')) {
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Show banner after 3 seconds
+    setTimeout(() => { banner.style.display = 'flex'; }, 3000);
+  });
+}
+
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) {
+      // Fallback instructions
+      const ua = navigator.userAgent;
+      if (/android/i.test(ua)) {
+        alert('Tap the ⋮ menu in your browser, then "Add to Home Screen" or "Install app".');
+      } else if (/iphone|ipad/i.test(ua)) {
+        alert('Tap the Share button (□↑) in Safari, then "Add to Home Screen".');
+      } else {
+        alert('Look for an install icon (⊕) in your browser address bar.');
+      }
+      return;
+    }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log('[BookSmartTools] Install outcome:', outcome);
+    deferredPrompt = null;
+    banner.style.display = 'none';
+    if (outcome === 'accepted') {
+      localStorage.setItem('pwa-installed', 'true');
+    }
+  });
+}
+
+if (dismissBtn) {
+  dismissBtn.addEventListener('click', () => {
+    banner.style.display = 'none';
+    localStorage.setItem('pwa-dismissed', Date.now());
+  });
+}
+
+// Re-show banner if dismissed more than 7 days ago
+const dismissed = localStorage.getItem('pwa-dismissed');
+if (dismissed && Date.now() - parseInt(dismissed) > 7 * 24 * 3600 * 1000) {
+  localStorage.removeItem('pwa-dismissed');
+}
+
+// Track install
+window.addEventListener('appinstalled', () => {
+  console.log('[BookSmartTools] App installed!');
+  banner.style.display = 'none';
+  localStorage.setItem('pwa-installed', 'true');
+});
+</script>
+
 </body>
 </html>

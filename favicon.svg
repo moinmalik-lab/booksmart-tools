@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6.4" fill="#143d24"/>
+  <!-- Grid lines (subtle) -->
+  <line x1="10.56" y1="3.84" x2="10.56" y2="28.16" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="21.12" y1="3.84" x2="21.12" y2="28.16" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <!-- Book pages (left) -->
+  <rect x="3.84" y="7.04" width="11.2" height="17.92" rx="0.96" fill="#0e2818"/>
+  <rect x="4.48" y="7.68" width="9.92" height="16.64" rx="0.8" fill="#1c5430"/>
+  <!-- Page lines -->
+  <line x1="5.76" y1="10.88" x2="13.12" y2="10.88" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="5.76" y1="13.44" x2="13.12" y2="13.44" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="5.76" y1="16.0" x2="11.2" y2="16.0" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+  <!-- Chart bars (right) -->
+  <rect x="16.96" y="19.2" width="2.4" height="5.76" rx="0.48" fill="#7dd4a0"/>
+  <rect x="19.68" y="15.36" width="2.4" height="9.6" rx="0.48" fill="#7dd4a0"/>
+  <rect x="22.4" y="11.2" width="2.4" height="13.76" rx="0.48" fill="#7dd4a0"/>
+  <rect x="25.12" y="14.08" width="2.4" height="10.88" rx="0.48" fill="#a8e8c0"/>
+  <!-- Trend line over bars -->
+  <polyline points="17.76,18.56 20.48,14.72 23.2,10.56 25.92,13.44" 
+    fill="none" stroke="#f0c060" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dollar sign accent -->
+  <circle cx="26.08" cy="8.48" r="2.24" fill="#f0c060"/>
+  <text x="26.08" y="9.44" text-anchor="middle" fill="#1a1a18" font-size="2.88" font-weight="bold" font-family="Georgia,serif">$</text>
+</svg>

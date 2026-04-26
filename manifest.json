@@ -1,0 +1,60 @@
+{
+  "name": "BookSmartTools — Free Finance & Bookkeeping Tools",
+  "short_name": "BookSmartTools",
+  "description": "35+ free professional bookkeeping, payroll, tax, amortization and PDF tools. Built by a real US bookkeeper with 17+ years experience.",
+  "start_url": "/booksmart-tools/",
+  "scope": "/booksmart-tools/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#143d24",
+  "theme_color": "#143d24",
+  "lang": "en-US",
+  "categories": ["finance", "business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/booksmart-tools/icons/screenshot-wide.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "BookSmartTools — All 35+ Finance Tools"
+    }
+  ],
+  "icons": [
+    { "src": "/booksmart-tools/icons/icon-72x72.svg",  "sizes": "72x72",   "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/booksmart-tools/icons/icon-96x96.svg",  "sizes": "96x96",   "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/booksmart-tools/icons/icon-128x128.svg","sizes": "128x128", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/booksmart-tools/icons/icon-144x144.svg","sizes": "144x144", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/booksmart-tools/icons/icon-152x152.svg","sizes": "152x152", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/booksmart-tools/icons/icon-192x192.svg","sizes": "192x192", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/booksmart-tools/icons/icon-384x384.svg","sizes": "384x384", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/booksmart-tools/icons/icon-512x512.svg","sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Payroll Calculator",
+      "short_name": "Payroll",
+      "url": "/booksmart-tools/payroll-tax-estimator.html",
+      "icons": [{ "src": "/booksmart-tools/icons/icon-96x96.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Loan Amortization",
+      "short_name": "Amortization",
+      "url": "/booksmart-tools/loan-amortization.html",
+      "icons": [{ "src": "/booksmart-tools/icons/icon-96x96.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "PDF Merge",
+      "short_name": "PDF Merge",
+      "url": "/booksmart-tools/pdf-merge.html",
+      "icons": [{ "src": "/booksmart-tools/icons/icon-96x96.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Quarterly Tax",
+      "short_name": "Tax",
+      "url": "/booksmart-tools/quarterly-tax-calculator.html",
+      "icons": [{ "src": "/booksmart-tools/icons/icon-96x96.svg", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
