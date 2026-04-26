@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+  <!-- Background -->
+  <rect width="72" height="72" rx="14.4" fill="#143d24"/>
+  <!-- Grid lines (subtle) -->
+  <line x1="23.76" y1="8.64" x2="23.76" y2="63.36" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="47.52" y1="8.64" x2="47.52" y2="63.36" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <!-- Book pages (left) -->
+  <rect x="8.64" y="15.84" width="25.2" height="40.32000000000001" rx="2.16" fill="#0e2818"/>
+  <rect x="10.080000000000002" y="17.28" width="22.32" height="37.44" rx="1.8" fill="#1c5430"/>
+  <!-- Page lines -->
+  <line x1="12.959999999999999" y1="24.48" x2="29.52" y2="24.48" stroke="rgba(255,255,255,0.4)" stroke-width="1.2959999999999998" stroke-linecap="round"/>
+  <line x1="12.959999999999999" y1="30.24" x2="29.52" y2="30.24" stroke="rgba(255,255,255,0.4)" stroke-width="1.2959999999999998" stroke-linecap="round"/>
+  <line x1="12.959999999999999" y1="36.0" x2="25.2" y2="36.0" stroke="rgba(255,255,255,0.25)" stroke-width="1.08" stroke-linecap="round"/>
+  <!-- Chart bars (right) -->
+  <rect x="38.160000000000004" y="43.199999999999996" width="5.3999999999999995" height="12.959999999999999" rx="1.08" fill="#7dd4a0"/>
+  <rect x="44.28" y="34.56" width="5.3999999999999995" height="21.599999999999998" rx="1.08" fill="#7dd4a0"/>
+  <rect x="50.4" y="25.2" width="5.3999999999999995" height="30.96" rx="1.08" fill="#7dd4a0"/>
+  <rect x="56.52" y="31.68" width="5.3999999999999995" height="24.48" rx="1.08" fill="#a8e8c0"/>
+  <!-- Trend line over bars -->
+  <polyline points="39.96,41.76 46.08,33.120000000000005 52.199999999999996,23.76 58.32000000000001,30.24" 
+    fill="none" stroke="#f0c060" stroke-width="1.5839999999999999" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dollar sign accent -->
+  <circle cx="58.67999999999999" cy="19.080000000000002" r="5.040000000000001" fill="#f0c060"/>
+  <text x="58.67999999999999" y="21.24" text-anchor="middle" fill="#1a1a18" font-size="6.4799999999999995" font-weight="bold" font-family="Georgia,serif">$</text>
+</svg>

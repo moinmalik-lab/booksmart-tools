@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144">
+  <!-- Background -->
+  <rect width="144" height="144" rx="28.8" fill="#143d24"/>
+  <!-- Grid lines (subtle) -->
+  <line x1="47.52" y1="17.28" x2="47.52" y2="126.72" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="95.04" y1="17.28" x2="95.04" y2="126.72" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <!-- Book pages (left) -->
+  <rect x="17.28" y="31.68" width="50.4" height="80.64000000000001" rx="4.32" fill="#0e2818"/>
+  <rect x="20.160000000000004" y="34.56" width="44.64" height="74.88" rx="3.6" fill="#1c5430"/>
+  <!-- Page lines -->
+  <line x1="25.919999999999998" y1="48.96" x2="59.04" y2="48.96" stroke="rgba(255,255,255,0.4)" stroke-width="2.5919999999999996" stroke-linecap="round"/>
+  <line x1="25.919999999999998" y1="60.48" x2="59.04" y2="60.48" stroke="rgba(255,255,255,0.4)" stroke-width="2.5919999999999996" stroke-linecap="round"/>
+  <line x1="25.919999999999998" y1="72.0" x2="50.4" y2="72.0" stroke="rgba(255,255,255,0.25)" stroke-width="2.16" stroke-linecap="round"/>
+  <!-- Chart bars (right) -->
+  <rect x="76.32000000000001" y="86.39999999999999" width="10.799999999999999" height="25.919999999999998" rx="2.16" fill="#7dd4a0"/>
+  <rect x="88.56" y="69.12" width="10.799999999999999" height="43.199999999999996" rx="2.16" fill="#7dd4a0"/>
+  <rect x="100.8" y="50.4" width="10.799999999999999" height="61.92" rx="2.16" fill="#7dd4a0"/>
+  <rect x="113.04" y="63.36" width="10.799999999999999" height="48.96" rx="2.16" fill="#a8e8c0"/>
+  <!-- Trend line over bars -->
+  <polyline points="79.92,83.52 92.16,66.24000000000001 104.39999999999999,47.52 116.64000000000001,60.48" 
+    fill="none" stroke="#f0c060" stroke-width="3.1679999999999997" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dollar sign accent -->
+  <circle cx="117.35999999999999" cy="38.160000000000004" r="10.080000000000002" fill="#f0c060"/>
+  <text x="117.35999999999999" y="42.48" text-anchor="middle" fill="#1a1a18" font-size="12.959999999999999" font-weight="bold" font-family="Georgia,serif">$</text>
+</svg>

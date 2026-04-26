@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="152" height="152" viewBox="0 0 152 152">
+  <!-- Background -->
+  <rect width="152" height="152" rx="30.400000000000002" fill="#143d24"/>
+  <!-- Grid lines (subtle) -->
+  <line x1="50.160000000000004" y1="18.24" x2="50.160000000000004" y2="133.76" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="100.32000000000001" y1="18.24" x2="100.32000000000001" y2="133.76" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <!-- Book pages (left) -->
+  <rect x="18.24" y="33.44" width="53.199999999999996" height="85.12" rx="4.56" fill="#0e2818"/>
+  <rect x="21.28" y="36.48" width="47.12" height="79.04" rx="3.8000000000000003" fill="#1c5430"/>
+  <!-- Page lines -->
+  <line x1="27.36" y1="51.68000000000001" x2="62.31999999999999" y2="51.68000000000001" stroke="rgba(255,255,255,0.4)" stroke-width="2.7359999999999998" stroke-linecap="round"/>
+  <line x1="27.36" y1="63.839999999999996" x2="62.31999999999999" y2="63.839999999999996" stroke="rgba(255,255,255,0.4)" stroke-width="2.7359999999999998" stroke-linecap="round"/>
+  <line x1="27.36" y1="76.0" x2="53.199999999999996" y2="76.0" stroke="rgba(255,255,255,0.25)" stroke-width="2.28" stroke-linecap="round"/>
+  <!-- Chart bars (right) -->
+  <rect x="80.56" y="91.2" width="11.4" height="27.36" rx="2.28" fill="#7dd4a0"/>
+  <rect x="93.48" y="72.96" width="11.4" height="45.6" rx="2.28" fill="#7dd4a0"/>
+  <rect x="106.39999999999999" y="53.199999999999996" width="11.4" height="65.36" rx="2.28" fill="#7dd4a0"/>
+  <rect x="119.32000000000001" y="66.88" width="11.4" height="51.68000000000001" rx="2.28" fill="#a8e8c0"/>
+  <!-- Trend line over bars -->
+  <polyline points="84.36000000000001,88.16 97.28,69.92 110.2,50.160000000000004 123.12,63.839999999999996" 
+    fill="none" stroke="#f0c060" stroke-width="3.344" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dollar sign accent -->
+  <circle cx="123.88" cy="40.28" r="10.64" fill="#f0c060"/>
+  <text x="123.88" y="44.839999999999996" text-anchor="middle" fill="#1a1a18" font-size="13.68" font-weight="bold" font-family="Georgia,serif">$</text>
+</svg>
