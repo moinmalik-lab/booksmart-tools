@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Leave Feedback | BookSmartTools</title>
+<meta name="description" content="Share your feedback about BookSmartTools calculators and help us improve. Tell us what worked, what didn't, and what you'd like to see.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f6f4ef;color:#1a1a18;-webkit-font-smoothing:antialiased}
+.site-nav{background:#1a1a18;padding:0 32px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:19px;color:white;text-decoration:none}
+.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:22px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);font-size:14px;text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1c3d28 0%,#2d5a3a 50%,#1a3424 100%);padding:56px 24px 48px;text-align:center;color:white}
+.hero-tag{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:18px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,44px);font-weight:400;margin-bottom:12px;line-height:1.2}
+.hero p{font-size:15px;color:rgba(255,255,255,.68);max-width:500px;margin:0 auto;line-height:1.7}
+
+/* Page wrap */
+.page-wrap{max-width:960px;margin:0 auto;padding:52px 24px 80px;display:grid;grid-template-columns:1fr 1.7fr;gap:40px;align-items:start}
+@media(max-width:720px){.page-wrap{grid-template-columns:1fr;padding:36px 20px 60px}}
+
+/* Left panel */
+.side-panel{}
+.side-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:14px}
+.side-text{font-size:14px;color:#5a5a56;line-height:1.8;margin-bottom:26px}
+
+/* Star rating widget */
+.rating-widget{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:20px;margin-bottom:16px;text-align:center}
+.rw-label{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:12px;font-family:'DM Mono',monospace}
+.stars{display:flex;justify-content:center;gap:6px;margin-bottom:10px}
+.star{font-size:34px;cursor:pointer;transition:transform .12s;user-select:none;opacity:.3}
+.star.active,.star:hover,.star.hovered{opacity:1;transform:scale(1.15)}
+.star-label{font-size:13px;color:#7a7568;min-height:20px;font-weight:500}
+
+/* Why feedback matters */
+.why-box{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:18px;margin-bottom:16px}
+.why-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:13px;color:#3a3a36;line-height:1.6}
+.why-item:last-child{margin-bottom:0}
+.why-dot{width:6px;height:6px;border-radius:50%;background:#1e5c33;flex-shrink:0;margin-top:5px}
+
+/* Anonymous note */
+.anon-note{background:#faf8f3;border:1px solid #d8d3c5;border-radius:5px;padding:14px 16px;font-size:12.5px;color:#6a6a67;line-height:1.6;display:flex;gap:10px;align-items:flex-start}
+.anon-icon{font-size:18px;flex-shrink:0}
+
+/* Form card */
+.form-card{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.form-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px}
+.form-sub{font-size:13px;color:#7a7568;margin-bottom:26px;line-height:1.6}
+
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:6px;font-family:'DM Mono',monospace}
+.field input,.field textarea,.field select{width:100%;border:1.5px solid #d8d3c5;border-radius:4px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a18;background:#faf8f3;outline:none;transition:all .15s;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#1e5c33;background:white;box-shadow:0 0 0 3px rgba(30,92,51,.08)}
+.field input::placeholder,.field textarea::placeholder{color:#b0ada5}
+.field textarea{min-height:120px;line-height:1.6}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:480px){.field-row{grid-template-columns:1fr}}
+
+/* Rating type buttons */
+.rating-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px}
+.rt-btn{padding:10px 8px;border:1.5px solid #d8d3c5;border-radius:4px;background:white;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#5a5a56;text-align:center;transition:all .15s}
+.rt-btn:hover{border-color:#1e5c33;color:#1e5c33;background:#f0f7f2}
+.rt-btn.selected{border-color:#1e5c33;background:#eef7f1;color:#1e5c33}
+.rt-btn .rt-icon{font-size:22px;display:block;margin-bottom:4px}
+
+/* Hidden star score input */
+.hidden-score{display:none}
+
+.char-count{font-size:11px;color:#9c9890;text-align:right;margin-top:4px;font-family:'DM Mono',monospace}
+
+/* Optional contact toggle */
+.contact-toggle{display:flex;align-items:center;gap:10px;margin-bottom:18px;cursor:pointer}
+.contact-toggle input[type=checkbox]{width:18px;height:18px;accent-color:#1e5c33;cursor:pointer}
+.ct-label{font-size:14px;color:#3a3a36;font-weight:500;line-height:1.4}
+.ct-sub{font-size:12px;color:#7a7568;margin-top:2px}
+.contact-fields{display:none}
+.contact-fields.visible{display:block}
+
+.submit-btn{width:100%;height:52px;background:#1e5c33;color:white;border:none;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}
+.submit-btn:hover{background:#165228;transform:translateY(-1px);box-shadow:0 6px 20px rgba(30,92,51,.25)}
+
+/* Success */
+.success-state{display:none;text-align:center;padding:40px 20px}
+.success-icon{font-size:56px;margin-bottom:18px}
+.success-title{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:10px}
+.success-text{font-size:15px;color:#5a5a56;line-height:1.7;max-width:360px;margin:0 auto 24px}
+.back-link{color:#1e5c33;font-weight:600;font-size:14px;text-decoration:none;border-bottom:1.5px solid #1e5c33;padding-bottom:1px}
+
+/* Divider */
+.divider{height:1px;background:#ede9e1;margin:20px 0}
+.section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7a7568;font-family:'DM Mono',monospace;margin-bottom:14px}
+
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/contact.html">Contact</a></li>
+    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <span class="hero-tag">Your Opinion Matters</span>
+  <h1>Share Your Feedback</h1>
+  <p>Tell us about your experience with any of our tools. Your feedback helps us fix what's broken and build what's needed.</p>
+</div>
+
+<div class="page-wrap">
+
+  <!-- Left panel -->
+  <div class="side-panel">
+    <div class="side-title">Why your feedback matters</div>
+    <p class="side-text">Every one of our tools is free, and we want to keep it that way. The only way we know what to improve is when real users tell us what they think.</p>
+
+    <div class="why-box">
+      <div class="why-item"><div class="why-dot"></div><div>We fix bugs and calculation errors based on user reports — if you found an issue, others probably did too</div></div>
+      <div class="why-item"><div class="why-dot"></div><div>New tools get built based on what people actually request — your suggestion might become the next calculator</div></div>
+      <div class="why-item"><div class="why-dot"></div><div>Positive feedback helps us understand what's working so we can do more of it</div></div>
+      <div class="why-item"><div class="why-dot"></div><div>We read every single message personally</div></div>
+    </div>
+
+    <div class="anon-note">
+      <div class="anon-icon">🔒</div>
+      <div>Your feedback can be completely anonymous — you don't need to provide any contact details unless you'd like us to follow up with you.</div>
+    </div>
+  </div>
+
+  <!-- Feedback form card -->
+  <div class="form-card">
+    <div class="form-title">Leave your feedback</div>
+    <p class="form-sub">Select the tool, rate your experience, and tell us what you think. Takes about 2 minutes.</p>
+
+    <form id="feedback-form" onsubmit="submitFeedback(event)">
+
+      <!-- Tool selector -->
+      <div class="field">
+        <label>Which tool are you reviewing? *</label>
+        <select name="tool" required id="tool-select">
+          <option value="" disabled selected>Select a tool...</option>
+          <optgroup label="── Payroll & HR ──">
+            <option value="payroll-tax-estimator">Payroll Tax Estimator</option>
+            <option value="overtime-calculator">Overtime Pay Calculator</option>
+            <option value="net-pay-calculator">Net Pay Calculator</option>
+            <option value="hourly-salary-converter">Hourly ↔ Salary Converter</option>
+            <option value="pto-calculator">PTO Calculator</option>
+            <option value="401k-calculator">401(k) Calculator</option>
+          </optgroup>
+          <optgroup label="── Tax Tools ──">
+            <option value="sales-tax-calculator">Sales Tax Return Calculator</option>
+            <option value="meals-tax-calculator">Meals Tax Calculator</option>
+            <option value="ecommerce-sales-tax">E-Commerce Sales Tax Tool</option>
+            <option value="quarterly-tax-calculator">Quarterly Tax Calculator</option>
+            <option value="self-employment-tax">Self-Employment Tax Calculator</option>
+            <option value="1099-vs-w2">1099 vs W-2 Calculator</option>
+          </optgroup>
+          <optgroup label="── Bookkeeping & Accounting ──">
+            <option value="invoice-late-fee">Invoice Late Fee Calculator</option>
+            <option value="ar-aging">Accounts Receivable Aging</option>
+            <option value="cash-flow-calculator">Cash Flow Calculator</option>
+            <option value="depreciation-calculator">Depreciation Calculator</option>
+            <option value="profit-margin">Profit Margin Calculator</option>
+            <option value="break-even">Break-Even Calculator</option>
+            <option value="ebitda-calculator">EBITDA Calculator</option>
+          </optgroup>
+          <optgroup label="── Business Finance ──">
+            <option value="business-loan">Business Loan Calculator</option>
+            <option value="roi-calculator">ROI Calculator</option>
+            <option value="markup-margin">Markup & Margin Calculator</option>
+            <option value="burn-rate">Burn Rate Calculator</option>
+          </optgroup>
+          <optgroup label="── Personal Finance ──">
+            <option value="mortgage-calculator">Mortgage Calculator</option>
+            <option value="loan-amortization">Loan Amortization Calculator</option>
+            <option value="compound-interest">Compound Interest Calculator</option>
+            <option value="savings-goal">Savings Goal Calculator</option>
+            <option value="budget-planner">Budget Planner</option>
+            <option value="debt-payoff">Debt Payoff Calculator</option>
+          </optgroup>
+          <optgroup label="── PDF Tools ──">
+            <option value="convert-to-pdf">Convert Files to PDF</option>
+            <option value="pdf-merge">PDF Merge</option>
+            <option value="pdf-converter">PDF to Word/Excel</option>
+          </optgroup>
+          <option value="general">General website feedback</option>
+        </select>
+      </div>
+
+      <!-- Star rating -->
+      <div class="field">
+        <label>Overall Rating *</label>
+        <div style="background:#faf8f3;border:1.5px solid #d8d3c5;border-radius:4px;padding:18px;text-align:center">
+          <div style="font-size:13px;color:#7a7568;margin-bottom:12px">How would you rate your experience?</div>
+          <div class="stars" id="stars">
+            <span class="star" data-val="1" onclick="setRating(1)" onmouseover="hoverRating(1)" onmouseout="resetHover()">★</span>
+            <span class="star" data-val="2" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseout="resetHover()">★</span>
+            <span class="star" data-val="3" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetHover()">★</span>
+            <span class="star" data-val="4" onclick="setRating(4)" onmouseover="hoverRating(4)" onmouseout="resetHover()">★</span>
+            <span class="star" data-val="5" onclick="setRating(5)" onmouseover="hoverRating(5)" onmouseout="resetHover()">★</span>
+          </div>
+          <div class="star-label" id="star-label">Click to rate</div>
+        </div>
+        <input type="hidden" name="rating" id="rating-input" value="">
+      </div>
+
+      <!-- Feedback type -->
+      <div class="field">
+        <label>What kind of feedback is this? *</label>
+        <div class="rating-btns">
+          <button type="button" class="rt-btn" onclick="selectType(this,'bug')"><span class="rt-icon">🐛</span>Found a Bug</button>
+          <button type="button" class="rt-btn" onclick="selectType(this,'suggestion')"><span class="rt-icon">💡</span>Suggestion</button>
+          <button type="button" class="rt-btn" onclick="selectType(this,'positive')"><span class="rt-icon">👍</span>Positive</button>
+          <button type="button" class="rt-btn" onclick="selectType(this,'accuracy')"><span class="rt-icon">🔢</span>Wrong Result</button>
+          <button type="button" class="rt-btn" onclick="selectType(this,'ui')"><span class="rt-icon">🎨</span>Design / UX</button>
+          <button type="button" class="rt-btn" onclick="selectType(this,'other')"><span class="rt-icon">📝</span>Other</button>
+        </div>
+        <input type="hidden" name="feedback_type" id="type-input" value="">
+      </div>
+
+      <!-- Comment -->
+      <div class="field">
+        <label>Your Feedback *</label>
+        <textarea name="comment" id="comment" placeholder="Tell us what you think. If something wasn't working as expected, describe what you entered and what result you got. The more detail the better — it really helps us fix things quickly." required maxlength="2000" oninput="updateCount(this)"></textarea>
+        <div class="char-count"><span id="char-count">0</span> / 2000</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Contact Details (optional)</div>
+
+      <!-- Optional contact toggle -->
+      <label class="contact-toggle">
+        <input type="checkbox" id="want-reply" onchange="toggleContact()">
+        <div>
+          <div class="ct-label">I'd like a reply to my feedback</div>
+          <div class="ct-sub">Check this if you'd like us to follow up with you directly</div>
+        </div>
+      </label>
+
+      <!-- Contact fields (shown only if checkbox checked) -->
+      <div class="contact-fields" id="contact-fields">
+        <div class="field-row">
+          <div class="field">
+            <label>Your Name</label>
+            <input type="text" name="name" placeholder="John Smith" maxlength="80">
+          </div>
+          <div class="field">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="+1 (555) 000-0000" maxlength="20">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" name="email" id="reply-email" placeholder="john@example.com">
+        </div>
+        <div style="background:#eef7f1;border:1px solid #b8ddc8;border-radius:4px;padding:12px 14px;font-size:12.5px;color:#2d5a3a;margin-bottom:18px;line-height:1.6">
+          📩 <strong>We will get back to you</strong> — once you submit this form, we aim to respond within <strong>1–2 business days</strong>. We read every message personally.
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">
+        <span>📤 Submit Feedback</span>
+      </button>
+
+      <p style="font-size:11.5px;color:#9c9890;text-align:center;margin-top:14px;line-height:1.6">
+        Anonymous feedback is welcome. Contact details are only needed if you want a reply.
+      </p>
+    </form>
+
+    <div class="success-state" id="success-state">
+      <div class="success-icon">🙏</div>
+      <div class="success-title">Thank you for your feedback!</div>
+      <p class="success-text" id="success-msg">We've received your message and really appreciate you taking the time to share your thoughts. It genuinely helps us make the tools better.</p>
+      <a href="/booksmart-tools/tools.html" class="back-link">← Back to all tools</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp; <a href="/booksmart-tools/contact.html">Contact</a>
+</footer>
+
+<script>
+// Star rating
+let currentRating = 0;
+const starLabels = ['','Poor — not what I expected','Below average','Decent — does the job','Good — would recommend','Excellent — exactly what I needed'];
+
+function setRating(val) {
+  currentRating = val;
+  document.getElementById('rating-input').value = val;
+  document.getElementById('star-label').textContent = starLabels[val];
+  document.querySelectorAll('.star').forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.val) <= val);
+  });
+}
+
+function hoverRating(val) {
+  document.querySelectorAll('.star').forEach(s => {
+    s.classList.toggle('hovered', parseInt(s.dataset.val) <= val);
+  });
+  document.getElementById('star-label').textContent = starLabels[val];
+}
+
+function resetHover() {
+  document.querySelectorAll('.star').forEach(s => s.classList.remove('hovered'));
+  document.getElementById('star-label').textContent = currentRating ? starLabels[currentRating] : 'Click to rate';
+}
+
+// Feedback type
+function selectType(btn, type) {
+  document.querySelectorAll('.rt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('type-input').value = type;
+}
+
+// Contact toggle
+function toggleContact() {
+  const cf = document.getElementById('contact-fields');
+  const checked = document.getElementById('want-reply').checked;
+  cf.classList.toggle('visible', checked);
+  if (checked) {
+    cf.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+}
+
+// Char count
+function updateCount(el) {
+  document.getElementById('char-count').textContent = el.value.length;
+}
+
+// Submit
+function submitFeedback(e) {
+  e.preventDefault();
+
+  // Validate rating
+  if (!currentRating) { alert('Please give a star rating before submitting.'); return; }
+  if (!document.getElementById('type-input').value) { alert('Please select a feedback type.'); return; }
+
+  // If wants reply, validate email
+  if (document.getElementById('want-reply').checked) {
+    const email = document.getElementById('reply-email').value;
+    if (!email) { alert('Please enter your email address so we can reply.'); return; }
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.innerHTML = '<span>Submitting...</span>';
+  btn.disabled = true;
+  btn.style.opacity = '.7';
+
+  const wantsReply = document.getElementById('want-reply').checked;
+
+  setTimeout(() => {
+    document.getElementById('feedback-form').style.display = 'none';
+    const successMsg = document.getElementById('success-msg');
+    successMsg.textContent = wantsReply
+      ? "We've received your feedback and will get back to you within 1–2 business days. Thank you for taking the time — it really does help us improve."
+      : "We've received your feedback and really appreciate you taking the time. It genuinely helps us make the tools better for everyone.";
+    document.getElementById('success-state').style.display = 'block';
+  }, 1200);
+}
+</script>
+</body>
+</html>
