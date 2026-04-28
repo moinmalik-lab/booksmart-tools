@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>How to Read a Loan Amortization Schedule | BookSmartTools</title>
+<meta name="description" content="Learn how to read an amortization schedule, understand odd-days interest, and match your bank's exact TILA disclosure. Step-by-step guide with examples.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f8f7f4;color:#1e1e1c;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#1e5c33;text-decoration:none}
+a:hover{text-decoration:underline}
+.site-nav{background:#154228;height:62px;display:flex;align-items:center;padding:0 32px;justify-content:space-between}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;color:white;text-decoration:none}
+.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:6px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.75);font-size:14px;padding:6px 12px;border-radius:4px;transition:all .15s}
+.nav-links a:hover{color:white;background:rgba(255,255,255,.1);text-decoration:none}
+.article-hero{background:linear-gradient(135deg,#1a2e1e,#243d28);padding:60px 0 52px;color:white}
+.wrap{max-width:780px;margin:0 auto;padding:0 28px}
+.wrap-wide{max-width:1080px;margin:0 auto;padding:0 28px}
+.article-cat{display:inline-flex;align-items:center;gap:6px;background:rgba(109,184,138,.15);border:1px solid rgba(109,184,138,.3);color:#a8dbb8;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:3px;margin-bottom:18px}
+.article-hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.15;margin-bottom:16px}
+.article-meta{display:flex;align-items:center;gap:16px;color:rgba(255,255,255,.6);font-size:13px;font-family:'DM Mono',monospace;flex-wrap:wrap}
+.article-body{max-width:720px;margin:0 auto;padding:52px 28px 80px}
+.article-body h2{font-family:'Playfair Display',serif;font-size:26px;color:#1e1e1c;margin:44px 0 14px;line-height:1.2}
+.article-body h3{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;color:#1e1e1c;margin:28px 0 10px}
+.article-body p{font-size:16px;color:#3d3d3a;line-height:1.85;margin-bottom:18px}
+.article-body ul,.article-body ol{padding-left:24px;margin-bottom:18px}
+.article-body li{font-size:16px;color:#3d3d3a;line-height:1.8;margin-bottom:6px}
+.callout{border-left:4px solid #1e5c33;background:#e6f4ec;padding:18px 20px;border-radius:0 6px 6px 0;margin:28px 0}
+.callout.amber{border-color:#c97a1a;background:#fef3e2}
+.callout.blue{border-color:#2563a8;background:#e8eef8}
+.callout strong{color:#1e1e1c}
+.example-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:13px}
+.example-table th{background:#1e1e1c;color:white;padding:10px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.5px}
+.example-table th:first-child{text-align:left}
+.example-table td{padding:9px 12px;border-bottom:1px solid #e0ddd5;text-align:right;font-family:'DM Mono',monospace;font-size:12px;color:#1e1e1c}
+.example-table td:first-child{text-align:left;font-weight:600}
+.example-table tr:nth-child(even) td{background:#f8f7f4}
+.example-table tr.highlight td{background:#e6f4ec;color:#1e5c33;font-weight:700}
+.tool-cta{background:#1e1e1c;border-radius:8px;padding:28px 32px;margin:36px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.tool-cta-text h3{color:white;font-size:18px;margin-bottom:6px}
+.tool-cta-text p{color:rgba(255,255,255,.6);font-size:14px;margin:0}
+.tool-cta-btn{background:#1e5c33;color:white;padding:12px 24px;border-radius:6px;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;transition:background .15s}
+.tool-cta-btn:hover{background:#2d7a47;text-decoration:none}
+.related{background:#f2f0eb;padding:40px 28px;border-top:1px solid #e0ddd5}
+.related h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:640px){.related-grid{grid-template-columns:1fr}}
+.related-card{background:white;border:1px solid #e0ddd5;border-radius:6px;padding:16px;text-decoration:none;color:#1e1e1c;transition:all .15s;display:block}
+.related-card:hover{border-color:#1e5c33;text-decoration:none;transform:translateY(-2px)}
+.rc-cat{font-size:10px;font-family:'DM Mono',monospace;color:#1e5c33;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.rc-title{font-size:14px;font-weight:700;line-height:1.3}
+footer{background:#1e1e1c;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/about.html">About</a></li>
+  </ul>
+</nav>
+
+<div class="article-hero">
+  <div class="wrap">
+    <div class="article-cat">📊 Loans & Amortization</div>
+    <h1>How to read a loan amortization schedule — and why your numbers don't match the bank's</h1>
+    <div class="article-meta">
+      <span>By Moin (BookSmartTools)</span>
+      <span>·</span>
+      <span>6 min read</span>
+      <span>·</span>
+      <span>Updated April 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="article-body">
+
+<p>If you've ever used an online loan calculator and compared the result to the payment on your loan documents, you've probably noticed they don't match exactly. Sometimes it's off by a few cents. Sometimes by a few dollars. This isn't a bug — it's a feature of how banks actually calculate interest, and understanding it can save you confusion and money.</p>
+
+<h2>What is an amortization schedule?</h2>
+<p>An amortization schedule is a complete table of every payment on a loan, showing exactly how each payment is divided between interest and principal. In the early payments, the majority goes to interest. In the final payments, almost everything goes to principal. This is called <strong>front-loaded interest</strong>.</p>
+<p>The key insight: the total amount you pay never changes from month to month (assuming a fixed rate), but the <em>split</em> between interest and principal shifts every single month.</p>
+
+<div class="callout">
+  <strong>Why this matters:</strong> When you make an extra principal payment, you're not just paying down the balance — you're permanently reducing the interest that will be charged on every future payment. A single $500 extra payment in month 1 can save thousands over the life of a 30-year mortgage.
+</div>
+
+<h2>The standard monthly payment formula</h2>
+<p>For a fixed-rate loan, the monthly payment is calculated with this formula:</p>
+
+<div style="background:#1e1e1c;color:#7dd4a0;font-family:'DM Mono',monospace;padding:16px 20px;border-radius:6px;font-size:13px;margin:20px 0;overflow-x:auto">
+  Payment = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]<br><br>
+  Where:<br>
+  P = loan principal<br>
+  r = monthly interest rate (annual rate ÷ 12)<br>
+  n = total number of payments
+</div>
+
+<p>For example: $46,673.83 loan, 4.99% APR, 60 months:</p>
+<ul>
+  <li>Monthly rate = 4.99% ÷ 12 = 0.4158%</li>
+  <li>Payment = $46,673.83 × [0.004158 × (1.004158)⁶⁰] / [(1.004158)⁶⁰ − 1]</li>
+  <li>= <strong>$880.58/month</strong> (approximately)</li>
+</ul>
+
+<p>But if you look at a real TILA disclosure for this loan, the payment is <strong>$882.38</strong>. What's going on?</p>
+
+<h2>Why your number doesn't match the bank: odd-days interest</h2>
+<p>The formula above assumes your first payment is exactly one calendar month after the loan originates. In reality, loans almost never close on exactly the right day. There are almost always <strong>odd days</strong> — the gap between origination and first payment isn't exactly 30 or 31 days.</p>
+
+<div class="callout amber">
+  <strong>Real example:</strong> Loan originates March 28, 2026. First payment is May 12, 2026 — that's 45 days. A standard month from March 28 would be 31 days (days in March). So there are <strong>14 extra "odd days."</strong>
+</div>
+
+<p>The bank calculates interest for those 14 extra days and adds it to the balance <em>before</em> computing the 60 equal payments. This is called <strong>capitalizing the odd-days interest</strong>.</p>
+
+<table class="example-table">
+  <thead><tr><th>What</th><th>Amount</th><th>How Calculated</th></tr></thead>
+  <tbody>
+    <tr><td>Original loan</td><td>$46,673.83</td><td>Amount financed</td></tr>
+    <tr><td>Odd-days interest</td><td>+ $90.57</td><td>$46,673.83 × (4.99%/360) × 14 days</td></tr>
+    <tr class="highlight"><td>Effective balance</td><td>$46,764.40</td><td>Basis for payment calculation</td></tr>
+    <tr><td>Monthly payment</td><td>$882.29</td><td>On $46,764.40 for 60 months</td></tr>
+    <tr class="highlight"><td>Bank's payment</td><td>$882.38</td><td>Rounded up by 1¢ for full payoff</td></tr>
+  </tbody>
+</table>
+
+<h2>The day-count convention: 360 vs 365</h2>
+<p>Notice the formula above uses 360 days, not 365. This is called the <strong>Actual/360</strong> day-count convention. It's standard for US auto loans, commercial loans, and many personal loans.</p>
+<p>Some loans use <strong>Actual/365</strong> — more common for mortgages and certain personal loans. Using 365 instead of 360 gives a slightly smaller odd-days charge.</p>
+
+<div class="callout blue">
+  <strong>How to find out which your loan uses:</strong> Look at your loan documents for "per diem interest" — that's the daily interest charge. If per diem = balance × rate / 360, you're on Actual/360. If it uses 365, you're on Actual/365.
+</div>
+
+<h2>Reading the schedule: a real example</h2>
+<p>Here's what the first few rows of an amortization schedule look like for the example above ($882.38 payment, 4.99%, 60 months, capitalized odd-days):</p>
+
+<table class="example-table">
+  <thead><tr><th>#</th><th>Date</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>May 12, 2026</td><td>$882.38</td><td>$686.98</td><td>$195.40</td><td>$46,077.42</td></tr>
+    <tr><td>2</td><td>Jun 1, 2026</td><td>$882.38</td><td>$689.84</td><td>$192.54</td><td>$45,387.58</td></tr>
+    <tr><td>3</td><td>Jul 1, 2026</td><td>$882.38</td><td>$692.72</td><td>$189.66</td><td>$44,694.86</td></tr>
+    <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+    <tr><td>59</td><td>Mar 1, 2031</td><td>$882.38</td><td>$878.70</td><td>$3.68</td><td>$882.16</td></tr>
+    <tr class="highlight"><td>60</td><td>Apr 1, 2031</td><td>$882.16</td><td>$878.48</td><td>$3.68</td><td>$0.00</td></tr>
+  </tbody>
+</table>
+
+<p>Notice how in payment #1, only $686.98 goes to principal — but by payment #60, almost everything ($878.48) goes to principal. The interest charge drops every month because the balance is getting smaller.</p>
+
+<h2>How to match your bank's exact schedule</h2>
+<p>To generate a schedule that exactly matches your bank's TILA disclosure:</p>
+<ol>
+  <li><strong>Enter the origination date and first payment date</strong> exactly as shown on your loan documents</li>
+  <li><strong>Enable "Capitalize odd-days into balance"</strong> (this is standard bank practice)</li>
+  <li><strong>Set day-count to Actual/360</strong> for most US auto and commercial loans</li>
+  <li><strong>Enable "Payment Override"</strong> and enter the exact payment from your TILA disclosure (e.g., $882.38)</li>
+</ol>
+
+<div class="tool-cta">
+  <div class="tool-cta-text">
+    <h3>Try the Loan Amortization Calculator</h3>
+    <p>Includes odd-days interest, Actual/360 & Actual/365, payment override, and CSV export</p>
+  </div>
+  <a href="/booksmart-tools/loan-amortization.html" class="tool-cta-btn">Open Calculator →</a>
+</div>
+
+<h2>The power of extra payments</h2>
+<p>The most valuable feature of an amortization calculator is modeling extra principal payments. Adding even $100/month extra to a 60-month car loan can save hundreds in interest and pay off the loan months early.</p>
+
+<div class="callout">
+  <strong>Rule of thumb:</strong> On a 60-month loan at 5%, every $100 in extra monthly principal payments saves approximately $150-200 in total interest and cuts roughly 4-6 months off the loan term.
+</div>
+
+<h2>Key terms to know</h2>
+<ul>
+  <li><strong>Principal:</strong> The original amount borrowed (and the remaining balance)</li>
+  <li><strong>Interest:</strong> The cost of borrowing, calculated on the outstanding balance</li>
+  <li><strong>Amortization:</strong> Gradual repayment of debt through regular payments</li>
+  <li><strong>Odd-days interest (stub period):</strong> Interest for the days between origination and first payment that don't fit a full month</li>
+  <li><strong>TILA disclosure:</strong> Truth-in-Lending Act document your lender must provide showing APR, finance charge, total of payments, and payment schedule</li>
+  <li><strong>Actual/360:</strong> Day-count convention where daily interest = balance × rate / 360</li>
+  <li><strong>Payoff date:</strong> The date of the final payment when the balance reaches $0</li>
+</ul>
+
+</div>
+
+<!-- Related Articles -->
+<div class="related">
+  <div class="wrap-wide">
+    <h3>Related tools & guides</h3>
+    <div class="related-grid">
+      <a href="/booksmart-tools/loan-amortization.html" class="related-card">
+        <div class="rc-cat">Calculator</div>
+        <div class="rc-title">Loan Amortization Calculator — with exact dates & odd-days interest</div>
+      </a>
+      <a href="/booksmart-tools/blog/quarterly-tax-guide.html" class="related-card">
+        <div class="rc-cat">Tax Guide</div>
+        <div class="rc-title">Quarterly Estimated Taxes: Complete 2026 Guide</div>
+      </a>
+      <a href="/booksmart-tools/mortgage-calculator.html" class="related-card">
+        <div class="rc-cat">Calculator</div>
+        <div class="rc-title">Mortgage Calculator — PITI with PMI, taxes, and insurance</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp; For estimation only — verify with your lender.</footer>
+</body>
+</html>

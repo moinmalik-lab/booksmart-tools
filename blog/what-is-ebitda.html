@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>What is EBITDA and How Do You Calculate It? (2026 Guide) | BookSmartTools</title>
+<meta name="description" content="EBITDA explained simply. What it means, how to calculate it step by step, what good EBITDA looks like, and why banks and investors use it to value businesses.">
+<meta name="keywords" content="what is EBITDA, how to calculate EBITDA, EBITDA explained, EBITDA formula, EBITDA example">
+<link rel="canonical" href="https://booksmartools.com/blog/what-is-ebitda.html">
+<meta property="og:title" content="What is EBITDA and How Do You Calculate It?">
+<meta property="og:description" content="EBITDA explained simply with step-by-step examples, industry benchmarks, and a free calculator.">
+<meta property="og:type" content="article">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What is EBITDA and How Do You Calculate It?","description":"EBITDA explained simply with step-by-step calculation, examples, and industry benchmarks.","url":"https://booksmartools.com/blog/what-is-ebitda.html","publisher":{"@type":"Organization","name":"BookSmartTools","url":"https://booksmartools.com"},"dateModified":"2026-01-01"}</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f6f4ef;color:#1a1a18;-webkit-font-smoothing:antialiased}
+a{color:#1e5c33;text-decoration:none}a:hover{text-decoration:underline}
+.site-nav{background:#1a1a18;padding:0 32px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:19px;color:#fff}.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);font-size:14px}.nav-links a:hover{color:#fff}
+.nav-cta{background:#1e5c33;color:#fff!important;padding:7px 16px;border-radius:4px}
+.art-hero{background:linear-gradient(135deg,#0e2818 0%,#1a3d60 100%);padding:52px 24px 44px;text-align:center;color:#fff}
+.art-tag{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;padding:5px 13px;border-radius:2px;margin-bottom:16px}
+.art-hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,44px);font-weight:700;line-height:1.15;max-width:740px;margin:0 auto 14px}
+.art-meta{font-size:12.5px;color:rgba(255,255,255,.55);font-family:'DM Mono',monospace}
+.art-meta span{margin:0 8px}
+.content-wrap{max-width:800px;margin:0 auto;padding:48px 24px 72px}
+.breadcrumb{font-size:12px;font-family:'DM Mono',monospace;color:#9c9890;margin-bottom:28px}
+.breadcrumb a{color:#6a6a67}
+/* TOC */
+.toc{background:#fff;border:1px solid #d8d3c5;border-radius:5px;padding:20px 24px;margin-bottom:36px}
+.toc-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7a7568;font-family:'DM Mono',monospace;margin-bottom:12px}
+.toc ol{padding-left:18px}
+.toc li{margin-bottom:6px;font-size:14px}
+.toc a{color:#1e5c33}
+/* Prose */
+h2{font-family:'Playfair Display',serif;font-size:28px;color:#1a1a18;margin:44px 0 14px}
+h3{font-family:'Playfair Display',serif;font-size:20px;color:#1a1a18;margin:28px 0 10px}
+p{font-size:15.5px;color:#3a3a36;line-height:1.85;margin-bottom:18px}
+ul,ol{font-size:15.5px;color:#3a3a36;line-height:1.85;margin:0 0 18px 22px}
+li{margin-bottom:6px}
+strong{color:#1a1a18}
+/* Boxes */
+.info-box{background:#eef7f1;border-left:4px solid #1e5c33;padding:16px 20px;border-radius:0 5px 5px 0;margin:24px 0}
+.info-box p{margin:0;color:#1a3828;font-size:14.5px}
+.warn-box{background:#fef8ec;border-left:4px solid #d4860a;padding:16px 20px;border-radius:0 5px 5px 0;margin:24px 0}
+.warn-box p{margin:0;color:#4a2800;font-size:14.5px}
+/* Example box */
+.ex-box{background:#fff;border:1px solid #d8d3c5;border-radius:5px;padding:22px;margin:24px 0}
+.ex-title{font-size:12px;font-family:'DM Mono',monospace;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7a7568;margin-bottom:14px}
+.ex-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ede9e1;font-size:14px}
+.ex-row:last-of-type{border-bottom:none}
+.ex-lbl{color:#5a5a56}.ex-val{font-family:'DM Mono',monospace;font-weight:700}
+.ex-val.g{color:#1e5c33}.ex-val.r{color:#a83428}.ex-val.b{color:#1a3d6e}
+.ex-total{display:flex;justify-content:space-between;padding:12px 0;margin-top:8px;border-top:2px solid #d8d3c5;font-weight:700;font-size:15px}
+/* Table */
+.rate-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.rate-table th{background:#1a1a18;color:#fff;padding:10px 14px;text-align:left;font-size:11px;letter-spacing:.5px;text-transform:uppercase}
+.rate-table td{padding:9px 14px;border-bottom:1px solid #ede9e1}
+.rate-table tr:nth-child(even) td{background:#faf8f3}
+.rate-table tr:hover td{background:#f0f7f2}
+/* CTA */
+.tool-cta{background:#1e5c33;color:#fff;border-radius:6px;padding:28px;text-align:center;margin:36px 0}
+.tool-cta h3{font-family:'Playfair Display',serif;color:#fff;font-size:20px;margin-bottom:8px}
+.tool-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:18px}
+.tool-cta a{background:#fff;color:#1e5c33;font-weight:700;font-size:14px;padding:11px 26px;border-radius:4px;display:inline-block}
+.tool-cta a:hover{text-decoration:none;opacity:.92}
+/* Related */
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media(max-width:600px){.related-grid{grid-template-columns:1fr}}
+.rel-card{background:#fff;border:1px solid #d8d3c5;border-radius:5px;padding:16px;text-decoration:none;color:#1a1a18;transition:all .18s;display:block}
+.rel-card:hover{border-color:#7aab8c;transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.07)}
+.rel-icon{font-size:22px;margin-bottom:6px}
+.rel-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.rel-sub{font-size:11.5px;color:#7a7568}
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6)}
+</style>
+<meta property="og:site_name" content="BookSmartTools">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<nav class="site-nav">
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/ebitda-calculator.html" class="nav-cta">EBITDA Calculator</a></li>
+  </ul>
+</nav>
+
+<div class="art-hero">
+  <span class="art-tag">Business Finance · 2026 Guide</span>
+  <h1>What is EBITDA and How Do You Calculate It?</h1>
+  <div class="art-meta"><span>📅 Updated January 2026</span><span>⏱ 10 min read</span><span>📈 Business Finance</span></div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb"><a href="/booksmart-tools/">Home</a> → <a href="/booksmart-tools/blog/index.html">Blog</a> → What is EBITDA</div>
+
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#what">What does EBITDA stand for?</a></li>
+      <li><a href="#why">Why do banks and investors use EBITDA?</a></li>
+      <li><a href="#how">How to calculate EBITDA — two methods</a></li>
+      <li><a href="#example">Real worked example</a></li>
+      <li><a href="#margin">EBITDA margin — what is good?</a></li>
+      <li><a href="#adjusted">Adjusted EBITDA explained</a></li>
+      <li><a href="#valuation">Using EBITDA to value a business</a></li>
+      <li><a href="#limits">Limitations of EBITDA</a></li>
+    </ol>
+  </div>
+
+  <p>If you've ever applied for a business loan, spoken with an investor, or looked at a company acquisition, you've almost certainly heard the word EBITDA. It's one of the most widely used financial metrics in business — and one of the most misunderstood.</p>
+  <p>This guide explains exactly what EBITDA is, how to calculate it two different ways, what the numbers mean, and when you should and shouldn't rely on it.</p>
+
+  <h2 id="what">What Does EBITDA Stand For?</h2>
+  <p>EBITDA stands for <strong>Earnings Before Interest, Taxes, Depreciation, and Amortization</strong>. It's a measure of a company's core operating profitability — how much cash the business generates from its day-to-day operations before accounting for financing decisions and accounting treatments.</p>
+  <p>Breaking it down:</p>
+  <ul>
+    <li><strong>Earnings</strong> — the profit your business makes</li>
+    <li><strong>Before Interest</strong> — ignores how the business is financed (loans vs equity)</li>
+    <li><strong>Before Taxes</strong> — ignores the tax structure (which varies by jurisdiction)</li>
+    <li><strong>Before Depreciation</strong> — adds back the non-cash write-down of physical assets</li>
+    <li><strong>Before Amortization</strong> — adds back the non-cash write-down of intangible assets</li>
+  </ul>
+  <div class="info-box"><p><strong>Simple version:</strong> EBITDA answers the question — "How much cash is this business generating from its actual operations, before we worry about debt payments, taxes, and accounting?" It strips out the noise so you can compare businesses on equal footing.</p></div>
+
+  <h2 id="why">Why Do Banks and Investors Use EBITDA?</h2>
+  <p>EBITDA is used for three main purposes:</p>
+  <ol>
+    <li><strong>Business valuation</strong> — Most small and mid-size businesses are sold for a multiple of EBITDA (e.g., "3× EBITDA"). It's the standard starting point for any M&A deal.</li>
+    <li><strong>Loan underwriting</strong> — Banks use EBITDA to calculate your Debt Service Coverage Ratio (DSCR). SBA loans typically require a DSCR of 1.25 or higher, meaning your EBITDA must be 1.25× your annual debt payments.</li>
+    <li><strong>Performance comparison</strong> — EBITDA lets you compare profitability across companies in the same industry regardless of their capital structure or tax situation.</li>
+  </ol>
+
+  <h2 id="how">How to Calculate EBITDA — Two Methods</h2>
+  <p>There are two ways to calculate EBITDA, and both should give you the same answer:</p>
+
+  <h3>Method 1: Bottom-Up (from Net Income)</h3>
+  <p>Start with your net income (the bottom line of your income statement) and add back the four items:</p>
+  <div class="ex-box">
+    <div class="ex-title">Bottom-Up EBITDA Formula</div>
+    <div class="ex-row"><span class="ex-lbl">Net Income (after-tax profit)</span><span class="ex-val">+ X</span></div>
+    <div class="ex-row"><span class="ex-lbl">+ Interest Expense</span><span class="ex-val g">+ X</span></div>
+    <div class="ex-row"><span class="ex-lbl">+ Income Tax Expense</span><span class="ex-val g">+ X</span></div>
+    <div class="ex-row"><span class="ex-lbl">+ Depreciation Expense</span><span class="ex-val g">+ X</span></div>
+    <div class="ex-row"><span class="ex-lbl">+ Amortization Expense</span><span class="ex-val g">+ X</span></div>
+    <div class="ex-total"><span>= EBITDA</span><span class="ex-val b">= X</span></div>
+  </div>
+
+  <h3>Method 2: Top-Down (from Revenue)</h3>
+  <p>Start with revenue and subtract only the cash operating expenses — leave out depreciation and amortization:</p>
+  <div class="ex-box">
+    <div class="ex-title">Top-Down EBITDA Formula</div>
+    <div class="ex-row"><span class="ex-lbl">Revenue</span><span class="ex-val">X</span></div>
+    <div class="ex-row"><span class="ex-lbl">− Cost of Goods Sold (COGS)</span><span class="ex-val r">− X</span></div>
+    <div class="ex-row"><span class="ex-lbl">− Operating Expenses (excl. D&A)</span><span class="ex-val r">− X</span></div>
+    <div class="ex-total"><span>= EBITDA</span><span class="ex-val b">= X</span></div>
+  </div>
+  <p>Use <strong>bottom-up</strong> when you have a completed income statement. Use <strong>top-down</strong> when building a forecast or financial model.</p>
+
+  <h2 id="example">Real Worked Example</h2>
+  <p>Let's say you own a small manufacturing business. Here's what your income statement shows:</p>
+
+  <div class="ex-box">
+    <div class="ex-title">ABC Manufacturing — Annual Income Statement</div>
+    <div class="ex-row"><span class="ex-lbl">Revenue</span><span class="ex-val">$1,200,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Cost of Goods Sold</span><span class="ex-val r">−$480,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Gross Profit</span><span class="ex-val g">$720,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Operating Expenses (rent, salaries, marketing)</span><span class="ex-val r">−$430,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Depreciation & Amortization</span><span class="ex-val r">−$60,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Operating Income (EBIT)</span><span class="ex-val">$230,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Interest Expense</span><span class="ex-val r">−$45,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Income Tax (21%)</span><span class="ex-val r">−$39,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Net Income</span><span class="ex-val g">$146,000</span></div>
+  </div>
+
+  <p>Now calculate EBITDA using the bottom-up method:</p>
+
+  <div class="ex-box">
+    <div class="ex-title">EBITDA Calculation</div>
+    <div class="ex-row"><span class="ex-lbl">Net Income</span><span class="ex-val">$146,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">+ Interest Expense</span><span class="ex-val g">+$45,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">+ Income Tax</span><span class="ex-val g">+$39,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">+ Depreciation & Amortization</span><span class="ex-val g">+$60,000</span></div>
+    <div class="ex-total"><span>EBITDA</span><span class="ex-val b">$290,000</span></div>
+  </div>
+
+  <p>The EBITDA margin = $290,000 ÷ $1,200,000 = <strong>24.2%</strong> — which is a strong result for a manufacturing business.</p>
+
+  <div class="tool-cta">
+    <h3>Calculate Your EBITDA Free</h3>
+    <p>Enter your income statement figures and get EBITDA, adjusted EBITDA, margin, and estimated enterprise value instantly.</p>
+    <a href="/booksmart-tools/ebitda-calculator.html">Open EBITDA Calculator →</a>
+  </div>
+
+  <h2 id="margin">EBITDA Margin — What Is Good?</h2>
+  <p>EBITDA margin = EBITDA ÷ Revenue × 100. It tells you what percentage of revenue becomes operating cash. Here are typical ranges by industry:</p>
+
+  <table class="rate-table">
+    <thead><tr><th>Industry</th><th>Typical EBITDA Margin</th><th>EV/EBITDA Multiple</th></tr></thead>
+    <tbody>
+      <tr><td>Retail / E-Commerce</td><td>3–8%</td><td>4–6×</td></tr>
+      <tr><td>Restaurant / Food Service</td><td>8–14%</td><td>4–7×</td></tr>
+      <tr><td>Manufacturing</td><td>10–18%</td><td>5–8×</td></tr>
+      <tr><td>Construction / Contracting</td><td>5–12%</td><td>4–7×</td></tr>
+      <tr><td>Healthcare / Medical</td><td>12–22%</td><td>7–12×</td></tr>
+      <tr><td>Business Services</td><td>12–20%</td><td>7–11×</td></tr>
+      <tr><td>Technology / SaaS</td><td>15–35%</td><td>10–20×</td></tr>
+      <tr><td>Financial Services</td><td>25–45%</td><td>10–16×</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="adjusted">Adjusted EBITDA Explained</h2>
+  <p>Adjusted EBITDA adds back one-time, non-recurring items that distort the true picture of ongoing profitability. It's commonly used in M&A and investor presentations.</p>
+  <p>Common add-backs for Adjusted EBITDA:</p>
+  <ul>
+    <li><strong>Owner compensation above market rate</strong> — If an owner pays themselves $300K but a market-rate CEO would earn $180K, the $120K difference is added back</li>
+    <li><strong>One-time expenses</strong> — Lawsuit settlements, restructuring costs, one-time marketing campaigns</li>
+    <li><strong>Non-cash stock compensation</strong> — Common in startups</li>
+    <li><strong>One-time revenue removed</strong> — PPP loan forgiveness, insurance proceeds, asset sale gains</li>
+  </ul>
+
+  <h2 id="valuation">Using EBITDA to Value a Business</h2>
+  <p>The most common way to value a small business is: <strong>Enterprise Value = EBITDA × Industry Multiple</strong></p>
+  <p>Using our ABC Manufacturing example:</p>
+  <ul>
+    <li>EBITDA: $290,000</li>
+    <li>Manufacturing multiple: ~6×</li>
+    <li>Implied enterprise value: $290,000 × 6 = <strong>$1,740,000</strong></li>
+  </ul>
+  <div class="warn-box"><p>⚠ This is a starting point only. Actual business value depends on growth rate, customer concentration, recurring revenue percentage, owner dependency, and buyer type. Always work with a business broker or M&A advisor for an actual sale.</p></div>
+
+  <h2 id="limits">Limitations of EBITDA</h2>
+  <p>Warren Buffett famously called EBITDA a "dangerous" metric. Here's why you shouldn't rely on it in isolation:</p>
+  <ul>
+    <li><strong>Ignores capital expenditures (CapEx)</strong> — A manufacturing business might need $200K/year in equipment just to maintain operations. EBITDA ignores this entirely.</li>
+    <li><strong>Ignores working capital</strong> — Cash can be tied up in inventory and receivables. EBITDA doesn't show this.</li>
+    <li><strong>Can be manipulated</strong> — Aggressive "adjustments" can make a poorly-performing business look healthy. Always scrutinize what's being added back.</li>
+    <li><strong>Doesn't reflect actual cash taxes</strong> — The income tax you add back is the accounting entry, not what the business actually paid to the IRS.</li>
+  </ul>
+  <p>The best approach: use EBITDA as a starting point for comparison and valuation, then validate it with free cash flow, DSCR, and actual cash tax analysis.</p>
+
+  <h2>Related Tools & Guides</h2>
+  <div class="related-grid">
+    <a href="/booksmart-tools/ebitda-calculator.html" class="rel-card"><div class="rel-icon">📈</div><div class="rel-title">EBITDA Calculator</div><div class="rel-sub">Calculate EBITDA, margin & enterprise value</div></a>
+    <a href="/booksmart-tools/profit-margin-calculator.html" class="rel-card"><div class="rel-icon">📊</div><div class="rel-title">Profit Margin Calculator</div><div class="rel-sub">Gross, operating & net margins</div></a>
+    <a href="/booksmart-tools/break-even-calculator.html" class="rel-card"><div class="rel-icon">⚖️</div><div class="rel-title">Break-Even Calculator</div><div class="rel-sub">Units and revenue to cover all costs</div></a>
+  </div>
+</div>
+<footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp; For estimation only.</footer>
+</body></html>

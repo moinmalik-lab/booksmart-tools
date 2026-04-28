@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>How to Calculate Payroll Taxes in 2026 | Step-by-Step Guide | BookSmartTools</title>
+<meta name="description" content="Complete guide to calculating employee payroll taxes in 2026. Federal income tax withholding, FICA, FUTA, state taxes — with real examples and our free calculator.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f6f4ef;color:#1b1b19;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#1c5430;text-decoration:none}a:hover{text-decoration:underline}
+.site-nav{background:#143d24;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:19px;color:#fff}.nav-logo em{color:#7dd4a0;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);font-size:14px}.nav-links a:hover{color:#fff}
+.nav-cta{background:#1c5430;color:#fff!important;padding:8px 16px;border-radius:5px}
+/* Article layout */
+.art-hero{background:linear-gradient(135deg,#0e2818 0%,#1c5430 100%);color:#fff;padding:56px 0 48px;text-align:center}
+.art-tag{display:inline-block;background:rgba(122,171,140,.2);border:1px solid rgba(122,171,140,.35);color:#a8dfc0;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:18px}
+.art-hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,44px);font-weight:700;line-height:1.15;max-width:760px;margin:0 auto 16px}
+.art-meta{font-size:13px;color:rgba(255,255,255,.55);font-family:'DM Mono',monospace}
+.art-meta span{margin:0 10px}
+.content-wrap{max-width:820px;margin:0 auto;padding:52px 28px 80px}
+/* Prose */
+h2{font-family:'Playfair Display',serif;font-size:28px;color:#1b1b19;margin:48px 0 16px;padding-top:8px}
+h3{font-family:'Playfair Display',serif;font-size:20px;color:#1b1b19;margin:32px 0 12px}
+p{font-size:15.5px;color:#444440;line-height:1.85;margin-bottom:18px}
+ul,ol{font-size:15.5px;color:#444440;line-height:1.85;margin:0 0 18px 22px}
+li{margin-bottom:6px}
+strong{color:#1b1b19}
+/* Boxes */
+.info-box{background:#eef7f1;border-left:4px solid #1c5430;border-radius:0 6px 6px 0;padding:18px 20px;margin:24px 0}
+.info-box p{margin-bottom:0;color:#1a3828}
+.warn-box{background:#fef0de;border-left:4px solid #b86e0c;border-radius:0 6px 6px 0;padding:18px 20px;margin:24px 0}
+.warn-box p{margin-bottom:0;color:#4a2c00}
+.example-box{background:#fff;border:1px solid #dedad2;border-radius:8px;padding:24px;margin:28px 0}
+.example-box h4{font-size:13px;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;color:#6a6a67;margin-bottom:16px}
+.ex-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #ede9e1;font-size:14px}
+.ex-row:last-child{border-bottom:none}
+.ex-lbl{color:#6a6a67}
+.ex-val{font-family:'DM Mono',monospace;font-weight:700}
+.ex-val.g{color:#1c5430}.ex-val.r{color:#b83428}.ex-val.w{color:#1b1b19}
+.ex-total{display:flex;justify-content:space-between;padding:12px 0;margin-top:8px;border-top:2px solid #dedad2;font-weight:700;font-size:15px}
+.ex-total .ex-val{font-size:18px;font-family:'Playfair Display',serif}
+/* Rate table */
+.rate-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.rate-table th{background:#143d24;color:#fff;padding:11px 14px;text-align:left;font-size:12px;letter-spacing:.5px}
+.rate-table td{padding:10px 14px;border-bottom:1px solid #ede9e1}
+.rate-table tr:hover td{background:#f5f3ee}
+.rate-table tr:nth-child(even) td{background:#faf8f4}
+/* CTA */
+.tool-cta{background:#1c5430;color:#fff;border-radius:10px;padding:32px;text-align:center;margin:44px 0}
+.tool-cta h3{font-family:'Playfair Display',serif;color:#fff;font-size:22px;margin-bottom:8px}
+.tool-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px}
+.tool-cta a{display:inline-block;background:#fff;color:#1c5430;font-weight:700;font-size:15px;padding:13px 28px;border-radius:6px;transition:transform .15s}
+.tool-cta a:hover{transform:translateY(-2px);text-decoration:none}
+/* Breadcrumb */
+.breadcrumb{font-size:12px;font-family:'DM Mono',monospace;color:#9c9c99;margin-bottom:32px}
+.breadcrumb a{color:#6a6a67}.breadcrumb a:hover{color:#1c5430}
+/* Related */
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+@media(max-width:640px){.related-grid{grid-template-columns:1fr}}
+.rel-card{background:#fff;border:1px solid #dedad2;border-radius:8px;padding:18px;text-decoration:none;color:#1b1b19;transition:all .18s;display:block}
+.rel-card:hover{border-color:#7aab8c;box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateY(-2px)}
+.rel-icon{font-size:24px;margin-bottom:8px}
+.rel-title{font-size:14px;font-weight:700;margin-bottom:4px;color:#1b1b19}
+.rel-sub{font-size:12px;color:#6a6a67}
+footer{background:#1b1b19;color:rgba(255,255,255,.4);text-align:center;padding:28px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.55)}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+  <ul class="nav-links">
+    <li><a href="/booksmart-tools/tools.html">All Tools</a></li>
+    <li><a href="/booksmart-tools/payroll-tax-estimator.html" class="nav-cta">Payroll Calculator</a></li>
+  </ul>
+</nav>
+
+<div class="art-hero">
+  <span class="art-tag">Payroll Guide</span>
+  <h1>How to Calculate Payroll Taxes in 2026 — Complete Step-by-Step Guide</h1>
+  <div class="art-meta"><span>📅 Updated January 2026</span><span>⏱ 12 min read</span><span>💼 Payroll & HR</span></div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb"><a href="/booksmart-tools/">Home</a> → <a href="/booksmart-tools/blog/index.html">Blog</a> → Payroll Tax Guide 2026</div>
+
+  <p>Calculating payroll taxes correctly is one of the most important — and most error-prone — tasks for any small business. Get it wrong and you face penalties, underpayment notices, or angry employees. This guide walks you through every component of a US employee paycheck in 2026, with a real worked example at the end.</p>
+
+  <div class="info-box"><p><strong>Quick version:</strong> Gross pay → subtract pre-tax deductions → apply FIT withholding (Step 2 method) → apply FICA (6.2% SS + 1.45% Medicare) → subtract state income tax → subtract post-tax deductions = net pay. Employer also pays matching FICA + FUTA.</p></div>
+
+  <h2>The 5 Components of Payroll Tax</h2>
+  <p>Every paycheck calculation involves five separate tax components. Let's look at each one:</p>
+  <ol>
+    <li><strong>Federal Income Tax (FIT)</strong> — withheld from employee pay based on W-4 elections</li>
+    <li><strong>Social Security Tax</strong> — 6.2% employee + 6.2% employer</li>
+    <li><strong>Medicare Tax</strong> — 1.45% employee + 1.45% employer (+ 0.9% Additional Medicare for high earners)</li>
+    <li><strong>Federal Unemployment Tax (FUTA)</strong> — employer only, 0.6% on first $7,000</li>
+    <li><strong>State Income Tax</strong> — varies by state (9 states have no income tax)</li>
+  </ol>
+
+  <h2>Step 1: Determine Gross Pay</h2>
+  <p>Gross pay is the starting point before any taxes or deductions. How you calculate it depends on pay type:</p>
+  <ul>
+    <li><strong>Hourly:</strong> Hours worked × hourly rate. Overtime hours (over 40/week) × rate × 1.5</li>
+    <li><strong>Salaried:</strong> Annual salary ÷ number of pay periods (52 weekly, 26 bi-weekly, 24 semi-monthly, 12 monthly)</li>
+    <li><strong>Commission:</strong> Base + earned commission for the period</li>
+  </ul>
+
+  <h2>Step 2: Subtract Pre-Tax Deductions</h2>
+  <p>Pre-tax deductions reduce taxable income — they come off gross pay <em>before</em> FIT and state taxes are applied (though FICA still applies to most of them).</p>
+  <ul>
+    <li><strong>401(k) Traditional contributions</strong> — reduce FIT and state tax, but not FICA</li>
+    <li><strong>Health insurance premiums</strong> (employer-sponsored) — reduce FIT, state, and FICA</li>
+    <li><strong>HSA/FSA contributions</strong> — reduce FIT, state, and FICA</li>
+    <li><strong>Commuter benefits</strong> (up to $315/month in 2026)</li>
+  </ul>
+  <div class="warn-box"><p><strong>Important:</strong> Traditional 401(k) deferrals reduce federal income tax but NOT Social Security or Medicare. Health insurance premiums under a Section 125 cafeteria plan reduce all three (FIT + FICA).</p></div>
+
+  <h2>Step 3: Calculate Federal Income Tax (FIT)</h2>
+  <p>The IRS provides two methods for withholding FIT: the Percentage Method (automated) and the Wage Bracket Method. The Percentage Method is what payroll software uses. Here are the 2026 brackets:</p>
+
+  <table class="rate-table">
+    <thead><tr><th>Single / MFS Taxable Wages (Annual)</th><th>Tax Rate</th></tr></thead>
+    <tbody>
+      <tr><td>$0 – $11,925</td><td>10%</td></tr>
+      <tr><td>$11,926 – $48,475</td><td>12%</td></tr>
+      <tr><td>$48,476 – $103,350</td><td>22%</td></tr>
+      <tr><td>$103,351 – $197,300</td><td>24%</td></tr>
+      <tr><td>$197,301 – $250,525</td><td>32%</td></tr>
+      <tr><td>$250,526 – $626,350</td><td>35%</td></tr>
+      <tr><td>Over $626,350</td><td>37%</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>How to apply it (Percentage Method):</strong></p>
+  <ol>
+    <li>Annualize the gross pay (bi-weekly gross × 26)</li>
+    <li>Subtract the standard withholding allowance if the employee claimed it on their 2020+ W-4 (it's $0 for 2020+ W-4 — the allowance system was eliminated)</li>
+    <li>Apply the tax brackets to find annual tax</li>
+    <li>Divide annual tax by number of pay periods to get per-paycheck withholding</li>
+  </ol>
+
+  <h2>Step 4: Calculate FICA Taxes</h2>
+  <p>FICA stands for Federal Insurance Contributions Act. It covers Social Security and Medicare.</p>
+
+  <table class="rate-table">
+    <thead><tr><th>Tax</th><th>Employee Rate</th><th>Employer Rate</th><th>2026 Wage Base</th></tr></thead>
+    <tbody>
+      <tr><td>Social Security</td><td>6.2%</td><td>6.2%</td><td>$184,500</td></tr>
+      <tr><td>Medicare</td><td>1.45%</td><td>1.45%</td><td>No limit</td></tr>
+      <tr><td>Additional Medicare</td><td>0.9%</td><td>—</td><td>Over $200K (single)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box"><p><strong>Social Security wage base:</strong> Once an employee's year-to-date wages reach $184,500, Social Security tax stops for the rest of the year. Medicare has no cap.</p></div>
+
+  <h2>Step 5: Calculate State Income Tax</h2>
+  <p>State income tax withholding depends on the employee's work state and the state's tax rates. Key notes:</p>
+  <ul>
+    <li><strong>No state income tax (2026):</strong> Alaska, Florida, Nevada, New Hampshire (only on interest/dividends), South Dakota, Tennessee, Texas, Washington, Wyoming</li>
+    <li><strong>Flat rate states:</strong> Colorado (4.4%), Illinois (4.95%), Pennsylvania (3.07%), Utah (4.85%)</li>
+    <li><strong>Progressive states:</strong> California (up to 13.3%), New York (up to 10.9%), Minnesota (up to 9.85%)</li>
+  </ul>
+  <p>Virginia example: 4 brackets — 2% on first $3,000, 3% on next $2,000, 5% on next $12,000, 5.75% on over $17,000 annually.</p>
+
+  <h2>Step 6: Employer-Only Taxes</h2>
+  <p>In addition to matching the employee's FICA, employers pay:</p>
+  <ul>
+    <li><strong>FUTA (Federal Unemployment):</strong> 6% on first $7,000 wages per employee, reduced to 0.6% if state UI taxes are paid on time. Maximum $42/employee/year at the credit rate.</li>
+    <li><strong>SUTA (State Unemployment):</strong> Varies by state and employer experience rating, typically 2–8% on the first $7,000–$38,000 of wages</li>
+  </ul>
+
+  <h2>Real Example: Bi-Weekly Paycheck Calculation</h2>
+  <p>Let's calculate a complete paycheck for a Virginia employee earning $75,000/year, filing Single, with $200/period health insurance deduction and 5% 401(k) contribution.</p>
+
+  <div class="example-box">
+    <h4>Employee: Jane Smith — Bi-Weekly Paycheck (Period 14 of 26)</h4>
+    <div class="ex-row"><span class="ex-lbl">Annual salary</span><span class="ex-val w">$75,000</span></div>
+    <div class="ex-row"><span class="ex-lbl">Gross pay (÷26)</span><span class="ex-val w">$2,884.62</span></div>
+    <div class="ex-row"><span class="ex-lbl">− Health insurance (pre-tax, Section 125)</span><span class="ex-val r">−$200.00</span></div>
+    <div class="ex-row"><span class="ex-lbl">− 401(k) contribution (5% of gross, pre-tax)</span><span class="ex-val r">−$144.23</span></div>
+    <div class="ex-row"><span class="ex-lbl">FICA taxable wages (gross − health only)</span><span class="ex-val">$2,684.62</span></div>
+    <div class="ex-row"><span class="ex-lbl">FIT taxable wages (gross − health − 401k)</span><span class="ex-val">$2,540.39</span></div>
+    <div class="ex-row" style="margin-top:10px"><span class="ex-lbl">Federal income tax (annualized → bracketed)</span><span class="ex-val r">−$328.46</span></div>
+    <div class="ex-row"><span class="ex-lbl">Social Security (6.2% × $2,684.62)</span><span class="ex-val r">−$166.45</span></div>
+    <div class="ex-row"><span class="ex-lbl">Medicare (1.45% × $2,684.62)</span><span class="ex-val r">−$38.93</span></div>
+    <div class="ex-row"><span class="ex-lbl">Virginia state income tax (est. 5.4% effective)</span><span class="ex-val r">−$137.18</span></div>
+    <div class="ex-total"><span>Net Take-Home Pay</span><span class="ex-val g">$2,013.60</span></div>
+  </div>
+
+  <div class="example-box" style="margin-top:16px">
+    <h4>Employer Cost for Same Paycheck</h4>
+    <div class="ex-row"><span class="ex-lbl">Gross wages paid</span><span class="ex-val r">$2,884.62</span></div>
+    <div class="ex-row"><span class="ex-lbl">Employer SS match (6.2%)</span><span class="ex-val r">$166.45</span></div>
+    <div class="ex-row"><span class="ex-lbl">Employer Medicare match (1.45%)</span><span class="ex-val r">$38.93</span></div>
+    <div class="ex-row"><span class="ex-lbl">FUTA (0.6% on $7,000 annual, split by period)</span><span class="ex-val r">$1.62</span></div>
+    <div class="ex-total"><span>True Employer Cost</span><span class="ex-val r">$3,091.62</span></div>
+  </div>
+
+  <div class="tool-cta">
+    <h3>Try the Payroll Tax Estimator</h3>
+    <p>Enter any gross pay and let the calculator do all of this instantly — with 2026 rates for all 50 states.</p>
+    <a href="/booksmart-tools/payroll-tax-estimator.html">Open Payroll Calculator →</a>
+  </div>
+
+  <h2>Common Payroll Tax Mistakes</h2>
+  <ul>
+    <li><strong>Forgetting the SS wage base:</strong> Stop withholding Social Security once YTD wages hit $184,500</li>
+    <li><strong>Applying FICA to exempt deductions:</strong> Section 125 health premiums are exempt from FICA; traditional 401(k) is not</li>
+    <li><strong>Using the wrong pay period divisor:</strong> Bi-weekly = 26, not 24 (that's semi-monthly)</li>
+    <li><strong>Missing state withholding:</strong> Employees who work in a different state than they live in may owe taxes to both states (reciprocity agreements can help)</li>
+    <li><strong>Late deposits:</strong> Payroll tax deposits have specific deadlines (next business day for large employers, monthly or semi-weekly for smaller ones)</li>
+  </ul>
+
+  <h2>Payroll Tax Deposit Schedule (2026)</h2>
+  <p>The IRS assigns a deposit schedule based on your lookback period (total taxes reported in the 12 months ending June 30 of the prior year):</p>
+  <ul>
+    <li><strong>Monthly depositor:</strong> Taxes &lt; $50,000 — deposit by the 15th of the following month</li>
+    <li><strong>Semi-weekly depositor:</strong> Taxes ≥ $50,000 — Wednesday payrolls due Friday, Friday payrolls due Wednesday</li>
+    <li><strong>Next-day rule:</strong> If you accumulate $100,000 or more in taxes on any day, deposit the next business day</li>
+  </ul>
+
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="/booksmart-tools/payroll-tax-estimator.html" class="rel-card"><div class="rel-icon">💼</div><div class="rel-title">Payroll Tax Estimator</div><div class="rel-sub">Full 2026 paycheck calculator with all 50 states</div></a>
+    <a href="/booksmart-tools/net-pay-calculator.html" class="rel-card"><div class="rel-icon">💵</div><div class="rel-title">Net Pay Calculator</div><div class="rel-sub">Quick gross-to-net for any paycheck</div></a>
+    <a href="/booksmart-tools/1099-vs-w2-calculator.html" class="rel-card"><div class="rel-icon">⚖️</div><div class="rel-title">1099 vs W-2 Calculator</div><div class="rel-sub">True employer cost comparison</div></a>
+  </div>
+</div>
+
+<footer>BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp; <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp; For estimation only — verify with a CPA for tax filing purposes.</footer>
+</body>
+</html>
