@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bookkeeping Blog | BookSmartTools</title>
+<meta name="description" content="Practical bookkeeping guides for US small business owners — QuickBooks tips, payroll tax explanations, invoicing best practices, and more.">
+<link rel="canonical" href="https://booksmartools.com/blog/">
+<link rel="stylesheet" href="/booksmart-tools/css/style.css">
+<style>
+.blog-hero { background:var(--ink); color:white; padding:64px 0 56px; }
+.blog-hero h1 { color:white; margin-bottom:14px; }
+.blog-hero p { color:rgba(255,255,255,.65); font-size:18px; max-width:520px; }
+.blog-hero .eyebrow { color:rgba(255,255,255,.6); background:rgba(255,255,255,.1); }
+.blog-hero .eyebrow::before { background:rgba(255,255,255,.6); }
+
+.blog-cats { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px; }
+.cat-pill {
+  padding:7px 16px; border-radius:2px; border:1px solid var(--border);
+  background:white; font-size:13px; font-weight:500; cursor:pointer;
+  color:var(--muted); transition:all .15s;
+}
+.cat-pill.active, .cat-pill:hover { background:var(--ink); color:white; border-color:var(--ink); }
+
+.featured-article {
+  background:white; border:1px solid var(--border); border-radius:4px;
+  overflow:hidden; margin-bottom:48px;
+  display:grid; grid-template-columns:1fr 1fr;
+}
+@media(max-width:680px) { .featured-article { grid-template-columns:1fr; } }
+.featured-img {
+  background:linear-gradient(135deg, var(--green) 0%, #0d3a1e 100%);
+  min-height:280px; display:flex; align-items:center; justify-content:center;
+  padding:40px; position:relative; overflow:hidden;
+}
+.featured-img::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:200px; height:200px; border:40px solid rgba(255,255,255,.08); border-radius:50%;
+}
+.featured-img-icon { font-size:64px; position:relative; }
+.featured-body { padding:36px; }
+.featured-meta { display:flex; gap:12px; align-items:center; margin-bottom:16px; }
+.featured-badge {
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:600;
+  letter-spacing:.8px; text-transform:uppercase;
+  background:var(--red-lt); color:var(--red); padding:3px 9px; border-radius:2px;
+}
+.featured-time { font-family:'DM Mono',monospace; font-size:12px; color:var(--muted); }
+.featured-title { font-family:'Playfair Display',serif; font-size:26px; line-height:1.25; margin-bottom:12px; }
+.featured-excerpt { font-size:15px; color:var(--muted); line-height:1.7; margin-bottom:24px; }
+
+.articles-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  margin-top:48px;
+}
+@media(max-width:800px) { .articles-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:500px) { .articles-grid { grid-template-columns:1fr; } }
+
+.newsletter-inline {
+  background:var(--green); border-radius:4px; padding:36px;
+  display:grid; grid-template-columns:1fr auto; gap:32px; align-items:center;
+  margin-top:48px;
+}
+@media(max-width:600px) { .newsletter-inline { grid-template-columns:1fr; } }
+.newsletter-inline h3 { color:white; font-size:22px; margin-bottom:6px; }
+.newsletter-inline p { color:rgba(255,255,255,.7); font-size:14px; margin:0; }
+.newsletter-inline form { display:flex; gap:0; }
+.newsletter-inline input {
+  height:46px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+  border-right:none; border-radius:3px 0 0 3px; padding:0 16px;
+  color:white; font-family:'DM Sans',sans-serif; font-size:14px;
+  outline:none; min-width:220px;
+}
+.newsletter-inline input::placeholder { color:rgba(255,255,255,.45); }
+.newsletter-inline button {
+  height:46px; background:white; color:var(--green); border:none;
+  padding:0 20px; font-weight:600; font-size:13px; cursor:pointer;
+  border-radius:0 3px 3px 0; white-space:nowrap; transition:opacity .15s;
+}
+.newsletter-inline button:hover { opacity:.9; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+      <li><a href="/booksmart-tools/" class="active">Blog</a></li>
+      <li><a href="/booksmart-tools/about.html">About</a></li>
+      <li><a href="../index.html#newsletter" class="nav-cta">Free Tools →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="blog-hero">
+  <div class="wrap">
+    <div class="eyebrow">Bookkeeping Blog</div>
+    <h1>Practical guides for US small businesses</h1>
+    <p>Plain-English bookkeeping advice from a working professional — no jargon, no filler, just what you need to know.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+
+    <!-- Category filter -->
+    <div class="blog-cats">
+      <div class="cat-pill active">All</div>
+      <div class="cat-pill">Invoicing</div>
+      <div class="cat-pill">QuickBooks</div>
+      <div class="cat-pill">Taxes</div>
+      <div class="cat-pill">Payroll</div>
+      <div class="cat-pill">Getting Paid</div>
+    </div>
+
+    <!-- Featured article -->
+    <div class="featured-article reveal">
+      <div class="featured-img">
+        <div class="featured-img-icon">🧾</div>
+      </div>
+      <div class="featured-body">
+        <div class="featured-meta">
+          <span class="featured-badge">Featured</span>
+          <span class="cat-pill active" style="pointer-events:none;padding:4px 10px;font-size:11px">Invoicing</span>
+          <span class="featured-time">5 min read</span>
+        </div>
+        <div class="featured-title">How to calculate invoice late fees — and actually charge them</div>
+        <p class="featured-excerpt">Most US businesses are owed money right now that they're too polite to chase. The standard rate is 1.5% per month, but how you calculate, state, and enforce late fees is what actually determines whether you get paid.</p>
+        <a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html" class="btn btn-primary btn-sm">Read Article →</a>
+      </div>
+    </div>
+
+    <!-- Article grid -->
+    <h3 style="margin-bottom:4px">All Articles</h3>
+    <p style="margin-bottom:32px">Sorted by most recent. More articles added monthly.</p>
+
+    <div class="articles-grid">
+      <div class="blog-card reveal">
+        <div class="blog-card-top"><span class="blog-cat">Invoicing</span><span class="blog-time">5 min read</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-title">How to calculate invoice late fees (with the right rate)</div>
+          <p class="blog-card-excerpt">The standard rate, how to calculate it, what to put on your invoices, and how to handle clients who push back.</p>
+          <a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html" class="blog-read">Read article</a>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-1">
+        <div class="blog-card-top"><span class="blog-cat">QuickBooks</span><span class="blog-time">7 min read</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-title">How to reconcile a bank account in QuickBooks Online</div>
+          <p class="blog-card-excerpt">Step-by-step walkthrough with fixes for the most common reconciliation errors that throw off your ending balance.</p>
+          <a href="/booksmart-tools/blog/quickbooks-bank-reconciliation.html" class="blog-read">Read article</a>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-2">
+        <div class="blog-card-top"><span class="blog-cat">Taxes</span><span class="blog-time">6 min read</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-title">1099-NEC vs W-2: what every small business owner needs to know</div>
+          <p class="blog-card-excerpt">Misclassifying a worker is one of the most expensive payroll mistakes. Here's the IRS test explained in plain English.</p>
+          <a href="/booksmart-tools/blog/1099-vs-w2.html" class="blog-read">Read article</a>
+        </div>
+      </div>
+
+      <!-- Placeholders for future articles -->
+      <div class="blog-card reveal" style="border-style:dashed;background:var(--cream)">
+        <div class="blog-card-top" style="background:#2a2a26"><span class="blog-cat">QuickBooks</span><span class="blog-time">Coming soon</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-title" style="opacity:.5">How to fix a beginning balance discrepancy in QuickBooks</div>
+          <p class="blog-card-excerpt" style="opacity:.5">The most common cause of reconciliation nightmares — and how to trace it back to the original error.</p>
+          <a href="../index.html#newsletter" class="blog-read" style="color:var(--muted)">Get notified</a>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-1" style="border-style:dashed;background:var(--cream)">
+        <div class="blog-card-top" style="background:#2a2a26"><span class="blog-cat">Payroll</span><span class="blog-time">Coming soon</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-title" style="opacity:.5">What is payroll tax? A plain-English guide for small business owners</div>
+          <p class="blog-card-excerpt" style="opacity:.5">FICA, FUTA, SUTA — what each tax is, who pays it, and how the IRS expects it to be reported.</p>
+          <a href="../index.html#newsletter" class="blog-read" style="color:var(--muted)">Get notified</a>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-2" style="border-style:dashed;background:var(--cream)">
+        <div class="blog-card-top" style="background:#2a2a26"><span class="blog-cat">Getting Paid</span><span class="blog-time">Coming soon</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-title" style="opacity:.5">How to follow up on a late invoice without losing the client</div>
+          <p class="blog-card-excerpt" style="opacity:.5">The exact email sequence and timing that gets overdue invoices paid — without damaging the relationship.</p>
+          <a href="../index.html#newsletter" class="blog-read" style="color:var(--muted)">Get notified</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline newsletter -->
+    <div class="newsletter-inline reveal">
+      <div>
+        <h3>New articles every month</h3>
+        <p>Get plain-English bookkeeping guides, free tool updates, and US tax tips in your inbox.</p>
+      </div>
+      <form novalidate>
+        <input type="email" placeholder="your@email.com">
+        <button type="submit">Subscribe →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><div class="footer-brand">Book<em>Smart</em>Tools</div><p class="footer-tagline">Free professional bookkeeping tools and guides for US small business owners.</p></div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="../invoice-late-fee-calculator.html">Invoice Late Fee Calculator</a></li>
+        <li><a href="../payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Articles</h4><ul>
+        <li><a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html">Invoice Late Fees</a></li>
+        <li><a href="/booksmart-tools/blog/quickbooks-bank-reconciliation.html">QuickBooks Reconciliation</a></li>
+        <li><a href="/booksmart-tools/blog/1099-vs-w2.html">1099 vs W-2</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="/booksmart-tools/">Home</a></li>
+        <li><a href="/booksmart-tools/tools.html">All Tools</a></li>
+        <li><a href="/booksmart-tools/about.html">About</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 BookSmartTools</div>
+      <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Disclaimer</a></div>
+    </div>
+  </div>
+
+        <a href="/booksmart-tools/blog/what-is-ebitda.html" class="article-card">
+          <div class="article-img" style="background:linear-gradient(135deg,#0e2818,#1a3d60)">📈</div>
+          <div class="article-body">
+            <div class="article-meta"><span class="article-cat" style="background:#eef7f1;color:#1e5c33">BUSINESS FINANCE</span><span class="article-time">10 min read</span></div>
+            <div class="article-title">What is EBITDA and How Do You Calculate It?</div>
+            <div class="article-excerpt">EBITDA explained simply with two calculation methods, industry benchmarks, business valuation multiples, and a real worked example.</div>
+            <span class="article-read">Read Guide →</span>
+          </div>
+        </a>
+        <a href="/booksmart-tools/blog/self-employment-tax-guide.html" class="article-card">
+          <div class="article-img" style="background:linear-gradient(135deg,#2a1400,#8a4c0a)">🧾</div>
+          <div class="article-body">
+            <div class="article-meta"><span class="article-cat" style="background:#fef8ec;color:#8a5a0a">TAX GUIDE</span><span class="article-time">11 min read</span></div>
+            <div class="article-title">Self-Employment Tax 2026: What It Is, How to Calculate It & Reduce It</div>
+            <div class="article-excerpt">The 15.3% SE tax explained, step-by-step calculation, the deductible half, 2026 quarterly due dates, and legal ways to reduce what you owe.</div>
+            <span class="article-read">Read Guide →</span>
+          </div>
+        </a>
+        <a href="/booksmart-tools/blog/free-pdf-tools-guide.html" class="article-card">
+          <div class="article-img" style="background:linear-gradient(135deg,#1a1840,#3040a0)">📄</div>
+          <div class="article-body">
+            <div class="article-meta"><span class="article-cat" style="background:#f0f4ff;color:#3040a0">PDF TOOLS</span><span class="article-time">8 min read</span></div>
+            <div class="article-title">Free PDF Tools That Actually Work in 2026 — No Watermarks, No Signup</div>
+            <div class="article-excerpt">Merge, convert, and edit PDFs free without watermarks, page limits, or uploading to a server. All processing stays in your browser.</div>
+            <span class="article-read">Read Guide →</span>
+          </div>
+        </a>
+</footer>
+
+<script src="/booksmart-tools/js/main.js"></script>
+<script>
+document.querySelectorAll('.cat-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+// Newsletter inline
+document.querySelector('.newsletter-inline form').addEventListener('submit', e => {
+  e.preventDefault();
+  e.target.innerHTML = '<p style="color:white;font-weight:600;padding:12px 0">✓ Subscribed! Check your inbox.</p>';
+});
+</script>
+</body>
+</html>
