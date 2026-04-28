@@ -2,123 +2,272 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi-County E-Commerce Sales Tax Calculator | Amazon, Shopify, eBay | BookSmartTools</title>
-<meta name="description" content="Calculate sales tax across multiple counties in the same state — built for Amazon, Shopify, and eBay sellers. Add unlimited county rows, get a combined total for your state sales tax return.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Free E-Commerce Sales Tax Report Tool — Amazon, Shopify, eBay | BookSmartTools</title>
+<meta name="description" content="Upload your Amazon, Shopify, or eBay sales report. Auto-calculates sales tax by state and county, generates ready-to-file reports for all 50 states.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a18;min-height:100vh;}
+/* ═══════════════════════════════════════════════════════════
+   E-Commerce Sales Tax Report Tool
+   ═══════════════════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a18;-webkit-font-smoothing:antialiased}
 
 /* NAV */
-.site-nav{background:#1a1a18;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:17px;color:white;text-decoration:none;}
-.nav-logo em{color:#6db88a;font-style:normal;}
-.nav-links{display:flex;align-items:center;gap:20px;list-style:none;}
-.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;transition:color .15s;}
-.nav-links a:hover{color:white;}
-.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.25);padding:5px 13px;border-radius:3px;}
+.site-nav{background:#1a1a18;padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}
+.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:13px}
+.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.25);padding:5px 13px;border-radius:3px}
 
 /* HERO */
-.hero{background:linear-gradient(135deg,#0f3d24 0%,#1a5c36 60%,#0d4a2e 100%);color:white;padding:48px 24px 44px;text-align:center;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
-.platform-badges{display:flex;justify-content:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;position:relative;}
-.pbadge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:white;font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:20px;letter-spacing:.3px;}
-.pbadge.amazon{background:rgba(255,153,0,.2);border-color:rgba(255,153,0,.4);}
-.pbadge.shopify{background:rgba(0,200,100,.2);border-color:rgba(0,200,100,.4);}
-.pbadge.ebay{background:rgba(100,150,255,.2);border-color:rgba(100,150,255,.4);}
-.hero h1{font-family:'DM Serif Display',serif;font-size:36px;font-weight:400;margin-bottom:12px;position:relative;line-height:1.2;}
-.hero h1 span{color:#6dd49a;}
-.hero p{font-size:15px;opacity:.85;max-width:600px;margin:0 auto;line-height:1.65;position:relative;}
+.hero{background:linear-gradient(135deg,#0f2d4a 0%,#1a3d6e 50%,#0d2840 100%);color:white;padding:48px 24px 44px;text-align:center}
+.platform-badges{display:flex;justify-content:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pb{padding:4px 14px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;border:1px solid;letter-spacing:.4px}
+.pb.amazon{background:rgba(255,153,0,.18);border-color:rgba(255,153,0,.4);color:#ffc048}
+.pb.shopify{background:rgba(0,200,100,.15);border-color:rgba(0,200,100,.35);color:#4de89a}
+.pb.ebay{background:rgba(100,150,255,.15);border-color:rgba(100,150,255,.35);color:#8eb4ff}
+.pb.generic{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8)}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(26px,3.5vw,38px);margin-bottom:12px;line-height:1.2;font-weight:400}
+.hero p{font-size:15px;opacity:.82;max-width:620px;margin:0 auto;line-height:1.6}
 
-/* MAIN LAYOUT */
-.main{max-width:1100px;margin:0 auto;padding:32px 20px 60px;}
-.grid{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;}
-@media(max-width:820px){.grid{grid-template-columns:1fr;}}
+/* MAIN CONTAINER */
+.main{max-width:1100px;margin:0 auto;padding:32px 20px 60px}
 
-/* CARD */
-.card{background:white;border:1px solid #ddd8cc;border-radius:6px;overflow:hidden;}
-.card-head{padding:18px 22px 16px;border-bottom:1px solid #ede9e1;display:flex;align-items:center;gap:12px;}
-.card-head h2{font-family:'DM Serif Display',serif;font-size:18px;font-weight:400;}
-.step-num{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:11px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.step-num.g{background:#1e5c33;}
-.card-body{padding:20px 22px;}
+/* STEP INDICATOR */
+.steps{display:flex;gap:0;margin-bottom:28px;background:white;border:1px solid #d8d3c5;border-radius:6px;overflow:hidden}
+.step-item{flex:1;padding:14px 16px;display:flex;align-items:center;gap:10px;font-size:13px;color:#7a7568;border-right:1px solid #d8d3c5;cursor:pointer;transition:background .15s}
+.step-item:last-child{border-right:none}
+.step-item.active{background:#1e5c33;color:white}
+.step-item.done{background:#eef7f1;color:#1e5c33}
+.step-item.locked{opacity:.45;cursor:not-allowed}
+.step-num{width:24px;height:24px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'DM Mono',monospace;font-weight:700;flex-shrink:0}
+.step-item.active .step-num{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
+.step-item.done .step-num{background:#1e5c33;border-color:#1e5c33;color:white}
 
-/* STATE SELECTOR */
-.state-row{display:flex;gap:12px;align-items:flex-end;margin-bottom:16px;}
-.state-row .field{flex:1;}
-.flbl{display:block;font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#7a7568;margin-bottom:5px;}
-select,input{width:100%;height:42px;border:1px solid #d0cbbf;border-radius:4px;padding:0 12px;font-family:'DM Mono',monospace;font-size:13px;color:#1a1a18;background:#faf8f3;outline:none;transition:border-color .15s;}
-select:focus,input:focus{border-color:#1e5c33;background:white;}
-.period-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
 
-/* COUNTY TABLE */
-.county-table-wrap{border:1px solid #ddd8cc;border-radius:5px;overflow:hidden;}
-.ct-header{display:grid;grid-template-columns:2fr 120px 140px 100px 36px;gap:0;background:#f3efe4;padding:9px 12px;font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#7a7568;align-items:center;}
-.county-row{display:grid;grid-template-columns:2fr 120px 140px 100px 36px;gap:0;padding:8px 12px;border-top:1px solid #ede9e1;align-items:center;transition:background .1s;}
-.county-row:hover{background:#faf8f3;}
-.county-row select{height:36px;font-size:12px;border-radius:3px;}
-.county-row input{height:36px;font-size:12px;border-radius:3px;}
-.tax-display{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:#1e5c33;text-align:right;}
-.rate-badge{font-family:'DM Mono',monospace;font-size:11px;color:#7a7568;text-align:center;}
-.del-btn{width:28px;height:28px;border:none;background:transparent;color:#d0cbbf;cursor:pointer;font-size:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
-.del-btn:hover{background:#fdf0ec;color:#c8472a;}
+/* ── STEP 1: UPLOAD ── */
+.upload-section{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:28px;margin-bottom:20px}
+.upload-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.upload-sub{font-size:13px;color:#7a7568;margin-bottom:24px;line-height:1.6}
 
-/* ADD ROW BUTTON */
-.add-row-btn{width:100%;padding:10px;border:2px dashed #d0cbbf;border-radius:4px;background:transparent;color:#7a7568;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;margin-top:10px;}
-.add-row-btn:hover{border-color:#1e5c33;color:#1e5c33;background:#f5fbf7;}
+/* Platform selector */
+.platform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+@media(max-width:600px){.platform-grid{grid-template-columns:1fr 1fr}}
+.plat-btn{border:2px solid #d8d3c5;border-radius:6px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .18s;background:white}
+.plat-btn:hover{border-color:#1e5c33;background:#f0f7f2}
+.plat-btn.selected{border-color:#1e5c33;background:#eef7f1}
+.plat-icon{font-size:28px;margin-bottom:8px}
+.plat-name{font-size:13px;font-weight:700;color:#1a1a18;margin-bottom:3px}
+.plat-sub{font-size:11px;color:#7a7568;font-family:'DM Mono',monospace}
 
-/* SUBTOTALS BAR */
-.subtotals{background:#f3efe4;border:1px solid #ddd8cc;border-radius:5px;padding:14px 16px;margin-top:16px;}
-.sub-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px;}
-.sub-row:last-child{border-bottom:none;}
-.sub-label{color:#7a7568;}
-.sub-val{font-family:'DM Mono',monospace;font-weight:600;}
+/* Drop zone */
+.drop-zone{border:2px dashed #c8c3b5;border-radius:6px;padding:44px 24px;text-align:center;cursor:pointer;transition:all .2s;background:#faf8f3;position:relative}
+.drop-zone:hover,.drop-zone.over{border-color:#1e5c33;background:#f0f7f2}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{font-size:44px;margin-bottom:14px}
+.drop-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:8px}
+.drop-sub{font-size:13px;color:#7a7568;line-height:1.6}
+.accepted-formats{display:flex;gap:6px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.fmt{background:#f0ece4;border:1px solid #d8d3c5;border-radius:2px;padding:2px 9px;font-size:11px;font-family:'DM Mono',monospace;color:#5a5550;font-weight:600}
 
-/* RESULTS CARD */
-.results-card{background:#1a1a18;color:white;border:none;}
-.results-card .card-head{background:#1a1a18;border-bottom-color:rgba(255,255,255,.1);}
-.results-card .card-head h2{color:white;}
-.ph{padding:40px 20px;text-align:center;color:rgba(255,255,255,.3);font-size:13px;line-height:2;}
-.rs{margin-bottom:14px;background:rgba(255,255,255,.05);border-radius:4px;padding:12px 14px;}
-.rst{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px;font-family:'DM Mono',monospace;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:6px;}
-.rr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px;}
-.rr:last-child{border-bottom:none;}
-.rl{color:rgba(255,255,255,.65);flex:1;padding-right:8px;}
-.rl.bold{color:white;font-weight:600;}
-.rv{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;white-space:nowrap;}
-.rv.g{color:#7dd4a0;}.rv.a{color:#f0c060;}.rv.r{color:#f08070;}
-.county-breakdown .rr{padding:5px 0;}
-.county-breakdown .rl{font-size:11px;color:rgba(255,255,255,.5);}
-.county-breakdown .rv{font-size:11px;}
+/* Column mapper */
+.mapper-card{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:24px;margin-top:20px;display:none}
+.mapper-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.mapper-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:600px){.mapper-grid{grid-template-columns:1fr}}
+.mapper-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+.mapper-field select{width:100%;height:38px;border:1px solid #d8d3c5;border-radius:3px;padding:0 10px;font-family:'DM Mono',monospace;font-size:12px;color:#1a1a18;background:#faf8f3;outline:none}
+.mapper-field select:focus{border-color:#1e5c33}
 
-/* TOTAL BOX */
-.total-box{padding:14px 16px;border-radius:4px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(255,255,255,.07);}
-.total-box.sub{background:rgba(255,255,255,.07);}
-.total-box.grand{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.2);}
-.total-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.65);}
-.total-val{font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:#f0c060;}
-.total-val.grand{font-family:'DM Serif Display',serif;font-size:28px;color:white;}
+/* Preview table */
+.preview-wrap{margin-top:16px;overflow-x:auto;border-radius:4px;border:1px solid #d8d3c5;display:none}
+.preview-wrap table{width:100%;border-collapse:collapse;font-size:11px;min-width:600px}
+.preview-wrap thead th{background:#1a1a18;color:rgba(255,255,255,.85);padding:8px 10px;text-align:left;font-size:10px;letter-spacing:.8px;text-transform:uppercase;font-family:'DM Mono',monospace;white-space:nowrap}
+.preview-wrap tbody td{padding:7px 10px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;white-space:nowrap}
+.preview-wrap tbody tr:hover td{background:#f5f3ee}
 
-/* DEALER DISCOUNT */
-.dis-box{background:rgba(125,212,160,.08);border:1px solid rgba(125,212,160,.2);border-radius:4px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:#7dd4a0;display:none;}
-.due-badge{background:rgba(240,192,96,.1);border:1px solid rgba(240,192,96,.25);border-radius:4px;padding:9px 14px;margin-bottom:12px;font-size:11px;color:#f0c060;line-height:1.6;display:none;}
+/* Filing period */
+.period-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:20px}
+@media(max-width:600px){.period-row{grid-template-columns:1fr}}
+.period-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
+.period-field input,.period-field select{width:100%;height:40px;border:1px solid #d8d3c5;border-radius:3px;padding:0 12px;font-family:'DM Mono',monospace;font-size:13px;color:#1a1a18;background:#faf8f3;outline:none}
+.period-field input:focus,.period-field select:focus{border-color:#1e5c33;background:white}
 
-/* ACTIONS */
-.actions{display:flex;gap:8px;margin-top:12px;}
-.abtn{flex:1;padding:9px;border:1px solid rgba(255,255,255,.2);border-radius:3px;background:transparent;color:rgba(255,255,255,.65);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;}
-.abtn:hover{background:rgba(255,255,255,.08);color:white;}
-.calc-btn{width:100%;height:48px;background:#1e5c33;color:white;border:none;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:14px;}
-.calc-btn:hover{background:#164a28;}
+.btn-primary{background:#1e5c33;color:white;border:none;border-radius:4px;padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:#165228}
+.btn-primary:disabled{background:#a0b8a4;cursor:not-allowed}
+.btn-secondary{background:white;color:#1a1a18;border:1.5px solid #d8d3c5;border-radius:4px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
+.btn-secondary:hover{border-color:#1a1a18}
 
-/* INFO BOX */
-.info-box{background:#eaf4ee;border:1px solid #b5d9c0;border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#1e5c33;line-height:1.7;}
-.info-box strong{color:#0f3d24;}
+/* Info box */
+.info-box{background:#eef7f1;border-left:3px solid #1e5c33;padding:12px 16px;border-radius:0 4px 4px 0;font-size:13px;color:#1a3828;line-height:1.6;margin-top:16px}
+.warn-box{background:#fef8ec;border-left:3px solid #d4860a;padding:12px 16px;border-radius:0 4px 4px 0;font-size:13px;color:#4a2c00;line-height:1.6;margin-top:16px}
 
-/* FOOTER */
-footer{background:#1a1a18;color:rgba(255,255,255,.35);text-align:center;padding:20px;font-size:11px;font-family:'DM Mono',monospace;}
-footer a{color:rgba(255,255,255,.5);}
+/* ── STEP 2: DASHBOARD ── */
+.dashboard-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.dh-title{font-family:'DM Serif Display',serif;font-size:24px}
+.dh-meta{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace;margin-top:4px}
+.dh-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* Summary cards */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+@media(max-width:720px){.summary-grid{grid-template-columns:1fr 1fr}}
+.sum-card{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:18px}
+.sum-label{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:8px;font-family:'DM Mono',monospace}
+.sum-value{font-family:'DM Serif Display',serif;font-size:28px;color:#1a1a18;line-height:1}
+.sum-sub{font-size:11px;color:#7a7568;margin-top:4px;font-family:'DM Mono',monospace}
+.sum-card.highlight{background:#1e5c33;border-color:#1e5c33}
+.sum-card.highlight .sum-label{color:rgba(255,255,255,.65)}
+.sum-card.highlight .sum-value{color:white}
+.sum-card.highlight .sum-sub{color:rgba(255,255,255,.55)}
+
+/* Filter bar */
+.filter-bar{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:14px 18px;margin-bottom:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.filter-bar label{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;white-space:nowrap}
+.filter-bar select,.filter-bar input{height:34px;border:1px solid #d8d3c5;border-radius:3px;padding:0 10px;font-family:'DM Mono',monospace;font-size:12px;color:#1a1a18;background:#faf8f3;outline:none}
+.filter-bar select:focus,.filter-bar input:focus{border-color:#1e5c33}
+
+/* State breakdown table */
+.data-table-wrap{background:white;border:1px solid #d8d3c5;border-radius:5px;overflow:hidden;margin-bottom:20px}
+.dt-header{padding:16px 20px;border-bottom:1px solid #d8d3c5;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.dt-title{font-family:'DM Serif Display',serif;font-size:16px}
+.dt-actions{display:flex;gap:8px}
+.dt-btn{padding:6px 14px;border:1px solid #d8d3c5;border-radius:3px;background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.dt-btn:hover{background:#f5f3ee}
+.dt-btn.active{background:#1e5c33;color:white;border-color:#1e5c33}
+.data-table{width:100%;border-collapse:collapse}
+.data-table thead th{background:#f5f3ee;padding:10px 14px;text-align:left;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#7a7568;border-bottom:1.5px solid #d8d3c5;white-space:nowrap;font-family:'DM Mono',monospace;font-weight:700;cursor:pointer;user-select:none}
+.data-table thead th:hover{background:#eee8de}
+.data-table thead th.sorted{color:#1e5c33}
+.data-table tbody td{padding:10px 14px;border-bottom:1px solid #ede9e1;font-size:13px;font-family:'DM Mono',monospace}
+.data-table tbody tr:hover td{background:#faf8f3}
+.data-table tbody tr.expanded td{background:#f0f7f2}
+.data-table tfoot td{padding:10px 14px;font-weight:700;background:#f5f3ee;border-top:2px solid #d8d3c5;font-family:'DM Mono',monospace;font-size:13px}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.5px}
+.status-due{background:#fef8ec;color:#8b5e0a;border:1px solid #f0d090}
+.status-ok{background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8}
+.status-nexus{background:#fde8e6;color:#a83428;border:1px solid #f0b0a8}
+.nexus-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.expand-btn{background:none;border:none;cursor:pointer;color:#7a7568;font-size:14px;padding:2px 4px;transition:transform .2s}
+.expand-btn.open{transform:rotate(90deg)}
+/* County sub-rows */
+.county-row{background:#f9f7f4}
+.county-row td{padding:7px 14px 7px 38px;font-size:12px;color:#5a5a56;border-bottom:1px solid #ede9e1}
+.county-row td:first-child{padding-left:44px;color:#7a7568}
+/* Progress bar in table */
+.nexus-bar{height:4px;background:#e8e4db;border-radius:2px;margin-top:4px;overflow:hidden}
+.nexus-fill{height:100%;border-radius:2px;transition:width .4s}
+
+/* ── STEP 3: FILING CENTER ── */
+.filing-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.filing-grid{grid-template-columns:1fr}}
+.filing-card{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:20px;transition:all .2s}
+.filing-card:hover{border-color:#7aab8c;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.filing-card.priority{border-color:#d4860a;background:#fefcf8}
+.fc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.fc-state{font-family:'DM Serif Display',serif;font-size:20px;color:#1a1a18}
+.fc-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.5px}
+.fc-due{background:#fef8ec;color:#8b5e0a;border:1px solid #f0d090}
+.fc-nexus{background:#fde8e6;color:#a83428;border:1px solid #f0b0a8}
+.fc-ok{background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8}
+.fc-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #ede9e1;font-size:13px}
+.fc-row:last-of-type{border-bottom:none}
+.fc-key{color:#7a7568}.fc-val{font-family:'DM Mono',monospace;font-weight:600;color:#1a1a18}
+.fc-val.green{color:#1e5c33}.fc-val.amber{color:#8b5e0a}.fc-val.red{color:#a83428}
+.fc-actions{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+.fc-btn{flex:1;min-width:100px;padding:9px 12px;border-radius:3px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;border:none}
+.fc-btn.download{background:#f5f3ee;color:#1a1a18;border:1px solid #d8d3c5}
+.fc-btn.download:hover{background:#eee8de}
+.fc-btn.portal{background:#1e5c33;color:white}
+.fc-btn.portal:hover{background:#165228}
+.fc-btn.review{background:#1a1a18;color:white}
+.fc-btn.review:hover{background:#333}
+
+/* County breakdown in filing card */
+.county-breakdown{margin-top:12px;padding:10px 14px;background:#f9f7f4;border-radius:3px;border:1px solid #e8e4db}
+.cb-title{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#7a7568;margin-bottom:8px;font-family:'DM Mono',monospace}
+.cb-row{display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;border-bottom:1px dotted #d8d3c5;font-family:'DM Mono',monospace}
+.cb-row:last-child{border-bottom:none;font-weight:700}
+
+/* ── STEP 4: DOWNLOAD ── */
+.download-section{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:28px}
+.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+@media(max-width:600px){.dl-grid{grid-template-columns:1fr}}
+.dl-card{border:1.5px solid #d8d3c5;border-radius:5px;padding:22px;text-align:center;transition:all .2s;cursor:pointer}
+.dl-card:hover{border-color:#1e5c33;background:#f0f7f2;transform:translateY(-2px)}
+.dl-icon{font-size:36px;margin-bottom:12px}
+.dl-name{font-weight:700;font-size:14px;margin-bottom:5px}
+.dl-desc{font-size:12px;color:#7a7568;line-height:1.5}
+.dl-tag{display:inline-block;background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8;border-radius:2px;padding:2px 8px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;margin-top:10px}
+
+/* Progress bar */
+.progress-wrap{margin-top:14px;display:none}
+.progress-bar{height:6px;background:#e0ddd6;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1e5c33,#7dd4a0);border-radius:3px;transition:width .3s}
+.progress-label{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace;margin-top:6px;text-align:center}
+
+/* State file modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:8px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-header{padding:22px 24px 18px;border-bottom:1px solid #d8d3c5;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:white;z-index:1}
+.modal-title{font-family:'DM Serif Display',serif;font-size:20px}
+.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:#7a7568;line-height:1}
+.modal-body{padding:24px}
+.modal-section{margin-bottom:20px}
+.modal-section h4{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#7a7568;margin-bottom:12px;font-family:'DM Mono',monospace;border-bottom:1px solid #ede9e1;padding-bottom:8px}
+.filing-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dotted #e8e4db;font-size:13px}
+.filing-line:last-child{border-bottom:none;font-weight:700;padding-top:12px;margin-top:4px;border-top:2px solid #d8d3c5}
+.filing-line .fl-key{color:#5a5a56}.filing-line .fl-val{font-family:'DM Mono',monospace;font-weight:600}
+.step-instructions{background:#f5f3ee;border-radius:4px;padding:14px;font-size:13px;line-height:1.7;color:#3a3a36}
+.step-instructions ol{padding-left:18px}
+.step-instructions li{margin-bottom:6px}
+.portal-link{display:flex;align-items:center;gap:10px;background:#1e5c33;color:white;padding:12px 20px;border-radius:4px;text-decoration:none;font-weight:700;font-size:14px;margin-top:16px;justify-content:center;transition:background .15s}
+.portal-link:hover{background:#165228}
+.disclaimer{font-size:11px;color:#9a9890;margin-top:12px;line-height:1.5;text-align:center;font-style:italic}
+
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6)}
 </style>
+<meta name="keywords" content="ecommerce sales tax calculator, Amazon sales tax report, Shopify tax calculator, eBay sales tax, multi-state sales tax">
+<link rel="canonical" href="https://booksmartools.com/ecommerce-sales-tax-calculator.html">
+<meta property="og:title" content="Free E-Commerce Sales Tax Report Tool — Amazon, Shopify, eBay | BookSmartTools">
+<meta property="og:description" content="Upload your Amazon, Shopify, or eBay sales report. Auto-calculates sales tax by state and county, generates ready-to-file reports for all 50 states.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://booksmartools.com/ecommerce-sales-tax-calculator.html">
+<meta property="og:site_name" content="BookSmartTools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free E-Commerce Sales Tax Report Tool — Amazon, Shopify, eBay | BookSmartTools">
+<meta name="twitter:description" content="Upload your Amazon, Shopify, or eBay sales report. Auto-calculates sales tax by state and county, generates ready-to-file reports for all 50 states.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "E-Commerce Sales Tax Report Tool",
+  "description": "Upload Amazon, Shopify, or eBay sales reports and generate state-by-state sales tax filing reports.",
+  "url": "https://booksmartools.com/ecommerce-sales-tax-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "BookSmartTools",
+    "url": "https://booksmartools.com"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -126,2169 +275,1038 @@ footer a{color:rgba(255,255,255,.5);}
   <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
   <ul class="nav-links">
     <li><a href="/booksmart-tools/tools.html">Tools</a></li>
-    <li><a href="/booksmart-tools/sales-tax-calculator.html">Business Tax</a></li>
-    <li><a href="/booksmart-tools/about.html">About</a></li>
+    <li><a href="/booksmart-tools/sales-tax-calculator.html">Sales Tax</a></li>
     <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
   </ul>
 </nav>
 
 <div class="hero">
   <div class="platform-badges">
-    <span class="pbadge amazon">Amazon FBA / FBM</span>
-    <span class="pbadge shopify">Shopify</span>
-    <span class="pbadge ebay">eBay</span>
-    <span class="pbadge">WooCommerce</span>
-    <span class="pbadge">Etsy</span>
-    <span class="pbadge">Multi-Channel</span>
+    <span class="pb amazon">Amazon Seller</span>
+    <span class="pb shopify">Shopify</span>
+    <span class="pb ebay">eBay</span>
+    <span class="pb generic">Any CSV / Excel</span>
   </div>
-  <h1>Multi-County <span>E-Commerce</span><br>Sales Tax Calculator</h1>
-  <p>You sell in multiple counties. Add as many as you need — each with its own rate — and get one combined sales tax total for your state return filing.</p>
+  <h1>E-Commerce Sales Tax Report Tool</h1>
+  <p>Upload your sales report from any platform. We'll automatically sort your sales by state and county, calculate the tax owed, and generate a ready-to-file report for each state.</p>
 </div>
 
 <div class="main">
-  <div class="grid">
 
-    <!-- LEFT — INPUT -->
-    <div>
-      <div class="card">
-        <div class="card-head">
-          <div class="step-num">1</div>
-          <h2>State & Filing Period</h2>
-        </div>
-        <div class="card-body">
-          <div class="period-row">
-            <div class="field">
-              <label class="flbl">State</label>
-              <select id="state-sel" onchange="onStateChange()">
-                <option value="">-- Select state --</option>
-              </select>
-            </div>
-            <div class="field">
-              <label class="flbl">Reporting Period</label>
-              <select id="period-sel">
-                <option value="January 2026">January 2026</option>
-                <option value="February 2026" selected>February 2026</option>
-                <option value="March 2026">March 2026</option>
-                <option value="April 2026">April 2026</option>
-                <option value="May 2026">May 2026</option>
-                <option value="June 2026">June 2026</option>
-                <option value="July 2026">July 2026</option>
-                <option value="August 2026">August 2026</option>
-                <option value="September 2026">September 2026</option>
-                <option value="October 2026">October 2026</option>
-                <option value="November 2026">November 2026</option>
-                <option value="December 2026">December 2026</option>
-                <option value="Q1 2026">Q1 2026 (Jan–Mar)</option>
-                <option value="Q2 2026">Q2 2026 (Apr–Jun)</option>
-                <option value="Q3 2026">Q3 2026 (Jul–Sep)</option>
-                <option value="Q4 2026">Q4 2026 (Oct–Dec)</option>
-                <option value="January 2025">January 2025</option>
-                <option value="February 2025">February 2025</option>
-                <option value="March 2025">March 2025</option>
-                <option value="Q1 2025">Q1 2025</option>
-                <option value="Q2 2025">Q2 2025</option>
-                <option value="Q3 2025">Q3 2025</option>
-                <option value="Q4 2025">Q4 2025</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field" style="margin-bottom:10px">
-            <label class="flbl">Exempt Sales (deducted from ALL counties combined, $)</label>
-            <div style="position:relative">
-              <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#7a7568;font-family:'DM Mono',monospace;font-size:13px;pointer-events:none">$</span>
-              <input type="number" id="total-exempt" placeholder="0.00" value="0" min="0" step="0.01" style="padding-left:24px">
-            </div>
-            <div style="font-size:11px;color:#7a7568;margin-top:4px">Resale/wholesale, exempt food, prescriptions, out-of-state shipments — enter the total exempt amount across all counties.</div>
-          </div>
-
-          <div class="field" style="margin-bottom:6px">
-            <label class="flbl">Dealer Discount</label>
-            <select id="discount-sel">
-              <option value="yes">Yes — Filed on time (apply vendor collection allowance)</option>
-              <option value="no">No — Late filing or state has no discount</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px">
-        <div class="card-head">
-          <div class="step-num g">2</div>
-          <h2>Counties &amp; Sales Amounts</h2>
-        </div>
-        <div class="card-body" style="padding-bottom:8px">
-
-          <div class="info-box" id="state-info" style="display:none">
-            <span id="state-info-text"></span>
-          </div>
-
-          <div class="county-table-wrap">
-            <div class="ct-header">
-              <div>County / Jurisdiction</div>
-              <div style="text-align:center">Rate</div>
-              <div>Taxable Sales ($)</div>
-              <div style="text-align:right">Tax Due</div>
-              <div></div>
-            </div>
-            <div id="county-rows">
-              <!-- rows added dynamically -->
-            </div>
-          </div>
-
-          <button class="add-row-btn" onclick="addRow()">+ Add Another County / Jurisdiction</button>
-
-          <div class="subtotals" id="subtotals" style="display:none">
-            <div class="sub-row">
-              <span class="sub-label">Total gross sales (all counties)</span>
-              <span class="sub-val" id="sub-gross">$0.00</span>
-            </div>
-            <div class="sub-row">
-              <span class="sub-label">Less: total exempt sales</span>
-              <span class="sub-val" id="sub-exempt" style="color:#b8860b">$0.00</span>
-            </div>
-            <div class="sub-row">
-              <span class="sub-label" style="font-weight:600;color:#1a1a18">Net taxable sales</span>
-              <span class="sub-val" style="color:#1e5c33" id="sub-taxable">$0.00</span>
-            </div>
-            <div class="sub-row">
-              <span class="sub-label" style="font-weight:600;color:#1a1a18">Combined tax (all counties)</span>
-              <span class="sub-val" style="color:#1e5c33;font-size:15px" id="sub-tax">$0.00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button class="calc-btn" onclick="calculate()">Calculate Combined Sales Tax Return →</button>
+  <!-- STEP INDICATOR -->
+  <div class="steps" id="step-indicator">
+    <div class="step-item active" data-step="1" onclick="goStep(1)">
+      <div class="step-num">1</div><div>Upload Report</div>
     </div>
-
-    <!-- RIGHT — RESULTS -->
-    <div class="card results-card" style="position:sticky;top:20px">
-      <div class="card-head">
-        <div class="step-num g">3</div>
-        <h2>Return Summary</h2>
-      </div>
-      <div class="card-body">
-        <div class="ph" id="ph">
-          Add your state, counties,<br>and sales amounts, then click<br>
-          <strong style="color:rgba(255,255,255,.7)">Calculate →</strong><br><br>
-          Results match your<br>actual state return form.
-        </div>
-        <div id="results" style="display:none">
-
-          <div class="due-badge" id="due-badge"></div>
-
-          <div class="rs">
-            <div class="rst">Sales Summary — <span id="r-period"></span></div>
-            <div class="rr"><span class="rl">Total gross sales</span><span class="rv" id="r-gross"></span></div>
-            <div class="rr"><span class="rl">Less exempt sales</span><span class="rv a" id="r-exempt"></span></div>
-            <div class="rr"><span class="rl bold">Net taxable sales</span><span class="rv g" id="r-taxable"></span></div>
-          </div>
-
-          <div class="rs county-breakdown" id="county-breakdown">
-            <div class="rst">Tax by County / Jurisdiction</div>
-            <!-- filled dynamically -->
-          </div>
-
-          <div class="rs">
-            <div class="rst">Dealer Discount</div>
-            <div class="rr"><span class="rl" id="r-dis-formula">—</span><span class="rv g" id="r-dis-amt">$0.00</span></div>
-          </div>
-
-          <div class="total-box sub">
-            <span class="total-lbl">Total Sales Tax Collected</span>
-            <span class="total-val" id="r-tax-total"></span>
-          </div>
-          <div class="total-box sub" id="r-dis-box">
-            <span class="total-lbl">Less Dealer Discount</span>
-            <span class="total-val" style="color:#7dd4a0" id="r-dis-total"></span>
-          </div>
-          <div class="total-box grand">
-            <span class="total-lbl">Amount Due to State</span>
-            <span class="total-val grand" id="r-grand"></span>
-          </div>
-
-          <div class="rs" style="margin-top:10px">
-            <div class="rst">Filing Checklist</div>
-            <div class="rr"><span class="rl">1. Gross general sales</span><span class="rv" id="r-c1"></span></div>
-            <div class="rr"><span class="rl">2. Exempt deductions</span><span class="rv a" id="r-c2"></span></div>
-            <div class="rr"><span class="rl">3. Net taxable sales</span><span class="rv g" id="r-c3"></span></div>
-            <div class="rr"><span class="rl">4. Total tax due</span><span class="rv" id="r-c4"></span></div>
-            <div class="rr"><span class="rl">5. Less dealer discount</span><span class="rv g" id="r-c5"></span></div>
-            <div class="rr" style="border-top:1px solid rgba(255,255,255,.12);margin-top:4px;padding-top:8px">
-              <span class="rl bold">6. AMOUNT DUE</span>
-              <span class="rv" style="color:white;font-size:15px" id="r-c6"></span>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="abtn" onclick="copyResult()">📋 Copy</button>
-            <button class="abtn" onclick="window.print()">🖨 Print</button>
-            <button class="abtn" id="file-btn-ec" onclick="openPortalEC()" style="display:none;background:rgba(125,212,160,.15);border-color:rgba(125,212,160,.4);color:#7dd4a0">🔗 File Now ↗</button>
-          </div>
-        </div>
-      </div>
+    <div class="step-item locked" data-step="2" onclick="goStep(2)">
+      <div class="step-num">2</div><div>Review by State</div>
     </div>
-
+    <div class="step-item locked" data-step="3" onclick="goStep(3)">
+      <div class="step-num">3</div><div>Filing Center</div>
+    </div>
+    <div class="step-item locked" data-step="4" onclick="goStep(4)">
+      <div class="step-num">4</div><div>Download Reports</div>
+    </div>
   </div>
-</div>
 
-<!-- EXCEL UPLOAD SECTION -->
-<div class="main" style="padding-top:0">
-  <div class="excel-section" id="excel-section">
-    <div class="ex-header">
-      <div class="ex-title">
-        <span class="ex-icon">📊</span>
-        <div>
-          <h2>Bulk Upload via Excel — Generate All State Reports at Once</h2>
-          <p>Upload your Amazon/Shopify/eBay sales data spreadsheet. The tool reads every state and county, calculates tax owed, and generates individual print-ready reports for each state — ready to file.</p>
-        </div>
+  <!-- ════════════════════════════════════════
+       STEP 1 — UPLOAD
+       ════════════════════════════════════════ -->
+  <div class="panel active" id="panel-1">
+    <div class="upload-section">
+      <div class="upload-title">
+        <span>📁</span> Step 1: Select Your Platform & Upload Report
       </div>
-      <div class="ex-actions-top">
-        <button class="btn-template" onclick="downloadTemplate()">⬇ Download Excel Template</button>
-      </div>
-    </div>
+      <p class="upload-sub">Choose where your sales came from, then upload your transaction report. The tool auto-detects column names — or you can map them manually.</p>
 
-    <div class="ex-two-col">
-
-      <!-- LEFT: Upload -->
-      <div class="ex-upload-col">
-        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('excel-input').click()">
-          <div class="upload-icon">📂</div>
-          <div class="upload-title">Click to upload your Excel file</div>
-          <div class="upload-sub">or drag and drop here</div>
-          <div class="upload-formats">.xlsx &nbsp;·&nbsp; .xls &nbsp;·&nbsp; .csv</div>
-          <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this.files[0])">
+      <!-- Platform selector -->
+      <div class="platform-grid">
+        <div class="plat-btn selected" data-platform="amazon" onclick="selectPlatform(this)">
+          <div class="plat-icon">📦</div>
+          <div class="plat-name">Amazon</div>
+          <div class="plat-sub">Seller Central Tax Report</div>
         </div>
-
-        <div class="ex-how">
-          <div class="ex-how-title">How It Works — Any Format Accepted:</div>
-          <div class="ex-how-row"><span class="col-letter">1</span> <span class="col-name">Upload any Excel or CSV</span> <span class="col-eg">Your Amazon, Shopify, eBay export</span></div>
-          <div class="ex-how-row"><span class="col-letter">2</span> <span class="col-name">We show you all your columns</span> <span class="col-eg">Pick which column = which field</span></div>
-          <div class="ex-how-row"><span class="col-letter">3</span> <span class="col-name">Click Generate Reports</span> <span class="col-eg">Get one report per state, ready to print</span></div>
-          <div class="ex-how-row" style="margin-top:8px;color:#1e5c33;font-size:11px;background:#eaf4ee;padding:8px 10px;border-radius:3px;border:none">✅ No template needed. Works with any column names — State, Ship-To State, Destination, Sales Total, Revenue, etc.</div>
+        <div class="plat-btn" data-platform="shopify" onclick="selectPlatform(this)">
+          <div class="plat-icon">🛍️</div>
+          <div class="plat-name">Shopify</div>
+          <div class="plat-sub">Taxes Finance Report</div>
+        </div>
+        <div class="plat-btn" data-platform="ebay" onclick="selectPlatform(this)">
+          <div class="plat-icon">🏷️</div>
+          <div class="plat-name">eBay</div>
+          <div class="plat-sub">Transaction Report</div>
+        </div>
+        <div class="plat-btn" data-platform="generic" onclick="selectPlatform(this)">
+          <div class="plat-icon">📊</div>
+          <div class="plat-name">Other / Generic</div>
+          <div class="plat-sub">Any CSV or Excel</div>
         </div>
       </div>
 
-      <!-- RIGHT: Status / Preview -->
-      <div class="ex-preview-col">
-        <div id="ex-status" class="ex-status-box" style="display:none"></div>
+      <!-- Filing period -->
+      <div class="period-row">
+        <div class="period-field">
+          <label>Filing Period Start</label>
+          <input type="date" id="period-start">
+        </div>
+        <div class="period-field">
+          <label>Filing Period End</label>
+          <input type="date" id="period-end">
+        </div>
+        <div class="period-field">
+          <label>Filing Frequency</label>
+          <select id="filing-freq">
+            <option value="monthly">Monthly</option>
+            <option value="quarterly" selected>Quarterly</option>
+            <option value="annual">Annual</option>
+          </select>
+        </div>
+      </div>
 
-        <!-- COLUMN MAPPER — shown after file read, before preview -->
-        <div id="col-mapper" style="display:none">
-          <div class="ex-preview-title">Step 2 — Match Your Columns</div>
-          <div style="font-size:12px;color:#7a7568;margin-bottom:12px;line-height:1.6">Your file has <strong id="col-count">0</strong> columns. Tell us which one is which — leave blank if your file doesn't have that field.</div>
-          <div class="mapper-grid" id="mapper-grid">
-            <!-- filled dynamically -->
+      <!-- Drop zone -->
+      <div class="drop-zone" id="drop-zone" style="margin-top:20px">
+        <input type="file" id="file-input" accept=".csv,.xlsx,.xls,.txt" onchange="handleFile(this.files[0])">
+        <div class="drop-icon">📂</div>
+        <div class="drop-title">Drop your sales report here</div>
+        <div class="drop-sub">Or click to browse — accepts CSV, Excel (.xlsx), or tab-delimited TXT</div>
+        <div class="accepted-formats">
+          <span class="fmt">CSV</span><span class="fmt">XLSX</span><span class="fmt">XLS</span><span class="fmt">TXT</span>
+        </div>
+      </div>
+
+      <!-- Sample data button -->
+      <div style="margin-top:14px;text-align:center">
+        <button class="btn-secondary" onclick="loadSampleData()" style="font-size:13px">
+          🧪 Load Sample Data (demo without uploading)
+        </button>
+      </div>
+
+      <!-- Column mapper -->
+      <div class="mapper-card" id="mapper-card">
+        <div class="mapper-title">
+          ⚙️ Column Mapping
+          <span style="font-size:12px;font-weight:400;color:#7a7568;font-family:'DM Mono',monospace" id="mapper-status"></span>
+        </div>
+        <div class="mapper-grid">
+          <div class="mapper-field">
+            <label>State / Ship-To State</label>
+            <select id="col-state"></select>
           </div>
-          <button class="btn-confirm-map" id="btn-confirm-map" onclick="confirmMapping()">Confirm Column Mapping →</button>
-        </div>
-        <div id="ex-preview" style="display:none">
-          <div class="ex-preview-title">Uploaded Data Preview</div>
-          <div class="ex-preview-table-wrap">
-            <table class="ex-preview-table" id="ex-preview-table"></table>
+          <div class="mapper-field">
+            <label>County / City / Jurisdiction</label>
+            <select id="col-county"></select>
           </div>
-          <div class="ex-summary" id="ex-summary"></div>
-          <button class="btn-generate" onclick="generateReports()">Generate All State Tax Reports →</button>
+          <div class="mapper-field">
+            <label>ZIP Code (optional)</label>
+            <select id="col-zip"></select>
+          </div>
+          <div class="mapper-field">
+            <label>Gross Sales / Item Price</label>
+            <select id="col-sales"></select>
+          </div>
+          <div class="mapper-field">
+            <label>Tax Collected</label>
+            <select id="col-tax"></select>
+          </div>
+          <div class="mapper-field">
+            <label>Order / Transaction Date</label>
+            <select id="col-date"></select>
+          </div>
         </div>
+        <div style="margin-top:14px;display:flex;gap:10px">
+          <button class="btn-primary" onclick="processData()">🔄 Process Report →</button>
+          <button class="btn-secondary" onclick="showPreview()">👁 Preview Data</button>
+        </div>
+      </div>
+
+      <!-- Preview table -->
+      <div class="preview-wrap" id="preview-wrap">
+        <div style="padding:10px 14px;background:#f5f3ee;border-bottom:1px solid #d8d3c5;font-size:12px;font-family:'DM Mono',monospace;color:#7a7568">
+          Showing first 10 rows of your data
+        </div>
+        <div style="overflow-x:auto"><table id="preview-table"></table></div>
+      </div>
+
+      <div class="info-box" id="platform-info">
+        <strong>Amazon Seller Central:</strong> Go to Reports → Tax Document Library → Download the Sales Tax Report (.csv). It contains ship-to state, county, item price, and tax collected columns.
+      </div>
+
+      <div class="progress-wrap" id="progress-1">
+        <div class="progress-bar"><div class="progress-fill" id="pf-1" style="width:0%"></div></div>
+        <div class="progress-label" id="pl-1">Processing...</div>
       </div>
     </div>
   </div>
 
-  <!-- GENERATED REPORTS -->
-  <div id="reports-section" style="display:none">
-    <div class="reports-header">
-      <h2 class="reports-title">📋 State Tax Reports — Ready to File</h2>
-      <p class="reports-sub">Each report below matches that state's return form. Print or save individually. Reviewed and filed separately with each state's Department of Revenue.</p>
-      <div class="reports-actions">
-        <button class="btn-print-all" onclick="printAll()">🖨 Print All Reports</button>
-        <button class="btn-copy-summary" onclick="copySummary()">📋 Copy Summary Table</button>
+  <!-- ════════════════════════════════════════
+       STEP 2 — REVIEW BY STATE
+       ════════════════════════════════════════ -->
+  <div class="panel" id="panel-2">
+    <div class="dashboard-header">
+      <div>
+        <div class="dh-title">Sales Tax Dashboard</div>
+        <div class="dh-meta" id="dash-meta"></div>
+      </div>
+      <div class="dh-actions">
+        <button class="btn-secondary" onclick="goStep(1)">← Back</button>
+        <button class="btn-primary" onclick="goStep(3)">Filing Center →</button>
       </div>
     </div>
 
-    <!-- Summary table across all states -->
-    <div class="summary-card">
-      <div class="summary-card-title">📊 Multi-State Summary — All States Combined</div>
-      <div class="summary-table-wrap">
-        <table class="summary-table" id="summary-table">
+    <!-- Summary cards -->
+    <div class="summary-grid">
+      <div class="sum-card">
+        <div class="sum-label">Total Gross Sales</div>
+        <div class="sum-value" id="s-gross">—</div>
+        <div class="sum-sub" id="s-orders">—</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-label">Taxable Sales</div>
+        <div class="sum-value" id="s-taxable">—</div>
+        <div class="sum-sub" id="s-states">—</div>
+      </div>
+      <div class="sum-card highlight">
+        <div class="sum-label">Tax Collected</div>
+        <div class="sum-value" id="s-collected">—</div>
+        <div class="sum-sub" id="s-due">—</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-label">States with Nexus</div>
+        <div class="sum-value" id="s-nexus">—</div>
+        <div class="sum-sub">States requiring filing</div>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <label>Filter:</label>
+      <select id="filter-state" onchange="renderStateTable()">
+        <option value="">All States</option>
+      </select>
+      <select id="filter-status" onchange="renderStateTable()">
+        <option value="">All Statuses</option>
+        <option value="nexus">Has Nexus (filing required)</option>
+        <option value="ok">Under threshold</option>
+      </select>
+      <input type="text" id="filter-search" placeholder="Search state..." oninput="renderStateTable()" style="width:150px">
+      <label style="margin-left:auto">Sort:</label>
+      <select id="sort-col" onchange="renderStateTable()">
+        <option value="state">State A-Z</option>
+        <option value="sales" selected>Gross Sales ↓</option>
+        <option value="tax">Tax Collected ↓</option>
+      </select>
+    </div>
+
+    <!-- State table -->
+    <div class="data-table-wrap">
+      <div class="dt-header">
+        <div class="dt-title">Breakdown by State & County</div>
+        <div class="dt-actions">
+          <button class="dt-btn active" id="view-state" onclick="switchView('state')">By State</button>
+          <button class="dt-btn" id="view-county" onclick="switchView('county')">By County</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="data-table">
           <thead>
             <tr>
-              <th>State</th>
-              <th>Period</th>
-              <th>Gross Sales</th>
-              <th>Exempt Sales</th>
-              <th>Net Taxable Sales</th>
-              <th>Tax Rate(s)</th>
-              <th>Tax Collected</th>
-              <th>Dealer Discount</th>
-              <th>AMOUNT DUE</th>
-              <th>Filing Due Date</th>
-              <th>File Online</th>
+              <th style="width:32px"></th>
+              <th onclick="sortBy('state')">State ↕</th>
+              <th onclick="sortBy('counties')">Counties</th>
+              <th onclick="sortBy('sales')">Gross Sales ↕</th>
+              <th onclick="sortBy('taxable')">Taxable Sales</th>
+              <th onclick="sortBy('rate')">Avg Rate</th>
+              <th onclick="sortBy('collected')">Tax Collected ↕</th>
+              <th onclick="sortBy('due')">Tax Due</th>
+              <th>Nexus Status</th>
+              <th>Action</th>
             </tr>
           </thead>
-          <tbody id="summary-tbody"></tbody>
-          <tfoot>
-            <tr id="summary-total-row" style="font-weight:700;background:#f3efe4;">
-              <td colspan="2">TOTALS — All States</td>
-              <td id="tot-gross"></td>
-              <td id="tot-exempt"></td>
-              <td id="tot-taxable"></td>
-              <td>—</td>
-              <td id="tot-tax"></td>
-              <td id="tot-dis"></td>
-              <td id="tot-due" style="color:#1e5c33;font-size:15px"></td>
-              <td>—</td>
-            </tr>
-          </tfoot>
+          <tbody id="state-tbody"></tbody>
+          <tfoot id="state-tfoot"></tfoot>
         </table>
       </div>
     </div>
+  </div>
 
-    <!-- Individual state reports (print-ready) -->
-    <div id="state-reports-container"></div>
+  <!-- ════════════════════════════════════════
+       STEP 3 — FILING CENTER
+       ════════════════════════════════════════ -->
+  <div class="panel" id="panel-3">
+    <div class="dashboard-header">
+      <div>
+        <div class="dh-title">Filing Center</div>
+        <div class="dh-meta">State-by-state filing summary with direct portal links</div>
+      </div>
+      <div class="dh-actions">
+        <button class="btn-secondary" onclick="goStep(2)">← Dashboard</button>
+        <button class="btn-primary" onclick="goStep(4)">Download All →</button>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      ⚠ <strong>Important:</strong> These tools calculate what's owed based on your uploaded data. You are responsible for verifying accuracy and submitting to each state. The "File Now" links open each state's official tax portal — you'll need your state tax account credentials.
+    </div>
+
+    <div class="filing-grid" id="filing-grid" style="margin-top:20px"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       STEP 4 — DOWNLOAD
+       ════════════════════════════════════════ -->
+  <div class="panel" id="panel-4">
+    <div class="download-section">
+      <div class="upload-title"><span>⬇️</span> Download Your Reports</div>
+      <p class="upload-sub">Download your categorized sales tax data in multiple formats. Each state gets its own formatted sheet ready for your tax filing.</p>
+
+      <div class="dl-grid">
+        <div class="dl-card" onclick="downloadFull()">
+          <div class="dl-icon">📊</div>
+          <div class="dl-name">Full Report (Excel)</div>
+          <div class="dl-desc">All states on separate sheets, county breakdown, totals, tax collected vs due</div>
+          <div class="dl-tag">XLSX</div>
+        </div>
+        <div class="dl-card" onclick="downloadCSV()">
+          <div class="dl-icon">📄</div>
+          <div class="dl-name">Full Report (CSV)</div>
+          <div class="dl-desc">Single CSV with all transactions categorized by state, county, and tax amount</div>
+          <div class="dl-tag">CSV</div>
+        </div>
+        <div class="dl-card" onclick="downloadSummary()">
+          <div class="dl-icon">📋</div>
+          <div class="dl-name">Filing Summary</div>
+          <div class="dl-desc">One-page summary: state, gross sales, taxable, tax collected, tax due, portal link</div>
+          <div class="dl-tag">CSV</div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px">
+        <div class="dt-title" style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:16px">Download by Individual State</div>
+        <div id="state-download-list" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"></div>
+      </div>
+
+      <div class="progress-wrap" id="progress-4">
+        <div class="progress-bar"><div class="progress-fill" id="pf-4" style="width:0%"></div></div>
+        <div class="progress-label" id="pl-4">Generating...</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- STATE REVIEW MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">State Filing Summary</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
-</div><!-- close main from above -->
+<footer>
+  BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp;
+  <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp;
+  Your data never leaves your browser · For estimation only
 
-<style>
-/* EXCEL SECTION */
-.excel-section{background:white;border:1px solid #ddd8cc;border-radius:6px;padding:28px;margin-bottom:24px;}
-.ex-header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:24px;flex-wrap:wrap;}
-.ex-header h2{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;margin-bottom:6px;}
-.ex-header p{font-size:13px;color:#7a7568;line-height:1.6;max-width:560px;}
-.ex-icon{font-size:28px;flex-shrink:0;}
-.ex-title{display:flex;gap:14px;align-items:flex-start;}
-.btn-template{padding:10px 18px;background:#1a1a18;color:white;border:none;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
-.btn-template:hover{background:#333;}
-.ex-two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:700px){.ex-two-col{grid-template-columns:1fr;}}
-.upload-zone{border:2px dashed #c5c0b5;border-radius:6px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#faf8f3;}
-.upload-zone:hover{border-color:#1e5c33;background:#f5fbf7;}
-.upload-icon{font-size:36px;margin-bottom:12px;}
-.upload-title{font-size:15px;font-weight:600;color:#1a1a18;margin-bottom:4px;}
-.upload-sub{font-size:13px;color:#7a7568;margin-bottom:8px;}
-.upload-formats{font-family:'DM Mono',monospace;font-size:11px;color:#aaa9a3;background:#ede9e1;display:inline-block;padding:3px 10px;border-radius:20px;}
-.ex-how{margin-top:14px;background:#f5f3ee;border-radius:4px;padding:14px 16px;}
-.ex-how-title{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:8px;}
-.ex-how-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;border-bottom:1px solid #ede9e1;}
-.ex-how-row:last-of-type{border-bottom:none;}
-.col-letter{background:#1a1a18;color:white;font-family:'DM Mono',monospace;font-size:10px;width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.col-name{font-weight:600;color:#1a1a18;min-width:150px;}
-.col-eg{color:#7a7568;font-size:11px;}
-.ex-status-box{padding:12px 16px;border-radius:4px;font-size:13px;line-height:1.6;}
-.ex-status-box.ok{background:#eaf4ee;border:1px solid #b5d9c0;color:#1e5c33;}
-.ex-status-box.err{background:#fdf0ec;border:1px solid #f0b8a8;color:#c8472a;}
-.ex-status-box.info{background:#f5f3ee;border:1px solid #ddd8cc;color:#7a7568;}
-.ex-preview-title{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;margin-bottom:10px;}
-.ex-preview-table-wrap{overflow-x:auto;max-height:220px;overflow-y:auto;border:1px solid #ede9e1;border-radius:4px;}
-.ex-preview-table{width:100%;border-collapse:collapse;font-size:11px;}
-.ex-preview-table th{background:#f3efe4;padding:6px 10px;text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;border-bottom:2px solid #ddd8cc;white-space:nowrap;position:sticky;top:0;}
-.ex-preview-table td{padding:6px 10px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;}
-.ex-preview-table tr:hover td{background:#faf8f3;}
-.ex-summary{margin-top:12px;background:#f5f3ee;border-radius:4px;padding:12px 14px;font-size:12px;color:#7a7568;line-height:1.7;}
-.ex-summary strong{color:#1a1a18;}
-.btn-generate{width:100%;height:46px;background:#1e5c33;color:white;border:none;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:12px;transition:background .15s;}
-.btn-generate:hover{background:#164a28;}
+<!-- RELATED TOOLS — SEO Internal Links -->
+<div style="background:#f6f4ef;border-top:1px solid #d8d3c5;padding:32px 24px;margin-top:40px;text-align:center">
+  <p style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7a7568;margin-bottom:14px">Related Tools & Guides</p>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center"><a href="/booksmart-tools/sales-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600;margin:4px">📊 Sales Tax Return Calculator</a><a href="/booksmart-tools/meals-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600;margin:4px">📊 Meals Tax Calculator</a><a href="/booksmart-tools/quarterly-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600;margin:4px">📊 Quarterly Tax Calculator</a></div>
+</div>
+<!-- END RELATED TOOLS -->
+</footer>
 
-/* REPORTS */
-.reports-header{margin-bottom:20px;padding:20px 24px;background:white;border:1px solid #ddd8cc;border-radius:6px;}
-.reports-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;}
-.reports-sub{font-size:13px;color:#7a7568;margin-bottom:14px;line-height:1.6;}
-.reports-actions{display:flex;gap:10px;flex-wrap:wrap;}
-.btn-print-all{padding:10px 20px;background:#1a1a18;color:white;border:none;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
-.btn-copy-summary{padding:10px 20px;background:white;color:#1a1a18;border:1px solid #d0cbbf;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;}
-
-/* SUMMARY TABLE */
-.summary-card{background:white;border:1px solid #ddd8cc;border-radius:6px;padding:20px 22px;margin-bottom:20px;overflow:hidden;}
-.summary-card-title{font-size:14px;font-weight:700;margin-bottom:14px;color:#1a1a18;}
-.summary-table-wrap{overflow-x:auto;}
-.summary-table{width:100%;border-collapse:collapse;font-size:12px;}
-.summary-table th{background:#1a1a18;color:white;padding:9px 12px;text-align:left;font-size:10px;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap;}
-.summary-table td{padding:9px 12px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;}
-.summary-table tr:hover td{background:#faf8f3;}
-.summary-table tfoot td{border-top:2px solid #1a1a18;padding:10px 12px;}
-
-/* INDIVIDUAL STATE REPORT CARDS */
-.state-report{background:white;border:2px solid #ddd8cc;border-radius:6px;margin-bottom:20px;overflow:hidden;}
-.state-report-head{background:#1a1a18;color:white;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.state-report-head h3{font-family:'DM Serif Display',serif;font-size:18px;font-weight:400;}
-.state-report-head .report-meta{font-size:12px;color:rgba(255,255,255,.65);font-family:'DM Mono',monospace;}
-.state-report-head .print-btn{padding:7px 14px;background:rgba(255,255,255,.15);color:white;border:1px solid rgba(255,255,255,.3);border-radius:3px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
-.state-report-head .print-btn:hover{background:rgba(255,255,255,.25);}
-.state-report-body{padding:20px 22px;}
-.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #ddd8cc;border-radius:4px;overflow:hidden;margin-bottom:16px;}
-@media(max-width:600px){.report-grid{grid-template-columns:1fr;}}
-.report-row{display:contents;}
-.report-label{padding:10px 14px;background:#f3efe4;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;border-bottom:1px solid #ddd8cc;}
-.report-val{padding:10px 14px;font-family:'DM Mono',monospace;font-size:13px;border-bottom:1px solid #ddd8cc;font-weight:600;}
-.report-val.green{color:#1e5c33;font-size:15px;}
-.report-val.amber{color:#b8860b;}
-.report-val.big{font-size:20px;color:#1a1a18;font-family:'DM Serif Display',serif;}
-.county-breakdown-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
-.county-breakdown-table th{background:#f3efe4;padding:7px 12px;text-align:left;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;border-bottom:2px solid #ddd8cc;}
-.county-breakdown-table td{padding:8px 12px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;font-size:12px;}
-.county-breakdown-table tr:last-child td{border-bottom:none;font-weight:700;background:#faf8f3;}
-.report-footer-note{font-size:11px;color:#7a7568;border-top:1px solid #ede9e1;padding-top:12px;line-height:1.6;}
-
-/* PRINT STYLES */
-.mapper-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.mapper-lbl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#1a1a18;padding:4px 0 2px;}
-.mapper-req{color:#c8472a;}
-.mapper-sel select{width:100%;height:36px;border:1px solid #d0cbbf;border-radius:3px;padding:0 10px;font-family:'DM Sans',sans-serif;font-size:12px;background:#faf8f3;outline:none;}
-.mapper-sel select:focus{border-color:#1e5c33;}
-.btn-confirm-map{width:100%;height:40px;background:#1a1a18;color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;transition:background .15s;}
-.btn-confirm-map:hover{background:#333;}
-@media print{
-  .site-nav,.hero,.main .grid,.excel-section,.reports-header .reports-actions,.print-btn,.btn-print-all,.btn-copy-summary{display:none!important;}
-  .state-report{border:1px solid #ccc;margin-bottom:0;page-break-after:always;}
-  .state-report:last-child{page-break-after:avoid;}
-  #reports-section{display:block!important;}
-}
-</style>
-
-<script src="/booksmart-tools/js/main.js"></script>
 <script>
-// ── COMPLETE COUNTY DATA — ALL 50 STATES + D.C. ──────────
-const STATES = {
-  "Alabama": {
-    "url": "https://www.revenue.alabama.gov/",
-    "due": "20th of following month",
-    "portal": "MyAlabamaTaxes (revenue.alabama.gov)",
-    "note": "State 4%. Counties add local rates. Combined avg ~9.25%.",
-    "discount": "none",
-    "counties": {
-      "Jefferson County (Birmingham)": 10.0,
-      "Mobile County": 10.0,
-      "Madison County (Huntsville)": 9.0,
-      "Montgomery County": 10.0,
-      "Shelby County": 9.0,
-      "Tuscaloosa County": 10.0,
-      "Lee County (Auburn/Opelika)": 9.0,
-      "Calhoun County (Anniston)": 9.0,
-      "Etowah County (Gadsden)": 9.0,
-      "Morgan County (Decatur)": 9.0,
-      "Baldwin County": 9.0,
-      "Marshall County": 9.0
-    }
+// ═══════════════════════════════════════════════════════════════
+//  PLATFORM CONFIGURATIONS
+// ═══════════════════════════════════════════════════════════════
+const PLATFORMS = {
+  amazon: {
+    info: '<strong>Amazon Seller Central:</strong> Reports → Tax Document Library → Sales Tax Report (.csv). Contains ship-to-state, county, item-price, and item-tax columns.',
+    colMap: { state:'ship-to-state', county:'ship-to-city', zip:'ship-to-postal-code', sales:'item-price', tax:'item-tax', date:'purchase-date' }
   },
-  "Alaska": {
-    "url": "",
-    "due": "Varies by locality",
-    "portal": "Contact your local borough",
-    "note": "No statewide sales tax. Some boroughs charge 0%-7.5% local sales tax.",
-    "discount": "none",
-    "counties": {
-      "Anchorage (no sales tax)": 0.0,
-      "Juneau": 5.0,
-      "Fairbanks (no sales tax)": 0.0,
-      "Sitka": 6.0,
-      "Ketchikan": 7.0,
-      "Kodiak": 6.0,
-      "Kenai Peninsula Borough": 0.0
-    }
+  shopify: {
+    info: '<strong>Shopify:</strong> Analytics → Reports → Finances → Taxes. Export as CSV. Contains Billing/Shipping Province, Tax Name, Taxable Amount, Tax Amount.',
+    colMap: { state:'shipping_province', county:'shipping_city', zip:'shipping_zip', sales:'subtotal_price', tax:'taxes_included', date:'created_at' }
   },
-  "Arizona": {
-    "url": "https://aztaxes.gov/",
-    "due": "20th of following month",
-    "portal": "AZTaxes (aztaxes.gov)",
-    "note": "State 5.6%. Cities and counties add TPT. Phoenix 8.6%, Tucson 8.7%.",
-    "discount": "none",
-    "counties": {
-      "Maricopa County (Phoenix)": 8.6,
-      "Pima County (Tucson)": 8.7,
-      "Pinal County": 8.7,
-      "Yavapai County (Prescott)": 7.6,
-      "Coconino County (Flagstaff)": 9.18,
-      "Mohave County (Kingman)": 8.35,
-      "Yuma County": 8.41,
-      "Navajo County (Show Low)": 8.6,
-      "Apache County": 8.6,
-      "Gila County": 8.35,
-      "Graham County": 8.6,
-      "La Paz County": 8.6,
-      "Santa Cruz County": 9.6
-    }
+  ebay: {
+    info: '<strong>eBay:</strong> Seller Hub → Reports → Transaction Reports. Download as CSV. Contains buyer-state, sales-tax columns.',
+    colMap: { state:'buyer-state', county:'buyer-city', zip:'buyer-zip-code', sales:'gross-amount', tax:'sales-tax-amount', date:'transaction-creation-date' }
   },
-  "Arkansas": {
-    "url": "https://atap.arkansas.gov/",
-    "due": "20th of following month",
-    "portal": "ATAP (atap.arkansas.gov)",
-    "note": "State 6.5%. Counties and cities add local rates. Combined avg ~9.46%.",
-    "discount": "none",
-    "counties": {
-      "Pulaski County (Little Rock)": 9.5,
-      "Benton County (Bentonville)": 9.5,
-      "Washington County (Fayetteville)": 9.75,
-      "Sebastian County (Fort Smith)": 9.25,
-      "Craighead County (Jonesboro)": 9.5,
-      "Garland County (Hot Springs)": 9.5,
-      "Saline County (Benton)": 9.25,
-      "Faulkner County (Conway)": 9.25,
-      "Jefferson County (Pine Bluff)": 9.5,
-      "Lonoke County": 9.0
-    }
-  },
-  "California": {
-    "url": "https://www.cdtfa.ca.gov/",
-    "due": "Last day of following month",
-    "portal": "CDTFA (cdtfa.ca.gov)",
-    "note": "State 7.25%. Districts add significant local rates. Varies greatly by city/zip.",
-    "discount": "none",
-    "counties": {
-      "Los Angeles County": 10.25,
-      "San Francisco County": 8.625,
-      "San Diego County": 7.75,
-      "Orange County": 7.75,
-      "Santa Clara County": 9.125,
-      "Alameda County": 10.25,
-      "Riverside County": 8.75,
-      "San Bernardino County": 8.75,
-      "Sacramento County": 8.75,
-      "Contra Costa County": 9.25,
-      "Fresno County": 8.35,
-      "Kern County": 8.25,
-      "San Mateo County": 9.375,
-      "Ventura County": 7.25,
-      "Sonoma County": 9.25,
-      "Marin County": 9.25,
-      "Monterey County": 9.25,
-      "Santa Barbara County": 8.75,
-      "Solano County": 8.375,
-      "Stanislaus County": 8.25,
-      "San Joaquin County": 8.75,
-      "Tulare County": 7.75,
-      "Shasta County": 7.25,
-      "San Luis Obispo County": 7.75,
-      "Santa Cruz County": 9.25,
-      "El Dorado County": 7.25,
-      "Napa County": 8.25,
-      "Humboldt County": 8.25,
-      "Butte County": 8.25
-    }
-  },
-  "Colorado": {
-    "url": "https://revenue.colorado.gov/",
-    "due": "20th of following month",
-    "portal": "Revenue Online (revenue.colorado.gov)",
-    "note": "State 2.9%. Very high local rates. Denver 8.81%, some areas exceed 11%.",
-    "discount": "none",
-    "counties": {
-      "Denver County": 8.81,
-      "El Paso County (Colorado Springs)": 8.2,
-      "Arapahoe County (Aurora)": 8.0,
-      "Jefferson County (Lakewood)": 8.5,
-      "Adams County (Thornton)": 8.75,
-      "Larimer County (Fort Collins)": 7.55,
-      "Douglas County (Castle Rock)": 6.9,
-      "Weld County (Greeley)": 7.01,
-      "Boulder County": 8.845,
-      "Pueblo County": 7.6,
-      "Mesa County (Grand Junction)": 7.27,
-      "Garfield County (Glenwood Springs)": 8.6,
-      "Eagle County (Vail)": 8.5,
-      "Summit County": 8.375,
-      "La Plata County (Durango)": 7.9
-    }
-  },
-  "Connecticut": {
-    "url": "https://portal.ct.gov/DRS",
-    "due": "Last day of following month",
-    "portal": "myconneCT (portal.ct.gov/DRS)",
-    "note": "Flat 6.35% statewide. No county-level variation. Meals taxed at 7.35%.",
-    "discount": "pct",
-    "counties": {
-      "All Connecticut Statewide": 6.35
-    }
-  },
-  "Delaware": {
-    "url": "",
-    "due": "No return required",
-    "portal": "No filing required",
-    "note": "No sales tax in Delaware.",
-    "discount": "none",
-    "counties": {
-      "No sales tax - no return required": 0.0
-    }
-  },
-  "Florida": {
-    "url": "https://floridarevenue.com/taxes/eservices/",
-    "due": "20th of following month",
-    "portal": "Florida e-Services (floridarevenue.com)",
-    "note": "State 6%. Counties add discretionary surtax 0.5%-2.5%.",
-    "discount": "pct",
-    "counties": {
-      "Miami-Dade County": 7.0,
-      "Broward County (Fort Lauderdale)": 7.0,
-      "Palm Beach County": 7.0,
-      "Hillsborough County (Tampa)": 8.5,
-      "Orange County (Orlando)": 6.5,
-      "Pinellas County (St. Pete)": 7.0,
-      "Duval County (Jacksonville)": 7.5,
-      "Lee County (Fort Myers)": 6.5,
-      "Polk County (Lakeland)": 7.0,
-      "Brevard County": 7.0,
-      "Volusia County (Daytona)": 6.5,
-      "Pasco County": 7.0,
-      "Sarasota County": 7.0,
-      "Manatee County (Bradenton)": 7.5,
-      "Collier County (Naples)": 6.0,
-      "Seminole County": 7.0,
-      "Lake County": 7.0,
-      "Alachua County (Gainesville)": 7.0,
-      "Leon County (Tallahassee)": 7.5,
-      "Osceola County (Kissimmee)": 7.5,
-      "Escambia County (Pensacola)": 7.5,
-      "Bay County (Panama City)": 7.5,
-      "St. Johns County": 6.5,
-      "Marion County (Ocala)": 7.0,
-      "St. Lucie County (Port St. Lucie)": 7.0,
-      "Charlotte County (Port Charlotte)": 7.0
-    }
-  },
-  "Georgia": {
-    "url": "https://gtc.dor.ga.gov/",
-    "due": "20th of following month",
-    "portal": "Georgia Tax Center (gtc.dor.ga.gov)",
-    "note": "State 4%. Counties add SPLOST and local taxes. Atlanta area highest.",
-    "discount": "none",
-    "counties": {
-      "Fulton County (Atlanta)": 8.9,
-      "DeKalb County": 8.0,
-      "Gwinnett County": 6.0,
-      "Cobb County": 6.0,
-      "Clayton County": 8.0,
-      "Cherokee County": 6.0,
-      "Chatham County (Savannah)": 7.0,
-      "Richmond County (Augusta)": 8.0,
-      "Bibb County (Macon)": 7.0,
-      "Clarke County (Athens)": 8.0,
-      "Forsyth County": 6.0,
-      "Hall County (Gainesville)": 7.0,
-      "Henry County": 6.0,
-      "Columbia County (Evans)": 8.0,
-      "Muscogee County (Columbus)": 8.0,
-      "Lowndes County (Valdosta)": 7.0,
-      "Whitfield County (Dalton)": 7.0
-    }
-  },
-  "Hawaii": {
-    "url": "https://tax.hawaii.gov/",
-    "due": "20th of following month",
-    "portal": "Hawaii Tax Online (tax.hawaii.gov)",
-    "note": "4% General Excise Tax (GET). Oahu adds 0.5% surcharge.",
-    "discount": "none",
-    "counties": {
-      "Honolulu County (Oahu)": 4.5,
-      "Maui County": 4.0,
-      "Hawaii County (Big Island)": 4.0,
-      "Kauai County": 4.0
-    }
-  },
-  "Idaho": {
-    "url": "https://tap.tax.idaho.gov/",
-    "due": "20th of following month",
-    "portal": "TAP (tap.tax.idaho.gov)",
-    "note": "Flat 6% statewide. Very limited local sales taxes.",
-    "discount": "none",
-    "counties": {
-      "Ada County (Boise)": 6.0,
-      "Canyon County (Nampa/Caldwell)": 6.0,
-      "Kootenai County (Coeur d'Alene)": 6.0,
-      "Twin Falls County": 6.0,
-      "Bonneville County (Idaho Falls)": 6.0,
-      "Bannock County (Pocatello)": 6.0,
-      "All Other Idaho Counties": 6.0
-    }
-  },
-  "Illinois": {
-    "url": "https://mytax.illinois.gov/",
-    "due": "20th of following month",
-    "portal": "MyTax Illinois (mytax.illinois.gov)",
-    "note": "State 6.25%. Chicago/Cook County up to 10.25% combined.",
-    "discount": "none",
-    "counties": {
-      "Cook County (Chicago city)": 10.25,
-      "Cook County (Chicago suburbs)": 9.0,
-      "DuPage County": 7.75,
-      "Lake County": 7.0,
-      "Will County (Joliet)": 8.0,
-      "Kane County (Aurora/Elgin)": 8.25,
-      "McHenry County": 7.0,
-      "Winnebago County (Rockford)": 8.25,
-      "Madison County": 7.85,
-      "St. Clair County (Belleville)": 7.85,
-      "Champaign County": 8.75,
-      "Sangamon County (Springfield)": 8.75,
-      "Peoria County": 8.75,
-      "McLean County (Bloomington)": 8.0,
-      "Macon County (Decatur)": 8.5
-    }
-  },
-  "Indiana": {
-    "url": "https://intime.dor.in.gov/",
-    "due": "Last day of following month",
-    "portal": "INTIME (intime.dor.in.gov)",
-    "note": "Flat 7% statewide. No local sales tax in Indiana.",
-    "discount": "none",
-    "counties": {
-      "All Indiana Counties - Flat 7% Statewide": 7.0
-    }
-  },
-  "Iowa": {
-    "url": "https://tax.iowa.gov/",
-    "due": "Last day of following month",
-    "portal": "GovConnectIowa (tax.iowa.gov)",
-    "note": "State 6%. Local option 1% added in many jurisdictions.",
-    "discount": "none",
-    "counties": {
-      "Polk County (Des Moines)": 7.0,
-      "Linn County (Cedar Rapids)": 7.0,
-      "Scott County (Davenport)": 7.0,
-      "Johnson County (Iowa City)": 7.0,
-      "Black Hawk County (Waterloo)": 7.0,
-      "Woodbury County (Sioux City)": 7.0,
-      "Dubuque County": 7.0,
-      "Story County (Ames)": 7.0,
-      "Pottawattamie County (Council Bluffs)": 7.0,
-      "All Other Iowa Counties": 6.0
-    }
-  },
-  "Kansas": {
-    "url": "https://ksrevenue.gov/",
-    "due": "25th of following month",
-    "portal": "KS Customer Service (ksrevenue.gov)",
-    "note": "State 6.5% (groceries exempt 2025). Counties and cities add local rates.",
-    "discount": "none",
-    "counties": {
-      "Johnson County (Overland Park/Olathe)": 9.1,
-      "Sedgwick County (Wichita)": 8.5,
-      "Shawnee County (Topeka)": 9.15,
-      "Wyandotte County (Kansas City KS)": 9.125,
-      "Douglas County (Lawrence)": 9.3,
-      "Riley County (Manhattan)": 8.95,
-      "Saline County (Salina)": 8.75,
-      "Reno County (Hutchinson)": 8.5,
-      "All Other Kansas Counties": 7.5
-    }
-  },
-  "Kentucky": {
-    "url": "https://revenue.ky.gov/",
-    "due": "20th of following month",
-    "portal": "KY Online Gateway (revenue.ky.gov)",
-    "note": "Flat 6% statewide. No local sales tax in Kentucky.",
-    "discount": "none",
-    "counties": {
-      "All Kentucky Counties - Flat 6% Statewide": 6.0
-    }
-  },
-  "Louisiana": {
-    "url": "https://latap.revenue.louisiana.gov/",
-    "due": "20th of following month",
-    "portal": "LATAP (latap.revenue.louisiana.gov)",
-    "note": "State 5%. Parishes add significant local rates. Combined avg ~10.1%.",
-    "discount": "pct",
-    "counties": {
-      "Orleans Parish (New Orleans)": 9.45,
-      "Jefferson Parish (Metairie)": 9.2,
-      "East Baton Rouge Parish (Baton Rouge)": 9.95,
-      "St. Tammany Parish (Slidell/Covington)": 9.2,
-      "Caddo Parish (Shreveport)": 9.05,
-      "Calcasieu Parish (Lake Charles)": 9.7,
-      "Rapides Parish (Alexandria)": 9.7,
-      "Ouachita Parish (Monroe)": 9.45,
-      "St. Landry Parish (Opelousas)": 9.95,
-      "Lafourche Parish": 9.7,
-      "Terrebonne Parish (Houma)": 9.7,
-      "Tangipahoa Parish (Hammond)": 9.45,
-      "Livingston Parish": 9.45,
-      "Ascension Parish (Gonzales)": 9.45
-    }
-  },
-  "Maine": {
-    "url": "https://portal.maine.gov/mtap/",
-    "due": "15th of following month",
-    "portal": "Maine Tax Portal (portal.maine.gov/mtap)",
-    "note": "Flat 5.5% statewide. No local sales tax. Meals taxed at 8%.",
-    "discount": "none",
-    "counties": {
-      "All Maine Counties - Flat 5.5% Statewide": 5.5
-    }
-  },
-  "Maryland": {
-    "url": "https://interactive.marylandtaxes.gov/",
-    "due": "20th of following month",
-    "portal": "bFile (interactive.marylandtaxes.gov)",
-    "note": "Flat 6% statewide. No local sales tax variation.",
-    "discount": "pct",
-    "counties": {
-      "All Maryland Counties - Flat 6% Statewide": 6.0
-    }
-  },
-  "Massachusetts": {
-    "url": "https://masstaxconnect.dor.state.ma.us/",
-    "due": "20th of following month",
-    "portal": "MassTaxConnect (masstaxconnect.dor.state.ma.us)",
-    "note": "Flat 6.25% statewide. No county-level sales tax variation.",
-    "discount": "none",
-    "counties": {
-      "All Massachusetts Counties - Flat 6.25%": 6.25
-    }
-  },
-  "Michigan": {
-    "url": "https://www.michigan.gov/taxes/",
-    "due": "20th of following month",
-    "portal": "Michigan Treasury Online (michigan.gov/taxes)",
-    "note": "Flat 6% statewide. No local sales tax in Michigan.",
-    "discount": "pct",
-    "counties": {
-      "All Michigan Counties - Flat 6% Statewide": 6.0
-    }
-  },
-  "Minnesota": {
-    "url": "https://www.mndor.state.mn.us/",
-    "due": "20th of following month",
-    "portal": "e-Services (mndor.state.mn.us)",
-    "note": "State 6.875%. Minneapolis area adds extra taxes. Most areas 7.375%-8%+.",
-    "discount": "none",
-    "counties": {
-      "Hennepin County (Minneapolis)": 8.025,
-      "Ramsey County (St. Paul)": 7.375,
-      "Dakota County": 7.375,
-      "Anoka County": 7.375,
-      "Washington County": 7.375,
-      "Scott County": 7.375,
-      "Carver County": 7.375,
-      "St. Louis County (Duluth)": 7.875,
-      "Olmsted County (Rochester)": 7.875,
-      "Stearns County (St. Cloud)": 7.875,
-      "All Other Minnesota Counties": 7.375
-    }
-  },
-  "Mississippi": {
-    "url": "https://tap.dor.ms.gov/",
-    "due": "20th of following month",
-    "portal": "TAP (tap.dor.ms.gov)",
-    "note": "State 7%. Very limited local additions.",
-    "discount": "none",
-    "counties": {
-      "Hinds County (Jackson)": 7.0,
-      "Harrison County (Biloxi/Gulfport)": 7.0,
-      "DeSoto County (Southaven)": 7.0,
-      "Rankin County (Brandon)": 7.0,
-      "Madison County (Ridgeland)": 7.0,
-      "Forrest County (Hattiesburg)": 7.0,
-      "All Other Mississippi Counties": 7.0
-    }
-  },
-  "Missouri": {
-    "url": "https://mytax.missouri.gov/",
-    "due": "20th of following month",
-    "portal": "MyTax Missouri (mytax.missouri.gov)",
-    "note": "State 4.225%. Cities and counties add significant local rates. KC area ~10.85%.",
-    "discount": "pct",
-    "counties": {
-      "Jackson County (Kansas City MO)": 10.85,
-      "St. Louis County": 9.679,
-      "St. Louis City": 11.679,
-      "Greene County (Springfield)": 8.225,
-      "Clay County (N. Kansas City)": 8.725,
-      "St. Charles County": 8.95,
-      "Jefferson County": 7.725,
-      "Boone County (Columbia)": 7.975,
-      "Cass County (Belton/Raymore)": 7.225,
-      "Franklin County": 7.225,
-      "Christian County (Nixa/Ozark)": 7.975,
-      "Jasper County (Joplin)": 8.225
-    }
-  },
-  "Montana": {
-    "url": "",
-    "due": "No return required",
-    "portal": "No filing required",
-    "note": "No sales tax in Montana.",
-    "discount": "none",
-    "counties": {
-      "No sales tax - no return required": 0.0
-    }
-  },
-  "Nebraska": {
-    "url": "https://revenue.nebraska.gov/",
-    "due": "25th of following month",
-    "portal": "Nebraska e-File (revenue.nebraska.gov)",
-    "note": "State 5.5%. Cities add local rates. Omaha 7%, Lincoln 7%.",
-    "discount": "none",
-    "counties": {
-      "Douglas County (Omaha)": 7.0,
-      "Lancaster County (Lincoln)": 7.0,
-      "Sarpy County (Papillion/Bellevue)": 7.0,
-      "Hall County (Grand Island)": 7.0,
-      "Buffalo County (Kearney)": 7.0,
-      "Dodge County (Fremont)": 7.0,
-      "All Other Nebraska Counties": 5.5
-    }
-  },
-  "Nevada": {
-    "url": "https://nevadatax.nv.gov/",
-    "due": "Last day of following month",
-    "portal": "Nevada Tax Center (nevadatax.nv.gov)",
-    "note": "State 6.85%. Clark County (Las Vegas) 8.375%, Washoe (Reno) 8.265%.",
-    "discount": "none",
-    "counties": {
-      "Clark County (Las Vegas/Henderson)": 8.375,
-      "Washoe County (Reno/Sparks)": 8.265,
-      "Carson City": 7.6,
-      "Douglas County": 7.1,
-      "Elko County": 7.1,
-      "Lyon County": 7.1,
-      "Nye County (Pahrump)": 6.85,
-      "Churchill County (Fallon)": 6.85,
-      "All Other Nevada Counties": 6.85
-    }
-  },
-  "New Hampshire": {
-    "url": "",
-    "due": "No return required",
-    "portal": "No filing required",
-    "note": "No sales tax. Meals and Rooms Tax 8.5% is separate.",
-    "discount": "none",
-    "counties": {
-      "No sales tax - no return required": 0.0
-    }
-  },
-  "New Jersey": {
-    "url": "https://www.njportal.com/DOR/Sales/",
-    "due": "20th of following month",
-    "portal": "NJ Taxation (njportal.com/DOR/Sales)",
-    "note": "Flat 6.625% statewide. Urban Enterprise Zones: 3.3125%.",
-    "discount": "none",
-    "counties": {
-      "All Counties - Standard Rate": 6.625,
-      "Urban Enterprise Zones (select cities)": 3.3125
-    }
-  },
-  "New Mexico": {
-    "url": "https://tap.state.nm.us/",
-    "due": "25th of following month",
-    "portal": "TAP (tap.state.nm.us)",
-    "note": "Gross Receipts Tax (GRT) - similar to sales tax. State 5%. Cities add local.",
-    "discount": "none",
-    "counties": {
-      "Bernalillo County (Albuquerque)": 7.875,
-      "Dona Ana County (Las Cruces)": 8.3125,
-      "Sandoval County (Rio Rancho)": 7.625,
-      "Santa Fe County": 8.4375,
-      "San Juan County (Farmington)": 7.625,
-      "McKinley County (Gallup)": 7.875,
-      "Chaves County (Roswell)": 7.375,
-      "Otero County (Alamogordo)": 7.875,
-      "All Other New Mexico Counties": 5.0
-    }
-  },
-  "New York": {
-    "url": "https://businessexpress.ny.gov/",
-    "due": "20th of following month",
-    "portal": "NY Business Online (businessexpress.ny.gov)",
-    "note": "State 4%. NYC = 8.875%. Other counties vary 7%-8.875%.",
-    "discount": "none",
-    "counties": {
-      "New York City (5 boroughs)": 8.875,
-      "Nassau County": 8.625,
-      "Suffolk County": 8.625,
-      "Westchester County": 8.375,
-      "Erie County (Buffalo)": 8.75,
-      "Monroe County (Rochester)": 8.0,
-      "Onondaga County (Syracuse)": 8.0,
-      "Albany County": 8.0,
-      "Dutchess County": 8.375,
-      "Orange County": 8.125,
-      "Rockland County": 8.375,
-      "Saratoga County": 7.0,
-      "Ulster County": 8.0,
-      "Broome County (Binghamton)": 8.0,
-      "Oneida County (Utica)": 8.75,
-      "Niagara County": 8.0,
-      "Schenectady County": 8.0,
-      "Rensselaer County (Troy)": 8.0,
-      "Chemung County (Elmira)": 8.0,
-      "Clinton County": 8.0,
-      "Jefferson County (Watertown)": 8.0,
-      "Chautauqua County": 8.0,
-      "Cattaraugus County": 8.0
-    }
-  },
-  "North Carolina": {
-    "url": "https://eservices.dor.nc.gov/",
-    "due": "20th of following month",
-    "portal": "e-Business Center (eservices.dor.nc.gov)",
-    "note": "State 4.75%. Counties add 2%-2.25% local. Most areas 6.75%-7.5%.",
-    "discount": "none",
-    "counties": {
-      "Mecklenburg County (Charlotte)": 7.25,
-      "Wake County (Raleigh)": 7.25,
-      "Guilford County (Greensboro)": 6.75,
-      "Durham County": 7.5,
-      "Forsyth County (Winston-Salem)": 7.0,
-      "Buncombe County (Asheville)": 7.0,
-      "Cumberland County (Fayetteville)": 7.0,
-      "Union County": 7.0,
-      "Cabarrus County (Concord)": 7.0,
-      "Gaston County": 7.0,
-      "Onslow County (Jacksonville)": 6.75,
-      "New Hanover County (Wilmington)": 7.0,
-      "Catawba County (Hickory)": 6.75,
-      "Robeson County": 7.0,
-      "Rowan County (Salisbury)": 7.0
-    }
-  },
-  "North Dakota": {
-    "url": "https://apps.nd.gov/tax/tap/",
-    "due": "Last day of following month",
-    "portal": "TAP (apps.nd.gov/tax/tap)",
-    "note": "State 5%. Cities add local rates. Fargo 7.5%, Bismarck 7%.",
-    "discount": "none",
-    "counties": {
-      "Cass County (Fargo)": 7.5,
-      "Burleigh County (Bismarck)": 7.0,
-      "Grand Forks County": 7.25,
-      "Ward County (Minot)": 7.0,
-      "Morton County (Mandan)": 7.0,
-      "Williams County (Williston)": 7.0,
-      "All Other North Dakota Counties": 5.0
-    }
-  },
-  "Ohio": {
-    "url": "https://gateway.ohio.gov/",
-    "due": "23rd of following month",
-    "portal": "Ohio Business Gateway (gateway.ohio.gov)",
-    "note": "State 5.75%. Counties add 0.5%-2.25% local. Cuyahoga (Cleveland) 8%.",
-    "discount": "none",
-    "counties": {
-      "Cuyahoga County (Cleveland)": 8.0,
-      "Franklin County (Columbus)": 7.5,
-      "Hamilton County (Cincinnati)": 7.8,
-      "Summit County (Akron)": 6.75,
-      "Montgomery County (Dayton)": 7.5,
-      "Lucas County (Toledo)": 7.75,
-      "Stark County (Canton)": 6.5,
-      "Lorain County": 6.5,
-      "Lake County": 7.25,
-      "Mahoning County (Youngstown)": 7.25,
-      "Butler County": 6.5,
-      "Warren County": 6.5,
-      "Delaware County": 7.0,
-      "Medina County": 6.75,
-      "Licking County (Newark)": 7.25
-    }
-  },
-  "Oklahoma": {
-    "url": "https://oktap.tax.ok.gov/",
-    "due": "20th of following month",
-    "portal": "OkTAP (oktap.tax.ok.gov)",
-    "note": "State 4.5% (2026). Cities and counties add local rates. OKC and Tulsa ~8.5%.",
-    "discount": "none",
-    "counties": {
-      "Oklahoma County (Oklahoma City)": 8.625,
-      "Tulsa County": 8.517,
-      "Cleveland County (Norman)": 8.375,
-      "Comanche County (Lawton)": 8.875,
-      "Canadian County (Yukon/Mustang)": 8.375,
-      "Rogers County (Claremore)": 8.517,
-      "Wagoner County (Broken Arrow)": 8.517,
-      "Payne County (Stillwater)": 8.875,
-      "Pontotoc County (Ada)": 9.0,
-      "Garfield County (Enid)": 9.0,
-      "All Other Oklahoma Counties": 7.5
-    }
-  },
-  "Oregon": {
-    "url": "",
-    "due": "No return required",
-    "portal": "No filing required",
-    "note": "No sales tax in Oregon.",
-    "discount": "none",
-    "counties": {
-      "No sales tax - no return required": 0.0
-    }
-  },
-  "Pennsylvania": {
-    "url": "https://mypath.pa.gov/",
-    "due": "20th of following month",
-    "portal": "myPATH (mypath.pa.gov)",
-    "note": "State 6%. Philadelphia 8% (+2%), Allegheny/Pittsburgh 7% (+1%). All others 6%.",
-    "discount": "none",
-    "counties": {
-      "Philadelphia County": 8.0,
-      "Allegheny County (Pittsburgh)": 7.0,
-      "Montgomery County": 6.0,
-      "Bucks County": 6.0,
-      "Delaware County": 6.0,
-      "Chester County": 6.0,
-      "Lancaster County": 6.0,
-      "York County": 6.0,
-      "Berks County (Reading)": 6.0,
-      "Lehigh County (Allentown)": 6.0,
-      "Northampton County (Bethlehem)": 6.0,
-      "Erie County": 6.0,
-      "Dauphin County (Harrisburg)": 6.0,
-      "Westmoreland County": 6.0,
-      "Luzerne County (Wilkes-Barre)": 6.0,
-      "Lackawanna County (Scranton)": 6.0
-    }
-  },
-  "Rhode Island": {
-    "url": "https://taxportal.ri.gov/",
-    "due": "20th of following month",
-    "portal": "Taxpayer Portal (taxportal.ri.gov)",
-    "note": "Flat 7% statewide. No local sales tax in Rhode Island.",
-    "discount": "none",
-    "counties": {
-      "All Rhode Island - Flat 7% Statewide": 7.0
-    }
-  },
-  "South Carolina": {
-    "url": "https://mydorway.dor.sc.gov/",
-    "due": "20th of following month",
-    "portal": "MyDORWAY (mydorway.dor.sc.gov)",
-    "note": "State 6% (6.1% in 2026). Counties add local option taxes.",
-    "discount": "none",
-    "counties": {
-      "Greenville County": 7.0,
-      "Richland County (Columbia)": 8.0,
-      "Charleston County": 9.0,
-      "Horry County (Myrtle Beach)": 8.5,
-      "Spartanburg County": 7.0,
-      "Lexington County": 7.0,
-      "York County (Rock Hill)": 7.0,
-      "Anderson County": 7.0,
-      "Beaufort County (Hilton Head)": 8.5,
-      "Berkeley County": 7.0,
-      "Dorchester County": 7.0,
-      "All Other SC Counties": 7.0
-    }
-  },
-  "South Dakota": {
-    "url": "https://etax.sd.gov/",
-    "due": "Last day of following month",
-    "portal": "e-Tax (etax.sd.gov)",
-    "note": "State 4.2% (may revert to 4.5% in 2027). Cities add local rates.",
-    "discount": "none",
-    "counties": {
-      "Minnehaha County (Sioux Falls)": 6.2,
-      "Pennington County (Rapid City)": 6.2,
-      "Brown County (Aberdeen)": 6.2,
-      "Beadle County (Huron)": 6.2,
-      "Codington County (Watertown)": 6.2,
-      "All Other South Dakota Counties": 4.2
-    }
-  },
-  "Tennessee": {
-    "url": "https://tntap.tn.gov/",
-    "due": "20th of following month",
-    "portal": "TNTAP (tntap.tn.gov)",
-    "note": "State 7% (groceries 4%). Counties add local rates. Most areas 9.25%-9.75%.",
-    "discount": "none",
-    "counties": {
-      "Shelby County (Memphis)": 9.75,
-      "Davidson County (Nashville)": 9.25,
-      "Knox County (Knoxville)": 9.25,
-      "Hamilton County (Chattanooga)": 9.25,
-      "Rutherford County (Murfreesboro)": 9.25,
-      "Williamson County (Franklin)": 9.25,
-      "Montgomery County (Clarksville)": 9.5,
-      "Sumner County": 9.25,
-      "Wilson County (Lebanon)": 9.25,
-      "Maury County (Columbia)": 9.25,
-      "Sullivan County (Kingsport)": 9.25,
-      "Washington County (Johnson City)": 9.25,
-      "Blount County (Maryville)": 9.75,
-      "Bradley County (Cleveland)": 9.25
-    }
-  },
-  "Texas": {
-    "url": "https://www.comptroller.texas.gov/taxes/sales/",
-    "due": "20th of following month",
-    "portal": "WebFile (comptroller.texas.gov)",
-    "note": "State 6.25%. Cities/counties can add up to 2% local. Most metro areas at 8.25%.",
-    "discount": "pct",
-    "counties": {
-      "Harris County (Houston)": 8.25,
-      "Dallas County": 8.25,
-      "Tarrant County (Fort Worth)": 8.25,
-      "Bexar County (San Antonio)": 8.25,
-      "Travis County (Austin)": 8.25,
-      "Collin County (Plano/McKinney)": 8.25,
-      "Denton County": 8.25,
-      "El Paso County": 8.25,
-      "Hidalgo County (McAllen)": 8.25,
-      "Fort Bend County": 8.25,
-      "Montgomery County": 8.25,
-      "Williamson County": 8.25,
-      "Cameron County (Brownsville)": 8.25,
-      "Nueces County (Corpus Christi)": 8.25,
-      "Jefferson County (Beaumont)": 8.25,
-      "Lubbock County": 8.25,
-      "Webb County (Laredo)": 8.25,
-      "Galveston County": 8.25,
-      "Brazoria County": 8.25,
-      "Smith County (Tyler)": 8.25,
-      "Brazos County (Bryan/College Stn)": 8.25,
-      "Tom Green County (San Angelo)": 8.25,
-      "Ector County (Odessa)": 8.25
-    }
-  },
-  "Utah": {
-    "url": "https://tap.tax.utah.gov/",
-    "due": "Last day of following month",
-    "portal": "TAP (tap.tax.utah.gov)",
-    "note": "State 4.85% (includes 1.25% mandatory local). Counties add more.",
-    "discount": "none",
-    "counties": {
-      "Salt Lake County (Salt Lake City)": 7.25,
-      "Utah County (Provo/Orem)": 6.85,
-      "Davis County (Layton)": 7.0,
-      "Weber County (Ogden)": 7.25,
-      "Washington County (St. George)": 6.35,
-      "Cache County (Logan)": 6.35,
-      "Iron County (Cedar City)": 6.35,
-      "Summit County (Park City)": 8.05,
-      "All Other Utah Counties": 6.1
-    }
-  },
-  "Vermont": {
-    "url": "https://myvtax.vermont.gov/",
-    "due": "25th of following month",
-    "portal": "myVTax (myvtax.vermont.gov)",
-    "note": "State 6%. Meals & rooms taxed at 9%. Local option 1% in some towns.",
-    "discount": "none",
-    "counties": {
-      "All Vermont - Statewide 6%": 6.0,
-      "Burlington (with local option 1%)": 7.0,
-      "Montpelier (with local option 1%)": 7.0
-    }
-  },
-  "Virginia": {
-    "url": "https://www.tax.virginia.gov/retail-sales-and-use-tax",
-    "due": "20th of following month",
-    "portal": "Virginia Tax eForms (tax.virginia.gov)",
-    "note": "Northern Virginia & Hampton Roads: 6.00% (4.3% + mandatory 1% + 0.7% regional). Rest of VA: 5.30%.",
-    "discount": "va",
-    "counties": {
-      "Alexandria City": 6.0,
-      "Arlington County": 6.0,
-      "Fairfax City": 6.0,
-      "Fairfax County": 6.0,
-      "Falls Church City": 6.0,
-      "Loudoun County": 6.0,
-      "Manassas City": 6.0,
-      "Manassas Park City": 6.0,
-      "Prince William County": 6.0,
-      "Chesapeake City": 6.0,
-      "Hampton City": 6.0,
-      "Isle of Wight County": 6.0,
-      "James City County": 6.0,
-      "Newport News City": 6.0,
-      "Norfolk City": 6.0,
-      "Poquoson City": 6.0,
-      "Portsmouth City": 6.0,
-      "Suffolk City": 6.0,
-      "Virginia Beach City": 6.0,
-      "Williamsburg City": 6.0,
-      "York County": 6.0,
-      "Albemarle County": 5.3,
-      "Augusta County": 5.3,
-      "Bedford County": 5.3,
-      "Botetourt County": 5.3,
-      "Campbell County": 5.3,
-      "Carroll County": 5.3,
-      "Charlottesville City": 5.3,
-      "Chesterfield County": 5.3,
-      "Frederick County": 5.3,
-      "Harrisonburg City": 5.3,
-      "Henrico County": 5.3,
-      "Lynchburg City": 5.3,
-      "Montgomery County": 5.3,
-      "Roanoke City": 5.3,
-      "Roanoke County": 5.3,
-      "Rockingham County": 5.3,
-      "Shenandoah County": 5.3,
-      "Spotsylvania County": 5.3,
-      "Stafford County": 5.3,
-      "Warren County": 5.3,
-      "Wise County": 5.3
-    }
-  },
-  "Washington": {
-    "url": "https://dor.wa.gov/",
-    "due": "25th of following month",
-    "portal": "DOR (dor.wa.gov)",
-    "note": "State 6.5%. Local rates vary significantly. Seattle area exceeds 10%.",
-    "discount": "none",
-    "counties": {
-      "King County (Seattle area)": 10.25,
-      "Pierce County (Tacoma)": 10.2,
-      "Snohomish County (Everett)": 10.6,
-      "Spokane County": 8.9,
-      "Clark County (Vancouver)": 8.7,
-      "Thurston County (Olympia)": 9.0,
-      "Kitsap County": 9.1,
-      "Whatcom County (Bellingham)": 8.8,
-      "Yakima County": 8.8,
-      "Benton County (Kennewick/Richland)": 8.7,
-      "Skagit County": 8.8,
-      "Cowlitz County": 8.3,
-      "Grant County": 8.3,
-      "Franklin County (Pasco)": 8.6,
-      "Lewis County": 8.1,
-      "Island County": 8.8,
-      "Mason County": 8.8,
-      "Jefferson County": 8.8
-    }
-  },
-  "Washington D.C.": {
-    "url": "https://mytax.dc.gov/",
-    "due": "20th of following month",
-    "portal": "MyTax DC (mytax.dc.gov)",
-    "note": "Flat 6% statewide for general sales. Meals taxed at 10%.",
-    "discount": "none",
-    "counties": {
-      "Washington D.C. - Statewide 6%": 6.0
-    }
-  },
-  "West Virginia": {
-    "url": "https://mytaxes.wvtax.gov/",
-    "due": "20th of following month",
-    "portal": "MyTaxes (mytaxes.wvtax.gov)",
-    "note": "State 6%. Limited local additions. Most areas 6%-7%.",
-    "discount": "none",
-    "counties": {
-      "Kanawha County (Charleston)": 6.0,
-      "Cabell County (Huntington)": 6.0,
-      "Monongalia County (Morgantown)": 6.0,
-      "Berkeley County (Martinsburg)": 6.0,
-      "Wood County (Parkersburg)": 6.0,
-      "Raleigh County (Beckley)": 6.0,
-      "All Other West Virginia Counties": 6.0
-    }
-  },
-  "Wisconsin": {
-    "url": "https://tap.revenue.wi.gov/",
-    "due": "Last day of following month",
-    "portal": "My Tax Account (tap.revenue.wi.gov)",
-    "note": "State 5%. Counties add 0.5% in most areas. Milwaukee area 5.6%.",
-    "discount": "none",
-    "counties": {
-      "Milwaukee County": 5.6,
-      "Dane County (Madison)": 5.5,
-      "Waukesha County": 5.5,
-      "Brown County (Green Bay)": 5.5,
-      "Racine County": 5.5,
-      "Outagamie County (Appleton)": 5.5,
-      "Winnebago County (Oshkosh)": 5.5,
-      "Rock County (Janesville/Beloit)": 5.5,
-      "Washington County": 5.5,
-      "Kenosha County": 5.5,
-      "All Other Wisconsin Counties": 5.5
-    }
-  },
-  "Wyoming": {
-    "url": "https://excise.wy.gov/",
-    "due": "Last day of following month",
-    "portal": "e-Services (excise.wy.gov)",
-    "note": "State 4%. Counties add up to 2% local. Combined most areas 5%-6%.",
-    "discount": "none",
-    "counties": {
-      "Laramie County (Cheyenne)": 6.0,
-      "Natrona County (Casper)": 6.0,
-      "Sweetwater County (Rock Springs)": 6.0,
-      "Albany County (Laramie)": 6.0,
-      "Campbell County (Gillette)": 6.0,
-      "Fremont County (Lander/Riverton)": 5.0,
-      "Park County (Cody)": 5.0,
-      "Teton County (Jackson)": 6.0,
-      "All Other Wyoming Counties": 5.0
-    }
+  generic: {
+    info: '<strong>Generic CSV/Excel:</strong> Any sales report with state, sales amount, and tax columns. Use the column mapper below to match your file\'s columns.',
+    colMap: {}
   }
 };
 
-let rowCount = 0;
-let currentState = null;
-
-// ── STATE FILING PORTAL URLs ─────────────────────────────
-const PORTAL_URLS_EC = {
-  "Alabama":"https://www.revenue.alabama.gov/","Alaska":"https://www.commerce.alaska.gov/web/dcra/",
-  "Arizona":"https://aztaxes.gov/","Arkansas":"https://atap.arkansas.gov/",
-  "California":"https://www.cdtfa.ca.gov/","Colorado":"https://revenue.colorado.gov/",
-  "Connecticut":"https://portal.ct.gov/DRS","Delaware":"https://revenue.delaware.gov/",
-  "Florida":"https://floridarevenue.com/taxes/eservices/","Georgia":"https://gtc.dor.ga.gov/",
-  "Hawaii":"https://tax.hawaii.gov/","Idaho":"https://tap.tax.idaho.gov/",
-  "Illinois":"https://mytax.illinois.gov/","Indiana":"https://intime.dor.in.gov/",
-  "Iowa":"https://tax.iowa.gov/","Kansas":"https://ksrevenue.gov/",
-  "Kentucky":"https://revenue.ky.gov/","Louisiana":"https://latap.revenue.louisiana.gov/",
-  "Maine":"https://portal.maine.gov/mtap/","Maryland":"https://interactive.marylandtaxes.gov/",
-  "Massachusetts":"https://masstaxconnect.dor.state.ma.us/","Michigan":"https://www.michigan.gov/taxes/",
-  "Minnesota":"https://www.mndor.state.mn.us/","Mississippi":"https://tap.dor.ms.gov/",
-  "Missouri":"https://mytax.missouri.gov/","Montana":"","Nebraska":"https://revenue.nebraska.gov/",
-  "Nevada":"https://nevadatax.nv.gov/","New Hampshire":"","New Jersey":"https://www.njportal.com/DOR/Sales/",
-  "New Mexico":"https://tap.state.nm.us/","New York":"https://businessexpress.ny.gov/",
-  "North Carolina":"https://eservices.dor.nc.gov/","North Dakota":"https://apps.nd.gov/tax/tap/",
-  "Ohio":"https://gateway.ohio.gov/","Oklahoma":"https://oktap.tax.ok.gov/","Oregon":"",
-  "Pennsylvania":"https://mypath.pa.gov/","Rhode Island":"https://taxportal.ri.gov/",
-  "South Carolina":"https://mydorway.dor.sc.gov/","South Dakota":"https://etax.sd.gov/",
-  "Tennessee":"https://tntap.tn.gov/","Texas":"https://www.comptroller.texas.gov/taxes/sales/",
-  "Utah":"https://tap.tax.utah.gov/","Vermont":"https://myvtax.vermont.gov/",
-  "Virginia":"https://www.tax.virginia.gov/retail-sales-and-use-tax",
-  "Washington":"https://dor.wa.gov/","Washington D.C.":"https://mytax.dc.gov/",
-  "West Virginia":"https://mytaxes.wvtax.gov/","Wisconsin":"https://tap.revenue.wi.gov/",
-  "Wyoming":"https://excise.wy.gov/"
+// ═══════════════════════════════════════════════════════════════
+//  2026 STATE TAX RATES & NEXUS THRESHOLDS & PORTAL URLS
+// ═══════════════════════════════════════════════════════════════
+const STATE_DATA = {
+  'AL':{ name:'Alabama',      rate:4.00, nexusThreshold:250000, nexusOrders:null, portal:'https://myalabamataxes.alabama.gov/', hasCounty:true },
+  'AK':{ name:'Alaska',       rate:0,    nexusThreshold:100000, nexusOrders:200,  portal:'',                                       hasCounty:true,  noState:true },
+  'AZ':{ name:'Arizona',      rate:5.60, nexusThreshold:100000, nexusOrders:null, portal:'https://azdor.gov/e-services',            hasCounty:true },
+  'AR':{ name:'Arkansas',     rate:6.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://atap.arkansas.gov/',             hasCounty:false },
+  'CA':{ name:'California',   rate:7.25, nexusThreshold:500000, nexusOrders:null, portal:'https://onlineservices.cdtfa.ca.gov/',   hasCounty:true },
+  'CO':{ name:'Colorado',     rate:2.90, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.colorado.gov/',              hasCounty:true },
+  'CT':{ name:'Connecticut',  rate:6.35, nexusThreshold:100000, nexusOrders:200,  portal:'https://portal.ct.gov/DRS',              hasCounty:false },
+  'DE':{ name:'Delaware',     rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                       hasCounty:false, noState:true },
+  'FL':{ name:'Florida',      rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://floridarevenue.com/taxes/',      hasCounty:true },
+  'GA':{ name:'Georgia',      rate:4.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://gtc.dor.ga.gov/',               hasCounty:true },
+  'HI':{ name:'Hawaii',       rate:4.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.hawaii.gov/',               hasCounty:false },
+  'ID':{ name:'Idaho',        rate:6.00, nexusThreshold:100000, nexusOrders:null, portal:'https://tax.idaho.gov/',                hasCounty:false },
+  'IL':{ name:'Illinois',     rate:6.25, nexusThreshold:100000, nexusOrders:200,  portal:'https://mytax.illinois.gov/',           hasCounty:true },
+  'IN':{ name:'Indiana',      rate:7.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://intime.dor.in.gov/',            hasCounty:false },
+  'IA':{ name:'Iowa',         rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.iowa.gov/',                 hasCounty:false },
+  'KS':{ name:'Kansas',       rate:6.50, nexusThreshold:100000, nexusOrders:null, portal:'https://www.ksrevenue.gov/',            hasCounty:false },
+  'KY':{ name:'Kentucky',     rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://kentucky.gov/Pages/Activity.aspx?View=KYE', hasCounty:false },
+  'LA':{ name:'Louisiana',    rate:4.45, nexusThreshold:100000, nexusOrders:200,  portal:'https://latap.revenue.louisiana.gov/',  hasCounty:true },
+  'ME':{ name:'Maine',        rate:5.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://maine.gov/revenue/taxes/',      hasCounty:false },
+  'MD':{ name:'Maryland',     rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://interactive.marylandtaxes.gov/',hasCounty:false },
+  'MA':{ name:'Massachusetts',rate:6.25, nexusThreshold:100000, nexusOrders:null, portal:'https://www.mass.gov/masstaxconnect',   hasCounty:false },
+  'MI':{ name:'Michigan',     rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://www.michigan.gov/taxes/',       hasCounty:false },
+  'MN':{ name:'Minnesota',    rate:6.875,nexusThreshold:100000, nexusOrders:200,  portal:'https://www.mndor.state.mn.us/',        hasCounty:false },
+  'MS':{ name:'Mississippi',  rate:7.00, nexusThreshold:250000, nexusOrders:null, portal:'https://tap.dor.ms.gov/',              hasCounty:false },
+  'MO':{ name:'Missouri',     rate:4.225,nexusThreshold:100000, nexusOrders:null, portal:'https://mytax.mo.gov/',                hasCounty:true },
+  'MT':{ name:'Montana',      rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                     hasCounty:false, noState:true },
+  'NE':{ name:'Nebraska',     rate:5.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://revenue.nebraska.gov/',        hasCounty:false },
+  'NV':{ name:'Nevada',       rate:6.85, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.nv.gov/',                  hasCounty:true },
+  'NH':{ name:'New Hampshire',rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                     hasCounty:false, noState:true },
+  'NJ':{ name:'New Jersey',   rate:6.625,nexusThreshold:100000, nexusOrders:200,  portal:'https://www1.state.nj.us/TYTR_BusinessFilings/',hasCounty:false },
+  'NM':{ name:'New Mexico',   rate:4.875,nexusThreshold:100000, nexusOrders:200,  portal:'https://tap.state.nm.us/',             hasCounty:false },
+  'NY':{ name:'New York',     rate:4.00, nexusThreshold:500000, nexusOrders:100,  portal:'https://www.tax.ny.gov/',              hasCounty:true },
+  'NC':{ name:'North Carolina',rate:4.75,nexusThreshold:100000, nexusOrders:200,  portal:'https://www.ncdor.gov/',               hasCounty:true },
+  'ND':{ name:'North Dakota', rate:5.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://www.nd.gov/tax/',              hasCounty:false },
+  'OH':{ name:'Ohio',         rate:5.75, nexusThreshold:100000, nexusOrders:200,  portal:'https://gateway.ohio.gov/',            hasCounty:true },
+  'OK':{ name:'Oklahoma',     rate:4.50, nexusThreshold:100000, nexusOrders:null, portal:'https://oktap.tax.ok.gov/',            hasCounty:true },
+  'OR':{ name:'Oregon',       rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                     hasCounty:false, noState:true },
+  'PA':{ name:'Pennsylvania', rate:6.00, nexusThreshold:100000, nexusOrders:null, portal:'https://mypath.pa.gov/',               hasCounty:false },
+  'RI':{ name:'Rhode Island', rate:7.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://taxportal.ri.gov/',            hasCounty:false },
+  'SC':{ name:'South Carolina',rate:6.00,nexusThreshold:100000, nexusOrders:200,  portal:'https://mydorway.dor.sc.gov/',         hasCounty:true },
+  'SD':{ name:'South Dakota', rate:4.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://sd.gov/taxes/',                hasCounty:false },
+  'TN':{ name:'Tennessee',    rate:7.00, nexusThreshold:100000, nexusOrders:null, portal:'https://tntap.tn.gov/',                hasCounty:true },
+  'TX':{ name:'Texas',        rate:6.25, nexusThreshold:500000, nexusOrders:null, portal:'https://taxpayersupport.cpa.texas.gov/',hasCounty:true },
+  'UT':{ name:'Utah',         rate:4.85, nexusThreshold:100000, nexusOrders:200,  portal:'https://tap.utah.gov/',                hasCounty:true },
+  'VT':{ name:'Vermont',      rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://myvtax.vermont.gov/',          hasCounty:false },
+  'VA':{ name:'Virginia',     rate:5.30, nexusThreshold:100000, nexusOrders:200,  portal:'https://www.tax.virginia.gov/',        hasCounty:true },
+  'WA':{ name:'Washington',   rate:6.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://dor.wa.gov/',                  hasCounty:true },
+  'WV':{ name:'West Virginia',rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://mytaxes.wvtax.gov/',           hasCounty:false },
+  'WI':{ name:'Wisconsin',    rate:5.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://tap.revenue.wi.gov/',          hasCounty:true },
+  'WY':{ name:'Wyoming',      rate:4.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://excise.wyo.gov/',              hasCounty:true },
+  'DC':{ name:'Wash. D.C.',   rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://mytax.dc.gov/',               hasCounty:false },
 };
-function openPortalEC(){
-  const stateName = document.getElementById('state-sel').value;
-  const url = PORTAL_URLS_EC[stateName] || (STATES[stateName]?.url) || '';
-  if(url) window.open(url,'_blank','noopener');
-  else alert('Visit your state Department of Revenue website to file online.');
-}
 
-// ── INIT ──────────────────────────────────────────────
-function init() {
-  const sel = document.getElementById('state-sel');
-  Object.keys(STATES).sort().forEach(name => {
-    const opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = name;
-    sel.appendChild(opt);
+// State abbreviation lookup
+const STATE_ABBR = {};
+Object.entries(STATE_DATA).forEach(([abbr,d])=>{ STATE_ABBR[d.name.toLowerCase()]=abbr; STATE_ABBR[abbr.toLowerCase()]=abbr; });
+// Extra common variations
+const STATE_NAMES_EXTRA = {'ca':'CA','california':'CA','ny':'NY','new york':'NY','tx':'TX','texas':'TX','fl':'FL','florida':'FL','va':'VA','virginia':'VA','wa':'WA','washington':'WA','ga':'GA','georgia':'GA','il':'IL','illinois':'IL','pa':'PA','pennsylvania':'PA','oh':'OH','ohio':'OH','nc':'NC','north carolina':'NC','mi':'MI','michigan':'MI','nj':'NJ','new jersey':'NJ','co':'CO','colorado':'CO','tn':'TN','tennessee':'TN','az':'AZ','arizona':'AZ','in':'IN','indiana':'IN','mo':'MO','missouri':'MO','md':'MD','maryland':'MD','wi':'WI','wisconsin':'WI','mn':'MN','minnesota':'MN','sc':'SC','south carolina':'SC','al':'AL','alabama':'AL','la':'LA','louisiana':'LA','ky':'KY','kentucky':'KY','or':'OR','oregon':'OR','ok':'OK','oklahoma':'OK','ct':'CT','connecticut':'CT','ut':'UT','utah':'UT','ia':'IA','iowa':'IA','nv':'NV','nevada':'NV','ar':'AR','arkansas':'AR','ms':'MS','mississippi':'MS','ks':'KS','kansas':'KS','nm':'NM','new mexico':'NM','ne':'NE','nebraska':'NE','id':'ID','idaho':'ID','wv':'WV','west virginia':'WV','hi':'HI','hawaii':'HI','nh':'NH','new hampshire':'NH','me':'ME','maine':'ME','ri':'RI','rhode island':'RI','mt':'MT','montana':'MT','de':'DE','delaware':'DE','sd':'SD','south dakota':'SD','nd':'ND','north dakota':'ND','ak':'AK','alaska':'AK','wy':'WY','wyoming':'WY','vt':'VT','vermont':'VT','dc':'DC'};
+
+// ═══════════════════════════════════════════════════════════════
+//  GLOBAL STATE
+// ═══════════════════════════════════════════════════════════════
+let currentPlatform = 'amazon';
+let rawRows = [];
+let colHeaders = [];
+let processedData = {}; // { stateAbbr: { name, sales, taxable, collected, counties:{} } }
+let sortField = 'sales';
+let sortDir = -1;
+let currentView = 'state';
+let currentStep = 1;
+let completedSteps = new Set([1]);
+
+// ═══════════════════════════════════════════════════════════════
+//  STEP NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+function goStep(n) {
+  if (n > 1 && !completedSteps.has(n)) return;
+  currentStep = n;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelectorAll('.step-item').forEach(s=>{
+    const sn = parseInt(s.dataset.step);
+    s.classList.remove('active','done','locked');
+    if(sn === n) s.classList.add('active');
+    else if(completedSteps.has(sn) && sn !== n) s.classList.add('done');
+    else s.classList.add('locked');
   });
-  addRow(); // start with one row
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function onStateChange() {
-  const name = document.getElementById('state-sel').value;
-  currentState = name ? STATES[name] : null;
-  // Update all existing rows
-  document.querySelectorAll('.county-sel').forEach(sel => {
-    populateCountySel(sel);
-  });
-  // Update info box
-  const infoBox = document.getElementById('state-info');
-  const infoTxt = document.getElementById('state-info-text');
-  if (currentState) {
-    infoBox.style.display = 'block';
-    infoTxt.innerHTML = '<strong>' + name + ':</strong> ' + currentState.note + ' &nbsp;|&nbsp; <strong>Return due:</strong> ' + currentState.due;
-    // Update discount selector
-    document.getElementById('discount-sel').value = currentState.discount !== 'none' ? 'yes' : 'no';
-  } else {
-    infoBox.style.display = 'none';
-  }
-  liveUpdate();
+// ═══════════════════════════════════════════════════════════════
+//  PLATFORM SELECTION
+// ═══════════════════════════════════════════════════════════════
+function selectPlatform(el) {
+  document.querySelectorAll('.plat-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  currentPlatform = el.dataset.platform;
+  document.getElementById('platform-info').innerHTML = PLATFORMS[currentPlatform].info;
 }
 
-function populateCountySel(sel) {
-  const savedVal = sel.value;
-  sel.innerHTML = '<option value="">-- Select county --</option>';
-  if (!currentState) return;
-  Object.entries(currentState.counties).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([name, rate]) => {
-    const opt = document.createElement('option');
-    opt.value = rate;
-    opt.dataset.name = name;
-    opt.textContent = name + '  —  ' + rate.toFixed(2) + '%';
-    sel.appendChild(opt);
-  });
-  if (savedVal) sel.value = savedVal;
-}
+// ═══════════════════════════════════════════════════════════════
+//  FILE HANDLING
+// ═══════════════════════════════════════════════════════════════
+const dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover', e=>{e.preventDefault();dz.classList.add('over')});
+dz.addEventListener('dragleave', ()=>dz.classList.remove('over'));
+dz.addEventListener('drop', e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])});
 
-// ── ADD / REMOVE ROWS ─────────────────────────────────
-function addRow() {
-  rowCount++;
-  const id = rowCount;
-  const div = document.createElement('div');
-  div.className = 'county-row';
-  div.id = 'row-' + id;
-  div.innerHTML = `
-    <select class="county-sel" id="county-${id}" onchange="onCountyChange(${id})">
-      <option value="">-- Select county --</option>
-    </select>
-    <div class="rate-badge" id="rate-${id}">—</div>
-    <div style="position:relative">
-      <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#7a7568;font-size:12px;pointer-events:none">$</span>
-      <input type="number" id="sales-${id}" placeholder="0.00" min="0" step="0.01"
-        style="padding-left:20px" oninput="liveUpdate()" onfocus="this.select()">
-    </div>
-    <div class="tax-display" id="tax-${id}">$0.00</div>
-    <button class="del-btn" onclick="removeRow(${id})" title="Remove">×</button>`;
-  document.getElementById('county-rows').appendChild(div);
-  if (currentState) populateCountySel(div.querySelector('.county-sel'));
-  liveUpdate();
-}
-
-function removeRow(id) {
-  const rows = document.querySelectorAll('.county-row');
-  if (rows.length <= 1) { alert('At least one county row is required.'); return; }
-  document.getElementById('row-' + id)?.remove();
-  liveUpdate();
-}
-
-function onCountyChange(id) {
-  const sel = document.getElementById('county-' + id);
-  const rate = parseFloat(sel.value);
-  const rateBadge = document.getElementById('rate-' + id);
-  rateBadge.textContent = isNaN(rate) ? '—' : rate.toFixed(2) + '%';
-  liveUpdate();
-}
-
-// ── LIVE UPDATE (updates subtotals as you type) ───────
-function liveUpdate() {
-  let totalGross = 0, totalTax = 0;
-  let hasAny = false;
-  document.querySelectorAll('.county-row').forEach(row => {
-    const idMatch = row.id.match(/row-(\d+)/);
-    if (!idMatch) return;
-    const id = idMatch[1];
-    const rate = parseFloat(document.getElementById('county-' + id)?.value) || 0;
-    const sales = parseFloat(document.getElementById('sales-' + id)?.value) || 0;
-    const tax = sales * (rate / 100);
-    document.getElementById('tax-' + id).textContent = fmt(tax);
-    totalGross += sales;
-    totalTax += tax;
-    if (sales > 0) hasAny = true;
-  });
-  const exempt = parseFloat(document.getElementById('total-exempt').value) || 0;
-  const exemptTax = exempt > 0 && totalGross > 0 ? (exempt / totalGross * totalTax) : 0;
-  const netTax = Math.max(0, totalTax - exemptTax);
-  const netTaxable = Math.max(0, totalGross - exempt);
-
-  const sub = document.getElementById('subtotals');
-  if (hasAny) {
-    sub.style.display = 'block';
-    document.getElementById('sub-gross').textContent = fmt(totalGross);
-    document.getElementById('sub-exempt').textContent = '- ' + fmt(exempt);
-    document.getElementById('sub-taxable').textContent = fmt(netTaxable);
-    document.getElementById('sub-tax').textContent = fmt(netTax);
-  } else {
-    sub.style.display = 'none';
-  }
-}
-
-// ── CALCULATE ─────────────────────────────────────────
-function calculate() {
-  const stateName = document.getElementById('state-sel').value;
-  if (!stateName) { alert('Please select a state.'); return; }
-  const period = document.getElementById('period-sel').value;
-  const exempt = parseFloat(document.getElementById('total-exempt').value) || 0;
-  const applyDis = document.getElementById('discount-sel').value === 'yes';
-
-  const s = STATES[stateName];
-  const rows = [];
-  let totalGross = 0, totalTax = 0, anyMissing = false;
-
-  document.querySelectorAll('.county-row').forEach(row => {
-    const idMatch = row.id.match(/row-(\d+)/);
-    if (!idMatch) return;
-    const id = idMatch[1];
-    const sel = document.getElementById('county-' + id);
-    const rate = parseFloat(sel?.value);
-    const sales = parseFloat(document.getElementById('sales-' + id)?.value) || 0;
-    const countyName = sel?.options[sel.selectedIndex]?.dataset?.name || sel?.options[sel.selectedIndex]?.text?.split('—')[0]?.trim() || 'County ' + id;
-    if (sales > 0) {
-      if (!rate) { anyMissing = true; return; }
-      const tax = sales * (rate / 100);
-      rows.push({ name: countyName, rate, sales, tax });
-      totalGross += sales;
-      totalTax += tax;
-    }
-  });
-
-  if (rows.length === 0) { alert('Please enter sales amounts for at least one county.'); return; }
-  if (anyMissing) { alert('Some rows with sales amounts are missing a county selection. Please select a county for each row.'); return; }
-
-  // Proportional exempt allocation
-  const exemptRatio = totalGross > 0 ? exempt / totalGross : 0;
-  const taxOnExempt = totalTax * exemptRatio;
-  const netTax = Math.max(0, totalTax - taxOnExempt);
-  const netTaxable = Math.max(0, totalGross - exempt);
-
-  // Dealer discount
-  let discount = 0;
-  if (applyDis && s.discount !== 'none') {
-    if (s.discount === 'va') {
-      discount = Math.min(netTax, 100) * 0.01 + Math.max(0, netTax - 100) * 0.006;
-    } else if (s.discount === 'pct') {
-      discount = netTax * 0.005;
-    }
-  }
-  const totalDue = Math.max(0, netTax - discount);
-
-  // Show results
-  document.getElementById('ph').style.display = 'none';
-  document.getElementById('results').style.display = 'block';
-
-  const due = document.getElementById('due-badge');
-  due.style.display = 'block';
-  due.innerHTML = '<strong>' + stateName + '</strong> — Return due: ' + s.due + ' | Period: ' + period;
-
-  document.getElementById('r-period').textContent = period;
-  document.getElementById('r-gross').textContent = fmt(totalGross);
-  document.getElementById('r-exempt').textContent = exempt > 0 ? '- ' + fmt(exempt) : '$0.00';
-  document.getElementById('r-taxable').textContent = fmt(netTaxable);
-
-  // County breakdown
-  const bd = document.getElementById('county-breakdown');
-  bd.innerHTML = '<div class="rst">Tax by County / Jurisdiction (' + rows.length + ')</div>';
-  rows.forEach(r => {
-    const adjTax = r.tax * (1 - exemptRatio);
-    const rr = document.createElement('div');
-    rr.className = 'rr';
-    rr.innerHTML = '<span class="rl">' + r.name + ' (' + r.rate.toFixed(2) + '%) — $' + r.sales.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' sales</span><span class="rv g">' + fmt(adjTax) + '</span>';
-    bd.appendChild(rr);
-  });
-
-  // Discount section
-  const disBox = document.getElementById('r-dis-box');
-  if (discount > 0) {
-    disBox.style.display = 'flex';
-    document.getElementById('r-dis-formula').textContent =
-      s.discount === 'va'
-        ? 'VA discount: 1% of first $100 + 0.6% of remainder'
-        : 'Vendor collection allowance (0.5% estimate — verify with DOR)';
-    document.getElementById('r-dis-amt').textContent = '- ' + fmt(discount);
-    document.getElementById('r-dis-total').textContent = '- ' + fmt(discount);
-  } else {
-    disBox.style.display = 'none';
-    document.getElementById('r-dis-formula').textContent = 'No dealer discount applied';
-    document.getElementById('r-dis-amt').textContent = '$0.00';
-  }
-
-  document.getElementById('r-tax-total').textContent = fmt(netTax);
-  document.getElementById('r-grand').textContent = fmt(totalDue);
-  document.getElementById('r-c1').textContent = fmt(totalGross);
-  document.getElementById('r-c2').textContent = exempt > 0 ? fmt(exempt) : '$0.00';
-  document.getElementById('r-c3').textContent = fmt(netTaxable);
-  document.getElementById('r-c4').textContent = fmt(netTax);
-  document.getElementById('r-c5').textContent = discount > 0 ? '- ' + fmt(discount) : '$0.00';
-  document.getElementById('r-c6').textContent = fmt(totalDue);
-
-  // Show File Now button
-  const fbEc = document.getElementById('file-btn-ec');
-  if(fbEc){ fbEc.style.display = PORTAL_URLS_EC[stateName] ? 'inline-flex' : 'none'; }
-}
-
-function fmt(n) {
-  return '$' + Math.max(0, n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
-function copyResult() {
-  const state = document.getElementById('state-sel').value;
-  const period = document.getElementById('period-sel').value;
-  const t = `MULTI-COUNTY SALES TAX RETURN — ${state}
-Period: ${period}
-${'='.repeat(45)}
-Gross Sales:         ${document.getElementById('r-gross').textContent}
-Less Exempt Sales:   ${document.getElementById('r-exempt').textContent}
-Net Taxable Sales:   ${document.getElementById('r-taxable').textContent}
-Total Sales Tax:     ${document.getElementById('r-tax-total').textContent}
-Less Dealer Discount:${document.getElementById('r-c5').textContent}
-AMOUNT DUE TO STATE: ${document.getElementById('r-grand').textContent}
-
-Generated by BookSmartTools.com — For estimation only`;
-  navigator.clipboard.writeText(t).then(() => alert('Copied!'));
-}
-
-document.getElementById('total-exempt').addEventListener('input', liveUpdate);
-init();
-</script>
-
-<!-- SheetJS for reading Excel/CSV files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script>
-// ── FORMAT HELPERS ────────────────────────────────────
-function fmtD(n){ n=+n||0; return '$'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
-function pctD(n){ return (+n||0).toFixed(2)+'%'; }
-function fmtN(n){ return (+(+n||0).toFixed(2)).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-
-// ── DRAG & DROP ───────────────────────────────────────
-const uploadZone = document.getElementById('upload-zone');
-if(uploadZone){
-  uploadZone.addEventListener('dragover', e=>{ e.preventDefault(); uploadZone.style.borderColor='#1e5c33'; uploadZone.style.background='#f5fbf7'; });
-  uploadZone.addEventListener('dragleave', ()=>{ uploadZone.style.borderColor='#c5c0b5'; uploadZone.style.background='#faf8f3'; });
-  uploadZone.addEventListener('drop', e=>{ e.preventDefault(); uploadZone.style.borderColor='#c5c0b5'; uploadZone.style.background='#faf8f3'; handleFile(e.dataTransfer.files[0]); });
-}
-
-// ── STORAGE ───────────────────────────────────────────
-let uploadedRows = [];
-
-// ── DOWNLOAD TEMPLATE ─────────────────────────────────
-function downloadTemplate(){
-  if(typeof XLSX === 'undefined'){ alert('Please wait a moment and try again — library still loading.'); return; }
-  const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.aoa_to_sheet([
-    ['State','County / Jurisdiction','Gross Sales ($)','Exempt Sales ($)','Period'],
-    ['Virginia','Prince William County',202995.47,0,'February 2026'],
-    ['Virginia','Fairfax County',85000.00,5000,'February 2026'],
-    ['Virginia','Henrico County',42500.00,0,'February 2026'],
-    ['California','Los Angeles County',125000.00,8000,'February 2026'],
-    ['California','Orange County',67000.00,0,'February 2026'],
-    ['Texas','Harris County (Houston)',93000.00,3000,'February 2026'],
-    ['Texas','Dallas County',78000.00,0,'February 2026'],
-    ['New York','New York City (5 boroughs)',55000.00,2000,'February 2026'],
-    ['Florida','Hillsborough County (Tampa)',44000.00,0,'February 2026'],
-    ['Florida','Miami-Dade County',39000.00,1500,'February 2026'],
-    ['Washington','King County (Seattle area)',29000.00,0,'February 2026'],
-    ['Illinois','Cook County (Chicago city)',18000.00,0,'February 2026'],
-  ]);
-  ws['!cols']=[{wch:22},{wch:38},{wch:18},{wch:16},{wch:18}];
-  XLSX.utils.book_append_sheet(wb,ws,'Sales Data');
-  XLSX.writeFile(wb,'BookSmartTools_SalesTax_Template.xlsx');
-}
-
-// ── FILE HANDLER — Auto-detect columns, no mapper needed ──
-let rawRows  = [];
-let fileKeys = [];
-let mappedCols = {};
-
-// Simple CSV parser fallback (when XLSX unavailable)
-function parseCSV(text){
-  const lines = text.trim().split('\n');
-  if(!lines.length) return [];
-  const headers = lines[0].split(',').map(h=>h.replace(/^"|"$/g,'').trim());
-  return lines.slice(1).map(line=>{
-    const vals = line.split(',').map(v=>v.replace(/^"|"$/g,'').trim());
-    const obj = {};
-    headers.forEach((h,i)=>{ obj[h] = vals[i]||''; });
-    return obj;
-  }).filter(r=>Object.values(r).some(v=>v));
-}
-
-// Auto-detect which column maps to which field
-function autoDetect(keys){
-  function best(patterns){ return keys.find(k=>patterns.some(p=>k.toLowerCase().replace(/[\s_-]/g,'').includes(p.toLowerCase().replace(/[\s_-]/g,'')))) || ''; }
-  return {
-    state:  best(['state','province','shiptostate','destinationstate','taxstate']),
-    county: best(['county','jurisdiction','city','district','territory','location','region','shipto','destination','localarea']),
-    gross:  best(['gross','totalsales','salesamount','revenue','amount','subtotal','netsales','taxablesales','sales']),
-    exempt: best(['exempt','deduction','nontax','excluded','exemptamt']),
-    period: best(['period','month','date','filing','quarter','year','reportingperiod']),
-  };
-}
-
-function handleFile(file){
-  if(!file) return;
-  const statusEl = document.getElementById('ex-status');
-  const previewEl= document.getElementById('ex-preview');
-  const mapperEl = document.getElementById('col-mapper');
-
-  statusEl.style.display = 'block';
-  statusEl.className     = 'ex-status-box info';
-  statusEl.innerHTML     = '⏳ Reading <strong>' + file.name + '</strong>...';
-  if(mapperEl) mapperEl.style.display = 'none';
-  if(previewEl) previewEl.style.display = 'none';
-  uploadedRows = [];
-
-  const isCSV = file.name.toLowerCase().endsWith('.csv');
-
+function handleFile(file) {
+  if (!file) return;
+  const ext = file.name.split('.').pop().toLowerCase();
   const reader = new FileReader();
-
-  reader.onerror = function(){
-    statusEl.className = 'ex-status-box err';
-    statusEl.innerHTML = '❌ Could not read the file. Please try again.';
-  };
-
-  reader.onload = function(e){
-    try {
-      let rows = [];
-
-      if(isCSV){
-        // CSV — parse directly
-        rows = parseCSV(e.target.result);
-      } else {
-        // Excel — try XLSX library
-        if(typeof XLSX === 'undefined'){
-          // XLSX didn't load — try treating as CSV
-          try {
-            rows = parseCSV(e.target.result);
-          } catch(e2){
-            throw new Error('Excel library failed to load. Please save your file as .csv and try again.');
-          }
-        } else {
-          const data = new Uint8Array(e.target.result);
-          const wb   = XLSX.read(data, {type:'array'});
-          const ws   = wb.Sheets[wb.SheetNames[0]];
-          rows = XLSX.utils.sheet_to_json(ws, {defval:''});
-        }
-      }
-
-      if(!rows.length) throw new Error('No data rows found. Make sure your file has a header row and data.');
-
-      rawRows  = rows;
-      fileKeys = Object.keys(rows[0]);
-      if(!fileKeys.length) throw new Error('Could not read column headers.');
-
-      // Auto-detect columns
-      mappedCols = autoDetect(fileKeys);
-
-      if(!mappedCols.state && !mappedCols.gross){
-        // Can't auto-detect — show column mapper
-        showColumnMapper(statusEl, mapperEl, file.name);
-        return;
-      }
-
-      // Auto-detect worked — process directly
-      processRows(mappedCols);
-
-      const stateCount = {};
-      uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
-      const totalGross = uploadedRows.reduce((s,r)=>s+r.gross, 0);
-
-      if(!uploadedRows.length){
-        showColumnMapper(statusEl, mapperEl, file.name);
-        return;
-      }
-
-      // Show success + preview
-      statusEl.className = 'ex-status-box ok';
-      statusEl.innerHTML = '✅ <strong>' + uploadedRows.length + ' rows</strong> detected across <strong>' + Object.keys(stateCount).length + ' states</strong>. Total gross sales: <strong>$' + fmtN(totalGross) + '</strong>'
-        + (mappedCols.county ? '' : ' <span style="color:#b8860b"> — No county column found; tax will use state-level rate.</span>');
-
-      // Build preview table
-      buildPreviewTable();
-      if(previewEl) previewEl.style.display = 'block';
-
-    } catch(err){
-      statusEl.className = 'ex-status-box err';
-      statusEl.innerHTML = '❌ <strong>Could not read file:</strong> ' + err.message + '<br><small>Try saving as .csv (File → Save As → CSV) and uploading again.</small>';
-    }
-  };
-
-  if(isCSV){
+  if (ext === 'csv' || ext === 'txt') {
+    reader.onload = e => parseCSV(e.target.result);
     reader.readAsText(file);
-  } else {
+  } else if (ext === 'xlsx' || ext === 'xls') {
+    reader.onload = e => parseExcel(e.target.result);
     reader.readAsArrayBuffer(file);
+  } else {
+    alert('Please upload a CSV, Excel (.xlsx), or text file.');
+  }
+  // Update drop zone
+  dz.querySelector('.drop-title').textContent = '✅ ' + file.name;
+  dz.querySelector('.drop-sub').textContent = 'File loaded — map columns below and click Process';
+}
+
+function parseCSV(text) {
+  const lines = text.split('\n').filter(l=>l.trim());
+  if (!lines.length) return;
+  const sep = lines[0].includes('\t') ? '\t' : ',';
+  const parseRow = row => {
+    const result=[]; let cur='',inQ=false;
+    for(let c of row){ if(c==='"'){inQ=!inQ}else if(c===sep&&!inQ){result.push(cur.trim());cur=''}else cur+=c; }
+    result.push(cur.trim()); return result;
+  };
+  colHeaders = parseRow(lines[0]).map(h=>h.replace(/^"|"$/g,'').trim());
+  rawRows = lines.slice(1).map(l=>parseRow(l));
+  setupMapper();
+}
+
+function parseExcel(buffer) {
+  const wb = XLSX.read(buffer,{type:'array'});
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const data = XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+  if(!data.length) return;
+  colHeaders = data[0].map(h=>String(h).trim());
+  rawRows = data.slice(1).map(r=>colHeaders.map((_,i)=>String(r[i]||'')));
+  setupMapper();
+}
+
+function setupMapper() {
+  ['col-state','col-county','col-zip','col-sales','col-tax','col-date'].forEach(id=>{
+    const sel = document.getElementById(id);
+    sel.innerHTML = '<option value="">-- Not in file --</option>' +
+      colHeaders.map((h,i)=>`<option value="${i}">${h}</option>`).join('');
+  });
+  // Auto-detect columns
+  const platMap = PLATFORMS[currentPlatform].colMap;
+  autoMap('col-state',  platMap.state  || ['state','ship-to-state','shipping_province','buyer-state','ship_state','province','billing_province','customer_state']);
+  autoMap('col-county', platMap.county || ['county','city','ship-to-city','shipping_city','buyer-city','ship_city','jurisdiction']);
+  autoMap('col-zip',    platMap.zip    || ['zip','postal','postcode','ship-to-postal-code','shipping_zip','buyer-zip-code']);
+  autoMap('col-sales',  platMap.sales  || ['item-price','gross','sales','subtotal','revenue','amount','item_price','subtotal_price','gross-amount','sale_amount','order_total']);
+  autoMap('col-tax',    platMap.tax    || ['item-tax','tax','sales-tax','tax_amount','taxes','item_tax','sales-tax-amount','tax_collected','marketplace_tax']);
+  autoMap('col-date',   platMap.date   || ['date','order-date','purchase-date','created_at','transaction-creation-date','order_date','sale_date']);
+
+  document.getElementById('mapper-status').textContent = `${rawRows.length} rows loaded`;
+  document.getElementById('mapper-card').style.display = 'block';
+  document.getElementById('mapper-card').scrollIntoView({behavior:'smooth'});
+}
+
+function autoMap(selectId, keywords) {
+  const sel = document.getElementById(selectId);
+  const kws = Array.isArray(keywords) ? keywords : [keywords];
+  for(const kw of kws) {
+    const idx = colHeaders.findIndex(h=>h.toLowerCase().replace(/[\s_-]/g,'').includes(kw.toLowerCase().replace(/[\s_-]/g,'')));
+    if(idx >= 0) { sel.value = idx; return; }
   }
 }
 
-// Show column mapper when auto-detect fails
-function showColumnMapper(statusEl, mapperEl, filename){
-  statusEl.className = 'ex-status-box info';
-  statusEl.innerHTML = '✅ File read: <strong>' + rawRows.length + ' rows</strong>, <strong>' + fileKeys.length + ' columns</strong>.<br>'
-    + '<strong>Column names not recognized.</strong> Match your columns below:';
-  buildMapper();
-  if(mapperEl){ mapperEl.style.display='block'; mapperEl.scrollIntoView({behavior:'smooth'}); }
+function showPreview() {
+  const wrap = document.getElementById('preview-wrap');
+  wrap.style.display = 'block';
+  const preview = rawRows.slice(0,10);
+  const table = document.getElementById('preview-table');
+  table.innerHTML = '<thead><tr>' + colHeaders.map(h=>`<th>${h}</th>`).join('') + '</tr></thead>' +
+    '<tbody>' + preview.map(r=>'<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>').join('') + '</tbody>';
 }
 
-// Process raw rows using column mapping
-function processRows(cols){
-  uploadedRows = rawRows.map(r=>({
-    state:  String(r[cols.state]  || '').trim(),
-    county: cols.county ? String(r[cols.county] || '').trim() : '',
-    gross:  parseFloat(String(r[cols.gross] || '0').replace(/[$,\s]/g,'')) || 0,
-    exempt: cols.exempt ? parseFloat(String(r[cols.exempt]||'0').replace(/[$,\s]/g,''))||0 : 0,
-    period: cols.period ? String(r[cols.period]||'').trim() : 'Not specified',
-  })).filter(r => r.state && r.gross > 0);
-}
+// ═══════════════════════════════════════════════════════════════
+//  PROCESS DATA
+// ═══════════════════════════════════════════════════════════════
+function processData() {
+  const stateCol  = parseInt(document.getElementById('col-state').value);
+  const countyCol = parseInt(document.getElementById('col-county').value);
+  const salesCol  = parseInt(document.getElementById('col-sales').value);
+  const taxCol    = parseInt(document.getElementById('col-tax').value);
 
-// Build preview table
-function buildPreviewTable(){
-  const tbl = document.getElementById('ex-preview-table');
-  const rows = uploadedRows.slice(0, 12);
-  if(!tbl) return;
-  tbl.innerHTML = '<tr><th>State</th><th>County / Jurisdiction</th><th>Gross Sales</th><th>Exempt Sales</th><th>Period</th></tr>'
-    + rows.map(r=>`<tr><td>${r.state}</td><td>${r.county||'—'}</td><td>$${fmtN(r.gross)}</td><td>$${fmtN(r.exempt)}</td><td>${r.period}</td></tr>`).join('')
-    + (uploadedRows.length > 12 ? `<tr><td colspan="5" style="text-align:center;color:#7a7568;padding:8px">... and ${uploadedRows.length-12} more rows</td></tr>` : '');
+  if(isNaN(stateCol)||isNaN(salesCol)){ alert('Please map at least State and Sales columns.'); return; }
 
-  const stateCount = {};
-  uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
-  const stateList = Object.entries(stateCount).sort((a,b)=>b[1]-a[1]).map(([s,c])=>s+' ('+c+')').join(', ');
-  const totalGross = uploadedRows.reduce((s,r)=>s+r.gross, 0);
-  const sumEl = document.getElementById('ex-summary');
-  if(sumEl) sumEl.innerHTML = '<strong>States:</strong> ' + stateList + '<br><strong>Total gross sales:</strong> $' + fmtN(totalGross);
-}
+  // Progress
+  const pw = document.getElementById('progress-1');
+  const pf = document.getElementById('pf-1');
+  const pl = document.getElementById('pl-1');
+  pw.style.display='block'; pf.style.width='10%'; pl.textContent='Processing rows...';
 
-// Column mapper (fallback when auto-detect fails)
-function guessCol(patterns){
-  return fileKeys.find(k=>patterns.some(p=>k.toLowerCase().includes(p.toLowerCase())))||'';
-}
+  processedData = {};
+  let errors = 0, processed = 0;
+  const periodStart = document.getElementById('period-start').value;
+  const periodEnd   = document.getElementById('period-end').value;
+  const dateCol     = parseInt(document.getElementById('col-date').value);
 
-function buildMapper(){
-  const grid = document.getElementById('mapper-grid');
-  if(!grid) return;
-  document.getElementById('col-count').textContent = fileKeys.length;
+  for(let i=0; i<rawRows.length; i++) {
+    if(i % 100 === 0) { pf.style.width = Math.round(10+(i/rawRows.length*80))+'%'; pl.textContent = `Processing row ${i+1} of ${rawRows.length}...`; }
+    const row = rawRows[i];
+    let rawState = (row[stateCol]||'').trim();
+    if(!rawState) continue;
 
-  const fields = [
-    {id:'map-state',  label:'State <span style="color:#c8472a">*</span>',    patterns:['state','province'],         required:true},
-    {id:'map-county', label:'County / Jurisdiction',                          patterns:['county','jurisdiction','city','district','location'], required:false},
-    {id:'map-gross',  label:'Gross Sales ($) <span style="color:#c8472a">*</span>', patterns:['gross','total','sales','revenue','amount'], required:true},
-    {id:'map-exempt', label:'Exempt Sales ($)',                               patterns:['exempt','deduction','nontax'],  required:false},
-    {id:'map-period', label:'Period / Month',                                 patterns:['period','month','date','filing'],required:false},
-  ];
+    // Date filter
+    if(!isNaN(dateCol) && periodStart && periodEnd) {
+      const d = row[dateCol]; if(d) { const dt = new Date(d); if(isNaN(dt)||dt<new Date(periodStart)||dt>new Date(periodEnd)) continue; }
+    }
 
-  grid.innerHTML = fields.map(f=>`
-    <div>
-      <div class="mapper-lbl">${f.label}</div>
-      <div class="mapper-sel">
-        <select id="${f.id}">
-          <option value="">— ${f.required?'Required':'Optional'} —</option>
-          ${fileKeys.map(k=>`<option value="${k}" ${guessCol(f.patterns)===k?'selected':''}>${k}</option>`).join('')}
-        </select>
-      </div>
-    </div>`).join('');
+    // Normalize state
+    const stateAbbr = normalizeState(rawState);
+    if(!stateAbbr) { errors++; continue; }
 
-  // Sample rows
-  const sampleDiv = document.createElement('div');
-  sampleDiv.style.cssText = 'grid-column:1/-1;margin-top:8px;';
-  sampleDiv.innerHTML = '<div style="font-size:10px;color:#7a7568;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Your file — first 3 rows:</div>'
-    + '<div style="overflow-x:auto;border:1px solid #ddd8cc;border-radius:3px;">'
-    + '<table style="border-collapse:collapse;font-size:11px;min-width:100%">'
-    + '<tr>' + fileKeys.map(k=>`<th style="background:#f3efe4;padding:5px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#7a7568;border-bottom:1px solid #ddd8cc;white-space:nowrap">${k}</th>`).join('') + '</tr>'
-    + rawRows.slice(0,3).map(r=>'<tr>'+fileKeys.map(k=>`<td style="padding:5px 8px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;white-space:nowrap">${String(r[k]).substring(0,25)}</td>`).join('')+'</tr>').join('')
-    + '</table></div>';
-  grid.appendChild(sampleDiv);
-}
+    const county = !isNaN(countyCol) ? (row[countyCol]||'Unknown').trim() : 'Statewide';
+    const sales  = parseDollar(row[salesCol]);
+    const tax    = !isNaN(taxCol) ? parseDollar(row[taxCol]) : 0;
+    if(isNaN(sales)||sales<=0) continue;
 
-function confirmMapping(){
-  const cState  = document.getElementById('map-state')?.value;
-  const cCounty = document.getElementById('map-county')?.value;
-  const cGross  = document.getElementById('map-gross')?.value;
-  const cExempt = document.getElementById('map-exempt')?.value;
-  const cPeriod = document.getElementById('map-period')?.value;
+    if(!processedData[stateAbbr]) {
+      processedData[stateAbbr] = { abbr:stateAbbr, name:STATE_DATA[stateAbbr]?.name||stateAbbr, sales:0, taxable:0, collected:0, orders:0, counties:{} };
+    }
+    processedData[stateAbbr].sales     += sales;
+    processedData[stateAbbr].taxable   += sales;
+    processedData[stateAbbr].collected += tax;
+    processedData[stateAbbr].orders++;
 
-  if(!cState){ alert('Please select the column containing State names.'); return; }
-  if(!cGross){ alert('Please select the column containing Gross Sales amounts.'); return; }
-
-  const cols = { state:cState, county:cCounty, gross:cGross, exempt:cExempt, period:cPeriod };
-  processRows(cols);
-
-  if(!uploadedRows.length){
-    alert('No valid rows found after mapping. Check that State and Gross Sales columns have values.');
-    return;
+    if(!processedData[stateAbbr].counties[county]) {
+      processedData[stateAbbr].counties[county] = { sales:0, taxable:0, collected:0, orders:0 };
+    }
+    processedData[stateAbbr].counties[county].sales     += sales;
+    processedData[stateAbbr].counties[county].taxable   += sales;
+    processedData[stateAbbr].counties[county].collected += tax;
+    processedData[stateAbbr].counties[county].orders++;
+    processed++;
   }
 
-  const stateCount = {};
-  uploadedRows.forEach(r=>{ stateCount[r.state]=(stateCount[r.state]||0)+1; });
-  const totalGross = uploadedRows.reduce((s,r)=>s+r.gross, 0);
+  pf.style.width='100%'; pl.textContent=`Done — ${processed} transactions processed${errors?' ('+errors+' unrecognized states)':''}.`;
+  setTimeout(()=>{ pw.style.display='none'; }, 2000);
 
-  const statusEl = document.getElementById('ex-status');
-  statusEl.className = 'ex-status-box ok';
-  statusEl.innerHTML = '✅ <strong>' + uploadedRows.length + ' valid rows</strong> across <strong>' + Object.keys(stateCount).length + ' states</strong>. Total: <strong>$' + fmtN(totalGross) + '</strong>';
+  if(!Object.keys(processedData).length) { alert('No valid data found. Check your column mapping and try again.'); return; }
 
-  const mapperEl = document.getElementById('col-mapper');
-  if(mapperEl) mapperEl.style.display = 'none';
-
-  buildPreviewTable();
-
-  const previewEl = document.getElementById('ex-preview');
-  if(previewEl){ previewEl.style.display = 'block'; previewEl.scrollIntoView({behavior:'smooth'}); }
+  completedSteps.add(2); completedSteps.add(3); completedSteps.add(4);
+  renderDashboard();
+  goStep(2);
 }
 
-// ── LOOK UP COUNTY RATE ───────────────────────────────
-function lookupRate(stateName, countyName){
-  const sd=STATES[stateName];
-  if(!sd) return null;
-  // Exact match
-  if(sd.counties[countyName]!==undefined) return sd.counties[countyName];
-  // Partial match (county name in key or key in county name)
-  const lower=countyName.toLowerCase();
-  for(const [k,v] of Object.entries(sd.counties)){
-    const kl=k.toLowerCase().split('(')[0].trim();
-    if(kl===lower||lower.includes(kl)||kl.includes(lower)) return v;
+function normalizeState(raw) {
+  const s = raw.trim().toLowerCase();
+  if(STATE_NAMES_EXTRA[s]) return STATE_NAMES_EXTRA[s];
+  // Try first 2 chars as abbr
+  if(STATE_DATA[raw.toUpperCase().slice(0,2)]) return raw.toUpperCase().slice(0,2);
+  return null;
+}
+
+function parseDollar(v) {
+  if(!v) return 0;
+  return parseFloat(String(v).replace(/[$,\s]/g,''))||0;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SAMPLE DATA
+// ═══════════════════════════════════════════════════════════════
+function loadSampleData() {
+  // Generate realistic sample Amazon data
+  const states = ['VA','CA','TX','NY','FL','GA','IL','WA','PA','OH','NC','MI','NJ','AZ','CO','TN','SC','MN','AL','LA'];
+  const counties = {VA:['Fairfax','Arlington','Prince William','Loudoun','Chesterfield'],CA:['Los Angeles','San Francisco','San Diego','Orange','Santa Clara'],TX:['Harris','Dallas','Travis','Bexar','Collin'],NY:['New York','Kings','Queens','Nassau','Suffolk'],FL:['Miami-Dade','Broward','Palm Beach','Orange','Hillsborough'],GA:['Fulton','DeKalb','Cobb','Gwinnett','Clayton'],IL:['Cook','DuPage','Lake','Will','Kane'],WA:['King','Pierce','Snohomish','Spokane','Clark'],PA:['Philadelphia','Allegheny','Montgomery','Bucks','Delaware'],OH:['Cuyahoga','Franklin','Hamilton','Summit','Montgomery']};
+  const defaultCounties = ['County A','County B','County C'];
+  rawRows = [];
+  colHeaders = ['purchase-date','ship-to-state','ship-to-city','item-price','item-tax','order-id'];
+  const now = new Date();
+  for(let i=0;i<500;i++){
+    const state = states[Math.floor(Math.random()*states.length)];
+    const ctys = counties[state]||defaultCounties;
+    const county = ctys[Math.floor(Math.random()*ctys.length)];
+    const sales = (Math.random()*200+10).toFixed(2);
+    const rate = (STATE_DATA[state]?.rate||5)/100;
+    const tax = (sales*rate).toFixed(2);
+    const d = new Date(now.getFullYear(),now.getMonth()-Math.floor(Math.random()*3),Math.floor(Math.random()*28)+1);
+    rawRows.push([d.toISOString().slice(0,10),state,county,sales,tax,'ORDER-'+Math.random().toString(36).slice(2,10).toUpperCase()]);
   }
-  // Return first (statewide) rate as fallback
-  return Object.values(sd.counties)[0]??null;
+  document.getElementById('period-start').value = new Date(now.getFullYear(),now.getMonth()-2,1).toISOString().slice(0,10);
+  document.getElementById('period-end').value   = new Date(now.getFullYear(),now.getMonth(),0).toISOString().slice(0,10);
+  setupMapper();
+  setTimeout(()=>processData(),400);
 }
 
-// ── DEALER DISCOUNT ───────────────────────────────────
-function calcDiscount(type, tax){
-  if(type==='va') return Math.min(tax,100)*0.01+Math.max(0,tax-100)*0.006;
-  if(type==='pct') return tax*0.005;
-  return 0;
+// ═══════════════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════════════
+function renderDashboard() {
+  const states = Object.values(processedData);
+  const totalSales     = states.reduce((s,d)=>s+d.sales,0);
+  const totalTaxable   = states.reduce((s,d)=>s+d.taxable,0);
+  const totalCollected = states.reduce((s,d)=>s+d.collected,0);
+  const totalOrders    = states.reduce((s,d)=>s+d.orders,0);
+  const nexusStates    = states.filter(d=>{ const sd=STATE_DATA[d.abbr]; return sd&&sd.nexusThreshold&&d.sales>=sd.nexusThreshold; }).length;
+
+  document.getElementById('s-gross').textContent     = fmt(totalSales);
+  document.getElementById('s-orders').textContent    = totalOrders.toLocaleString()+' transactions';
+  document.getElementById('s-taxable').textContent   = fmt(totalTaxable);
+  document.getElementById('s-states').textContent    = states.length+' states';
+  document.getElementById('s-collected').textContent = fmt(totalCollected);
+  document.getElementById('s-due').textContent       = 'Tax collected from customers';
+  document.getElementById('s-nexus').textContent     = nexusStates;
+  document.getElementById('dash-meta').textContent   = `Period: ${document.getElementById('period-start').value||'All time'} to ${document.getElementById('period-end').value||'present'} · ${totalOrders.toLocaleString()} transactions`;
+
+  // Populate state filter
+  const fs = document.getElementById('filter-state');
+  fs.innerHTML = '<option value="">All States</option>' + states.sort((a,b)=>a.name.localeCompare(b.name)).map(d=>`<option value="${d.abbr}">${d.name}</option>`).join('');
+
+  renderStateTable();
+  renderFilingCenter();
+  renderDownloadList();
 }
 
-// ── GENERATE ALL REPORTS ──────────────────────────────
-function generateReports(){
-  if(!uploadedRows.length){ alert('No data loaded. Please upload an Excel file first.'); return; }
+function renderStateTable() {
+  const filterState  = document.getElementById('filter-state').value;
+  const filterStatus = document.getElementById('filter-status').value;
+  const search       = document.getElementById('filter-search').value.toLowerCase();
+  const sortCol      = document.getElementById('sort-col').value;
 
-  // Group: State → County → {gross, exempt, period}
-  const byState={};
-  uploadedRows.forEach(r=>{
-    if(!byState[r.state]) byState[r.state]={};
-    const key=r.county||'Statewide';
-    if(!byState[r.state][key]) byState[r.state][key]={gross:0,exempt:0,period:r.period};
-    byState[r.state][key].gross+=r.gross;
-    byState[r.state][key].exempt+=r.exempt;
+  let rows = Object.values(processedData);
+  if(filterState)  rows = rows.filter(d=>d.abbr===filterState);
+  if(search)       rows = rows.filter(d=>d.name.toLowerCase().includes(search)||d.abbr.toLowerCase().includes(search));
+  if(filterStatus==='nexus') rows = rows.filter(d=>{ const sd=STATE_DATA[d.abbr]; return sd&&sd.nexusThreshold&&d.sales>=sd.nexusThreshold; });
+  if(filterStatus==='ok')    rows = rows.filter(d=>{ const sd=STATE_DATA[d.abbr]; return !sd||!sd.nexusThreshold||d.sales<sd.nexusThreshold; });
+
+  rows.sort((a,b)=>{
+    let av=0,bv=0;
+    if(sortCol==='state') return sortDir*a.name.localeCompare(b.name);
+    if(sortCol==='sales') { av=a.sales; bv=b.sales; }
+    if(sortCol==='tax')   { av=a.collected; bv=b.collected; }
+    return sortDir*(bv-av);
   });
 
-  const container   = document.getElementById('state-reports-container');
-  const summaryBody = document.getElementById('summary-tbody');
-  container.innerHTML='';
-  summaryBody.innerHTML='';
-
-  let totG=0,totE=0,totT=0,totX=0,totD=0,totDue=0;
-
-  Object.keys(byState).sort().forEach(stateName=>{
-    const sd=STATES[stateName];
-    const counties=byState[stateName];
-
-    // Dominant period
-    const periodFreq={};
-    Object.values(counties).forEach(c=>{ periodFreq[c.period]=(periodFreq[c.period]||0)+1; });
-    const period=Object.entries(periodFreq).sort((a,b)=>b[1]-a[1])[0]?.[0]||'';
-
-    let stateGross=0,stateExempt=0,stateTax=0;
-    const countyRows=[];
-    const unknownList=[];
-
-    Object.entries(counties).forEach(([countyName,data])=>{
-      const rate=lookupRate(stateName,countyName);
-      stateGross+=data.gross;
-      stateExempt+=data.exempt;
-      const taxable=Math.max(0,data.gross-data.exempt);
-      const tax = (rate!==null&&rate>0) ? taxable*(rate/100) : 0;
-      stateTax+=tax;
-      if(rate===null) unknownList.push(countyName);
-      countyRows.push({county:countyName,gross:data.gross,exempt:data.exempt,taxable,rate,tax,unknown:rate===null,noTax:rate===0});
-    });
-
-    const stateTaxable=Math.max(0,stateGross-stateExempt);
-    const discount=sd?calcDiscount(sd.discount||'none',stateTax):0;
-    const amountDue=Math.max(0,stateTax-discount);
-
-    totG+=stateGross; totE+=stateExempt; totT+=stateTaxable; totX+=stateTax; totD+=discount; totDue+=amountDue;
-
-    // ── Summary row ──
-    const tr=document.createElement('tr');
-    const rates=[...new Set(countyRows.filter(c=>c.rate!==null&&c.rate>0).map(c=>pctD(c.rate)))].join(', ')||'N/A';
-    tr.innerHTML=`
-      <td style="font-weight:600;font-family:'DM Sans',sans-serif">${stateName}</td>
-      <td>${period}</td>
-      <td>${fmtD(stateGross)}</td>
-      <td>${fmtD(stateExempt)}</td>
-      <td>${fmtD(stateTaxable)}</td>
-      <td style="font-size:11px">${rates}</td>
-      <td>${fmtD(stateTax)}</td>
-      <td style="color:#1e5c33">${discount>0?'- '+fmtD(discount):'$0.00'}</td>
-      <td style="font-weight:700;color:#1e5c33;font-size:14px">${fmtD(amountDue)}</td>
-      <td style="font-size:11px;color:#7a7568">${sd?.due||'Check state DOR'}</td>
-      <td>${sd?.url?`<a href="${sd.url}" target="_blank" rel="noopener" style="color:#1e5c33;font-weight:600;font-size:11px;text-decoration:none;white-space:nowrap" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🔗 File Now ↗</a>`:'<span style="color:#aaa;font-size:11px">—</span>'}</td>`;
-    summaryBody.appendChild(tr);
-
-    // ── Individual state report card ──
-    const unknownWarn = unknownList.length
-      ? `<div style="background:#fdf8ec;border:1px solid #e8c84a;border-radius:3px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#8a6000"><strong>⚠ Rate not found for:</strong> ${unknownList.join(', ')} — Enter rate manually before filing.</div>`
-      : '';
-
-    const countyTableRows = countyRows.map(c=>`
-      <tr>
-        <td style="font-family:'DM Sans',sans-serif">${c.county}</td>
-        <td>${fmtD(c.gross)}</td>
-        <td>${c.exempt>0?fmtD(c.exempt):'$0.00'}</td>
-        <td>${c.unknown?'<span style="color:#c8472a">Rate unknown</span>':c.noTax?'<span style="color:#1e5c33">Tax-exempt</span>':fmtD(c.taxable)}</td>
-        <td>${c.rate===null?'<span style="color:#c8472a">?%</span>':pctD(c.rate)}</td>
-        <td style="font-weight:700;color:#1e5c33">${fmtD(c.tax)}</td>
-      </tr>`).join('');
-
-    const card=document.createElement('div');
-    card.className='state-report';
-    card.id='rpt-'+stateName.replace(/[\s.]/g,'-');
-    card.innerHTML=`
-      <div class="state-report-head">
-        <div>
-          <h3>${stateName} — Sales Tax Return</h3>
-          <div class="report-meta">Period: ${period} &nbsp;|&nbsp; Due: ${sd?.due||'Check state DOR'} &nbsp;|&nbsp; <a href="${sd?.url||'#'}" target="_blank" rel="noopener" style="color:#7dd4a0;text-decoration:none" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🔗 File Online ↗</a></div>
-        </div>
-        <button class="print-btn" onclick="printOne('${stateName.replace(/'/g,"\\'")}')">🖨 Print This Report</button>
-      </div>
-      <div class="state-report-body">
-        ${unknownWarn}
-        <table class="county-breakdown-table">
-          <thead><tr><th>County / Jurisdiction</th><th>Gross Sales</th><th>Exempt Sales</th><th>Taxable Sales</th><th>Rate</th><th>Tax Due</th></tr></thead>
-          <tbody>
-            ${countyTableRows}
-            <tr style="background:#f3efe4;font-weight:700">
-              <td style="font-family:'DM Sans',sans-serif">TOTALS</td>
-              <td>${fmtD(stateGross)}</td><td>${fmtD(stateExempt)}</td>
-              <td>${fmtD(stateTaxable)}</td><td>—</td>
-              <td style="color:#1e5c33">${fmtD(stateTax)}</td>
-            </tr>
-          </tbody>
+  const tbody = document.getElementById('state-tbody');
+  tbody.innerHTML = rows.map((d,idx)=>{
+    const sd      = STATE_DATA[d.abbr];
+    const hasNexus = sd&&sd.nexusThreshold&&d.sales>=sd.nexusThreshold;
+    const noTax    = sd?.noState;
+    const avgRate  = d.taxable>0 ? ((d.collected/d.taxable)*100).toFixed(2) : '0.00';
+    const taxDue   = d.taxable * (sd?.rate||0) / 100;
+    const countyCount = Object.keys(d.counties).length;
+    const nexusPct = sd?.nexusThreshold ? Math.min(100,Math.round(d.sales/sd.nexusThreshold*100)) : 0;
+    let statusBadge = noTax
+      ? '<span class="status-badge status-ok"><span class="nexus-dot"></span>No state tax</span>'
+      : hasNexus
+        ? '<span class="status-badge status-nexus"><span class="nexus-dot"></span>Filing required</span>'
+        : `<span class="status-badge status-due"><span class="nexus-dot"></span>${nexusPct}% of threshold</span>`;
+    return `<tr>
+      <td><button class="expand-btn" id="expand-${d.abbr}" onclick="toggleCounty('${d.abbr}')">▶</button></td>
+      <td><strong>${d.name}</strong> <span style="color:#9a9890;font-size:11px">${d.abbr}</span></td>
+      <td>${countyCount}</td>
+      <td>${fmt(d.sales)}</td>
+      <td>${fmt(d.taxable)}</td>
+      <td>${avgRate}%</td>
+      <td style="color:#1e5c33;font-weight:700">${fmt(d.collected)}</td>
+      <td>${noTax?'N/A':fmt(taxDue)}</td>
+      <td>${statusBadge}<div class="nexus-bar"><div class="nexus-fill" style="width:${nexusPct}%;background:${hasNexus?'#f08070':'#7dd4a0'}"></div></div></td>
+      <td><button class="dt-btn" onclick="openStateModal('${d.abbr}')" style="font-size:11px">Review →</button></td>
+    </tr>
+    <tr id="county-rows-${d.abbr}" style="display:none">
+      <td colspan="10" style="padding:0">
+        <table style="width:100%;border-collapse:collapse">
+          ${Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).map(([county,cd])=>`
+          <tr class="county-row">
+            <td colspan="3">↳ ${county}</td>
+            <td>${fmt(cd.sales)}</td>
+            <td>${fmt(cd.taxable)}</td>
+            <td>${cd.taxable>0?((cd.collected/cd.taxable)*100).toFixed(2)+'%':'—'}</td>
+            <td style="color:#1e5c33;font-weight:600">${fmt(cd.collected)}</td>
+            <td colspan="3"></td>
+          </tr>`).join('')}
         </table>
-        <div class="report-grid">
-          <div class="report-label">1. Gross General Sales</div><div class="report-val">${fmtD(stateGross)}</div>
-          <div class="report-label">2. Less Exempt Sales</div><div class="report-val amber">${fmtD(stateExempt)}</div>
-          <div class="report-label">3. Net Taxable Sales</div><div class="report-val green">${fmtD(stateTaxable)}</div>
-          <div class="report-label">4. Total Sales Tax Collected</div><div class="report-val">${fmtD(stateTax)}</div>
-          <div class="report-label">5. Less Dealer Discount</div><div class="report-val" style="color:#1e5c33">${discount>0?'- '+fmtD(discount):'$0.00'}</div>
-          <div class="report-label" style="background:#1a1a18;color:white;font-size:12px">6. AMOUNT DUE TO STATE</div>
-          <div class="report-val" style="font-family:'DM Serif Display',serif;font-size:26px">${fmtD(amountDue)}</div>
-        </div>
-        <div class="report-footer-note">
-          📍 File at: ${sd?.url ? `<a href="${sd.url}" target="_blank" rel="noopener" style="color:#1e5c33;font-weight:700">${sd.portal} ↗</a>` : `<strong>${sd?.portal||'Contact state DOR'}</strong>`} &nbsp;·&nbsp;
-          📅 Due: <strong>${sd?.due||'Check state DOR'}</strong> &nbsp;·&nbsp;
-          Generated by BookSmartTools.com — For estimation only. Always verify with your state DOR before filing.
-        </div>
-      </div>`;
-    container.appendChild(card);
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Footer totals
+  const totSales     = rows.reduce((s,d)=>s+d.sales,0);
+  const totTaxable   = rows.reduce((s,d)=>s+d.taxable,0);
+  const totCollected = rows.reduce((s,d)=>s+d.collected,0);
+  const totDue       = rows.reduce((s,d)=>{ const sd=STATE_DATA[d.abbr]; return s+d.taxable*(sd?.rate||0)/100; },0);
+  document.getElementById('state-tfoot').innerHTML = `<tr>
+    <td></td><td>TOTAL (${rows.length} states)</td><td></td>
+    <td>${fmt(totSales)}</td><td>${fmt(totTaxable)}</td><td></td>
+    <td style="color:#1e5c33">${fmt(totCollected)}</td>
+    <td>${fmt(totDue)}</td><td colspan="2"></td>
+  </tr>`;
+}
+
+function toggleCounty(abbr) {
+  const row = document.getElementById('county-rows-'+abbr);
+  const btn = document.getElementById('expand-'+abbr);
+  if(row.style.display==='none'){row.style.display='table-row';btn.classList.add('open');}
+  else{row.style.display='none';btn.classList.remove('open');}
+}
+
+function sortBy(field) {
+  if(sortField===field) sortDir*=-1; else { sortField=field; sortDir=-1; }
+  document.getElementById('sort-col').value = field==='state'?'state':field==='collected'?'tax':'sales';
+  renderStateTable();
+}
+
+function switchView(v) {
+  currentView = v;
+  document.getElementById('view-state').classList.toggle('active', v==='state');
+  document.getElementById('view-county').classList.toggle('active', v==='county');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE MODAL
+// ═══════════════════════════════════════════════════════════════
+function openStateModal(abbr) {
+  const d  = processedData[abbr];
+  const sd = STATE_DATA[abbr];
+  if(!d||!sd) return;
+  const taxDue = d.taxable*(sd.rate||0)/100;
+  const hasNexus = sd.nexusThreshold&&d.sales>=sd.nexusThreshold;
+  const period = `${document.getElementById('period-start').value||'—'} to ${document.getElementById('period-end').value||'—'}`;
+
+  document.getElementById('modal-title').textContent = sd.name+' — Filing Summary';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-section">
+      <h4>Filing Period</h4>
+      <div class="filing-line"><span class="fl-key">Period</span><span class="fl-val">${period}</span></div>
+      <div class="filing-line"><span class="fl-key">Filing Frequency</span><span class="fl-val">${document.getElementById('filing-freq').value}</span></div>
+      <div class="filing-line"><span class="fl-key">Nexus Status</span><span class="fl-val">${hasNexus?'⚠ Filing Required':'Below Threshold'}</span></div>
+    </div>
+    <div class="modal-section">
+      <h4>Sales Summary</h4>
+      <div class="filing-line"><span class="fl-key">Gross Sales</span><span class="fl-val">${fmt(d.sales)}</span></div>
+      <div class="filing-line"><span class="fl-key">Taxable Sales</span><span class="fl-val">${fmt(d.taxable)}</span></div>
+      <div class="filing-line"><span class="fl-key">Exempt Sales</span><span class="fl-val">$0.00</span></div>
+      <div class="filing-line"><span class="fl-key">State Tax Rate</span><span class="fl-val">${sd.rate}%</span></div>
+      <div class="filing-line"><span class="fl-key">Tax Collected from Customers</span><span class="fl-val" style="color:#1e5c33">${fmt(d.collected)}</span></div>
+      <div class="filing-line"><span class="fl-key">Tax Due (calculated)</span><span class="fl-val">${fmt(taxDue)}</span></div>
+    </div>
+    <div class="modal-section">
+      <h4>County / Jurisdiction Breakdown</h4>
+      ${Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).map(([county,cd])=>`
+        <div class="filing-line">
+          <span class="fl-key">${county}</span>
+          <span class="fl-val">${fmt(cd.sales)} sales · ${fmt(cd.collected)} tax</span>
+        </div>`).join('')}
+    </div>
+    <div class="modal-section">
+      <h4>How to File</h4>
+      <div class="step-instructions">
+        <ol>
+          <li>Log in to the ${sd.name} tax portal with your state tax account</li>
+          <li>Navigate to Sales & Use Tax → File Return</li>
+          <li>Enter the filing period: <strong>${period}</strong></li>
+          <li>Total Taxable Sales: <strong>${fmt(d.taxable)}</strong></li>
+          <li>Tax Due: <strong>${fmt(taxDue)}</strong> (verify against your records)</li>
+          <li>Enter county breakdowns if required by ${sd.name}</li>
+          <li>Submit and pay any balance owed</li>
+        </ol>
+      </div>
+      ${sd.portal?`<a href="${sd.portal}" target="_blank" rel="noopener" class="portal-link">🔗 Open ${sd.name} Tax Portal ↗</a>`:'<p style="color:#7a7568;margin-top:12px;font-size:13px">No state sales tax portal — this state has no sales tax.</p>'}
+      <p class="disclaimer">Always verify these figures against your own records before filing. These calculations are estimates based on your uploaded data.</p>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn-primary" onclick="downloadStatePDF('${abbr}')" style="font-size:13px;padding:10px 18px">⬇ Download ${abbr} Report</button>
+      <button class="btn-secondary" onclick="closeModal()" style="font-size:13px;padding:10px 18px">Close</button>
+    </div>`;
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if(!e||e.target===document.getElementById('modal-overlay'))
+    document.getElementById('modal-overlay').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FILING CENTER
+// ═══════════════════════════════════════════════════════════════
+function renderFilingCenter() {
+  const states = Object.values(processedData).sort((a,b)=>{
+    const ah = STATE_DATA[a.abbr]?.nexusThreshold&&a.sales>=STATE_DATA[a.abbr]?.nexusThreshold;
+    const bh = STATE_DATA[b.abbr]?.nexusThreshold&&b.sales>=STATE_DATA[b.abbr]?.nexusThreshold;
+    if(ah&&!bh) return -1; if(!ah&&bh) return 1; return b.sales-a.sales;
   });
 
-  // Totals row
-  document.getElementById('tot-gross').textContent=fmtD(totG);
-  document.getElementById('tot-exempt').textContent=fmtD(totE);
-  document.getElementById('tot-taxable').textContent=fmtD(totT);
-  document.getElementById('tot-tax').textContent=fmtD(totX);
-  document.getElementById('tot-dis').textContent=totD>0?'- '+fmtD(totD):'$0.00';
-  document.getElementById('tot-due').textContent=fmtD(totDue);
-
-  document.getElementById('reports-section').style.display='block';
-  document.getElementById('reports-section').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('filing-grid').innerHTML = states.map(d=>{
+    const sd = STATE_DATA[d.abbr];
+    const hasNexus = sd?.nexusThreshold&&d.sales>=sd.nexusThreshold;
+    const noTax    = sd?.noState;
+    const taxDue   = d.taxable*(sd?.rate||0)/100;
+    const countyEntries = Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).slice(0,5);
+    return `
+    <div class="filing-card ${hasNexus?'priority':''}">
+      <div class="fc-header">
+        <div class="fc-state">${d.name} <span style="font-size:14px;color:#7a7568">(${d.abbr})</span></div>
+        <span class="fc-badge ${noTax?'fc-ok':hasNexus?'fc-nexus':'fc-due'}">${noTax?'No State Tax':hasNexus?'⚠ File Required':'Below Threshold'}</span>
+      </div>
+      <div class="fc-row"><span class="fc-key">Gross Sales</span><span class="fc-val">${fmt(d.sales)}</span></div>
+      <div class="fc-row"><span class="fc-key">Tax Collected</span><span class="fc-val green">${fmt(d.collected)}</span></div>
+      <div class="fc-row"><span class="fc-key">Tax Due (est.)</span><span class="fc-val ${hasNexus?'amber':''}">${noTax?'N/A':fmt(taxDue)}</span></div>
+      <div class="fc-row"><span class="fc-key">Nexus Threshold</span><span class="fc-val">${sd?.nexusThreshold?'$'+sd.nexusThreshold.toLocaleString():'N/A'}</span></div>
+      ${countyEntries.length>1?`
+      <div class="county-breakdown">
+        <div class="cb-title">Top Counties / Jurisdictions</div>
+        ${countyEntries.map(([county,cd])=>`<div class="cb-row"><span>${county}</span><span>${fmt(cd.sales)} · ${fmt(cd.collected)} tax</span></div>`).join('')}
+      </div>`:''}
+      <div class="fc-actions">
+        <button class="fc-btn download" onclick="downloadStatePDF('${d.abbr}')">⬇ Download</button>
+        <button class="fc-btn review" onclick="openStateModal('${d.abbr}')">Review</button>
+        ${sd?.portal?`<a href="${sd.portal}" target="_blank" class="fc-btn portal">File Now ↗</a>`:'<span class="fc-btn download" style="opacity:.4;cursor:default">No Portal</span>'}
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// ── PRINT ONE STATE ───────────────────────────────────
-function printOne(stateName){
-  const el=document.getElementById('rpt-'+stateName.replace(/[\s.]/g,'-'));
-  if(!el){ alert('Report not found.'); return; }
-  const w=window.open('','_blank');
-  w.document.write(`<!DOCTYPE html><html><head><title>${stateName} Sales Tax Report</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:Arial,sans-serif;color:#1a1a18;padding:28px;font-size:13px;}
-    h3{font-size:20px;margin-bottom:4px;}
-    .meta{font-size:11px;color:#666;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid #1a1a18;}
-    table{width:100%;border-collapse:collapse;margin-bottom:18px;font-size:12px;}
-    th{background:#1a1a18;color:white;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;}
-    td{padding:8px 10px;border-bottom:1px solid #ddd;}
-    .tot td{font-weight:700;background:#f5f5f5;border-top:2px solid #1a1a18;}
-    .grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid #ccc;border-radius:4px;overflow:hidden;margin-bottom:14px;}
-    .lbl{padding:10px 12px;background:#f5f5f5;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#555;border-bottom:1px solid #ddd;}
-    .val{padding:10px 12px;font-family:monospace;font-size:13px;font-weight:600;border-bottom:1px solid #ddd;}
-    .dark{background:#1a1a18;color:white;}
-    .big{font-size:24px;background:#1a1a18;color:white;padding:14px;font-weight:700;}
-    .warn{background:#fffbe6;border:1px solid #e8c84a;border-radius:3px;padding:8px 12px;margin-bottom:12px;font-size:11px;color:#7a6000;}
-    .note{font-size:10px;color:#888;border-top:1px solid #ddd;padding-top:10px;margin-top:8px;}
-  </style></head><body>
-  <h3>${stateName} — Sales Tax Return</h3>
-  <div class="meta">${el.querySelector('.report-meta')?.textContent||''}</div>
-  ${el.querySelector('.warn-box')?.outerHTML||''}
-  ${el.querySelector('.county-breakdown-table')?.outerHTML||''}
-  <div class="grid">
-    ${Array.from(el.querySelectorAll('.report-grid > div')).map(d=>{
-      const isLbl=d.classList.contains('report-label');
-      const isDark=d.style.background==='rgb(26, 26, 24)';
-      const isBig=d.style.fontFamily&&d.style.fontFamily.includes('Serif');
-      return `<div class="${isLbl?(isDark?'lbl dark':'lbl'):(isBig?'big':'val')}">${d.textContent}</div>`;
-    }).join('')}
-  </div>
-  <div class="note">${el.querySelector('.report-footer-note')?.textContent||''}</div>
-  </body></html>`);
-  w.document.close();
-  setTimeout(()=>{ w.focus(); w.print(); },500);
+// ═══════════════════════════════════════════════════════════════
+//  DOWNLOADS
+// ═══════════════════════════════════════════════════════════════
+function renderDownloadList() {
+  const list = document.getElementById('state-download-list');
+  list.innerHTML = Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).map(d=>`
+    <button onclick="downloadStatePDF('${d.abbr}')" style="text-align:left;background:white;border:1px solid #d8d3c5;border-radius:4px;padding:10px 12px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif" onmouseover="this.style.borderColor='#1e5c33'" onmouseout="this.style.borderColor='#d8d3c5'">
+      <div style="font-weight:700;font-size:13px">${d.name}</div>
+      <div style="font-size:11px;color:#7a7568;font-family:'DM Mono',monospace">${fmt(d.sales)} · ${fmt(d.collected)} tax</div>
+    </button>`).join('');
 }
 
-// ── PRINT ALL ─────────────────────────────────────────
-function printAll(){ window.print(); }
+function downloadStatePDF(abbr) {
+  const d  = processedData[abbr];
+  const sd = STATE_DATA[abbr];
+  if(!d) return;
+  const taxDue = d.taxable*(sd?.rate||0)/100;
+  const period = `${document.getElementById('period-start').value||'All'} to ${document.getElementById('period-end').value||'present'}`;
 
-// ── COPY SUMMARY ──────────────────────────────────────
-function copySummary(){
-  const rows=Array.from(document.querySelectorAll('#summary-table tr'));
-  const txt='MULTI-STATE SALES TAX SUMMARY\n'+'='.repeat(90)+'\n'
-    +rows.map(r=>Array.from(r.cells).map(c=>c.textContent.trim().padEnd(18)).join('\t')).join('\n');
-  navigator.clipboard.writeText(txt).then(()=>alert('Summary copied to clipboard!'));
+  // Build CSV for this state
+  let csv = `BookSmartTools — Sales Tax Report\n`;
+  csv += `State: ${d.name} (${abbr})\n`;
+  csv += `Period: ${period}\n`;
+  csv += `Generated: ${new Date().toLocaleDateString()}\n\n`;
+  csv += `SUMMARY\n`;
+  csv += `Gross Sales,${d.sales.toFixed(2)}\n`;
+  csv += `Taxable Sales,${d.taxable.toFixed(2)}\n`;
+  csv += `State Tax Rate,${sd?.rate||0}%\n`;
+  csv += `Tax Collected from Customers,${d.collected.toFixed(2)}\n`;
+  csv += `Tax Due (calculated),${taxDue.toFixed(2)}\n\n`;
+  csv += `COUNTY / JURISDICTION BREAKDOWN\n`;
+  csv += `County/City,Gross Sales,Taxable Sales,Tax Collected,Tax Rate\n`;
+  Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([county,cd])=>{
+    const rate = cd.taxable>0?(cd.collected/cd.taxable*100).toFixed(2):0;
+    csv += `"${county}",${cd.sales.toFixed(2)},${cd.taxable.toFixed(2)},${cd.collected.toFixed(2)},${rate}%\n`;
+  });
+  csv += `\nState Portal: ${sd?.portal||'N/A'}\n`;
+  csv += `\nIMPORTANT: These figures are estimates based on uploaded data. Verify before filing.`;
+
+  triggerDownload(csv, `${abbr}-sales-tax-report.csv`, 'text/csv');
 }
+
+function downloadFull() {
+  if(!Object.keys(processedData).length){ alert('No data to download.'); return; }
+  const wb = XLSX.utils.book_new();
+
+  // Summary sheet
+  const summaryData = [
+    ['BookSmartTools — E-Commerce Sales Tax Report'],
+    ['Period:', `${document.getElementById('period-start').value} to ${document.getElementById('period-end').value}`],
+    ['Generated:', new Date().toLocaleDateString()],
+    [],
+    ['State','Abbr','Gross Sales','Taxable Sales','Tax Rate','Tax Collected','Tax Due (est.)','Nexus Threshold','Status','Portal']
+  ];
+  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
+    const sd=STATE_DATA[d.abbr];
+    const hasNexus=sd?.nexusThreshold&&d.sales>=sd.nexusThreshold;
+    summaryData.push([
+      d.name, d.abbr, d.sales.toFixed(2), d.taxable.toFixed(2),
+      `${sd?.rate||0}%`, d.collected.toFixed(2), (d.taxable*(sd?.rate||0)/100).toFixed(2),
+      sd?.nexusThreshold?'$'+sd.nexusThreshold.toLocaleString():'N/A',
+      sd?.noState?'No Tax':hasNexus?'Filing Required':'Below Threshold',
+      sd?.portal||'N/A'
+    ]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(summaryData), 'Summary');
+
+  // Individual state sheets
+  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
+    const sd=STATE_DATA[d.abbr];
+    const sheetData = [
+      [d.name+' Sales Tax Report'],
+      ['Period:', `${document.getElementById('period-start').value} to ${document.getElementById('period-end').value}`],
+      [],
+      ['SUMMARY'],
+      ['Gross Sales', d.sales.toFixed(2)],
+      ['Taxable Sales', d.taxable.toFixed(2)],
+      ['State Tax Rate', `${sd?.rate||0}%`],
+      ['Tax Collected', d.collected.toFixed(2)],
+      ['Tax Due (est.)', (d.taxable*(sd?.rate||0)/100).toFixed(2)],
+      [],
+      ['COUNTY BREAKDOWN'],
+      ['County/City','Gross Sales','Taxable Sales','Tax Collected','Effective Rate']
+    ];
+    Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([county,cd])=>{
+      sheetData.push([county, cd.sales.toFixed(2), cd.taxable.toFixed(2), cd.collected.toFixed(2), cd.taxable>0?((cd.collected/cd.taxable)*100).toFixed(2)+'%':'0%']);
+    });
+    const name = d.abbr.substring(0,31);
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sheetData), name);
+  });
+
+  XLSX.writeFile(wb, 'booksmartools-sales-tax-report.xlsx');
+}
+
+function downloadCSV() {
+  let csv = 'State,State Abbr,County/City,Gross Sales,Taxable Sales,Tax Collected,State Tax Rate,Tax Due\n';
+  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
+    const sd=STATE_DATA[d.abbr];
+    Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([county,cd])=>{
+      csv += `"${d.name}","${d.abbr}","${county}",${cd.sales.toFixed(2)},${cd.taxable.toFixed(2)},${cd.collected.toFixed(2)},${sd?.rate||0}%,${(cd.taxable*(sd?.rate||0)/100).toFixed(2)}\n`;
+    });
+  });
+  triggerDownload(csv,'sales-tax-full-report.csv','text/csv');
+}
+
+function downloadSummary() {
+  let csv = 'State,Gross Sales,Taxable Sales,Tax Rate,Tax Collected,Tax Due,Nexus Status,Portal\n';
+  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
+    const sd=STATE_DATA[d.abbr];
+    const hasNexus=sd?.nexusThreshold&&d.sales>=sd.nexusThreshold;
+    csv += `"${d.name}",${d.sales.toFixed(2)},${d.taxable.toFixed(2)},${sd?.rate||0}%,${d.collected.toFixed(2)},${(d.taxable*(sd?.rate||0)/100).toFixed(2)},"${sd?.noState?'No Tax':hasNexus?'Filing Required':'Below Threshold'}","${sd?.portal||'N/A'}"\n`;
+  });
+  triggerDownload(csv,'sales-tax-filing-summary.csv','text/csv');
+}
+
+function triggerDownload(content, filename, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content],{type}));
+  a.download = filename;
+  a.click();
+}
+
+// ── Helpers ──────────────────────────────────────────────────
+function fmt(n){ return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+
+// ── Set default dates ────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  const now = new Date();
+  const qStart = new Date(now.getFullYear(), Math.floor(now.getMonth()/3)*3, 1);
+  const qEnd   = new Date(qStart.getFullYear(), qStart.getMonth()+3, 0);
+  document.getElementById('period-start').value = qStart.toISOString().slice(0,10);
+  document.getElementById('period-end').value   = qEnd.toISOString().slice(0,10);
+  document.getElementById('platform-info').innerHTML = PLATFORMS['amazon'].info;
+});
 </script>
 </body>
 </html>

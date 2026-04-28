@@ -25,7 +25,7 @@
   <!-- Tax Tools -->
   <url><loc>https://booksmartools.com/sales-tax-calculator.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
   <url><loc>https://booksmartools.com/meals-tax-calculator.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://booksmartools.com/ecommerce-sales-tax-calculator.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://booksmartools.com/ecommerce-sales-tax-calculator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://booksmartools.com/self-employment-tax.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
   <url><loc>https://booksmartools.com/quarterly-tax-calculator.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
   <url><loc>https://booksmartools.com/1099-vs-w2-calculator.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
@@ -59,5 +59,11 @@
   <url><loc>https://booksmartools.com/blog/profit-margin-vs-markup.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
   <url><loc>https://booksmartools.com/ebitda-calculator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <url><loc>https://booksmartools.com/contact.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://booksmartools.com/feedback.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://booksmartools.com/blog/what-is-ebitda.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://booksmartools.com/blog/self-employment-tax-guide.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://booksmartools.com/blog/free-pdf-tools-guide.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
 </urlset>
