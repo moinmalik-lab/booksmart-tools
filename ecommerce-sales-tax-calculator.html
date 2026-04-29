@@ -4,1309 +4,1022 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Free E-Commerce Sales Tax Report Tool — Amazon, Shopify, eBay | BookSmartTools</title>
-<meta name="description" content="Upload your Amazon, Shopify, or eBay sales report. Auto-calculates sales tax by state and county, generates ready-to-file reports for all 50 states.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<style>
-/* ═══════════════════════════════════════════════════════════
-   E-Commerce Sales Tax Report Tool
-   ═══════════════════════════════════════════════════════════ */
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a18;-webkit-font-smoothing:antialiased}
-
-/* NAV */
-.site-nav{background:#1a1a18;padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}
-.nav-logo em{color:#6db88a;font-style:normal}
-.nav-links{display:flex;align-items:center;gap:20px;list-style:none}
-.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:13px}
-.nav-links a:hover{color:white}
-.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.25);padding:5px 13px;border-radius:3px}
-
-/* HERO */
-.hero{background:linear-gradient(135deg,#0f2d4a 0%,#1a3d6e 50%,#0d2840 100%);color:white;padding:48px 24px 44px;text-align:center}
-.platform-badges{display:flex;justify-content:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
-.pb{padding:4px 14px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;border:1px solid;letter-spacing:.4px}
-.pb.amazon{background:rgba(255,153,0,.18);border-color:rgba(255,153,0,.4);color:#ffc048}
-.pb.shopify{background:rgba(0,200,100,.15);border-color:rgba(0,200,100,.35);color:#4de89a}
-.pb.ebay{background:rgba(100,150,255,.15);border-color:rgba(100,150,255,.35);color:#8eb4ff}
-.pb.generic{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8)}
-.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(26px,3.5vw,38px);margin-bottom:12px;line-height:1.2;font-weight:400}
-.hero p{font-size:15px;opacity:.82;max-width:620px;margin:0 auto;line-height:1.6}
-
-/* MAIN CONTAINER */
-.main{max-width:1100px;margin:0 auto;padding:32px 20px 60px}
-
-/* STEP INDICATOR */
-.steps{display:flex;gap:0;margin-bottom:28px;background:white;border:1px solid #d8d3c5;border-radius:6px;overflow:hidden}
-.step-item{flex:1;padding:14px 16px;display:flex;align-items:center;gap:10px;font-size:13px;color:#7a7568;border-right:1px solid #d8d3c5;cursor:pointer;transition:background .15s}
-.step-item:last-child{border-right:none}
-.step-item.active{background:#1e5c33;color:white}
-.step-item.done{background:#eef7f1;color:#1e5c33}
-.step-item.locked{opacity:.45;cursor:not-allowed}
-.step-num{width:24px;height:24px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'DM Mono',monospace;font-weight:700;flex-shrink:0}
-.step-item.active .step-num{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
-.step-item.done .step-num{background:#1e5c33;border-color:#1e5c33;color:white}
-
-/* PANELS */
-.panel{display:none}
-.panel.active{display:block}
-
-/* ── STEP 1: UPLOAD ── */
-.upload-section{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:28px;margin-bottom:20px}
-.upload-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.upload-sub{font-size:13px;color:#7a7568;margin-bottom:24px;line-height:1.6}
-
-/* Platform selector */
-.platform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
-@media(max-width:600px){.platform-grid{grid-template-columns:1fr 1fr}}
-.plat-btn{border:2px solid #d8d3c5;border-radius:6px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .18s;background:white}
-.plat-btn:hover{border-color:#1e5c33;background:#f0f7f2}
-.plat-btn.selected{border-color:#1e5c33;background:#eef7f1}
-.plat-icon{font-size:28px;margin-bottom:8px}
-.plat-name{font-size:13px;font-weight:700;color:#1a1a18;margin-bottom:3px}
-.plat-sub{font-size:11px;color:#7a7568;font-family:'DM Mono',monospace}
-
-/* Drop zone */
-.drop-zone{border:2px dashed #c8c3b5;border-radius:6px;padding:44px 24px;text-align:center;cursor:pointer;transition:all .2s;background:#faf8f3;position:relative}
-.drop-zone:hover,.drop-zone.over{border-color:#1e5c33;background:#f0f7f2}
-.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.drop-icon{font-size:44px;margin-bottom:14px}
-.drop-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:8px}
-.drop-sub{font-size:13px;color:#7a7568;line-height:1.6}
-.accepted-formats{display:flex;gap:6px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-.fmt{background:#f0ece4;border:1px solid #d8d3c5;border-radius:2px;padding:2px 9px;font-size:11px;font-family:'DM Mono',monospace;color:#5a5550;font-weight:600}
-
-/* Column mapper */
-.mapper-card{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:24px;margin-top:20px;display:none}
-.mapper-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.mapper-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-@media(max-width:600px){.mapper-grid{grid-template-columns:1fr}}
-.mapper-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
-.mapper-field select{width:100%;height:38px;border:1px solid #d8d3c5;border-radius:3px;padding:0 10px;font-family:'DM Mono',monospace;font-size:12px;color:#1a1a18;background:#faf8f3;outline:none}
-.mapper-field select:focus{border-color:#1e5c33}
-
-/* Preview table */
-.preview-wrap{margin-top:16px;overflow-x:auto;border-radius:4px;border:1px solid #d8d3c5;display:none}
-.preview-wrap table{width:100%;border-collapse:collapse;font-size:11px;min-width:600px}
-.preview-wrap thead th{background:#1a1a18;color:rgba(255,255,255,.85);padding:8px 10px;text-align:left;font-size:10px;letter-spacing:.8px;text-transform:uppercase;font-family:'DM Mono',monospace;white-space:nowrap}
-.preview-wrap tbody td{padding:7px 10px;border-bottom:1px solid #ede9e1;font-family:'DM Mono',monospace;white-space:nowrap}
-.preview-wrap tbody tr:hover td{background:#f5f3ee}
-
-/* Filing period */
-.period-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:20px}
-@media(max-width:600px){.period-row{grid-template-columns:1fr}}
-.period-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px}
-.period-field input,.period-field select{width:100%;height:40px;border:1px solid #d8d3c5;border-radius:3px;padding:0 12px;font-family:'DM Mono',monospace;font-size:13px;color:#1a1a18;background:#faf8f3;outline:none}
-.period-field input:focus,.period-field select:focus{border-color:#1e5c33;background:white}
-
-.btn-primary{background:#1e5c33;color:white;border:none;border-radius:4px;padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{background:#165228}
-.btn-primary:disabled{background:#a0b8a4;cursor:not-allowed}
-.btn-secondary{background:white;color:#1a1a18;border:1.5px solid #d8d3c5;border-radius:4px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
-.btn-secondary:hover{border-color:#1a1a18}
-
-/* Info box */
-.info-box{background:#eef7f1;border-left:3px solid #1e5c33;padding:12px 16px;border-radius:0 4px 4px 0;font-size:13px;color:#1a3828;line-height:1.6;margin-top:16px}
-.warn-box{background:#fef8ec;border-left:3px solid #d4860a;padding:12px 16px;border-radius:0 4px 4px 0;font-size:13px;color:#4a2c00;line-height:1.6;margin-top:16px}
-
-/* ── STEP 2: DASHBOARD ── */
-.dashboard-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px}
-.dh-title{font-family:'DM Serif Display',serif;font-size:24px}
-.dh-meta{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace;margin-top:4px}
-.dh-actions{display:flex;gap:10px;flex-wrap:wrap}
-
-/* Summary cards */
-.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-@media(max-width:720px){.summary-grid{grid-template-columns:1fr 1fr}}
-.sum-card{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:18px}
-.sum-label{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:8px;font-family:'DM Mono',monospace}
-.sum-value{font-family:'DM Serif Display',serif;font-size:28px;color:#1a1a18;line-height:1}
-.sum-sub{font-size:11px;color:#7a7568;margin-top:4px;font-family:'DM Mono',monospace}
-.sum-card.highlight{background:#1e5c33;border-color:#1e5c33}
-.sum-card.highlight .sum-label{color:rgba(255,255,255,.65)}
-.sum-card.highlight .sum-value{color:white}
-.sum-card.highlight .sum-sub{color:rgba(255,255,255,.55)}
-
-/* Filter bar */
-.filter-bar{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:14px 18px;margin-bottom:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.filter-bar label{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a7568;white-space:nowrap}
-.filter-bar select,.filter-bar input{height:34px;border:1px solid #d8d3c5;border-radius:3px;padding:0 10px;font-family:'DM Mono',monospace;font-size:12px;color:#1a1a18;background:#faf8f3;outline:none}
-.filter-bar select:focus,.filter-bar input:focus{border-color:#1e5c33}
-
-/* State breakdown table */
-.data-table-wrap{background:white;border:1px solid #d8d3c5;border-radius:5px;overflow:hidden;margin-bottom:20px}
-.dt-header{padding:16px 20px;border-bottom:1px solid #d8d3c5;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.dt-title{font-family:'DM Serif Display',serif;font-size:16px}
-.dt-actions{display:flex;gap:8px}
-.dt-btn{padding:6px 14px;border:1px solid #d8d3c5;border-radius:3px;background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
-.dt-btn:hover{background:#f5f3ee}
-.dt-btn.active{background:#1e5c33;color:white;border-color:#1e5c33}
-.data-table{width:100%;border-collapse:collapse}
-.data-table thead th{background:#f5f3ee;padding:10px 14px;text-align:left;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#7a7568;border-bottom:1.5px solid #d8d3c5;white-space:nowrap;font-family:'DM Mono',monospace;font-weight:700;cursor:pointer;user-select:none}
-.data-table thead th:hover{background:#eee8de}
-.data-table thead th.sorted{color:#1e5c33}
-.data-table tbody td{padding:10px 14px;border-bottom:1px solid #ede9e1;font-size:13px;font-family:'DM Mono',monospace}
-.data-table tbody tr:hover td{background:#faf8f3}
-.data-table tbody tr.expanded td{background:#f0f7f2}
-.data-table tfoot td{padding:10px 14px;font-weight:700;background:#f5f3ee;border-top:2px solid #d8d3c5;font-family:'DM Mono',monospace;font-size:13px}
-.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.5px}
-.status-due{background:#fef8ec;color:#8b5e0a;border:1px solid #f0d090}
-.status-ok{background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8}
-.status-nexus{background:#fde8e6;color:#a83428;border:1px solid #f0b0a8}
-.nexus-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.expand-btn{background:none;border:none;cursor:pointer;color:#7a7568;font-size:14px;padding:2px 4px;transition:transform .2s}
-.expand-btn.open{transform:rotate(90deg)}
-/* County sub-rows */
-.county-row{background:#f9f7f4}
-.county-row td{padding:7px 14px 7px 38px;font-size:12px;color:#5a5a56;border-bottom:1px solid #ede9e1}
-.county-row td:first-child{padding-left:44px;color:#7a7568}
-/* Progress bar in table */
-.nexus-bar{height:4px;background:#e8e4db;border-radius:2px;margin-top:4px;overflow:hidden}
-.nexus-fill{height:100%;border-radius:2px;transition:width .4s}
-
-/* ── STEP 3: FILING CENTER ── */
-.filing-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:720px){.filing-grid{grid-template-columns:1fr}}
-.filing-card{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:20px;transition:all .2s}
-.filing-card:hover{border-color:#7aab8c;box-shadow:0 4px 18px rgba(0,0,0,.06)}
-.filing-card.priority{border-color:#d4860a;background:#fefcf8}
-.fc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
-.fc-state{font-family:'DM Serif Display',serif;font-size:20px;color:#1a1a18}
-.fc-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.5px}
-.fc-due{background:#fef8ec;color:#8b5e0a;border:1px solid #f0d090}
-.fc-nexus{background:#fde8e6;color:#a83428;border:1px solid #f0b0a8}
-.fc-ok{background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8}
-.fc-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #ede9e1;font-size:13px}
-.fc-row:last-of-type{border-bottom:none}
-.fc-key{color:#7a7568}.fc-val{font-family:'DM Mono',monospace;font-weight:600;color:#1a1a18}
-.fc-val.green{color:#1e5c33}.fc-val.amber{color:#8b5e0a}.fc-val.red{color:#a83428}
-.fc-actions{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
-.fc-btn{flex:1;min-width:100px;padding:9px 12px;border-radius:3px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;border:none}
-.fc-btn.download{background:#f5f3ee;color:#1a1a18;border:1px solid #d8d3c5}
-.fc-btn.download:hover{background:#eee8de}
-.fc-btn.portal{background:#1e5c33;color:white}
-.fc-btn.portal:hover{background:#165228}
-.fc-btn.review{background:#1a1a18;color:white}
-.fc-btn.review:hover{background:#333}
-
-/* County breakdown in filing card */
-.county-breakdown{margin-top:12px;padding:10px 14px;background:#f9f7f4;border-radius:3px;border:1px solid #e8e4db}
-.cb-title{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#7a7568;margin-bottom:8px;font-family:'DM Mono',monospace}
-.cb-row{display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;border-bottom:1px dotted #d8d3c5;font-family:'DM Mono',monospace}
-.cb-row:last-child{border-bottom:none;font-weight:700}
-
-/* ── STEP 4: DOWNLOAD ── */
-.download-section{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:28px}
-.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
-@media(max-width:600px){.dl-grid{grid-template-columns:1fr}}
-.dl-card{border:1.5px solid #d8d3c5;border-radius:5px;padding:22px;text-align:center;transition:all .2s;cursor:pointer}
-.dl-card:hover{border-color:#1e5c33;background:#f0f7f2;transform:translateY(-2px)}
-.dl-icon{font-size:36px;margin-bottom:12px}
-.dl-name{font-weight:700;font-size:14px;margin-bottom:5px}
-.dl-desc{font-size:12px;color:#7a7568;line-height:1.5}
-.dl-tag{display:inline-block;background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8;border-radius:2px;padding:2px 8px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;margin-top:10px}
-
-/* Progress bar */
-.progress-wrap{margin-top:14px;display:none}
-.progress-bar{height:6px;background:#e0ddd6;border-radius:3px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#1e5c33,#7dd4a0);border-radius:3px;transition:width .3s}
-.progress-label{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace;margin-top:6px;text-align:center}
-
-/* State file modal */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:white;border-radius:8px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-.modal-header{padding:22px 24px 18px;border-bottom:1px solid #d8d3c5;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:white;z-index:1}
-.modal-title{font-family:'DM Serif Display',serif;font-size:20px}
-.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:#7a7568;line-height:1}
-.modal-body{padding:24px}
-.modal-section{margin-bottom:20px}
-.modal-section h4{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#7a7568;margin-bottom:12px;font-family:'DM Mono',monospace;border-bottom:1px solid #ede9e1;padding-bottom:8px}
-.filing-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dotted #e8e4db;font-size:13px}
-.filing-line:last-child{border-bottom:none;font-weight:700;padding-top:12px;margin-top:4px;border-top:2px solid #d8d3c5}
-.filing-line .fl-key{color:#5a5a56}.filing-line .fl-val{font-family:'DM Mono',monospace;font-weight:600}
-.step-instructions{background:#f5f3ee;border-radius:4px;padding:14px;font-size:13px;line-height:1.7;color:#3a3a36}
-.step-instructions ol{padding-left:18px}
-.step-instructions li{margin-bottom:6px}
-.portal-link{display:flex;align-items:center;gap:10px;background:#1e5c33;color:white;padding:12px 20px;border-radius:4px;text-decoration:none;font-weight:700;font-size:14px;margin-top:16px;justify-content:center;transition:background .15s}
-.portal-link:hover{background:#165228}
-.disclaimer{font-size:11px;color:#9a9890;margin-top:12px;line-height:1.5;text-align:center;font-style:italic}
-
-footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
-footer a{color:rgba(255,255,255,.6)}
-</style>
-<meta name="keywords" content="ecommerce sales tax calculator, Amazon sales tax report, Shopify tax calculator, eBay sales tax, multi-state sales tax">
+<meta name="description" content="Upload your Amazon, Shopify, or eBay sales report. Auto-reads every column, sorts sales by state and county, calculates tax owed, and generates ready-to-file reports for all 50 states.">
+<meta name="keywords" content="ecommerce sales tax calculator, Amazon sales tax report, Shopify tax calculator, eBay sales tax report, multi-state sales tax, sales tax by state county">
 <link rel="canonical" href="https://booksmartools.com/ecommerce-sales-tax-calculator.html">
 <meta property="og:title" content="Free E-Commerce Sales Tax Report Tool — Amazon, Shopify, eBay | BookSmartTools">
-<meta property="og:description" content="Upload your Amazon, Shopify, or eBay sales report. Auto-calculates sales tax by state and county, generates ready-to-file reports for all 50 states.">
+<meta property="og:description" content="Upload your eBay, Amazon or Shopify sales report. Auto-calculates sales tax by state and county. Generate ready-to-file reports for all 50 states.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://booksmartools.com/ecommerce-sales-tax-calculator.html">
 <meta property="og:site_name" content="BookSmartTools">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Free E-Commerce Sales Tax Report Tool — Amazon, Shopify, eBay | BookSmartTools">
-<meta name="twitter:description" content="Upload your Amazon, Shopify, or eBay sales report. Auto-calculates sales tax by state and county, generates ready-to-file reports for all 50 states.">
+<meta name="twitter:title" content="Free E-Commerce Sales Tax Report Tool | BookSmartTools">
+<meta name="twitter:description" content="Upload eBay, Amazon or Shopify reports. Auto-sorts by state & county. Generates filing reports for all 50 states.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "E-Commerce Sales Tax Report Tool",
-  "description": "Upload Amazon, Shopify, or eBay sales reports and generate state-by-state sales tax filing reports.",
+  "name": "Free E-Commerce Sales Tax Report Tool",
+  "description": "Upload Amazon, Shopify, or eBay sales reports and generate state-by-state sales tax filing reports with county breakdown.",
   "url": "https://booksmartools.com/ecommerce-sales-tax-calculator.html",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Any browser",
-  "browserRequirements": "Requires JavaScript",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "provider": {
-    "@type": "Organization",
-    "name": "BookSmartTools",
-    "url": "https://booksmartools.com"
-  }
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "BookSmartTools", "url": "https://booksmartools.com" }
 }
 </script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a18;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+.site-nav{background:#1a1a18;padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:18px;color:white;text-decoration:none}
+.nav-logo em{color:#6db88a;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;transition:color .15s}
+.nav-links a:hover{color:white}
+.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.25);padding:5px 13px;border-radius:3px}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0f2d4a 0%,#1a3d6e 50%,#0d2840 100%);color:white;padding:48px 24px 44px;text-align:center}
+.platform-badges{display:flex;justify-content:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pb{padding:4px 14px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;border:1px solid;letter-spacing:.4px}
+.pb.ebay{background:rgba(100,150,255,.15);border-color:rgba(100,150,255,.4);color:#8eb4ff}
+.pb.amz{background:rgba(255,153,0,.15);border-color:rgba(255,153,0,.4);color:#ffc048}
+.pb.sh{background:rgba(0,200,100,.12);border-color:rgba(0,200,100,.3);color:#4de89a}
+.pb.gen{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8)}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(24px,3.5vw,38px);margin-bottom:12px;line-height:1.2;font-weight:400}
+.hero p{font-size:15px;opacity:.82;max-width:620px;margin:0 auto;line-height:1.6}
+
+/* ── MAIN ── */
+.main{max-width:1100px;margin:0 auto;padding:32px 20px 60px}
+
+/* ── STEP TABS ── */
+.tabs{display:flex;background:white;border:1px solid #d8d3c5;border-radius:6px;overflow:hidden;margin-bottom:20px}
+.tab{flex:1;padding:14px 10px;text-align:center;font-size:13px;font-weight:600;color:#7a7568;cursor:pointer;border-right:1px solid #d8d3c5;transition:all .15s}
+.tab:last-child{border-right:none}
+.tab.on{background:#1e5c33;color:white}
+.tab.done{background:#eef7f1;color:#1e5c33}
+.tab.lock{opacity:.35;cursor:not-allowed}
+
+/* ── CARDS ── */
+.card{background:white;border:1px solid #d8d3c5;border-radius:6px;padding:24px;margin-bottom:16px}
+
+/* ── PLATFORM PILLS ── */
+.plat-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.pp{border:1.5px solid #d8d3c5;border-radius:20px;padding:7px 18px;font-size:13px;font-weight:600;cursor:pointer;background:white;color:#7a7568;transition:all .15s}
+.pp:hover{border-color:#1e5c33;color:#1e5c33}
+.pp.on{border-color:#1e5c33;background:#eef7f1;color:#1e5c33}
+
+/* ── INSTRUCTIONS ── */
+.instr{background:#f0f7f2;border-left:3px solid #1e5c33;padding:12px 16px;border-radius:0 5px 5px 0;font-size:13px;color:#1a3828;margin-bottom:16px;line-height:1.7}
+.instr strong{color:#0e2818}
+
+/* ── DROP ZONE ── */
+.dz{border:2px dashed #c8c3b5;border-radius:6px;padding:44px 24px;text-align:center;cursor:pointer;transition:all .2s;background:#faf8f3;position:relative}
+.dz:hover,.dz.over{border-color:#1e5c33;background:#f0f7f2}
+.dz input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.dz-icon{font-size:44px;margin-bottom:12px}
+.dz-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px;color:#1a1a18}
+.dz-sub{font-size:13px;color:#7a7568}
+.fmts{display:flex;gap:5px;justify-content:center;margin-top:10px}
+.fmt{background:#f0ece4;border:1px solid #d8d3c5;border-radius:2px;padding:2px 9px;font-size:11px;font-family:'DM Mono',monospace;color:#5a5550;font-weight:600}
+
+/* ── PROGRESS ── */
+.prog-wrap{margin-top:14px;display:none}
+.prog-bar{height:7px;background:#e0ddd6;border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#1e5c33,#7dd4a0);border-radius:4px;transition:width .3s}
+.prog-lbl{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace;margin-top:5px;text-align:center}
+
+/* ── SUMMARY CARDS ── */
+.sum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.sm{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:16px}
+.sm.hl{background:#1e5c33;border-color:#1e5c33}
+.sm-lbl{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:6px;font-family:'DM Mono',monospace}
+.sm.hl .sm-lbl{color:rgba(255,255,255,.65)}
+.sm-val{font-family:'DM Serif Display',serif;font-size:28px;color:#1a1a18;line-height:1}
+.sm.hl .sm-val{color:white}
+.sm-sub{font-size:11px;color:#7a7568;margin-top:3px;font-family:'DM Mono',monospace}
+.sm.hl .sm-sub{color:rgba(255,255,255,.55)}
+
+/* ── ACTIONS BAR ── */
+.acts{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.acts input[type=text]{height:36px;border:1px solid #d8d3c5;border-radius:4px;padding:0 12px;font-size:13px;font-family:'DM Mono',monospace;background:#faf8f3;color:#1a1a18;outline:none;flex:1;min-width:140px}
+.acts input:focus{border-color:#1e5c33}
+.acts select{height:36px;border:1px solid #d8d3c5;border-radius:4px;padding:0 10px;font-size:13px;background:#faf8f3;color:#1a1a18;outline:none}
+.btn{padding:9px 18px;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;border:1px solid #d8d3c5;background:white;color:#1a1a18;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
+.btn:hover{background:#f5f3ee}
+.btn.g{background:#1e5c33;color:white;border-color:#1e5c33}
+.btn.g:hover{background:#165228}
+.btn.sm2{padding:7px 14px;font-size:13px}
+
+/* ── TABLE ── */
+.tbl-card{background:white;border:1px solid #d8d3c5;border-radius:6px;overflow:hidden;margin-bottom:16px}
+.tbl-head{padding:14px 18px;border-bottom:1px solid #d8d3c5;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.tbl-title{font-family:'DM Serif Display',serif;font-size:17px;color:#1a1a18}
+.tbl-meta{font-size:12px;color:#7a7568;font-family:'DM Mono',monospace}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{background:#f5f3ee;padding:10px 14px;text-align:left;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#7a7568;border-bottom:1.5px solid #d8d3c5;white-space:nowrap;font-family:'DM Mono',monospace;cursor:pointer;user-select:none}
+th:hover{background:#eee8de;color:#1e5c33}
+td{padding:10px 14px;border-bottom:1px solid #ede9e1;font-size:13px;font-family:'DM Mono',monospace}
+tr:hover td{background:#faf8f3}
+tfoot td{padding:10px 14px;font-weight:700;background:#f5f3ee;border-top:2px solid #d8d3c5;font-size:13px;font-family:'DM Mono',monospace}
+.exp-btn{background:none;border:none;cursor:pointer;font-size:13px;color:#7a7568;padding:2px 5px;border-radius:3px;transition:all .15s}
+.exp-btn:hover{background:#eef7f1;color:#1e5c33}
+.cr td{background:#f9f7f4;padding:7px 14px 7px 40px;font-size:12px;color:#5a5a56;border-bottom:1px dotted #ede9e1}
+
+/* ── BADGES ── */
+.nbadge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.3px}
+.n-yes{background:#fde8e6;color:#a83428;border:1px solid #f0b0a8}
+.n-no{background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8}
+.n-na{background:#f5f3ee;color:#7a7568;border:1px solid #d8d3c5}
+
+/* ── FILING GRID ── */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fc{background:white;border:1px solid #d8d3c5;border-radius:5px;padding:18px;transition:all .18s}
+.fc:hover{border-color:#7aab8c;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.fc.pri{border-color:#d4860a;background:#fefcf8}
+.fc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.fc-st{font-family:'DM Serif Display',serif;font-size:18px;color:#1a1a18}
+.fc-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #ede9e1;font-size:13px}
+.fc-row:last-of-type{border-bottom:none}
+.fc-k{color:#7a7568}.fc-v{font-family:'DM Mono',monospace;font-weight:600;color:#1a1a18}
+.fc-v.g{color:#1e5c33}.fc-v.a{color:#8b5e0a}
+.fc-acts{margin-top:12px;display:flex;gap:8px}
+.fc-btn{flex:1;padding:9px 12px;border-radius:3px;font-size:12px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;border:none;font-family:'DM Sans',sans-serif}
+.fc-dl{background:#f5f3ee;color:#1a1a18;border:1px solid #d8d3c5}
+.fc-dl:hover{background:#eee8de}
+.fc-portal{background:#1e5c33;color:white}
+.fc-portal:hover{background:#165228}
+
+/* ── DOWNLOAD GRID ── */
+.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.dlc{border:1.5px solid #d8d3c5;border-radius:5px;padding:20px;text-align:center;cursor:pointer;transition:all .2s}
+.dlc:hover{border-color:#1e5c33;background:#f0f7f2;transform:translateY(-2px)}
+.dlc-icon{font-size:32px;margin-bottom:10px}
+.dlc-name{font-size:13px;font-weight:700;color:#1a1a18;margin-bottom:4px}
+.dlc-desc{font-size:12px;color:#7a7568;line-height:1.5}
+.dlc-tag{display:inline-block;background:#eef7f1;color:#1e5c33;border:1px solid #a8d8b8;border-radius:2px;padding:2px 8px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;margin-top:8px}
+
+/* ── STATE DOWNLOAD LIST ── */
+.sdl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.sdb{background:white;border:1px solid #d8d3c5;border-radius:4px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .15s;font-family:'DM Sans',sans-serif}
+.sdb:hover{border-color:#1e5c33;background:#f0f7f2}
+.sdb-n{font-size:12.5px;font-weight:700;color:#1a1a18}
+.sdb-s{font-size:11px;color:#7a7568;font-family:'DM Mono',monospace}
+
+/* ── MISC ── */
+.warn-box{background:#fef8ec;border:1px solid #f0d090;border-radius:5px;padding:14px 18px;font-size:13px;color:#4a2800;margin-bottom:16px;line-height:1.6}
+.sample-btn{margin-top:10px;padding:8px 18px;font-size:12.5px;border:1px solid #d8d3c5;border-radius:4px;background:white;color:#7a7568;cursor:pointer;transition:all .15s}
+.sample-btn:hover{background:#f5f3ee;border-color:#7a7568}
+.date-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.date-row label{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7a7568;margin-bottom:5px;font-family:'DM Mono',monospace}
+.date-row input{width:100%;height:38px;border:1px solid #d8d3c5;border-radius:3px;padding:0 12px;font-family:'DM Mono',monospace;font-size:13px;color:#1a1a18;background:#faf8f3;outline:none}
+.date-row input:focus{border-color:#1e5c33}
+.date-note{font-size:12px;color:#9c9890;margin-bottom:14px;font-family:'DM Mono',monospace;font-style:italic}
+
+footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+
+@media(max-width:720px){
+  .sum-grid{grid-template-columns:1fr 1fr}
+  .fg{grid-template-columns:1fr}
+  .dl-grid{grid-template-columns:1fr}
+  .sdl{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
 <body>
 
 <nav class="site-nav">
   <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
   <ul class="nav-links">
-    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
+    <li><a href="/booksmart-tools/tools.html">All Tools</a></li>
     <li><a href="/booksmart-tools/sales-tax-calculator.html">Sales Tax</a></li>
-    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Tools</a></li>
+    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
+    <li><a href="/booksmart-tools/contact.html">Contact</a></li>
+    <li><a href="/booksmart-tools/tools.html" class="nav-cta">Free Tools</a></li>
   </ul>
 </nav>
 
 <div class="hero">
   <div class="platform-badges">
-    <span class="pb amazon">Amazon Seller</span>
-    <span class="pb shopify">Shopify</span>
-    <span class="pb ebay">eBay</span>
-    <span class="pb generic">Any CSV / Excel</span>
+    <span class="pb ebay">🏷️ eBay</span>
+    <span class="pb amz">📦 Amazon</span>
+    <span class="pb sh">🛍️ Shopify</span>
+    <span class="pb gen">📊 Any CSV / Excel</span>
   </div>
   <h1>E-Commerce Sales Tax Report Tool</h1>
-  <p>Upload your sales report from any platform. We'll automatically sort your sales by state and county, calculate the tax owed, and generate a ready-to-file report for each state.</p>
+  <p>Upload your sales report from any platform. No column mapping needed — the tool reads your file automatically, sorts every sale by state and county, and generates a ready-to-file report for each state.</p>
 </div>
 
 <div class="main">
 
-  <!-- STEP INDICATOR -->
-  <div class="steps" id="step-indicator">
-    <div class="step-item active" data-step="1" onclick="goStep(1)">
-      <div class="step-num">1</div><div>Upload Report</div>
-    </div>
-    <div class="step-item locked" data-step="2" onclick="goStep(2)">
-      <div class="step-num">2</div><div>Review by State</div>
-    </div>
-    <div class="step-item locked" data-step="3" onclick="goStep(3)">
-      <div class="step-num">3</div><div>Filing Center</div>
-    </div>
-    <div class="step-item locked" data-step="4" onclick="goStep(4)">
-      <div class="step-num">4</div><div>Download Reports</div>
-    </div>
+  <!-- STEP TABS -->
+  <div class="tabs" id="tabs">
+    <div class="tab on"   id="t1" onclick="goTab(1)">① Upload Report</div>
+    <div class="tab lock" id="t2" onclick="goTab(2)">② State Dashboard</div>
+    <div class="tab lock" id="t3" onclick="goTab(3)">③ Filing Center</div>
+    <div class="tab lock" id="t4" onclick="goTab(4)">④ Download</div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       STEP 1 — UPLOAD
-       ════════════════════════════════════════ -->
-  <div class="panel active" id="panel-1">
-    <div class="upload-section">
-      <div class="upload-title">
-        <span>📁</span> Step 1: Select Your Platform & Upload Report
-      </div>
-      <p class="upload-sub">Choose where your sales came from, then upload your transaction report. The tool auto-detects column names — or you can map them manually.</p>
+  <!-- ═══ PANEL 1 — UPLOAD ═══ -->
+  <div id="p1">
+    <div class="card">
+      <p style="font-size:16px;font-weight:600;color:#1a1a18;margin-bottom:6px">Step 1 — Select your platform and upload your report</p>
+      <p style="font-size:13px;color:#7a7568;margin-bottom:18px;line-height:1.6">Choose where your sales came from, then drop or browse for your file. The tool reads the file automatically — no manual column mapping.</p>
 
-      <!-- Platform selector -->
-      <div class="platform-grid">
-        <div class="plat-btn selected" data-platform="amazon" onclick="selectPlatform(this)">
-          <div class="plat-icon">📦</div>
-          <div class="plat-name">Amazon</div>
-          <div class="plat-sub">Seller Central Tax Report</div>
-        </div>
-        <div class="plat-btn" data-platform="shopify" onclick="selectPlatform(this)">
-          <div class="plat-icon">🛍️</div>
-          <div class="plat-name">Shopify</div>
-          <div class="plat-sub">Taxes Finance Report</div>
-        </div>
-        <div class="plat-btn" data-platform="ebay" onclick="selectPlatform(this)">
-          <div class="plat-icon">🏷️</div>
-          <div class="plat-name">eBay</div>
-          <div class="plat-sub">Transaction Report</div>
-        </div>
-        <div class="plat-btn" data-platform="generic" onclick="selectPlatform(this)">
-          <div class="plat-icon">📊</div>
-          <div class="plat-name">Other / Generic</div>
-          <div class="plat-sub">Any CSV or Excel</div>
-        </div>
+      <div class="plat-row">
+        <button class="pp on" data-p="ebay"    onclick="setPlatform(this)">🏷️ eBay</button>
+        <button class="pp"    data-p="amazon"  onclick="setPlatform(this)">📦 Amazon</button>
+        <button class="pp"    data-p="shopify" onclick="setPlatform(this)">🛍️ Shopify</button>
+        <button class="pp"    data-p="generic" onclick="setPlatform(this)">📊 Other / Generic CSV</button>
       </div>
 
-      <!-- Filing period -->
-      <div class="period-row">
-        <div class="period-field">
-          <label>Filing Period Start</label>
-          <input type="date" id="period-start">
+      <div class="instr" id="instr">
+        <strong>eBay — How to download your report:</strong><br>
+        Go to <strong>Seller Hub → Orders</strong> → click <strong>"Download order reports"</strong> → select <strong>"All orders"</strong> → set your date range → click Download. The file will be named <em>ebay-all-orders-report-YYYY-MM-DD.csv</em>
+      </div>
+
+      <!-- Filing period dates — OPTIONAL -->
+      <div class="date-row">
+        <div>
+          <label for="d-start">Filing Period Start</label>
+          <input type="date" id="d-start">
         </div>
-        <div class="period-field">
-          <label>Filing Period End</label>
-          <input type="date" id="period-end">
-        </div>
-        <div class="period-field">
-          <label>Filing Frequency</label>
-          <select id="filing-freq">
-            <option value="monthly">Monthly</option>
-            <option value="quarterly" selected>Quarterly</option>
-            <option value="annual">Annual</option>
-          </select>
+        <div>
+          <label for="d-end">Filing Period End</label>
+          <input type="date" id="d-end">
         </div>
       </div>
+      <p class="date-note">⬆ Leave both dates blank to process ALL orders in the file regardless of date</p>
 
       <!-- Drop zone -->
-      <div class="drop-zone" id="drop-zone" style="margin-top:20px">
-        <input type="file" id="file-input" accept=".csv,.xlsx,.xls,.txt" onchange="handleFile(this.files[0])">
-        <div class="drop-icon">📂</div>
-        <div class="drop-title">Drop your sales report here</div>
-        <div class="drop-sub">Or click to browse — accepts CSV, Excel (.xlsx), or tab-delimited TXT</div>
-        <div class="accepted-formats">
+      <div class="dz" id="dz">
+        <input type="file" id="fi" accept=".csv,.xlsx,.xls,.txt">
+        <div class="dz-icon">📂</div>
+        <div class="dz-title" id="dz-t">Drop your report file here</div>
+        <p class="dz-sub" id="dz-s">or click to browse · CSV, XLSX, XLS, TXT accepted</p>
+        <div class="fmts">
           <span class="fmt">CSV</span><span class="fmt">XLSX</span><span class="fmt">XLS</span><span class="fmt">TXT</span>
         </div>
       </div>
 
-      <!-- Sample data button -->
-      <div style="margin-top:14px;text-align:center">
-        <button class="btn-secondary" onclick="loadSampleData()" style="font-size:13px">
-          🧪 Load Sample Data (demo without uploading)
-        </button>
+      <div style="text-align:center">
+        <button class="sample-btn" onclick="loadSample()">🧪 Load Sample Data — no file needed</button>
       </div>
 
-      <!-- Column mapper -->
-      <div class="mapper-card" id="mapper-card">
-        <div class="mapper-title">
-          ⚙️ Column Mapping
-          <span style="font-size:12px;font-weight:400;color:#7a7568;font-family:'DM Mono',monospace" id="mapper-status"></span>
-        </div>
-        <div class="mapper-grid">
-          <div class="mapper-field">
-            <label>State / Ship-To State</label>
-            <select id="col-state"></select>
-          </div>
-          <div class="mapper-field">
-            <label>County / City / Jurisdiction</label>
-            <select id="col-county"></select>
-          </div>
-          <div class="mapper-field">
-            <label>ZIP Code (optional)</label>
-            <select id="col-zip"></select>
-          </div>
-          <div class="mapper-field">
-            <label>Gross Sales / Item Price</label>
-            <select id="col-sales"></select>
-          </div>
-          <div class="mapper-field">
-            <label>Tax Collected</label>
-            <select id="col-tax"></select>
-          </div>
-          <div class="mapper-field">
-            <label>Order / Transaction Date</label>
-            <select id="col-date"></select>
-          </div>
-        </div>
-        <div style="margin-top:14px;display:flex;gap:10px">
-          <button class="btn-primary" onclick="processData()">🔄 Process Report →</button>
-          <button class="btn-secondary" onclick="showPreview()">👁 Preview Data</button>
-        </div>
-      </div>
-
-      <!-- Preview table -->
-      <div class="preview-wrap" id="preview-wrap">
-        <div style="padding:10px 14px;background:#f5f3ee;border-bottom:1px solid #d8d3c5;font-size:12px;font-family:'DM Mono',monospace;color:#7a7568">
-          Showing first 10 rows of your data
-        </div>
-        <div style="overflow-x:auto"><table id="preview-table"></table></div>
-      </div>
-
-      <div class="info-box" id="platform-info">
-        <strong>Amazon Seller Central:</strong> Go to Reports → Tax Document Library → Download the Sales Tax Report (.csv). It contains ship-to state, county, item price, and tax collected columns.
-      </div>
-
-      <div class="progress-wrap" id="progress-1">
-        <div class="progress-bar"><div class="progress-fill" id="pf-1" style="width:0%"></div></div>
-        <div class="progress-label" id="pl-1">Processing...</div>
+      <div class="prog-wrap" id="prog">
+        <div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+        <div class="prog-lbl" id="pl">Processing...</div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       STEP 2 — REVIEW BY STATE
-       ════════════════════════════════════════ -->
-  <div class="panel" id="panel-2">
-    <div class="dashboard-header">
-      <div>
-        <div class="dh-title">Sales Tax Dashboard</div>
-        <div class="dh-meta" id="dash-meta"></div>
-      </div>
-      <div class="dh-actions">
-        <button class="btn-secondary" onclick="goStep(1)">← Back</button>
-        <button class="btn-primary" onclick="goStep(3)">Filing Center →</button>
-      </div>
-    </div>
-
-    <!-- Summary cards -->
-    <div class="summary-grid">
-      <div class="sum-card">
-        <div class="sum-label">Total Gross Sales</div>
-        <div class="sum-value" id="s-gross">—</div>
-        <div class="sum-sub" id="s-orders">—</div>
-      </div>
-      <div class="sum-card">
-        <div class="sum-label">Taxable Sales</div>
-        <div class="sum-value" id="s-taxable">—</div>
-        <div class="sum-sub" id="s-states">—</div>
-      </div>
-      <div class="sum-card highlight">
-        <div class="sum-label">Tax Collected</div>
-        <div class="sum-value" id="s-collected">—</div>
-        <div class="sum-sub" id="s-due">—</div>
-      </div>
-      <div class="sum-card">
-        <div class="sum-label">States with Nexus</div>
-        <div class="sum-value" id="s-nexus">—</div>
-        <div class="sum-sub">States requiring filing</div>
-      </div>
-    </div>
-
-    <!-- Filter bar -->
-    <div class="filter-bar">
-      <label>Filter:</label>
-      <select id="filter-state" onchange="renderStateTable()">
-        <option value="">All States</option>
-      </select>
-      <select id="filter-status" onchange="renderStateTable()">
-        <option value="">All Statuses</option>
-        <option value="nexus">Has Nexus (filing required)</option>
-        <option value="ok">Under threshold</option>
-      </select>
-      <input type="text" id="filter-search" placeholder="Search state..." oninput="renderStateTable()" style="width:150px">
-      <label style="margin-left:auto">Sort:</label>
-      <select id="sort-col" onchange="renderStateTable()">
-        <option value="state">State A-Z</option>
-        <option value="sales" selected>Gross Sales ↓</option>
-        <option value="tax">Tax Collected ↓</option>
+  <!-- ═══ PANEL 2 — DASHBOARD ═══ -->
+  <div id="p2" style="display:none">
+    <div class="sum-grid" id="sums"></div>
+    <div class="acts">
+      <button class="btn sm2" onclick="goTab(1)">← Upload New File</button>
+      <button class="btn g sm2" onclick="goTab(3)">Filing Center →</button>
+      <input type="text" id="srch" placeholder="Search state..." oninput="renderTbl()">
+      <select id="srt" onchange="renderTbl()">
+        <option value="sales">Sort: Sales ↓</option>
+        <option value="tax">Sort: Tax ↓</option>
+        <option value="orders">Sort: Orders ↓</option>
+        <option value="state">Sort: State A–Z</option>
       </select>
     </div>
 
-    <!-- State table -->
-    <div class="data-table-wrap">
-      <div class="dt-header">
-        <div class="dt-title">Breakdown by State & County</div>
-        <div class="dt-actions">
-          <button class="dt-btn active" id="view-state" onclick="switchView('state')">By State</button>
-          <button class="dt-btn" id="view-county" onclick="switchView('county')">By County</button>
-        </div>
+    <div class="tbl-card">
+      <div class="tbl-head">
+        <div class="tbl-title">Breakdown by State & County</div>
+        <div class="tbl-meta" id="tm"></div>
       </div>
-      <div style="overflow-x:auto">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th style="width:32px"></th>
-              <th onclick="sortBy('state')">State ↕</th>
-              <th onclick="sortBy('counties')">Counties</th>
-              <th onclick="sortBy('sales')">Gross Sales ↕</th>
-              <th onclick="sortBy('taxable')">Taxable Sales</th>
-              <th onclick="sortBy('rate')">Avg Rate</th>
-              <th onclick="sortBy('collected')">Tax Collected ↕</th>
-              <th onclick="sortBy('due')">Tax Due</th>
-              <th>Nexus Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="state-tbody"></tbody>
-          <tfoot id="state-tfoot"></tfoot>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th style="width:32px"></th>
+            <th onclick="sortC('state')">State</th>
+            <th onclick="sortC('orders')">Orders</th>
+            <th onclick="sortC('sales')">Gross Sales</th>
+            <th onclick="sortC('tax')">Tax Collected</th>
+            <th onclick="sortC('rate')">Eff. Rate</th>
+            <th>Nexus Status</th>
+            <th>State Portal</th>
+          </tr></thead>
+          <tbody id="stb"></tbody>
+          <tfoot id="stf"></tfoot>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       STEP 3 — FILING CENTER
-       ════════════════════════════════════════ -->
-  <div class="panel" id="panel-3">
-    <div class="dashboard-header">
+  <!-- ═══ PANEL 3 — FILING CENTER ═══ -->
+  <div id="p3" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
       <div>
-        <div class="dh-title">Filing Center</div>
-        <div class="dh-meta">State-by-state filing summary with direct portal links</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a18;margin-bottom:3px">Filing Center</div>
+        <div style="font-size:13px;color:#7a7568">State-by-state filing summary with direct portal links</div>
       </div>
-      <div class="dh-actions">
-        <button class="btn-secondary" onclick="goStep(2)">← Dashboard</button>
-        <button class="btn-primary" onclick="goStep(4)">Download All →</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn sm2" onclick="goTab(2)">← Dashboard</button>
+        <button class="btn g sm2" onclick="goTab(4)">Download All →</button>
       </div>
     </div>
-
     <div class="warn-box">
-      ⚠ <strong>Important:</strong> These tools calculate what's owed based on your uploaded data. You are responsible for verifying accuracy and submitting to each state. The "File Now" links open each state's official tax portal — you'll need your state tax account credentials.
+      ⚠️ <strong>Important:</strong> These calculations are based on your uploaded report data. "File Now" opens each state's official tax portal — you need your state tax account credentials to actually submit. Always verify figures before filing.
     </div>
-
-    <div class="filing-grid" id="filing-grid" style="margin-top:20px"></div>
+    <div class="fg" id="fg"></div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       STEP 4 — DOWNLOAD
-       ════════════════════════════════════════ -->
-  <div class="panel" id="panel-4">
-    <div class="download-section">
-      <div class="upload-title"><span>⬇️</span> Download Your Reports</div>
-      <p class="upload-sub">Download your categorized sales tax data in multiple formats. Each state gets its own formatted sheet ready for your tax filing.</p>
-
+  <!-- ═══ PANEL 4 — DOWNLOAD ═══ -->
+  <div id="p4" style="display:none">
+    <div class="card">
+      <p style="font-size:17px;font-weight:600;color:#1a1a18;margin-bottom:6px">Download Your Reports</p>
+      <p style="font-size:13px;color:#7a7568;margin-bottom:2px">Download your categorized sales tax data. The Excel report gives each state its own sheet with full county breakdown.</p>
       <div class="dl-grid">
-        <div class="dl-card" onclick="downloadFull()">
-          <div class="dl-icon">📊</div>
-          <div class="dl-name">Full Report (Excel)</div>
-          <div class="dl-desc">All states on separate sheets, county breakdown, totals, tax collected vs due</div>
-          <div class="dl-tag">XLSX</div>
+        <div class="dlc" onclick="dlExcel()">
+          <div class="dlc-icon">📊</div>
+          <div class="dlc-name">Full Excel Report</div>
+          <div class="dlc-desc">All states on separate sheets, county breakdown, totals, tax collected</div>
+          <div class="dlc-tag">XLSX</div>
         </div>
-        <div class="dl-card" onclick="downloadCSV()">
-          <div class="dl-icon">📄</div>
-          <div class="dl-name">Full Report (CSV)</div>
-          <div class="dl-desc">Single CSV with all transactions categorized by state, county, and tax amount</div>
-          <div class="dl-tag">CSV</div>
+        <div class="dlc" onclick="dlCSV()">
+          <div class="dlc-icon">📄</div>
+          <div class="dlc-name">Full CSV Report</div>
+          <div class="dlc-desc">All transactions categorized by state, county, and tax in one file</div>
+          <div class="dlc-tag">CSV</div>
         </div>
-        <div class="dl-card" onclick="downloadSummary()">
-          <div class="dl-icon">📋</div>
-          <div class="dl-name">Filing Summary</div>
-          <div class="dl-desc">One-page summary: state, gross sales, taxable, tax collected, tax due, portal link</div>
-          <div class="dl-tag">CSV</div>
+        <div class="dlc" onclick="dlSummary()">
+          <div class="dlc-icon">📋</div>
+          <div class="dlc-name">Filing Summary</div>
+          <div class="dlc-desc">One row per state: gross sales, tax collected, tax due, portal link</div>
+          <div class="dlc-tag">CSV</div>
         </div>
       </div>
-
-      <div style="margin-top:28px">
-        <div class="dt-title" style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:16px">Download by Individual State</div>
-        <div id="state-download-list" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"></div>
-      </div>
-
-      <div class="progress-wrap" id="progress-4">
-        <div class="progress-bar"><div class="progress-fill" id="pf-4" style="width:0%"></div></div>
-        <div class="progress-label" id="pl-4">Generating...</div>
+      <div style="margin-top:24px">
+        <div style="font-family:'DM Serif Display',serif;font-size:17px;color:#1a1a18;margin-bottom:12px">Download by Individual State</div>
+        <div class="sdl" id="sdl"></div>
       </div>
     </div>
   </div>
 
-</div><!-- end main -->
+</div><!-- /main -->
 
-<!-- STATE REVIEW MODAL -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-title">State Filing Summary</div>
-      <button class="modal-close" onclick="closeModal()">×</button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
+<!-- RELATED TOOLS — SEO Internal Links -->
+<div style="background:#f6f4ef;border-top:1px solid #d8d3c5;padding:32px 24px;text-align:center">
+  <p style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7a7568;margin-bottom:14px">Related Tools & Guides</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:900px;margin:0 auto">
+    <a href="/booksmart-tools/sales-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600">📊 Sales Tax Return Calculator</a>
+    <a href="/booksmart-tools/meals-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600">📊 Meals Tax Calculator</a>
+    <a href="/booksmart-tools/quarterly-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600">📊 Quarterly Tax Calculator</a>
+    <a href="/booksmart-tools/self-employment-tax.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600">📊 Self-Employment Tax</a>
   </div>
 </div>
 
 <footer>
   BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp;
   <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp;
-  Your data never leaves your browser · For estimation only
-
-<!-- RELATED TOOLS — SEO Internal Links -->
-<div style="background:#f6f4ef;border-top:1px solid #d8d3c5;padding:32px 24px;margin-top:40px;text-align:center">
-  <p style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7a7568;margin-bottom:14px">Related Tools & Guides</p>
-  <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center"><a href="/booksmart-tools/sales-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600;margin:4px">📊 Sales Tax Return Calculator</a><a href="/booksmart-tools/meals-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600;margin:4px">📊 Meals Tax Calculator</a><a href="/booksmart-tools/quarterly-tax-calculator.html" style="display:inline-flex;align-items:center;gap:6px;background:#f0f7f2;border:1px solid #b8ddc8;color:#1e5c33;padding:8px 16px;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600;margin:4px">📊 Quarterly Tax Calculator</a></div>
-</div>
-<!-- END RELATED TOOLS -->
+  <a href="/booksmart-tools/contact.html">Contact</a> &nbsp;|&nbsp;
+  Your data never leaves your browser &nbsp;|&nbsp; For estimation only
 </footer>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  PLATFORM CONFIGURATIONS
+// PLATFORM INSTRUCTIONS
 // ═══════════════════════════════════════════════════════════════
-const PLATFORMS = {
-  amazon: {
-    info: '<strong>Amazon Seller Central:</strong> Reports → Tax Document Library → Sales Tax Report (.csv). Contains ship-to-state, county, item-price, and item-tax columns.',
-    colMap: { state:'ship-to-state', county:'ship-to-city', zip:'ship-to-postal-code', sales:'item-price', tax:'item-tax', date:'purchase-date' }
-  },
-  shopify: {
-    info: '<strong>Shopify:</strong> Analytics → Reports → Finances → Taxes. Export as CSV. Contains Billing/Shipping Province, Tax Name, Taxable Amount, Tax Amount.',
-    colMap: { state:'shipping_province', county:'shipping_city', zip:'shipping_zip', sales:'subtotal_price', tax:'taxes_included', date:'created_at' }
-  },
-  ebay: {
-    info: '<strong>eBay:</strong> Seller Hub → Reports → Transaction Reports. Download as CSV. Contains buyer-state, sales-tax columns.',
-    colMap: { state:'buyer-state', county:'buyer-city', zip:'buyer-zip-code', sales:'gross-amount', tax:'sales-tax-amount', date:'transaction-creation-date' }
-  },
-  generic: {
-    info: '<strong>Generic CSV/Excel:</strong> Any sales report with state, sales amount, and tax columns. Use the column mapper below to match your file\'s columns.',
-    colMap: {}
+const INSTRS = {
+  ebay:    '<strong>eBay:</strong> Seller Hub → Orders → "Download order reports" → "All orders" → set date range → Download. File: <em>ebay-all-orders-report-*.csv</em>',
+  amazon:  '<strong>Amazon Seller Central:</strong> Reports → Tax Document Library → Sales Tax Report → select dates → Download CSV. Contains ship-to-state, item price, and tax collected.',
+  shopify: '<strong>Shopify:</strong> Analytics → Reports → Finances → Taxes → Export → Download CSV. Contains province, taxable amount, and tax amount columns.',
+  generic: '<strong>Generic CSV/Excel:</strong> Any sales file that contains columns for state, sales amount, and tax amount. The tool automatically scans all column names and finds the right ones.'
+};
+
+// ═══════════════════════════════════════════════════════════════
+// 2026 STATE TAX DATA
+// ═══════════════════════════════════════════════════════════════
+const SD = {
+  'AL':{n:'Alabama',r:4.00,thr:250000,p:'https://myalabamataxes.alabama.gov/'},
+  'AK':{n:'Alaska',r:0,thr:100000,p:'',nt:1},
+  'AZ':{n:'Arizona',r:5.60,thr:100000,p:'https://azdor.gov/e-services'},
+  'AR':{n:'Arkansas',r:6.50,thr:100000,p:'https://atap.arkansas.gov/'},
+  'CA':{n:'California',r:7.25,thr:500000,p:'https://onlineservices.cdtfa.ca.gov/'},
+  'CO':{n:'Colorado',r:2.90,thr:100000,p:'https://tax.colorado.gov/'},
+  'CT':{n:'Connecticut',r:6.35,thr:100000,p:'https://portal.ct.gov/DRS'},
+  'DE':{n:'Delaware',r:0,thr:null,p:'',nt:1},
+  'FL':{n:'Florida',r:6.00,thr:100000,p:'https://floridarevenue.com/taxes/'},
+  'GA':{n:'Georgia',r:4.00,thr:100000,p:'https://gtc.dor.ga.gov/'},
+  'HI':{n:'Hawaii',r:4.00,thr:100000,p:'https://tax.hawaii.gov/'},
+  'ID':{n:'Idaho',r:6.00,thr:100000,p:'https://tax.idaho.gov/'},
+  'IL':{n:'Illinois',r:6.25,thr:100000,p:'https://mytax.illinois.gov/'},
+  'IN':{n:'Indiana',r:7.00,thr:100000,p:'https://intime.dor.in.gov/'},
+  'IA':{n:'Iowa',r:6.00,thr:100000,p:'https://tax.iowa.gov/'},
+  'KS':{n:'Kansas',r:6.50,thr:100000,p:'https://www.ksrevenue.gov/'},
+  'KY':{n:'Kentucky',r:6.00,thr:100000,p:'https://kentucky.gov/'},
+  'LA':{n:'Louisiana',r:4.45,thr:100000,p:'https://latap.revenue.louisiana.gov/'},
+  'ME':{n:'Maine',r:5.50,thr:100000,p:'https://maine.gov/revenue/taxes/'},
+  'MD':{n:'Maryland',r:6.00,thr:100000,p:'https://interactive.marylandtaxes.gov/'},
+  'MA':{n:'Massachusetts',r:6.25,thr:100000,p:'https://www.mass.gov/masstaxconnect'},
+  'MI':{n:'Michigan',r:6.00,thr:100000,p:'https://www.michigan.gov/taxes/'},
+  'MN':{n:'Minnesota',r:6.875,thr:100000,p:'https://www.mndor.state.mn.us/'},
+  'MS':{n:'Mississippi',r:7.00,thr:250000,p:'https://tap.dor.ms.gov/'},
+  'MO':{n:'Missouri',r:4.225,thr:100000,p:'https://mytax.mo.gov/'},
+  'MT':{n:'Montana',r:0,thr:null,p:'',nt:1},
+  'NE':{n:'Nebraska',r:5.50,thr:100000,p:'https://revenue.nebraska.gov/'},
+  'NV':{n:'Nevada',r:6.85,thr:100000,p:'https://tax.nv.gov/'},
+  'NH':{n:'New Hampshire',r:0,thr:null,p:'',nt:1},
+  'NJ':{n:'New Jersey',r:6.625,thr:100000,p:'https://www1.state.nj.us/TYTR_BusinessFilings/'},
+  'NM':{n:'New Mexico',r:4.875,thr:100000,p:'https://tap.state.nm.us/'},
+  'NY':{n:'New York',r:4.00,thr:500000,p:'https://www.tax.ny.gov/'},
+  'NC':{n:'North Carolina',r:4.75,thr:100000,p:'https://www.ncdor.gov/'},
+  'ND':{n:'North Dakota',r:5.00,thr:100000,p:'https://www.nd.gov/tax/'},
+  'OH':{n:'Ohio',r:5.75,thr:100000,p:'https://gateway.ohio.gov/'},
+  'OK':{n:'Oklahoma',r:4.50,thr:100000,p:'https://oktap.tax.ok.gov/'},
+  'OR':{n:'Oregon',r:0,thr:null,p:'',nt:1},
+  'PA':{n:'Pennsylvania',r:6.00,thr:100000,p:'https://mypath.pa.gov/'},
+  'RI':{n:'Rhode Island',r:7.00,thr:100000,p:'https://taxportal.ri.gov/'},
+  'SC':{n:'South Carolina',r:6.00,thr:100000,p:'https://mydorway.dor.sc.gov/'},
+  'SD':{n:'South Dakota',r:4.50,thr:100000,p:'https://sd.gov/taxes/'},
+  'TN':{n:'Tennessee',r:7.00,thr:100000,p:'https://tntap.tn.gov/'},
+  'TX':{n:'Texas',r:6.25,thr:500000,p:'https://taxpayersupport.cpa.texas.gov/'},
+  'UT':{n:'Utah',r:4.85,thr:100000,p:'https://tap.utah.gov/'},
+  'VT':{n:'Vermont',r:6.00,thr:100000,p:'https://myvtax.vermont.gov/'},
+  'VA':{n:'Virginia',r:5.30,thr:100000,p:'https://www.tax.virginia.gov/'},
+  'WA':{n:'Washington',r:6.50,thr:100000,p:'https://dor.wa.gov/'},
+  'WV':{n:'West Virginia',r:6.00,thr:100000,p:'https://mytaxes.wvtax.gov/'},
+  'WI':{n:'Wisconsin',r:5.00,thr:100000,p:'https://tap.revenue.wi.gov/'},
+  'WY':{n:'Wyoming',r:4.00,thr:100000,p:'https://excise.wyo.gov/'},
+  'DC':{n:'Washington D.C.',r:6.00,thr:100000,p:'https://mytax.dc.gov/'}
+};
+
+// State lookup map — handles 2-letter codes (upper and lower), full names
+const SM = {};
+Object.entries(SD).forEach(([a,d]) => { SM[a] = a; SM[a.toLowerCase()] = a; SM[d.n.toLowerCase()] = a; });
+const EXTRA = {ca:'CA',california:'CA',ny:'NY','new york':'NY',tx:'TX',texas:'TX',fl:'FL',florida:'FL',
+  va:'VA',virginia:'VA',wa:'WA',washington:'WA',ga:'GA',georgia:'GA',il:'IL',illinois:'IL',
+  pa:'PA',pennsylvania:'PA',oh:'OH',ohio:'OH',nc:'NC','north carolina':'NC',mi:'MI',michigan:'MI',
+  nj:'NJ','new jersey':'NJ',co:'CO',colorado:'CO',tn:'TN',tennessee:'TN',az:'AZ',arizona:'AZ',
+  'in':'IN',indiana:'IN',mo:'MO',missouri:'MO',md:'MD',maryland:'MD',wi:'WI',wisconsin:'WI',
+  mn:'MN',minnesota:'MN',sc:'SC','south carolina':'SC',al:'AL',alabama:'AL',la:'LA',louisiana:'LA',
+  ky:'KY',kentucky:'KY',or:'OR',oregon:'OR',ok:'OK',oklahoma:'OK',ct:'CT',connecticut:'CT',
+  ut:'UT',utah:'UT',ia:'IA',iowa:'IA',nv:'NV',nevada:'NV',ar:'AR',arkansas:'AR',ms:'MS',
+  mississippi:'MS',ks:'KS',kansas:'KS',nm:'NM','new mexico':'NM',ne:'NE',nebraska:'NE',id:'ID',
+  idaho:'ID',wv:'WV','west virginia':'WV',hi:'HI',hawaii:'HI',nh:'NH','new hampshire':'NH',
+  me:'ME',maine:'ME',ri:'RI','rhode island':'RI',mt:'MT',montana:'MT',de:'DE',delaware:'DE',
+  sd:'SD','south dakota':'SD',nd:'ND','north dakota':'ND',ak:'AK',alaska:'AK',wy:'WY',wyoming:'WY',
+  vt:'VT',vermont:'VT',dc:'DC',ma:'MA',massachusetts:'MA'};
+Object.assign(SM, EXTRA);
+
+// ═══════════════════════════════════════════════════════════════
+// GLOBAL STATE
+// ═══════════════════════════════════════════════════════════════
+let plat = 'ebay', data = {}, srtF = 'sales', srtD = -1, unlocked = new Set([1]);
+const f$ = n => '$' + Math.abs(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const fn = n => (+n||0).toLocaleString();
+const pm = v => parseFloat(String(v||0).replace(/[$,\s%]/g,'')) || 0;
+
+// ═══════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════
+function stateOf(raw) {
+  if (!raw) return null;
+  const s = raw.trim();
+  if (SD[s.toUpperCase()]) return s.toUpperCase();
+  return SM[s.toLowerCase()] || SM[s] || null;
+}
+
+function parseDate(v) {
+  if (!v) return null;
+  let s = String(v).trim();
+  // Amazon format: "2024-01-01+00:00" — strip timezone offset
+  s = s.replace(/\+\d{2}:\d{2}$/, '').replace(/T\d{2}:\d{2}:\d{2}.*$/, '');
+  // eBay format: "Jul-06-25"
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,
+                  jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+  const ebay = s.match(/^([A-Za-z]{3})-(\d{2})-(\d{2})$/);
+  if (ebay && months[ebay[1]] !== undefined)
+    return new Date(2000 + parseInt(ebay[3]), months[ebay[1]], parseInt(ebay[2]));
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
+}
+
+function parseLine(line, sep) {
+  const r = []; let c = '', q = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { if (q && line[i+1] === '"') { c += '"'; i++; } else q = !q; }
+    else if (ch === sep && !q) { r.push(c.trim()); c = ''; }
+    else if (ch !== '\r') c += ch;
   }
-};
+  r.push(c.trim());
+  return r;
+}
 
-// ═══════════════════════════════════════════════════════════════
-//  2026 STATE TAX RATES & NEXUS THRESHOLDS & PORTAL URLS
-// ═══════════════════════════════════════════════════════════════
-const STATE_DATA = {
-  'AL':{ name:'Alabama',      rate:4.00, nexusThreshold:250000, nexusOrders:null, portal:'https://myalabamataxes.alabama.gov/', hasCounty:true },
-  'AK':{ name:'Alaska',       rate:0,    nexusThreshold:100000, nexusOrders:200,  portal:'',                                       hasCounty:true,  noState:true },
-  'AZ':{ name:'Arizona',      rate:5.60, nexusThreshold:100000, nexusOrders:null, portal:'https://azdor.gov/e-services',            hasCounty:true },
-  'AR':{ name:'Arkansas',     rate:6.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://atap.arkansas.gov/',             hasCounty:false },
-  'CA':{ name:'California',   rate:7.25, nexusThreshold:500000, nexusOrders:null, portal:'https://onlineservices.cdtfa.ca.gov/',   hasCounty:true },
-  'CO':{ name:'Colorado',     rate:2.90, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.colorado.gov/',              hasCounty:true },
-  'CT':{ name:'Connecticut',  rate:6.35, nexusThreshold:100000, nexusOrders:200,  portal:'https://portal.ct.gov/DRS',              hasCounty:false },
-  'DE':{ name:'Delaware',     rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                       hasCounty:false, noState:true },
-  'FL':{ name:'Florida',      rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://floridarevenue.com/taxes/',      hasCounty:true },
-  'GA':{ name:'Georgia',      rate:4.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://gtc.dor.ga.gov/',               hasCounty:true },
-  'HI':{ name:'Hawaii',       rate:4.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.hawaii.gov/',               hasCounty:false },
-  'ID':{ name:'Idaho',        rate:6.00, nexusThreshold:100000, nexusOrders:null, portal:'https://tax.idaho.gov/',                hasCounty:false },
-  'IL':{ name:'Illinois',     rate:6.25, nexusThreshold:100000, nexusOrders:200,  portal:'https://mytax.illinois.gov/',           hasCounty:true },
-  'IN':{ name:'Indiana',      rate:7.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://intime.dor.in.gov/',            hasCounty:false },
-  'IA':{ name:'Iowa',         rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.iowa.gov/',                 hasCounty:false },
-  'KS':{ name:'Kansas',       rate:6.50, nexusThreshold:100000, nexusOrders:null, portal:'https://www.ksrevenue.gov/',            hasCounty:false },
-  'KY':{ name:'Kentucky',     rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://kentucky.gov/Pages/Activity.aspx?View=KYE', hasCounty:false },
-  'LA':{ name:'Louisiana',    rate:4.45, nexusThreshold:100000, nexusOrders:200,  portal:'https://latap.revenue.louisiana.gov/',  hasCounty:true },
-  'ME':{ name:'Maine',        rate:5.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://maine.gov/revenue/taxes/',      hasCounty:false },
-  'MD':{ name:'Maryland',     rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://interactive.marylandtaxes.gov/',hasCounty:false },
-  'MA':{ name:'Massachusetts',rate:6.25, nexusThreshold:100000, nexusOrders:null, portal:'https://www.mass.gov/masstaxconnect',   hasCounty:false },
-  'MI':{ name:'Michigan',     rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://www.michigan.gov/taxes/',       hasCounty:false },
-  'MN':{ name:'Minnesota',    rate:6.875,nexusThreshold:100000, nexusOrders:200,  portal:'https://www.mndor.state.mn.us/',        hasCounty:false },
-  'MS':{ name:'Mississippi',  rate:7.00, nexusThreshold:250000, nexusOrders:null, portal:'https://tap.dor.ms.gov/',              hasCounty:false },
-  'MO':{ name:'Missouri',     rate:4.225,nexusThreshold:100000, nexusOrders:null, portal:'https://mytax.mo.gov/',                hasCounty:true },
-  'MT':{ name:'Montana',      rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                     hasCounty:false, noState:true },
-  'NE':{ name:'Nebraska',     rate:5.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://revenue.nebraska.gov/',        hasCounty:false },
-  'NV':{ name:'Nevada',       rate:6.85, nexusThreshold:100000, nexusOrders:200,  portal:'https://tax.nv.gov/',                  hasCounty:true },
-  'NH':{ name:'New Hampshire',rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                     hasCounty:false, noState:true },
-  'NJ':{ name:'New Jersey',   rate:6.625,nexusThreshold:100000, nexusOrders:200,  portal:'https://www1.state.nj.us/TYTR_BusinessFilings/',hasCounty:false },
-  'NM':{ name:'New Mexico',   rate:4.875,nexusThreshold:100000, nexusOrders:200,  portal:'https://tap.state.nm.us/',             hasCounty:false },
-  'NY':{ name:'New York',     rate:4.00, nexusThreshold:500000, nexusOrders:100,  portal:'https://www.tax.ny.gov/',              hasCounty:true },
-  'NC':{ name:'North Carolina',rate:4.75,nexusThreshold:100000, nexusOrders:200,  portal:'https://www.ncdor.gov/',               hasCounty:true },
-  'ND':{ name:'North Dakota', rate:5.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://www.nd.gov/tax/',              hasCounty:false },
-  'OH':{ name:'Ohio',         rate:5.75, nexusThreshold:100000, nexusOrders:200,  portal:'https://gateway.ohio.gov/',            hasCounty:true },
-  'OK':{ name:'Oklahoma',     rate:4.50, nexusThreshold:100000, nexusOrders:null, portal:'https://oktap.tax.ok.gov/',            hasCounty:true },
-  'OR':{ name:'Oregon',       rate:0,    nexusThreshold:null,   nexusOrders:null, portal:'',                                     hasCounty:false, noState:true },
-  'PA':{ name:'Pennsylvania', rate:6.00, nexusThreshold:100000, nexusOrders:null, portal:'https://mypath.pa.gov/',               hasCounty:false },
-  'RI':{ name:'Rhode Island', rate:7.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://taxportal.ri.gov/',            hasCounty:false },
-  'SC':{ name:'South Carolina',rate:6.00,nexusThreshold:100000, nexusOrders:200,  portal:'https://mydorway.dor.sc.gov/',         hasCounty:true },
-  'SD':{ name:'South Dakota', rate:4.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://sd.gov/taxes/',                hasCounty:false },
-  'TN':{ name:'Tennessee',    rate:7.00, nexusThreshold:100000, nexusOrders:null, portal:'https://tntap.tn.gov/',                hasCounty:true },
-  'TX':{ name:'Texas',        rate:6.25, nexusThreshold:500000, nexusOrders:null, portal:'https://taxpayersupport.cpa.texas.gov/',hasCounty:true },
-  'UT':{ name:'Utah',         rate:4.85, nexusThreshold:100000, nexusOrders:200,  portal:'https://tap.utah.gov/',                hasCounty:true },
-  'VT':{ name:'Vermont',      rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://myvtax.vermont.gov/',          hasCounty:false },
-  'VA':{ name:'Virginia',     rate:5.30, nexusThreshold:100000, nexusOrders:200,  portal:'https://www.tax.virginia.gov/',        hasCounty:true },
-  'WA':{ name:'Washington',   rate:6.50, nexusThreshold:100000, nexusOrders:200,  portal:'https://dor.wa.gov/',                  hasCounty:true },
-  'WV':{ name:'West Virginia',rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://mytaxes.wvtax.gov/',           hasCounty:false },
-  'WI':{ name:'Wisconsin',    rate:5.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://tap.revenue.wi.gov/',          hasCounty:true },
-  'WY':{ name:'Wyoming',      rate:4.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://excise.wyo.gov/',              hasCounty:true },
-  'DC':{ name:'Wash. D.C.',   rate:6.00, nexusThreshold:100000, nexusOrders:200,  portal:'https://mytax.dc.gov/',               hasCounty:false },
-};
+function findHeaderRow(lines, sep) {
+  // Find first row with 4+ non-empty cells — handles eBay's blank metadata row
+  for (let i = 0; i < Math.min(6, lines.length); i++) {
+    const cells = parseLine(lines[i], sep).filter(c => c.replace(/"/g,'').trim() !== '');
+    if (cells.length > 4) return i;
+  }
+  return 0;
+}
 
-// State abbreviation lookup
-const STATE_ABBR = {};
-Object.entries(STATE_DATA).forEach(([abbr,d])=>{ STATE_ABBR[d.name.toLowerCase()]=abbr; STATE_ABBR[abbr.toLowerCase()]=abbr; });
-// Extra common variations
-const STATE_NAMES_EXTRA = {'ca':'CA','california':'CA','ny':'NY','new york':'NY','tx':'TX','texas':'TX','fl':'FL','florida':'FL','va':'VA','virginia':'VA','wa':'WA','washington':'WA','ga':'GA','georgia':'GA','il':'IL','illinois':'IL','pa':'PA','pennsylvania':'PA','oh':'OH','ohio':'OH','nc':'NC','north carolina':'NC','mi':'MI','michigan':'MI','nj':'NJ','new jersey':'NJ','co':'CO','colorado':'CO','tn':'TN','tennessee':'TN','az':'AZ','arizona':'AZ','in':'IN','indiana':'IN','mo':'MO','missouri':'MO','md':'MD','maryland':'MD','wi':'WI','wisconsin':'WI','mn':'MN','minnesota':'MN','sc':'SC','south carolina':'SC','al':'AL','alabama':'AL','la':'LA','louisiana':'LA','ky':'KY','kentucky':'KY','or':'OR','oregon':'OR','ok':'OK','oklahoma':'OK','ct':'CT','connecticut':'CT','ut':'UT','utah':'UT','ia':'IA','iowa':'IA','nv':'NV','nevada':'NV','ar':'AR','arkansas':'AR','ms':'MS','mississippi':'MS','ks':'KS','kansas':'KS','nm':'NM','new mexico':'NM','ne':'NE','nebraska':'NE','id':'ID','idaho':'ID','wv':'WV','west virginia':'WV','hi':'HI','hawaii':'HI','nh':'NH','new hampshire':'NH','me':'ME','maine':'ME','ri':'RI','rhode island':'RI','mt':'MT','montana':'MT','de':'DE','delaware':'DE','sd':'SD','south dakota':'SD','nd':'ND','north dakota':'ND','ak':'AK','alaska':'AK','wy':'WY','wyoming':'WY','vt':'VT','vermont':'VT','dc':'DC'};
-
-// ═══════════════════════════════════════════════════════════════
-//  GLOBAL STATE
-// ═══════════════════════════════════════════════════════════════
-let currentPlatform = 'amazon';
-let rawRows = [];
-let colHeaders = [];
-let processedData = {}; // { stateAbbr: { name, sales, taxable, collected, counties:{} } }
-let sortField = 'sales';
-let sortDir = -1;
-let currentView = 'state';
-let currentStep = 1;
-let completedSteps = new Set([1]);
-
-// ═══════════════════════════════════════════════════════════════
-//  STEP NAVIGATION
-// ═══════════════════════════════════════════════════════════════
-function goStep(n) {
-  if (n > 1 && !completedSteps.has(n)) return;
-  currentStep = n;
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-'+n).classList.add('active');
-  document.querySelectorAll('.step-item').forEach(s=>{
-    const sn = parseInt(s.dataset.step);
-    s.classList.remove('active','done','locked');
-    if(sn === n) s.classList.add('active');
-    else if(completedSteps.has(sn) && sn !== n) s.classList.add('done');
-    else s.classList.add('locked');
-  });
-  window.scrollTo({top:0,behavior:'smooth'});
+function detectCols(hdrs) {
+  const h = hdrs.map(x => x.toLowerCase().replace(/[\s_\-]/g,''));
+  function find(kws) {
+    // Exact match first
+    for (const kw of kws) {
+      const k = kw.toLowerCase().replace(/[\s_\-]/g,'');
+      const i = h.findIndex(x => x === k);
+      if (i >= 0) return hdrs[i];
+    }
+    // Fuzzy contains match
+    for (const kw of kws) {
+      const k = kw.toLowerCase().replace(/[\s_\-]/g,'');
+      const i = h.findIndex(x => x.includes(k) || k.includes(x));
+      if (i >= 0) return hdrs[i];
+    }
+    return null;
+  }
+  const isAmazon = hdrs.some(h => h === 'Jurisdiction_Level' || h === 'TaxExclusive_Selling_Price' || h === 'Tax_Amount_Collected_By_Amazon' || h === 'Ship_To_State');
+  return {
+    isAmazon,
+    stateCol: find(['Ship_To_State','ShipToState','Tax State','TaxState','Ship To State',
+                    'ShippingState','shipping_province','Buyer State','BuyerState','state','province']),
+    cityCol:  find(['Ship_To_City','ShipToCity','Tax City','TaxCity','Ship To City',
+                    'ShippingCity','shipping_city','Buyer City','BuyerCity','city','locality']),
+    salesCol: find(['TaxExclusive_Selling_Price','Display_Price','Sold For','SoldFor',
+                    'subtotal_price','item-price','item price','gross-amount','GrossAmount',
+                    'sale amount','order total','sales','subtotal','revenue','amount']),
+    taxCol:   find(['Tax_Amount_Collected_By_Amazon','Total_Tax_Collected_By_Amazon',
+                    'eBay Collected Tax','eBayCollectedTax','taxes_included','Tax_Amount',
+                    'item-tax','item tax','tax amount','sales-tax-amount','tax_collected',
+                    'marketplace_tax','Seller Collected Tax','tax','taxes']),
+    dateCol:  find(['Order_Date','OrderDate','Sale Date','SaleDate','purchase-date',
+                    'purchase date','created_at','order_date','order date','date']),
+    jurisdictionCol: find(['Jurisdiction_Level']),
+    transactionCol:  find(['Transaction_Type']),
+    orderIdCol:      find(['Order_ID','Order ID'])
+  };
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  PLATFORM SELECTION
+// UI CONTROLS
 // ═══════════════════════════════════════════════════════════════
-function selectPlatform(el) {
-  document.querySelectorAll('.plat-btn').forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-  currentPlatform = el.dataset.platform;
-  document.getElementById('platform-info').innerHTML = PLATFORMS[currentPlatform].info;
+function setPlatform(el) {
+  document.querySelectorAll('.pp').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  plat = el.dataset.p;
+  document.getElementById('instr').innerHTML = INSTRS[plat];
+}
+
+function goTab(n) {
+  if (!unlocked.has(n)) return;
+  ['p1','p2','p3','p4'].forEach((id,i) => document.getElementById(id).style.display = i+1===n ? 'block' : 'none');
+  for (let i = 1; i <= 4; i++) {
+    const t = document.getElementById('t'+i);
+    t.className = 'tab' + (i===n?' on' : unlocked.has(i)?' done':' lock');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setProg(pct, lbl) {
+  document.getElementById('prog').style.display = 'block';
+  document.getElementById('pf').style.width = pct + '%';
+  document.getElementById('pl').textContent = lbl;
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  FILE HANDLING
+// FILE HANDLING
 // ═══════════════════════════════════════════════════════════════
-const dz = document.getElementById('drop-zone');
-dz.addEventListener('dragover', e=>{e.preventDefault();dz.classList.add('over')});
-dz.addEventListener('dragleave', ()=>dz.classList.remove('over'));
-dz.addEventListener('drop', e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])});
+const dz = document.getElementById('dz');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('over');
+  if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
+});
+document.getElementById('fi').addEventListener('change', e => {
+  if (e.target.files[0]) readFile(e.target.files[0]);
+});
 
-function handleFile(file) {
-  if (!file) return;
+function readFile(file) {
+  // Auto-detect platform from filename
+  const fn = file.name.toLowerCase();
+  const plats = fn.includes('ebay')||fn.includes('all-orders') ? 'ebay' :
+                fn.includes('amazon')||fn.includes('seller')||fn.includes('combinedtax')||fn.includes('customtax')||fn.includes('salestax') ? 'amazon' :
+                fn.includes('shopify') ? 'shopify' : null;
+  if (plats) {
+    plat = plats;
+    document.querySelectorAll('.pp').forEach(b => b.classList.toggle('on', b.dataset.p === plat));
+    document.getElementById('instr').innerHTML = INSTRS[plat];
+  }
+
+  document.getElementById('dz-t').textContent = '✅ ' + file.name;
+  document.getElementById('dz-s').textContent = 'File loaded — processing now...';
+
   const ext = file.name.split('.').pop().toLowerCase();
   const reader = new FileReader();
   if (ext === 'csv' || ext === 'txt') {
     reader.onload = e => parseCSV(e.target.result);
-    reader.readAsText(file);
-  } else if (ext === 'xlsx' || ext === 'xls') {
+    reader.readAsText(file, 'UTF-8');
+  } else {
     reader.onload = e => parseExcel(e.target.result);
     reader.readAsArrayBuffer(file);
-  } else {
-    alert('Please upload a CSV, Excel (.xlsx), or text file.');
   }
-  // Update drop zone
-  dz.querySelector('.drop-title').textContent = '✅ ' + file.name;
-  dz.querySelector('.drop-sub').textContent = 'File loaded — map columns below and click Process';
 }
 
-function parseCSV(text) {
-  const lines = text.split('\n').filter(l=>l.trim());
-  if (!lines.length) return;
-  const sep = lines[0].includes('\t') ? '\t' : ',';
-  const parseRow = row => {
-    const result=[]; let cur='',inQ=false;
-    for(let c of row){ if(c==='"'){inQ=!inQ}else if(c===sep&&!inQ){result.push(cur.trim());cur=''}else cur+=c; }
-    result.push(cur.trim()); return result;
-  };
-  colHeaders = parseRow(lines[0]).map(h=>h.replace(/^"|"$/g,'').trim());
-  rawRows = lines.slice(1).map(l=>parseRow(l));
-  setupMapper();
+// ═══════════════════════════════════════════════════════════════
+// PARSERS
+// ═══════════════════════════════════════════════════════════════
+function parseCSV(raw) {
+  // Strip BOM
+  const text = raw.charCodeAt(0) === 0xFEFF ? raw.slice(1) : raw;
+  const lines = text.split('\n').filter(l => l.trim() !== '');
+  if (lines.length < 2) { alert('File appears to be empty.'); return; }
+
+  const sep = lines.slice(0,5).join('').includes('\t') ? '\t' : ',';
+  const hi = findHeaderRow(lines, sep);
+  const hdrs = parseLine(lines[hi], sep).map(h => h.replace(/^"|"$/g,'').trim());
+
+  // Build row objects — skip rows where first cell is empty (eBay blank template row)
+  const rows = lines.slice(hi + 1)
+    .map(l => parseLine(l, sep).map(c => c.replace(/^"|"$/g,'').trim()))
+    .filter(r => r[0] !== '' && r.filter(c => c !== '').length > 4)
+    .map(r => { const o = {}; hdrs.forEach((h,i) => o[h] = r[i]||''); return o; });
+
+  crunch(hdrs, rows);
 }
 
-function parseExcel(buffer) {
-  const wb = XLSX.read(buffer,{type:'array'});
+function parseExcel(buf) {
+  const wb = XLSX.read(buf, { type:'array' });
   const ws = wb.Sheets[wb.SheetNames[0]];
-  const data = XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
-  if(!data.length) return;
-  colHeaders = data[0].map(h=>String(h).trim());
-  rawRows = data.slice(1).map(r=>colHeaders.map((_,i)=>String(r[i]||'')));
-  setupMapper();
-}
+  const raw = XLSX.utils.sheet_to_json(ws, { header:1, defval:'' });
+  if (!raw.length) { alert('Excel file appears empty.'); return; }
 
-function setupMapper() {
-  ['col-state','col-county','col-zip','col-sales','col-tax','col-date'].forEach(id=>{
-    const sel = document.getElementById(id);
-    sel.innerHTML = '<option value="">-- Not in file --</option>' +
-      colHeaders.map((h,i)=>`<option value="${i}">${h}</option>`).join('');
-  });
-  // Auto-detect columns
-  const platMap = PLATFORMS[currentPlatform].colMap;
-  autoMap('col-state',  platMap.state  || ['state','ship-to-state','shipping_province','buyer-state','ship_state','province','billing_province','customer_state']);
-  autoMap('col-county', platMap.county || ['county','city','ship-to-city','shipping_city','buyer-city','ship_city','jurisdiction']);
-  autoMap('col-zip',    platMap.zip    || ['zip','postal','postcode','ship-to-postal-code','shipping_zip','buyer-zip-code']);
-  autoMap('col-sales',  platMap.sales  || ['item-price','gross','sales','subtotal','revenue','amount','item_price','subtotal_price','gross-amount','sale_amount','order_total']);
-  autoMap('col-tax',    platMap.tax    || ['item-tax','tax','sales-tax','tax_amount','taxes','item_tax','sales-tax-amount','tax_collected','marketplace_tax']);
-  autoMap('col-date',   platMap.date   || ['date','order-date','purchase-date','created_at','transaction-creation-date','order_date','sale_date']);
-
-  document.getElementById('mapper-status').textContent = `${rawRows.length} rows loaded`;
-  document.getElementById('mapper-card').style.display = 'block';
-  document.getElementById('mapper-card').scrollIntoView({behavior:'smooth'});
-}
-
-function autoMap(selectId, keywords) {
-  const sel = document.getElementById(selectId);
-  const kws = Array.isArray(keywords) ? keywords : [keywords];
-  for(const kw of kws) {
-    const idx = colHeaders.findIndex(h=>h.toLowerCase().replace(/[\s_-]/g,'').includes(kw.toLowerCase().replace(/[\s_-]/g,'')));
-    if(idx >= 0) { sel.value = idx; return; }
+  let hi = 0;
+  for (let i = 0; i < Math.min(6, raw.length); i++) {
+    if (raw[i].filter(c => String(c).trim() !== '').length > 4) { hi = i; break; }
   }
-}
+  const hdrs = raw[hi].map(h => String(h).trim());
+  const rows = raw.slice(hi+1)
+    .filter(r => r.filter(c => String(c).trim() !== '').length > 4)
+    .map(r => { const o = {}; hdrs.forEach((h,i) => o[h] = String(r[i]||'').trim()); return o; });
 
-function showPreview() {
-  const wrap = document.getElementById('preview-wrap');
-  wrap.style.display = 'block';
-  const preview = rawRows.slice(0,10);
-  const table = document.getElementById('preview-table');
-  table.innerHTML = '<thead><tr>' + colHeaders.map(h=>`<th>${h}</th>`).join('') + '</tr></thead>' +
-    '<tbody>' + preview.map(r=>'<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>').join('') + '</tbody>';
+  crunch(hdrs, rows);
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  PROCESS DATA
+// CORE DATA PROCESSING
 // ═══════════════════════════════════════════════════════════════
-function processData() {
-  const stateCol  = parseInt(document.getElementById('col-state').value);
-  const countyCol = parseInt(document.getElementById('col-county').value);
-  const salesCol  = parseInt(document.getElementById('col-sales').value);
-  const taxCol    = parseInt(document.getElementById('col-tax').value);
+function crunch(hdrs, rows) {
+  setProg(10, 'Detecting columns...');
+  const cols = detectCols(hdrs);
 
-  if(isNaN(stateCol)||isNaN(salesCol)){ alert('Please map at least State and Sales columns.'); return; }
+  // Last resort: scan columns to find one containing state codes
+  if (!cols.stateCol) {
+    for (const h of hdrs) {
+      const sample = rows.slice(0,20).map(r => r[h]).filter(Boolean);
+      if (sample.filter(v => stateOf(v)).length >= sample.length * 0.5) {
+        cols.stateCol = h; break;
+      }
+    }
+  }
 
-  // Progress
-  const pw = document.getElementById('progress-1');
-  const pf = document.getElementById('pf-1');
-  const pl = document.getElementById('pl-1');
-  pw.style.display='block'; pf.style.width='10%'; pl.textContent='Processing rows...';
+  if (!cols.stateCol) {
+    alert('Could not find a state column.\n\nPlease make sure your file has a column for "state", "ship-to-state", or similar.\n\nColumns found: ' + hdrs.join(', '));
+    document.getElementById('prog').style.display = 'none';
+    return;
+  }
 
-  processedData = {};
-  let errors = 0, processed = 0;
-  const periodStart = document.getElementById('period-start').value;
-  const periodEnd   = document.getElementById('period-end').value;
-  const dateCol     = parseInt(document.getElementById('col-date').value);
+  // Date filter — only applied if BOTH dates are filled in
+  const ps = document.getElementById('d-start').value;
+  const pe = document.getElementById('d-end').value;
+  const ds = ps ? new Date(ps) : null;
+  const de = pe ? new Date(pe) : null;
 
-  for(let i=0; i<rawRows.length; i++) {
-    if(i % 100 === 0) { pf.style.width = Math.round(10+(i/rawRows.length*80))+'%'; pl.textContent = `Processing row ${i+1} of ${rawRows.length}...`; }
-    const row = rawRows[i];
-    let rawState = (row[stateCol]||'').trim();
-    if(!rawState) continue;
+  data = {};
+  let ok = 0, skip = 0;
+  // Amazon deduplication: track which Order IDs we've already counted SALES for
+  // Amazon creates multiple rows per order (State + County + City + District)
+  // We sum ALL tax rows but only count SALES once per order (on the State-level row)
+  const seenOrders = new Set();
+
+  rows.forEach((row, i) => {
+    if (i % 100 === 0) setProg(15 + Math.round(i/rows.length*75), `Processing row ${i+1} of ${rows.length}...`);
 
     // Date filter
-    if(!isNaN(dateCol) && periodStart && periodEnd) {
-      const d = row[dateCol]; if(d) { const dt = new Date(d); if(isNaN(dt)||dt<new Date(periodStart)||dt>new Date(periodEnd)) continue; }
+    if (cols.dateCol && ds && de) {
+      const dt = parseDate(row[cols.dateCol]);
+      if (!dt || dt < ds || dt > de) return;
     }
 
-    // Normalize state
-    const stateAbbr = normalizeState(rawState);
-    if(!stateAbbr) { errors++; continue; }
+    const sa = stateOf(row[cols.stateCol] || '');
+    if (!sa) { skip++; return; }
 
-    const county = !isNaN(countyCol) ? (row[countyCol]||'Unknown').trim() : 'Statewide';
-    const sales  = parseDollar(row[salesCol]);
-    const tax    = !isNaN(taxCol) ? parseDollar(row[taxCol]) : 0;
-    if(isNaN(sales)||sales<=0) continue;
-
-    if(!processedData[stateAbbr]) {
-      processedData[stateAbbr] = { abbr:stateAbbr, name:STATE_DATA[stateAbbr]?.name||stateAbbr, sales:0, taxable:0, collected:0, orders:0, counties:{} };
+    // Amazon: skip REFUND and RETURN transactions
+    if (cols.transactionCol) {
+      const tt = (row[cols.transactionCol] || '').toUpperCase();
+      if (tt === 'REFUND' || tt === 'RETURN') { skip++; return; }
     }
-    processedData[stateAbbr].sales     += sales;
-    processedData[stateAbbr].taxable   += sales;
-    processedData[stateAbbr].collected += tax;
-    processedData[stateAbbr].orders++;
 
-    if(!processedData[stateAbbr].counties[county]) {
-      processedData[stateAbbr].counties[county] = { sales:0, taxable:0, collected:0, orders:0 };
+    const city = (cols.cityCol ? row[cols.cityCol] : '').trim() || 'Statewide';
+    const tax  = cols.taxCol ? pm(row[cols.taxCol]) : 0;
+
+    // Amazon deduplication logic:
+    // - Sales are only counted on STATE-level rows (or once per order for non-Amazon files)
+    // - Tax is summed from ALL jurisdiction rows (each level has its own tax component)
+    let sales = 0;
+    if (cols.isAmazon) {
+      const jLevel   = cols.jurisdictionCol ? (row[cols.jurisdictionCol] || '') : '';
+      const orderId  = cols.orderIdCol      ? (row[cols.orderIdCol] || '')      : '';
+      // Only count sales once — on the State jurisdiction row
+      if (jLevel === 'State' || (jLevel === '' && !seenOrders.has(orderId))) {
+        sales = cols.salesCol ? pm(row[cols.salesCol]) : 0;
+        if (orderId) seenOrders.add(orderId);
+      }
+    } else {
+      sales = cols.salesCol ? pm(row[cols.salesCol]) : 0;
     }
-    processedData[stateAbbr].counties[county].sales     += sales;
-    processedData[stateAbbr].counties[county].taxable   += sales;
-    processedData[stateAbbr].counties[county].collected += tax;
-    processedData[stateAbbr].counties[county].orders++;
-    processed++;
-  }
 
-  pf.style.width='100%'; pl.textContent=`Done — ${processed} transactions processed${errors?' ('+errors+' unrecognized states)':''}.`;
-  setTimeout(()=>{ pw.style.display='none'; }, 2000);
+    if (sales <= 0 && tax <= 0) { skip++; return; }
 
-  if(!Object.keys(processedData).length) { alert('No valid data found. Check your column mapping and try again.'); return; }
+    if (!data[sa]) data[sa] = { abbr:sa, name:SD[sa]?.n||sa, sales:0, tax:0, orders:0, counties:{} };
+    data[sa].sales  += sales;
+    data[sa].tax    += tax;
+    // Count as an order only when sales > 0 (avoids counting each jurisdiction row as an order)
+    if (sales > 0) data[sa].orders += 1;
 
-  completedSteps.add(2); completedSteps.add(3); completedSteps.add(4);
-  renderDashboard();
-  goStep(2);
-}
-
-function normalizeState(raw) {
-  const s = raw.trim().toLowerCase();
-  if(STATE_NAMES_EXTRA[s]) return STATE_NAMES_EXTRA[s];
-  // Try first 2 chars as abbr
-  if(STATE_DATA[raw.toUpperCase().slice(0,2)]) return raw.toUpperCase().slice(0,2);
-  return null;
-}
-
-function parseDollar(v) {
-  if(!v) return 0;
-  return parseFloat(String(v).replace(/[$,\s]/g,''))||0;
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  SAMPLE DATA
-// ═══════════════════════════════════════════════════════════════
-function loadSampleData() {
-  // Generate realistic sample Amazon data
-  const states = ['VA','CA','TX','NY','FL','GA','IL','WA','PA','OH','NC','MI','NJ','AZ','CO','TN','SC','MN','AL','LA'];
-  const counties = {VA:['Fairfax','Arlington','Prince William','Loudoun','Chesterfield'],CA:['Los Angeles','San Francisco','San Diego','Orange','Santa Clara'],TX:['Harris','Dallas','Travis','Bexar','Collin'],NY:['New York','Kings','Queens','Nassau','Suffolk'],FL:['Miami-Dade','Broward','Palm Beach','Orange','Hillsborough'],GA:['Fulton','DeKalb','Cobb','Gwinnett','Clayton'],IL:['Cook','DuPage','Lake','Will','Kane'],WA:['King','Pierce','Snohomish','Spokane','Clark'],PA:['Philadelphia','Allegheny','Montgomery','Bucks','Delaware'],OH:['Cuyahoga','Franklin','Hamilton','Summit','Montgomery']};
-  const defaultCounties = ['County A','County B','County C'];
-  rawRows = [];
-  colHeaders = ['purchase-date','ship-to-state','ship-to-city','item-price','item-tax','order-id'];
-  const now = new Date();
-  for(let i=0;i<500;i++){
-    const state = states[Math.floor(Math.random()*states.length)];
-    const ctys = counties[state]||defaultCounties;
-    const county = ctys[Math.floor(Math.random()*ctys.length)];
-    const sales = (Math.random()*200+10).toFixed(2);
-    const rate = (STATE_DATA[state]?.rate||5)/100;
-    const tax = (sales*rate).toFixed(2);
-    const d = new Date(now.getFullYear(),now.getMonth()-Math.floor(Math.random()*3),Math.floor(Math.random()*28)+1);
-    rawRows.push([d.toISOString().slice(0,10),state,county,sales,tax,'ORDER-'+Math.random().toString(36).slice(2,10).toUpperCase()]);
-  }
-  document.getElementById('period-start').value = new Date(now.getFullYear(),now.getMonth()-2,1).toISOString().slice(0,10);
-  document.getElementById('period-end').value   = new Date(now.getFullYear(),now.getMonth(),0).toISOString().slice(0,10);
-  setupMapper();
-  setTimeout(()=>processData(),400);
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  DASHBOARD
-// ═══════════════════════════════════════════════════════════════
-function renderDashboard() {
-  const states = Object.values(processedData);
-  const totalSales     = states.reduce((s,d)=>s+d.sales,0);
-  const totalTaxable   = states.reduce((s,d)=>s+d.taxable,0);
-  const totalCollected = states.reduce((s,d)=>s+d.collected,0);
-  const totalOrders    = states.reduce((s,d)=>s+d.orders,0);
-  const nexusStates    = states.filter(d=>{ const sd=STATE_DATA[d.abbr]; return sd&&sd.nexusThreshold&&d.sales>=sd.nexusThreshold; }).length;
-
-  document.getElementById('s-gross').textContent     = fmt(totalSales);
-  document.getElementById('s-orders').textContent    = totalOrders.toLocaleString()+' transactions';
-  document.getElementById('s-taxable').textContent   = fmt(totalTaxable);
-  document.getElementById('s-states').textContent    = states.length+' states';
-  document.getElementById('s-collected').textContent = fmt(totalCollected);
-  document.getElementById('s-due').textContent       = 'Tax collected from customers';
-  document.getElementById('s-nexus').textContent     = nexusStates;
-  document.getElementById('dash-meta').textContent   = `Period: ${document.getElementById('period-start').value||'All time'} to ${document.getElementById('period-end').value||'present'} · ${totalOrders.toLocaleString()} transactions`;
-
-  // Populate state filter
-  const fs = document.getElementById('filter-state');
-  fs.innerHTML = '<option value="">All States</option>' + states.sort((a,b)=>a.name.localeCompare(b.name)).map(d=>`<option value="${d.abbr}">${d.name}</option>`).join('');
-
-  renderStateTable();
-  renderFilingCenter();
-  renderDownloadList();
-}
-
-function renderStateTable() {
-  const filterState  = document.getElementById('filter-state').value;
-  const filterStatus = document.getElementById('filter-status').value;
-  const search       = document.getElementById('filter-search').value.toLowerCase();
-  const sortCol      = document.getElementById('sort-col').value;
-
-  let rows = Object.values(processedData);
-  if(filterState)  rows = rows.filter(d=>d.abbr===filterState);
-  if(search)       rows = rows.filter(d=>d.name.toLowerCase().includes(search)||d.abbr.toLowerCase().includes(search));
-  if(filterStatus==='nexus') rows = rows.filter(d=>{ const sd=STATE_DATA[d.abbr]; return sd&&sd.nexusThreshold&&d.sales>=sd.nexusThreshold; });
-  if(filterStatus==='ok')    rows = rows.filter(d=>{ const sd=STATE_DATA[d.abbr]; return !sd||!sd.nexusThreshold||d.sales<sd.nexusThreshold; });
-
-  rows.sort((a,b)=>{
-    let av=0,bv=0;
-    if(sortCol==='state') return sortDir*a.name.localeCompare(b.name);
-    if(sortCol==='sales') { av=a.sales; bv=b.sales; }
-    if(sortCol==='tax')   { av=a.collected; bv=b.collected; }
-    return sortDir*(bv-av);
+    if (!data[sa].counties[city]) data[sa].counties[city] = { sales:0, tax:0, orders:0 };
+    data[sa].counties[city].sales  += sales;
+    data[sa].counties[city].tax    += tax;
+    if (sales > 0) data[sa].counties[city].orders += 1;
+    ok++;
   });
 
-  const tbody = document.getElementById('state-tbody');
-  tbody.innerHTML = rows.map((d,idx)=>{
-    const sd      = STATE_DATA[d.abbr];
-    const hasNexus = sd&&sd.nexusThreshold&&d.sales>=sd.nexusThreshold;
-    const noTax    = sd?.noState;
-    const avgRate  = d.taxable>0 ? ((d.collected/d.taxable)*100).toFixed(2) : '0.00';
-    const taxDue   = d.taxable * (sd?.rate||0) / 100;
-    const countyCount = Object.keys(d.counties).length;
-    const nexusPct = sd?.nexusThreshold ? Math.min(100,Math.round(d.sales/sd.nexusThreshold*100)) : 0;
-    let statusBadge = noTax
-      ? '<span class="status-badge status-ok"><span class="nexus-dot"></span>No state tax</span>'
-      : hasNexus
-        ? '<span class="status-badge status-nexus"><span class="nexus-dot"></span>Filing required</span>'
-        : `<span class="status-badge status-due"><span class="nexus-dot"></span>${nexusPct}% of threshold</span>`;
+  setProg(100, `Done! Processed ${Object.values(data).reduce((s,d)=>s+d.orders,0)} orders across ${Object.keys(data).length} states.`);
+
+  if (!Object.keys(data).length) {
+    setTimeout(() => {
+      let msg = `No data extracted.\n\nRows found: ${rows.length}\nState column: "${cols.stateCol}"\nSales column: "${cols.salesCol || 'not found'}"\nTax column: "${cols.taxCol || 'not found'}"`;
+      if (ds || de) msg += '\n\nTip: You have date filters set. Try clearing both date fields to process all orders.';
+      alert(msg);
+      document.getElementById('prog').style.display = 'none';
+    }, 400);
+    return;
+  }
+
+  setTimeout(() => {
+    document.getElementById('prog').style.display = 'none';
+    buildDash();
+    unlocked = new Set([1,2,3,4]);
+    goTab(2);
+  }, 600);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════════════
+function buildDash() {
+  const vs = Object.values(data);
+  const tS = vs.reduce((s,d) => s+d.sales, 0);
+  const tT = vs.reduce((s,d) => s+d.tax,   0);
+  const tO = vs.reduce((s,d) => s+d.orders, 0);
+  const nx = vs.filter(d => SD[d.abbr]?.thr && d.sales >= SD[d.abbr].thr).length;
+  document.getElementById('sums').innerHTML = `
+    <div class="sm"><div class="sm-lbl">Total Gross Sales</div><div class="sm-val">${f$(tS)}</div><div class="sm-sub">${fn(tO)} total orders</div></div>
+    <div class="sm"><div class="sm-lbl">Tax Collected</div><div class="sm-val">${f$(tT)}</div><div class="sm-sub">Collected from customers</div></div>
+    <div class="sm hl"><div class="sm-lbl">States Found</div><div class="sm-val">${vs.length}</div><div class="sm-sub">${nx} require filing</div></div>
+    <div class="sm"><div class="sm-lbl">Effective Rate</div><div class="sm-val">${tS>0?((tT/tS)*100).toFixed(1):'0.0'}%</div><div class="sm-sub">Overall average</div></div>`;
+  renderTbl();
+  buildFiling();
+  buildDL();
+}
+
+function renderTbl() {
+  const q   = (document.getElementById('srch')?.value || '').toLowerCase();
+  const sf  = document.getElementById('srt')?.value || 'sales';
+
+  let rows = Object.values(data).filter(d =>
+    !q || d.name.toLowerCase().includes(q) || d.abbr.toLowerCase().includes(q)
+  );
+
+  rows.sort((a,b) => {
+    const av = sf==='state'?a.name : sf==='orders'?a.orders : sf==='tax'?a.tax : sf==='rate'?(a.sales?a.tax/a.sales:0) : a.sales;
+    const bv = sf==='state'?b.name : sf==='orders'?b.orders : sf==='tax'?b.tax : sf==='rate'?(b.sales?b.tax/b.sales:0) : b.sales;
+    return sf==='state' ? srtD*av.localeCompare(bv) : srtD*(bv-av);
+  });
+
+  document.getElementById('tm').textContent = rows.length + ' states';
+
+  document.getElementById('stb').innerHTML = rows.map(d => {
+    const sd  = SD[d.abbr];
+    const nx  = sd?.thr && d.sales >= sd.thr;
+    const nt  = sd?.nt;
+    const pct = sd?.thr ? Math.min(100, Math.round(d.sales/sd.thr*100)) : 0;
+    const rate = d.sales > 0 ? ((d.tax/d.sales)*100).toFixed(1) : '0.0';
+    const badge = nt
+      ? `<span class="nbadge n-na">No state tax</span>`
+      : nx
+        ? `<span class="nbadge n-yes">⚠ File Required</span>`
+        : `<span class="nbadge n-no">${pct}% of threshold</span>`;
+
+    const county_rows = Object.entries(d.counties)
+      .sort((a,b) => b[1].sales-a[1].sales)
+      .map(([city,cd]) => `<tr class="cr">
+        <td>↳ ${city}</td><td>${cd.orders}</td>
+        <td>${f$(cd.sales)}</td><td style="color:#1e5c33">${f$(cd.tax)}</td>
+        <td></td><td></td><td></td>
+      </tr>`).join('');
+
     return `<tr>
-      <td><button class="expand-btn" id="expand-${d.abbr}" onclick="toggleCounty('${d.abbr}')">▶</button></td>
+      <td><button class="exp-btn" onclick="tog('cb-${d.abbr}')">▶</button></td>
       <td><strong>${d.name}</strong> <span style="color:#9a9890;font-size:11px">${d.abbr}</span></td>
-      <td>${countyCount}</td>
-      <td>${fmt(d.sales)}</td>
-      <td>${fmt(d.taxable)}</td>
-      <td>${avgRate}%</td>
-      <td style="color:#1e5c33;font-weight:700">${fmt(d.collected)}</td>
-      <td>${noTax?'N/A':fmt(taxDue)}</td>
-      <td>${statusBadge}<div class="nexus-bar"><div class="nexus-fill" style="width:${nexusPct}%;background:${hasNexus?'#f08070':'#7dd4a0'}"></div></div></td>
-      <td><button class="dt-btn" onclick="openStateModal('${d.abbr}')" style="font-size:11px">Review →</button></td>
+      <td>${fn(d.orders)}</td>
+      <td style="font-weight:700">${f$(d.sales)}</td>
+      <td style="color:#1e5c33;font-weight:700">${f$(d.tax)}</td>
+      <td>${rate}%</td>
+      <td>${badge}</td>
+      <td>${sd?.p ? `<a href="${sd.p}" target="_blank" rel="noopener" style="color:#1e5c33;font-size:11px;font-family:'DM Mono',monospace">File →</a>` : '—'}</td>
     </tr>
-    <tr id="county-rows-${d.abbr}" style="display:none">
-      <td colspan="10" style="padding:0">
-        <table style="width:100%;border-collapse:collapse">
-          ${Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).map(([county,cd])=>`
-          <tr class="county-row">
-            <td colspan="3">↳ ${county}</td>
-            <td>${fmt(cd.sales)}</td>
-            <td>${fmt(cd.taxable)}</td>
-            <td>${cd.taxable>0?((cd.collected/cd.taxable)*100).toFixed(2)+'%':'—'}</td>
-            <td style="color:#1e5c33;font-weight:600">${fmt(cd.collected)}</td>
-            <td colspan="3"></td>
-          </tr>`).join('')}
-        </table>
+    <tr id="cb-${d.abbr}" style="display:none">
+      <td colspan="8" style="padding:0">
+        <table style="width:100%;border-collapse:collapse">${county_rows}</table>
       </td>
     </tr>`;
   }).join('');
 
-  // Footer totals
-  const totSales     = rows.reduce((s,d)=>s+d.sales,0);
-  const totTaxable   = rows.reduce((s,d)=>s+d.taxable,0);
-  const totCollected = rows.reduce((s,d)=>s+d.collected,0);
-  const totDue       = rows.reduce((s,d)=>{ const sd=STATE_DATA[d.abbr]; return s+d.taxable*(sd?.rate||0)/100; },0);
-  document.getElementById('state-tfoot').innerHTML = `<tr>
-    <td></td><td>TOTAL (${rows.length} states)</td><td></td>
-    <td>${fmt(totSales)}</td><td>${fmt(totTaxable)}</td><td></td>
-    <td style="color:#1e5c33">${fmt(totCollected)}</td>
-    <td>${fmt(totDue)}</td><td colspan="2"></td>
-  </tr>`;
+  const tS = rows.reduce((s,d)=>s+d.sales,0);
+  const tT = rows.reduce((s,d)=>s+d.tax,0);
+  const tO = rows.reduce((s,d)=>s+d.orders,0);
+  document.getElementById('stf').innerHTML = `
+    <tr><td></td><td>TOTAL (${rows.length} states)</td><td>${fn(tO)}</td>
+    <td>${f$(tS)}</td><td style="color:#1e5c33">${f$(tT)}</td>
+    <td></td><td></td><td></td></tr>`;
 }
 
-function toggleCounty(abbr) {
-  const row = document.getElementById('county-rows-'+abbr);
-  const btn = document.getElementById('expand-'+abbr);
-  if(row.style.display==='none'){row.style.display='table-row';btn.classList.add('open');}
-  else{row.style.display='none';btn.classList.remove('open');}
+function tog(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = el.style.display==='none' ? 'table-row' : 'none';
 }
 
-function sortBy(field) {
-  if(sortField===field) sortDir*=-1; else { sortField=field; sortDir=-1; }
-  document.getElementById('sort-col').value = field==='state'?'state':field==='collected'?'tax':'sales';
-  renderStateTable();
-}
-
-function switchView(v) {
-  currentView = v;
-  document.getElementById('view-state').classList.toggle('active', v==='state');
-  document.getElementById('view-county').classList.toggle('active', v==='county');
+function sortC(f) {
+  if (srtF === f) srtD *= -1; else { srtF = f; srtD = -1; }
+  document.getElementById('srt').value = f==='state'?'state':f==='orders'?'orders':f==='tax'?'tax':'sales';
+  renderTbl();
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  STATE MODAL
+// FILING CENTER
 // ═══════════════════════════════════════════════════════════════
-function openStateModal(abbr) {
-  const d  = processedData[abbr];
-  const sd = STATE_DATA[abbr];
-  if(!d||!sd) return;
-  const taxDue = d.taxable*(sd.rate||0)/100;
-  const hasNexus = sd.nexusThreshold&&d.sales>=sd.nexusThreshold;
-  const period = `${document.getElementById('period-start').value||'—'} to ${document.getElementById('period-end').value||'—'}`;
-
-  document.getElementById('modal-title').textContent = sd.name+' — Filing Summary';
-  document.getElementById('modal-body').innerHTML = `
-    <div class="modal-section">
-      <h4>Filing Period</h4>
-      <div class="filing-line"><span class="fl-key">Period</span><span class="fl-val">${period}</span></div>
-      <div class="filing-line"><span class="fl-key">Filing Frequency</span><span class="fl-val">${document.getElementById('filing-freq').value}</span></div>
-      <div class="filing-line"><span class="fl-key">Nexus Status</span><span class="fl-val">${hasNexus?'⚠ Filing Required':'Below Threshold'}</span></div>
-    </div>
-    <div class="modal-section">
-      <h4>Sales Summary</h4>
-      <div class="filing-line"><span class="fl-key">Gross Sales</span><span class="fl-val">${fmt(d.sales)}</span></div>
-      <div class="filing-line"><span class="fl-key">Taxable Sales</span><span class="fl-val">${fmt(d.taxable)}</span></div>
-      <div class="filing-line"><span class="fl-key">Exempt Sales</span><span class="fl-val">$0.00</span></div>
-      <div class="filing-line"><span class="fl-key">State Tax Rate</span><span class="fl-val">${sd.rate}%</span></div>
-      <div class="filing-line"><span class="fl-key">Tax Collected from Customers</span><span class="fl-val" style="color:#1e5c33">${fmt(d.collected)}</span></div>
-      <div class="filing-line"><span class="fl-key">Tax Due (calculated)</span><span class="fl-val">${fmt(taxDue)}</span></div>
-    </div>
-    <div class="modal-section">
-      <h4>County / Jurisdiction Breakdown</h4>
-      ${Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).map(([county,cd])=>`
-        <div class="filing-line">
-          <span class="fl-key">${county}</span>
-          <span class="fl-val">${fmt(cd.sales)} sales · ${fmt(cd.collected)} tax</span>
-        </div>`).join('')}
-    </div>
-    <div class="modal-section">
-      <h4>How to File</h4>
-      <div class="step-instructions">
-        <ol>
-          <li>Log in to the ${sd.name} tax portal with your state tax account</li>
-          <li>Navigate to Sales & Use Tax → File Return</li>
-          <li>Enter the filing period: <strong>${period}</strong></li>
-          <li>Total Taxable Sales: <strong>${fmt(d.taxable)}</strong></li>
-          <li>Tax Due: <strong>${fmt(taxDue)}</strong> (verify against your records)</li>
-          <li>Enter county breakdowns if required by ${sd.name}</li>
-          <li>Submit and pay any balance owed</li>
-        </ol>
-      </div>
-      ${sd.portal?`<a href="${sd.portal}" target="_blank" rel="noopener" class="portal-link">🔗 Open ${sd.name} Tax Portal ↗</a>`:'<p style="color:#7a7568;margin-top:12px;font-size:13px">No state sales tax portal — this state has no sales tax.</p>'}
-      <p class="disclaimer">Always verify these figures against your own records before filing. These calculations are estimates based on your uploaded data.</p>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:16px">
-      <button class="btn-primary" onclick="downloadStatePDF('${abbr}')" style="font-size:13px;padding:10px 18px">⬇ Download ${abbr} Report</button>
-      <button class="btn-secondary" onclick="closeModal()" style="font-size:13px;padding:10px 18px">Close</button>
-    </div>`;
-
-  document.getElementById('modal-overlay').classList.add('open');
-}
-
-function closeModal(e) {
-  if(!e||e.target===document.getElementById('modal-overlay'))
-    document.getElementById('modal-overlay').classList.remove('open');
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  FILING CENTER
-// ═══════════════════════════════════════════════════════════════
-function renderFilingCenter() {
-  const states = Object.values(processedData).sort((a,b)=>{
-    const ah = STATE_DATA[a.abbr]?.nexusThreshold&&a.sales>=STATE_DATA[a.abbr]?.nexusThreshold;
-    const bh = STATE_DATA[b.abbr]?.nexusThreshold&&b.sales>=STATE_DATA[b.abbr]?.nexusThreshold;
-    if(ah&&!bh) return -1; if(!ah&&bh) return 1; return b.sales-a.sales;
+function buildFiling() {
+  const vs = Object.values(data).sort((a,b) => {
+    const ah = SD[a.abbr]?.thr && a.sales >= SD[a.abbr].thr;
+    const bh = SD[b.abbr]?.thr && b.sales >= SD[b.abbr].thr;
+    return ah&&!bh ? -1 : !ah&&bh ? 1 : b.sales-a.sales;
   });
 
-  document.getElementById('filing-grid').innerHTML = states.map(d=>{
-    const sd = STATE_DATA[d.abbr];
-    const hasNexus = sd?.nexusThreshold&&d.sales>=sd.nexusThreshold;
-    const noTax    = sd?.noState;
-    const taxDue   = d.taxable*(sd?.rate||0)/100;
-    const countyEntries = Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).slice(0,5);
-    return `
-    <div class="filing-card ${hasNexus?'priority':''}">
-      <div class="fc-header">
-        <div class="fc-state">${d.name} <span style="font-size:14px;color:#7a7568">(${d.abbr})</span></div>
-        <span class="fc-badge ${noTax?'fc-ok':hasNexus?'fc-nexus':'fc-due'}">${noTax?'No State Tax':hasNexus?'⚠ File Required':'Below Threshold'}</span>
+  document.getElementById('fg').innerHTML = vs.map(d => {
+    const sd  = SD[d.abbr];
+    const nx  = sd?.thr && d.sales >= sd.thr;
+    const due = d.sales * (sd?.r||0) / 100;
+    const cs  = Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).slice(0,4);
+
+    return `<div class="fc${nx?' pri':''}">
+      <div class="fc-head">
+        <div class="fc-st">${d.name} <span style="font-size:12px;color:#7a7568">(${d.abbr})</span></div>
+        <span class="nbadge ${sd?.nt?'n-na':nx?'n-yes':'n-no'}">${sd?.nt?'No Tax':nx?'⚠ File Required':'Below Threshold'}</span>
       </div>
-      <div class="fc-row"><span class="fc-key">Gross Sales</span><span class="fc-val">${fmt(d.sales)}</span></div>
-      <div class="fc-row"><span class="fc-key">Tax Collected</span><span class="fc-val green">${fmt(d.collected)}</span></div>
-      <div class="fc-row"><span class="fc-key">Tax Due (est.)</span><span class="fc-val ${hasNexus?'amber':''}">${noTax?'N/A':fmt(taxDue)}</span></div>
-      <div class="fc-row"><span class="fc-key">Nexus Threshold</span><span class="fc-val">${sd?.nexusThreshold?'$'+sd.nexusThreshold.toLocaleString():'N/A'}</span></div>
-      ${countyEntries.length>1?`
-      <div class="county-breakdown">
-        <div class="cb-title">Top Counties / Jurisdictions</div>
-        ${countyEntries.map(([county,cd])=>`<div class="cb-row"><span>${county}</span><span>${fmt(cd.sales)} · ${fmt(cd.collected)} tax</span></div>`).join('')}
-      </div>`:''}
-      <div class="fc-actions">
-        <button class="fc-btn download" onclick="downloadStatePDF('${d.abbr}')">⬇ Download</button>
-        <button class="fc-btn review" onclick="openStateModal('${d.abbr}')">Review</button>
-        ${sd?.portal?`<a href="${sd.portal}" target="_blank" class="fc-btn portal">File Now ↗</a>`:'<span class="fc-btn download" style="opacity:.4;cursor:default">No Portal</span>'}
+      <div class="fc-row"><span class="fc-k">Gross Sales</span><span class="fc-v">${f$(d.sales)}</span></div>
+      <div class="fc-row"><span class="fc-k">Tax Collected</span><span class="fc-v g">${f$(d.tax)}</span></div>
+      <div class="fc-row"><span class="fc-k">Tax Due (est.)</span><span class="fc-v${nx?' a':''}">${sd?.nt?'N/A':f$(due)}</span></div>
+      <div class="fc-row"><span class="fc-k">Orders</span><span class="fc-v">${fn(d.orders)}</span></div>
+      <div class="fc-row"><span class="fc-k">Nexus Threshold</span><span class="fc-v">${sd?.thr?'$'+sd.thr.toLocaleString():'N/A'}</span></div>
+      ${cs.length>1?`<div style="margin-top:10px;padding:10px;background:#f9f7f4;border-radius:4px;font-size:11.5px;font-family:'DM Mono',monospace">${cs.map(([c,cd])=>`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted #e8e4db"><span>${c}</span><span style="color:#1e5c33">${f$(cd.tax)}</span></div>`).join('')}</div>`:''}
+      <div class="fc-acts">
+        <button class="fc-btn fc-dl" onclick="dlState('${d.abbr}')">⬇ Download</button>
+        ${sd?.p ? `<a href="${sd.p}" target="_blank" rel="noopener" class="fc-btn fc-portal">File Now ↗</a>` : '<span class="fc-btn fc-dl" style="opacity:.4;cursor:default">No Portal</span>'}
       </div>
     </div>`;
   }).join('');
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  DOWNLOADS
+// DOWNLOADS
 // ═══════════════════════════════════════════════════════════════
-function renderDownloadList() {
-  const list = document.getElementById('state-download-list');
-  list.innerHTML = Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).map(d=>`
-    <button onclick="downloadStatePDF('${d.abbr}')" style="text-align:left;background:white;border:1px solid #d8d3c5;border-radius:4px;padding:10px 12px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif" onmouseover="this.style.borderColor='#1e5c33'" onmouseout="this.style.borderColor='#d8d3c5'">
-      <div style="font-weight:700;font-size:13px">${d.name}</div>
-      <div style="font-size:11px;color:#7a7568;font-family:'DM Mono',monospace">${fmt(d.sales)} · ${fmt(d.collected)} tax</div>
+function buildDL() {
+  document.getElementById('sdl').innerHTML = Object.values(data)
+    .sort((a,b) => a.name.localeCompare(b.name))
+    .map(d => `<button class="sdb" onclick="dlState('${d.abbr}')">
+      <div class="sdb-n">${d.name}</div>
+      <div class="sdb-s">${f$(d.sales)} · ${f$(d.tax)} tax</div>
     </button>`).join('');
 }
 
-function downloadStatePDF(abbr) {
-  const d  = processedData[abbr];
-  const sd = STATE_DATA[abbr];
-  if(!d) return;
-  const taxDue = d.taxable*(sd?.rate||0)/100;
-  const period = `${document.getElementById('period-start').value||'All'} to ${document.getElementById('period-end').value||'present'}`;
-
-  // Build CSV for this state
-  let csv = `BookSmartTools — Sales Tax Report\n`;
-  csv += `State: ${d.name} (${abbr})\n`;
-  csv += `Period: ${period}\n`;
-  csv += `Generated: ${new Date().toLocaleDateString()}\n\n`;
-  csv += `SUMMARY\n`;
-  csv += `Gross Sales,${d.sales.toFixed(2)}\n`;
-  csv += `Taxable Sales,${d.taxable.toFixed(2)}\n`;
-  csv += `State Tax Rate,${sd?.rate||0}%\n`;
-  csv += `Tax Collected from Customers,${d.collected.toFixed(2)}\n`;
-  csv += `Tax Due (calculated),${taxDue.toFixed(2)}\n\n`;
-  csv += `COUNTY / JURISDICTION BREAKDOWN\n`;
-  csv += `County/City,Gross Sales,Taxable Sales,Tax Collected,Tax Rate\n`;
-  Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([county,cd])=>{
-    const rate = cd.taxable>0?(cd.collected/cd.taxable*100).toFixed(2):0;
-    csv += `"${county}",${cd.sales.toFixed(2)},${cd.taxable.toFixed(2)},${cd.collected.toFixed(2)},${rate}%\n`;
+function dlState(abbr) {
+  const d  = data[abbr]; if (!d) return;
+  const sd = SD[abbr];
+  const due = d.sales * (sd?.r||0) / 100;
+  const period = [document.getElementById('d-start').value||'All', document.getElementById('d-end').value||'present'].join(' to ');
+  let csv = `BookSmartTools — Sales Tax Report\nState: ${d.name} (${abbr})\nPeriod: ${period}\nGenerated: ${new Date().toLocaleDateString()}\n\n`;
+  csv += `SUMMARY\nGross Sales,$${d.sales.toFixed(2)}\nTax Collected,$${d.tax.toFixed(2)}\nState Tax Rate,${sd?.r||0}%\nTax Due (est.),$${due.toFixed(2)}\nOrders,${d.orders}\n\n`;
+  csv += `CITY / JURISDICTION BREAKDOWN\nCity,Orders,Gross Sales,Tax Collected\n`;
+  Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([city,cd]) => {
+    csv += `"${city}",${cd.orders},${cd.sales.toFixed(2)},${cd.tax.toFixed(2)}\n`;
   });
-  csv += `\nState Portal: ${sd?.portal||'N/A'}\n`;
-  csv += `\nIMPORTANT: These figures are estimates based on uploaded data. Verify before filing.`;
-
-  triggerDownload(csv, `${abbr}-sales-tax-report.csv`, 'text/csv');
+  csv += `\nState Portal: ${sd?.p||'N/A'}\n\nFor estimation purposes only. Verify before filing.`;
+  dl(csv, `${abbr}-sales-tax-report.csv`, 'text/csv');
 }
 
-function downloadFull() {
-  if(!Object.keys(processedData).length){ alert('No data to download.'); return; }
-  const wb = XLSX.utils.book_new();
-
-  // Summary sheet
-  const summaryData = [
-    ['BookSmartTools — E-Commerce Sales Tax Report'],
-    ['Period:', `${document.getElementById('period-start').value} to ${document.getElementById('period-end').value}`],
-    ['Generated:', new Date().toLocaleDateString()],
-    [],
-    ['State','Abbr','Gross Sales','Taxable Sales','Tax Rate','Tax Collected','Tax Due (est.)','Nexus Threshold','Status','Portal']
-  ];
-  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
-    const sd=STATE_DATA[d.abbr];
-    const hasNexus=sd?.nexusThreshold&&d.sales>=sd.nexusThreshold;
-    summaryData.push([
-      d.name, d.abbr, d.sales.toFixed(2), d.taxable.toFixed(2),
-      `${sd?.rate||0}%`, d.collected.toFixed(2), (d.taxable*(sd?.rate||0)/100).toFixed(2),
-      sd?.nexusThreshold?'$'+sd.nexusThreshold.toLocaleString():'N/A',
-      sd?.noState?'No Tax':hasNexus?'Filing Required':'Below Threshold',
-      sd?.portal||'N/A'
-    ]);
-  });
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(summaryData), 'Summary');
-
-  // Individual state sheets
-  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
-    const sd=STATE_DATA[d.abbr];
-    const sheetData = [
-      [d.name+' Sales Tax Report'],
-      ['Period:', `${document.getElementById('period-start').value} to ${document.getElementById('period-end').value}`],
-      [],
-      ['SUMMARY'],
-      ['Gross Sales', d.sales.toFixed(2)],
-      ['Taxable Sales', d.taxable.toFixed(2)],
-      ['State Tax Rate', `${sd?.rate||0}%`],
-      ['Tax Collected', d.collected.toFixed(2)],
-      ['Tax Due (est.)', (d.taxable*(sd?.rate||0)/100).toFixed(2)],
-      [],
-      ['COUNTY BREAKDOWN'],
-      ['County/City','Gross Sales','Taxable Sales','Tax Collected','Effective Rate']
-    ];
-    Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([county,cd])=>{
-      sheetData.push([county, cd.sales.toFixed(2), cd.taxable.toFixed(2), cd.collected.toFixed(2), cd.taxable>0?((cd.collected/cd.taxable)*100).toFixed(2)+'%':'0%']);
+function dlCSV() {
+  let c = 'State,Abbr,City,Orders,Gross Sales,Tax Collected\n';
+  Object.values(data).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d => {
+    Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([city,cd]) => {
+      c += `"${d.name}","${d.abbr}","${city}",${cd.orders},${cd.sales.toFixed(2)},${cd.tax.toFixed(2)}\n`;
     });
-    const name = d.abbr.substring(0,31);
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sheetData), name);
+  });
+  dl(c, 'sales-tax-full-report.csv', 'text/csv');
+}
+
+function dlSummary() {
+  let c = 'State,Abbr,Gross Sales,Tax Collected,Tax Rate,Tax Due (est.),Orders,Nexus Status,State Portal\n';
+  Object.values(data).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d => {
+    const sd = SD[d.abbr];
+    const nx = sd?.thr && d.sales >= sd.thr;
+    c += `"${d.name}","${d.abbr}",${d.sales.toFixed(2)},${d.tax.toFixed(2)},${sd?.r||0}%,${(d.sales*(sd?.r||0)/100).toFixed(2)},${d.orders},"${sd?.nt?'No Tax':nx?'Filing Required':'Below Threshold'}","${sd?.p||'N/A'}"\n`;
+  });
+  dl(c, 'sales-tax-filing-summary.csv', 'text/csv');
+}
+
+function dlExcel() {
+  const wb = XLSX.utils.book_new();
+  const sum = [['State','Gross Sales','Tax Collected','Tax Rate','Tax Due (est.)','Orders','Nexus Status','Portal']];
+  Object.values(data).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d => {
+    const sd = SD[d.abbr]; const nx = sd?.thr && d.sales >= sd.thr;
+    sum.push([d.name, +d.sales.toFixed(2), +d.tax.toFixed(2), (sd?.r||0)+'%',
+              +(d.sales*(sd?.r||0)/100).toFixed(2), d.orders,
+              sd?.nt?'No Tax':nx?'Filing Required':'Below Threshold', sd?.p||'N/A']);
+    Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([c,cd]) => {
+      sum.push(['  ↳ '+c, +cd.sales.toFixed(2), +cd.tax.toFixed(2), '', '', cd.orders, '', '']);
+    });
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sum), 'Summary');
+
+  Object.values(data).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d => {
+    const sd = SD[d.abbr];
+    const sheet = [
+      [d.name+' — Sales Tax Report'],
+      ['Gross Sales', +d.sales.toFixed(2)],
+      ['Tax Collected', +d.tax.toFixed(2)],
+      ['Tax Rate', (sd?.r||0)+'%'],
+      ['Tax Due (est.)', +(d.sales*(sd?.r||0)/100).toFixed(2)],
+      ['Orders', d.orders],
+      [],
+      ['City / Jurisdiction','Orders','Gross Sales','Tax Collected']
+    ];
+    Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([c,cd]) => {
+      sheet.push([c, cd.orders, +cd.sales.toFixed(2), +cd.tax.toFixed(2)]);
+    });
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sheet), d.abbr.substring(0,31));
   });
 
   XLSX.writeFile(wb, 'booksmartools-sales-tax-report.xlsx');
 }
 
-function downloadCSV() {
-  let csv = 'State,State Abbr,County/City,Gross Sales,Taxable Sales,Tax Collected,State Tax Rate,Tax Due\n';
-  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
-    const sd=STATE_DATA[d.abbr];
-    Object.entries(d.counties).sort((a,b)=>b[1].sales-a[1].sales).forEach(([county,cd])=>{
-      csv += `"${d.name}","${d.abbr}","${county}",${cd.sales.toFixed(2)},${cd.taxable.toFixed(2)},${cd.collected.toFixed(2)},${sd?.rate||0}%,${(cd.taxable*(sd?.rate||0)/100).toFixed(2)}\n`;
-    });
-  });
-  triggerDownload(csv,'sales-tax-full-report.csv','text/csv');
-}
-
-function downloadSummary() {
-  let csv = 'State,Gross Sales,Taxable Sales,Tax Rate,Tax Collected,Tax Due,Nexus Status,Portal\n';
-  Object.values(processedData).sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
-    const sd=STATE_DATA[d.abbr];
-    const hasNexus=sd?.nexusThreshold&&d.sales>=sd.nexusThreshold;
-    csv += `"${d.name}",${d.sales.toFixed(2)},${d.taxable.toFixed(2)},${sd?.rate||0}%,${d.collected.toFixed(2)},${(d.taxable*(sd?.rate||0)/100).toFixed(2)},"${sd?.noState?'No Tax':hasNexus?'Filing Required':'Below Threshold'}","${sd?.portal||'N/A'}"\n`;
-  });
-  triggerDownload(csv,'sales-tax-filing-summary.csv','text/csv');
-}
-
-function triggerDownload(content, filename, type) {
+function dl(content, fname, type) {
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([content],{type}));
-  a.download = filename;
+  a.href = URL.createObjectURL(new Blob([content], {type}));
+  a.download = fname;
   a.click();
 }
 
-// ── Helpers ──────────────────────────────────────────────────
-function fmt(n){ return '$'+(+n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
-
-// ── Set default dates ────────────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{
-  const now = new Date();
-  const qStart = new Date(now.getFullYear(), Math.floor(now.getMonth()/3)*3, 1);
-  const qEnd   = new Date(qStart.getFullYear(), qStart.getMonth()+3, 0);
-  document.getElementById('period-start').value = qStart.toISOString().slice(0,10);
-  document.getElementById('period-end').value   = qEnd.toISOString().slice(0,10);
-  document.getElementById('platform-info').innerHTML = PLATFORMS['amazon'].info;
-});
+// ═══════════════════════════════════════════════════════════════
+// SAMPLE DATA
+// ═══════════════════════════════════════════════════════════════
+function loadSample() {
+  setProg(10, 'Generating sample data...');
+  const sts = ['CA','TX','NY','FL','VA','WA','GA','IL','PA','OH','NJ','TN','CO','AZ','MA'];
+  const cts = {CA:['Los Angeles','San Francisco','San Diego'],TX:['Houston','Dallas','Austin'],
+    NY:['New York','Brooklyn','Queens'],FL:['Miami','Orlando','Tampa'],VA:['Fairfax','Arlington'],
+    WA:['Seattle','Tacoma'],GA:['Atlanta','Decatur'],IL:['Chicago','Naperville'],
+    PA:['Philadelphia','Pittsburgh'],OH:['Columbus','Cleveland'],NJ:['Newark','Trenton'],
+    TN:['Nashville','Memphis'],CO:['Denver','Colorado Springs'],AZ:['Phoenix','Tucson'],MA:['Boston','Worcester']};
+  const rows = [];
+  for (let i = 0; i < 200; i++) {
+    const s = sts[i % sts.length];
+    const c = cts[s][i % cts[s].length];
+    const sale = (Math.random()*150+10).toFixed(2);
+    const rate = (SD[s]?.r||5)/100;
+    const tax  = (sale*rate).toFixed(2);
+    rows.push({'Tax State':s,'Tax City':c,'Sold For':'$'+sale,'eBay Collected Tax':'$'+tax,'Sale Date':'Jul-01-25'});
+  }
+  setTimeout(() => crunch(['Tax State','Tax City','Sold For','eBay Collected Tax','Sale Date'], rows), 200);
+}
 </script>
 </body>
 </html>
