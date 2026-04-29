@@ -3,763 +3,1092 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BookSmartTools — 35+ Free Finance, Payroll & Bookkeeping Calculators 2026</title>
+<title>BookSmartTools — Free Finance, Payroll & Tax Calculators 2026</title>
 <meta name="description" content="Free professional payroll, tax, loan amortization, bookkeeping, and PDF tools. 35+ calculators updated for 2026. No signup, no cost, always free.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════
-   BASE
-   ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --ink:#1a1a14;
-  --ink2:#2e2e25;
-  --muted:#6b6b5e;
-  --border:#d6d0c4;
-  --cream:#faf7f2;
-  --cream2:#f2ede4;
-  --green:#1e5c33;
-  --green2:#165228;
-  --green-lt:#eef7f1;
-  --gold:#c8922a;
-  --gold-lt:#fdf6e8;
-  --r:8px;
+  --ink:#0e0e0c;
+  --ink2:#1c1c1a;
+  --muted:#5a5a56;
+  --subtle:#9a9a96;
+  --border:#e4e0d8;
+  --border2:#d0ccc4;
+  --paper:#fafaf7;
+  --white:#ffffff;
+  --green:#1a5c35;
+  --green2:#2a7a48;
+  --green3:#0f3d22;
+  --green-lt:#e8f5ed;
+  --green-mid:#c8e6d4;
+  --gold:#b5820a;
+  --gold-lt:#fef8e7;
+  --blue:#0d4a8a;
+  --blue-lt:#e8f2fd;
+  --amber:#a85e08;
+  --amber-lt:#fdf3e7;
+  --purple:#4a1d96;
+  --purple-lt:#f0ebff;
+  --rose:#9b1b30;
+  --rose-lt:#fdf0f2;
+  --teal:#0a5c6e;
+  --teal-lt:#e6f7fa;
 }
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+input,button,select{font-family:inherit;outline:none}
 
-/* ═══════════════════════════════════════════════
-   NAVIGATION
-   ═══════════════════════════════════════════════ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
-.nav.scrolled{background:rgba(250,247,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 2px 20px rgba(0,0,0,.06)}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-icon{width:36px;height:36px;background:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.logo-icon::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(135deg,transparent 45%,rgba(255,255,255,.15) 50%,transparent 55%);animation:logo-shine 3s ease-in-out infinite}
-@keyframes logo-shine{0%,100%{transform:translateX(-100%) translateY(-100%)}60%{transform:translateX(100%) translateY(100%)}}
-.logo-icon svg{width:20px;height:20px}
-.logo-text{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--ink);letter-spacing:-.5px}
-.logo-text em{color:var(--green);font-style:italic}
-.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
-.nav-links a{font-size:14px;font-weight:500;color:var(--muted);padding:8px 14px;border-radius:6px;text-decoration:none;transition:all .15s}
-.nav-links a:hover{color:var(--ink);background:var(--cream2)}
-.nav-cta{background:var(--ink)!important;color:white!important;border-radius:6px!important}
+/* ═══════════════════════════════════════════
+   ANNOUNCEMENT BAR
+═══════════════════════════════════════════ */
+.ann{background:var(--green);padding:9px 24px;text-align:center;font-size:13px;color:rgba(255,255,255,.88);display:flex;align-items:center;justify-content:center;gap:10px}
+.ann strong{color:#7dd4a0}
+.ann a{color:white;font-weight:600;background:rgba(255,255,255,.18);padding:3px 11px;border-radius:4px;margin-left:4px;transition:background .15s}
+.ann a:hover{background:rgba(255,255,255,.28)}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(250,250,247,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:18px;height:18px}
+.logo-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink)}
+.logo-name em{color:var(--green);font-style:italic}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:6px;transition:all .15s}
+.nav-links a:hover{color:var(--ink);background:var(--border)}
+.nav-cta{background:var(--ink)!important;color:white!important;border-radius:7px!important}
 .nav-cta:hover{background:var(--ink2)!important}
 
-/* ═══════════════════════════════════════════════
-   HERO
-   ═══════════════════════════════════════════════ */
-.hero{min-height:92vh;max-height:860px;display:flex;align-items:center;justify-content:center;padding:96px 32px 56px;position:relative;overflow:hidden}
+/* ═══════════════════════════════════════════
+   HERO — TOOL-CENTRIC, NOT MARKETING
+═══════════════════════════════════════════ */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:var(--ink);position:relative;overflow:hidden}
 
-/* Animated background */
-.hero-bg{position:absolute;inset:0;background:var(--cream)}
-.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(30,92,51,.07) 0%,transparent 70%)}
-.floating-shape{position:absolute;border-radius:50%;opacity:.4;animation:float-gentle 8s ease-in-out infinite}
-.fs1{width:300px;height:300px;background:radial-gradient(circle,rgba(30,92,51,.08),transparent);top:-80px;right:5%;animation-delay:0s}
-.fs2{width:200px;height:200px;background:radial-gradient(circle,rgba(200,146,42,.1),transparent);bottom:20%;left:2%;animation-delay:-3s}
-.fs3{width:150px;height:150px;background:radial-gradient(circle,rgba(30,92,51,.06),transparent);top:40%;right:15%;animation-delay:-5s}
-@keyframes float-gentle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-20px) scale(1.05)}}
+/* Animated texture */
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.04) 1px,transparent 0);background-size:32px 32px;pointer-events:none}
 
-/* Grid dots background */
-.hero-grid{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,.06) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse 70% 60% at center,black 0%,transparent 100%)}
+.hero-left{padding:80px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.eyebrow-line{width:28px;height:2px;background:var(--green2)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#7dd4a0}
+h1{font-family:'Playfair Display',serif;font-size:clamp(42px,4.5vw,64px);font-weight:900;line-height:1.04;letter-spacing:-2px;color:white;margin-bottom:24px}
+h1 .italic{font-style:italic;color:#7dd4a0}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.6);line-height:1.75;max-width:420px;margin-bottom:40px;font-weight:300}
+.hero-actions{display:flex;gap:12px;margin-bottom:56px;flex-wrap:wrap}
+.btn-hero{padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;border:none}
+.btn-primary{background:var(--green);color:white}
+.btn-primary:hover{background:var(--green2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,92,53,.4)}
+.btn-secondary{background:rgba(255,255,255,.08);color:white;border:1px solid rgba(255,255,255,.2)}
+.btn-secondary:hover{background:rgba(255,255,255,.14)}
+.hero-stats{display:flex;gap:32px;border-top:1px solid rgba(255,255,255,.08);padding-top:32px}
+.hs-item{}
+.hs-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:white;display:block;line-height:1}
+.hs-num .accent{color:#7dd4a0}
+.hs-lbl{font-size:12px;color:rgba(255,255,255,.45);margin-top:4px;font-weight:400}
 
-.hero-inner{position:relative;z-index:1;max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+/* Hero right — live calculator panel */
+.hero-right{position:relative;display:flex;align-items:center;justify-content:center;padding:40px;border-left:1px solid rgba(255,255,255,.06);z-index:1}
 
-/* Hero left */
-.hero-left{}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--green-lt);border:1px solid rgba(30,92,51,.2);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.3px;margin-bottom:28px}
-.tag-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse-dot 2s ease-in-out infinite}
-@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-h1{font-family:'Fraunces',serif;font-size:clamp(40px,5vw,62px);line-height:1.06;font-weight:700;letter-spacing:-2px;color:var(--ink);margin-bottom:22px}
-h1 em{color:var(--green);font-style:italic}
-h1 .line{display:block}
-.hero-sub{font-size:17px;color:var(--muted);line-height:1.8;max-width:460px;margin-bottom:36px;font-weight:300}
-.hero-btns{display:flex;gap:12px;margin-bottom:44px;flex-wrap:wrap}
-.btn-main{background:var(--ink);color:white;padding:15px 28px;border-radius:var(--r);font-size:15px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;position:relative;overflow:hidden}
-.btn-main::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);transition:left .4s}
-.btn-main:hover::before{left:100%}
-.btn-main:hover{background:var(--ink2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
-.btn-alt{background:transparent;color:var(--ink);padding:15px 28px;border-radius:var(--r);font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);transition:all .2s}
-.btn-alt:hover{border-color:var(--ink);background:white;transform:translateY(-1px)}
-.trust-row{display:flex;gap:20px;flex-wrap:wrap}
-.trust-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
-.trust-check{width:18px;height:18px;background:var(--green-lt);border:1px solid rgba(30,92,51,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--green);font-weight:700}
+/* Floating cards in hero */
+.calc-stage{width:100%;max-width:440px;position:relative}
+.cs-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+.calc-panel{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:28px;margin-bottom:12px}
+.cp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.cp-title{font-size:14px;font-weight:600;color:rgba(255,255,255,.9)}
+.cp-live{display:flex;align-items:center;gap:6px;font-size:11px;color:#7dd4a0;font-weight:600;font-family:'JetBrains Mono',monospace}
+.live-indicator{width:7px;height:7px;background:#4ade80;border-radius:50%;animation:live-blink 1.4s ease-in-out infinite}
+@keyframes live-blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.4)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(74,222,128,0)}}
 
-/* Hero right — animated calculator */
-.hero-right{opacity:1;transform:none}
-.calc-card{background:white;border:1px solid var(--border);border-radius:14px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.08);position:relative;overflow:hidden;opacity:1;display:block}
-.calc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),#6db88a,var(--gold));border-radius:14px 14px 0 0}
-.calc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.calc-title{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--ink)}
-.live-badge{display:flex;align-items:center;gap:5px;background:var(--green-lt);color:var(--green);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:10px;font-family:'DM Mono',monospace}
-.live-dot{width:6px;height:6px;background:#2d9e50;border-radius:50%;animation:live-pulse 1.5s ease-in-out infinite}
-@keyframes live-pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.calc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05)}
-.calc-row:last-of-type{border-bottom:none}
-.cr-label{font-size:13px;color:var(--muted)}
-.cr-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--ink)}
-.cr-val.red{color:#c0392b}.cr-val.green{color:var(--green)}
-.calc-total{margin-top:18px;padding:16px;background:var(--ink);border-radius:10px;display:flex;justify-content:space-between;align-items:center}
-.ct-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace}
-.ct-val{font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:white;transition:opacity .3s}
-.ct-val.updating{opacity:.3}
+/* Slider controls */
+.slider-group{margin-bottom:20px}
+.slider-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.slider-label{font-size:12px;color:rgba(255,255,255,.5);font-weight:400}
+.slider-value{font-size:13px;font-weight:600;color:white;font-family:'JetBrains Mono',monospace}
+.styled-slider{width:100%;height:4px;border-radius:2px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.15);cursor:pointer;transition:background .2s}
+.styled-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--green2);border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer;transition:transform .15s}
+.styled-slider::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.styled-slider:focus{background:rgba(255,255,255,.2)}
 
-/* Animated number ticker */
-.ticker-wrap{overflow:hidden;height:1.2em;display:inline-block}
-.ticker{display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+/* Result rows */
+.result-rows{border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-bottom:20px}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0}
+.rr-label{font-size:12.5px;color:rgba(255,255,255,.5)}
+.rr-val{font-size:12.5px;font-weight:600;font-family:'JetBrains Mono',monospace}
+.rr-val.minus{color:#f87171}
+.takehome-row{display:flex;justify-content:space-between;align-items:center;background:var(--green3);border:1px solid rgba(125,212,160,.2);border-radius:10px;padding:14px 18px}
+.tr-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(125,212,160,.7);font-family:'JetBrains Mono',monospace}
+.tr-val{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:white;transition:opacity .3s}
 
-/* Quick jump pills */
-.calc-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}
-.pill{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11.5px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;text-decoration:none}
-.pill:hover{background:var(--green-lt);border-color:rgba(30,92,51,.3);color:var(--green);transform:translateY(-1px)}
+.calc-cta{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;text-decoration:none}
+.calc-cta:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15)}
+.cta-left{font-size:13px;color:rgba(255,255,255,.7)}
+.cta-left strong{display:block;color:white;font-size:14px;margin-bottom:2px}
+.cta-arrow{font-size:20px;color:var(--green2);transition:transform .2s}
+.calc-cta:hover .cta-arrow{transform:translateX(4px)}
 
-/* ═══════════════════════════════════════════════
-   STATS STRIP
-   ═══════════════════════════════════════════════ */
-.stats-strip{background:var(--ink);padding:36px 32px;position:relative;overflow:hidden}
-.stats-strip::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0px,rgba(255,255,255,.02) 1px,transparent 1px,transparent 80px)}
-.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:16px;position:relative}
-.stat-item+.stat-item::before{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.1)}
-.stat-num{font-family:'Fraunces',serif;font-size:44px;font-weight:700;color:white;display:block;line-height:1;margin-bottom:6px}
-.stat-num .accent{color:#6db88a}
-.stat-lbl{font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.5px}
+/* ═══════════════════════════════════════════
+   CATEGORY NAV
+═══════════════════════════════════════════ */
+.cat-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 40px;overflow-x:auto;display:flex;gap:0;scrollbar-width:none;position:sticky;top:60px;z-index:90}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-btn{padding:0 20px;height:52px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;text-decoration:none;flex-shrink:0}
+.cat-btn:hover{color:var(--ink)}
+.cat-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-/* ═══════════════════════════════════════════════
-   TOOLS SECTION
-   ═══════════════════════════════════════════════ */
-.tools-section{padding:88px 32px;max-width:1100px;margin:0 auto}
-.section-kicker{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.section-kicker::before{content:'';display:block;width:24px;height:2px;background:var(--green)}
-.section-title{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-1.5px;color:var(--ink);margin-bottom:12px;line-height:1.15}
-.section-sub{font-size:16px;color:var(--muted);max-width:500px;line-height:1.75;margin-bottom:52px;font-weight:300}
-.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px}
-.view-all{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px;border-bottom:1.5px solid var(--ink);padding-bottom:2px;transition:gap .2s}
-.view-all:hover{gap:10px}
+/* ═══════════════════════════════════════════
+   SECTION SHELL
+═══════════════════════════════════════════ */
+.tool-section{padding:80px 40px;max-width:1200px;margin:0 auto}
+.tool-section+.tool-section{border-top:1px solid var(--border)}
+.ts-header{display:grid;grid-template-columns:1fr auto;align-items:end;margin-bottom:48px;gap:20px}
+.ts-kicker{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.ts-kicker::before{content:'';display:block;width:20px;height:2px;background:currentColor;border-radius:1px}
+.ts-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,40px);font-weight:700;letter-spacing:-1px;color:var(--ink);line-height:1.15}
+.ts-desc{font-size:15px;color:var(--muted);margin-top:10px;line-height:1.7;max-width:480px;font-weight:300}
+.ts-viewall{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:6px;border-bottom:1.5px solid var(--ink);padding-bottom:2px;white-space:nowrap;transition:gap .2s}
+.ts-viewall:hover{gap:10px}
 
-/* Tool cards grid */
-.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.tool-card{background:white;border:1px solid var(--border);border-radius:var(--r);padding:24px;text-decoration:none;color:var(--ink);display:block;transition:all .25s;position:relative;overflow:hidden;cursor:pointer}
-.tool-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
-.tool-card:hover{border-color:rgba(30,92,51,.3);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
-.tool-card:hover::after{transform:scaleX(1)}
-.tool-card.featured{background:var(--ink);border-color:var(--ink)}
-.tool-card.featured .tc-cat{color:rgba(255,255,255,.4)}
-.tool-card.featured .tc-name{color:white}
-.tool-card.featured .tc-desc{color:rgba(255,255,255,.55)}
-.tool-card.featured::after{background:#6db88a}
-.tc-cat{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--green);margin-bottom:14px;font-family:'DM Mono',monospace}
-.tc-icon{font-size:30px;margin-bottom:14px;display:block;transition:transform .3s}
-.tool-card:hover .tc-icon{transform:scale(1.1) rotate(-3deg)}
-.tc-name{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:8px;line-height:1.3;color:var(--ink)}
-.tc-desc{font-size:13px;color:var(--muted);line-height:1.65}
-.tc-arrow{position:absolute;bottom:20px;right:20px;font-size:18px;color:var(--green);opacity:0;transform:translateX(-6px);transition:all .2s}
-.tool-card:hover .tc-arrow,.tool-card.featured .tc-arrow{opacity:1;transform:translateX(0)}
-.tool-card.featured .tc-arrow{color:#6db88a}
+/* ═══════════════════════════════════════════
+   FEATURE LAYOUT — BIG + SMALL
+═══════════════════════════════════════════ */
+.feature-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:stretch}
+.small-tools{display:grid;grid-template-rows:repeat(3,1fr);gap:10px}
 
-/* ═══════════════════════════════════════════════
-   ABOUT / HUMAN SECTION
-   ═══════════════════════════════════════════════ */
-.about-section{background:var(--cream2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 32px}
-.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.about-left{}
-.about-facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px}
-.af{background:white;border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:all .2s}
-.af:hover{border-color:rgba(30,92,51,.3);transform:translateY(-2px)}
-.af-num{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:var(--green);display:block;margin-bottom:4px}
-.af-lbl{font-size:12px;color:var(--muted);line-height:1.5}
-.about-right h2{font-family:'Fraunces',serif;font-size:clamp(26px,3.5vw,38px);font-weight:700;letter-spacing:-1px;color:var(--ink);margin-bottom:20px;line-height:1.2}
-.about-right h2 em{color:var(--green);font-style:italic}
-.about-right p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:16px;font-weight:300}
-/* Checklist */
-.checklist{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:12px}
-.checklist li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--muted);line-height:1.5}
-.check-icon{width:22px;height:22px;background:var(--green-lt);border:1px solid rgba(30,92,51,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
-.checklist strong{color:var(--ink)}
+/* Big feature card */
+.feature-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.feature-card .fc-accent{position:absolute;top:0;left:0;right:0;height:4px;border-radius:16px 16px 0 0}
+.fc-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:4px;margin-bottom:18px;width:fit-content}
+.fc-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.2}
+.fc-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;font-weight:300}
+.fc-interactive{flex:1;background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:20px}
+.fc-open-btn{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;background:transparent;width:100%;font-family:'Inter',sans-serif;text-decoration:none;color:inherit}
+.fc-open-btn:hover{border-color:currentColor;background:var(--paper)}
+.fob-text{font-size:14px;font-weight:600}
+.fob-sub{font-size:12px;color:var(--muted);margin-top:2px;font-weight:400}
 
-/* ═══════════════════════════════════════════════
-   PDF SECTION
-   ═══════════════════════════════════════════════ */
-.pdf-section{padding:80px 32px;max-width:1100px;margin:0 auto}
-.pdf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-.pdf-card{background:white;border:1px solid var(--border);border-radius:var(--r);padding:24px;text-decoration:none;color:var(--ink);display:block;transition:all .25s;text-align:center;position:relative;overflow:hidden}
-.pdf-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--green-lt) 0%,transparent 60%);opacity:0;transition:opacity .3s}
-.pdf-card:hover{border-color:rgba(30,92,51,.3);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
-.pdf-card:hover::before{opacity:1}
-.pdf-card>*{position:relative;z-index:1}
-.pc-icon{font-size:40px;margin-bottom:14px;display:block;transition:transform .3s}
-.pdf-card:hover .pc-icon{transform:scale(1.1)}
-.pc-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:6px}
-.pc-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
-.pc-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
-.pct{background:var(--green-lt);border:1px solid rgba(30,92,51,.15);color:var(--green);font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;font-family:'DM Mono',monospace}
+/* Small tool cards */
+.small-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--ink);transition:all .2s;position:relative;overflow:hidden}
+.small-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:12px 0 0 12px;transition:opacity .2s;opacity:0}
+.small-card:hover{border-color:var(--border2);transform:translateX(3px);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.small-card:hover::before{opacity:1}
+.sc-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sc-body{flex:1;min-width:0}
+.sc-name{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-desc{font-size:12px;color:var(--muted);line-height:1.4}
+.sc-arrow{font-size:16px;color:var(--border2);transition:all .2s;flex-shrink:0}
+.small-card:hover .sc-arrow{transform:translateX(3px)}
 
-/* ═══════════════════════════════════════════════
-   TESTIMONIALS
-   ═══════════════════════════════════════════════ */
-.testi-section{background:var(--ink);padding:80px 32px;position:relative;overflow:hidden}
-.testi-section::before{content:'"';position:absolute;top:-60px;left:32px;font-family:'Fraunces',serif;font-size:400px;color:rgba(255,255,255,.03);line-height:1;pointer-events:none}
-.testi-inner{max-width:1100px;margin:0 auto}
-.testi-kicker{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;display:flex;align-items:center;gap:10px;font-family:'DM Mono',monospace}
-.testi-kicker::before{content:'';display:block;width:24px;height:1px;background:rgba(255,255,255,.3)}
-.testi-title{font-family:'Fraunces',serif;font-size:clamp(24px,3.5vw,38px);font-weight:600;color:white;margin-bottom:44px;letter-spacing:-1px;line-height:1.2}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.06)}
-.tc-wrap{background:var(--ink);padding:30px;transition:background .2s}
-.tc-wrap:hover{background:rgba(255,255,255,.04)}
-.tc-stars{color:#f5c518;font-size:14px;letter-spacing:2px;margin-bottom:16px}
-.tc-quote{font-family:'Fraunces',serif;font-size:17px;font-style:italic;color:rgba(255,255,255,.88);line-height:1.65;margin-bottom:22px}
-.tc-who{font-size:13px;font-weight:600;color:#6db88a;font-family:'DM Mono',monospace;letter-spacing:.3px}
-.tc-role{font-size:12px;color:rgba(255,255,255,.35);margin-top:3px}
+/* ═══════════════════════════════════════════
+   INLINE CALCULATORS (feature card content)
+═══════════════════════════════════════════ */
+.mini-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.mini-row:last-of-type{border-bottom:none}
+.mini-label{font-size:13px;color:var(--muted)}
+.mini-val{font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--ink)}
+.mini-val.neg{color:#dc2626}
+.mini-val.pos{color:var(--green)}
+.mini-slider{width:100%;margin:10px 0}
+.mini-slider input[type=range]{width:100%;accent-color:currentColor}
+.mini-total{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:8px;margin-top:12px}
+.mt-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.mt-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700}
+.mini-input-row{display:flex;gap:8px;margin-bottom:12px}
+.mini-input{height:36px;border:1px solid var(--border);border-radius:6px;padding:0 12px;font-size:13px;color:var(--ink);background:var(--white);transition:border-color .15s;font-family:'JetBrains Mono',monospace;width:100%}
+.mini-input:focus{border-color:currentColor}
 
-/* ═══════════════════════════════════════════════
-   BLOG TEASER
-   ═══════════════════════════════════════════════ */
-.blog-section{padding:80px 32px;max-width:1100px;margin:0 auto}
-.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
-.blog-card{background:white;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;text-decoration:none;color:var(--ink);display:block;transition:all .25s}
-.blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.09);border-color:var(--border)}
-.bc-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:44px;position:relative}
-.bc-body{padding:20px}
-.bc-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:8px}
-.bc-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;line-height:1.4;color:var(--ink);margin-bottom:8px}
-.bc-excerpt{font-size:12.5px;color:var(--muted);line-height:1.6}
-.bc-read{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--green);margin-top:12px;transition:gap .2s}
-.blog-card:hover .bc-read{gap:8px}
+/* ═══════════════════════════════════════════
+   PDF SECTION — VISUAL LAYOUT
+═══════════════════════════════════════════ */
+.pdf-visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pdf-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;text-decoration:none;color:var(--ink);transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.pdf-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,29,150,.04) 0%,transparent 60%);opacity:0;transition:opacity .3s}
+.pdf-card:hover{border-color:var(--purple);transform:translateY(-4px);box-shadow:0 12px 40px rgba(74,29,150,.1)}
+.pdf-card:hover::after{opacity:1}
+.pdf-icon-big{font-size:48px;margin-bottom:20px;display:block}
+.pdf-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.pdf-desc{font-size:14px;color:var(--muted);line-height:1.65;flex:1;margin-bottom:16px;font-weight:300}
+.pdf-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pdf-tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;font-family:'JetBrains Mono',monospace}
+.pdf-link{font-size:13px;font-weight:600;color:var(--purple);display:flex;align-items:center;gap:5px;transition:gap .15s}
+.pdf-card:hover .pdf-link{gap:8px}
 
-/* ═══════════════════════════════════════════════
-   CTA BAND
-   ═══════════════════════════════════════════════ */
-.cta-band{background:var(--green);padding:64px 32px;text-align:center;position:relative;overflow:hidden}
-.cta-band::before,.cta-band::after{content:'';position:absolute;border-radius:50%;opacity:.15}
-.cta-band::before{width:400px;height:400px;background:white;top:-200px;left:-100px}
-.cta-band::after{width:300px;height:300px;background:white;bottom:-150px;right:-50px}
-.cta-inner{position:relative;z-index:1}
-.cta-band h2{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:white;letter-spacing:-1.5px;margin-bottom:14px;line-height:1.15}
-.cta-band p{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7}
-.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-white{background:white;color:var(--green);padding:14px 30px;border-radius:var(--r);font-size:15px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
-.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
-.btn-ghost-white{background:transparent;color:white;padding:14px 30px;border-radius:var(--r);font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid rgba(255,255,255,.4);transition:all .2s}
-.btn-ghost-white:hover{background:rgba(255,255,255,.1);border-color:white}
+/* ═══════════════════════════════════════════
+   E-COMMERCE SECTION — HERO TREATMENT
+═══════════════════════════════════════════ */
+.ecom-hero{background:var(--ink);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:0}
+.eh-left{padding:48px}
+.eh-kicker{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7dd4a0;margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+.eh-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:white;line-height:1.2;margin-bottom:16px;letter-spacing:-1px}
+.eh-desc{font-size:15px;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:28px;font-weight:300}
+.platform-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.pp{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);transition:all .15s;cursor:default}
+.pp.ebay{border-color:rgba(100,149,255,.4);color:#8eb4ff;background:rgba(100,149,255,.1)}
+.pp.amz{border-color:rgba(255,153,0,.4);color:#ffc048;background:rgba(255,153,0,.08)}
+.pp.sh{border-color:rgba(0,200,100,.4);color:#4de89a;background:rgba(0,200,100,.08)}
+.eh-cta{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:white;padding:14px 24px;border-radius:8px;font-size:15px;font-weight:600;transition:all .2s}
+.eh-cta:hover{background:var(--green2);transform:translateY(-2px)}
+.eh-right{padding:48px;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;justify-content:center;gap:12px}
+.ecom-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:14px;transition:background .2s}
+.ecom-step:hover{background:rgba(255,255,255,.08)}
+.step-num{width:28px;height:28px;background:var(--green3);border:1px solid rgba(125,212,160,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#7dd4a0;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.step-text{font-size:14px;color:rgba(255,255,255,.75);line-height:1.5}
+.step-text strong{color:white;display:block;margin-bottom:3px}
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
+   ABOUT STRIP
+═══════════════════════════════════════════ */
+.about-strip{background:var(--white);border-top:1px solid var(--border);padding:60px 40px}
+.about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--border);border-radius:12px;overflow:hidden}
+.about-cell{background:var(--white);padding:28px 24px}
+.about-cell:hover{background:var(--paper)}
+.ac-icon{font-size:28px;margin-bottom:14px;display:block}
+.ac-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.ac-text{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* ═══════════════════════════════════════════
    FOOTER
-   ═══════════════════════════════════════════════ */
-footer{background:var(--ink2);padding:52px 32px 24px}
-.footer-inner{max-width:1100px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)}
-.footer-logo-text{font-family:'Fraunces',serif;font-size:22px;color:white;margin-bottom:10px}
-.footer-logo-text em{color:#6db88a;font-style:italic}
-.footer-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.7;max-width:260px;font-weight:300}
-.footer-col h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px;font-family:'DM Mono',monospace}
-.footer-col ul{list-style:none}
-.footer-col li{margin-bottom:8px}
-.footer-col a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s;font-weight:300}
-.footer-col a:hover{color:white}
-.footer-bottom{padding-top:20px;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace}
+═══════════════════════════════════════════ */
+footer{background:var(--ink);padding:52px 40px 28px}
+.footer-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.footer-brand{font-family:'Playfair Display',serif;font-size:20px;color:white;margin-bottom:10px}
+.footer-brand em{color:#7dd4a0;font-style:italic}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;max-width:240px;font-weight:300}
+.fcol h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+.fcol li{list-style:none;margin-bottom:8px}
+.fcol a{font-size:13px;color:rgba(255,255,255,.48);font-weight:300;transition:color .15s}
+.fcol a:hover{color:white}
+.footer-bottom{max-width:1200px;margin:20px auto 0;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.22);font-family:'JetBrains Mono',monospace}
 
-/* ═══════════════════════════════════════════════
-   ANIMATIONS
-   ═══════════════════════════════════════════════ */
-@keyframes fade-up{
-  from{opacity:0;transform:translateY(24px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.fade-up{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
+/* ═══════════════════════════════════════════
+   SCROLL ANIMATIONS
+═══════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.shown{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.18s}.reveal-d3{transition-delay:.26s}
 
-/* Scroll reveal delays */
-.delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}
-.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}
-
-/* Top announcement bar */
-.top-bar{background:linear-gradient(90deg,var(--green),#2d7a45);padding:10px 32px;text-align:center;font-size:13px;color:rgba(255,255,255,.9)}
-.top-bar a{color:white;font-weight:700;text-decoration:underline;text-decoration-style:dotted;margin-left:4px}
-
-@media(max-width:768px){
-  .hero-inner,.about-inner,.footer-grid{grid-template-columns:1fr}
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr}
   .hero-right{display:none}
-  .tools-grid,.pdf-grid,.testi-grid,.blog-grid{grid-template-columns:1fr 1fr}
-  .stats-inner{grid-template-columns:1fr 1fr}
+  .hero-left{padding:80px 32px 60px}
+  .feature-layout{grid-template-columns:1fr}
+  .small-tools{grid-template-rows:auto;grid-template-columns:1fr}
+  .ecom-hero{grid-template-columns:1fr}
+  .eh-right{border-left:none;border-top:1px solid rgba(255,255,255,.08)}
+  .about-inner{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .pdf-visual-grid{grid-template-columns:1fr}
 }
-@media(max-width:600px){
-  .tools-grid,.pdf-grid,.testi-grid,.blog-grid{grid-template-columns:1fr}
-  .about-facts{grid-template-columns:1fr 1fr}
+@media(max-width:768px){
+  .tool-section{padding:60px 20px}
+  .cat-nav{padding:0 20px}
+  .ann{font-size:12px;padding:8px 16px}
+  nav{padding:0 20px}
+  .about-inner{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  footer{padding:40px 20px 20px}
 }
 </style>
 </head>
 <body>
 
-<!-- Top announcement bar -->
-<div class="top-bar">
-  🆕 New: E-Commerce Sales Tax Tool — reads eBay, Amazon & Shopify reports automatically.
+<!-- Announcement Bar -->
+<div class="ann">
+  <strong>New:</strong> E-Commerce Sales Tax Tool — reads eBay, Amazon &amp; Shopify CSV reports automatically
   <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html">Try it free →</a>
 </div>
 
 <!-- Navigation -->
-<nav class="nav" id="nav">
-  <a href="/booksmart-tools/" class="nav-logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="3" width="7" height="14" rx="1" fill="rgba(255,255,255,.25)"/>
-        <rect x="3" y="4" width="5" height="12" rx=".5" fill="white"/>
-        <line x1="4.5" y1="7" x2="7" y2="7" stroke="#1e5c33" stroke-width="1.2" stroke-linecap="round"/>
-        <line x1="4.5" y1="9.5" x2="7" y2="9.5" stroke="#1e5c33" stroke-width="1.2" stroke-linecap="round"/>
-        <rect x="11" y="11" width="2" height="5" rx=".5" fill="rgba(255,255,255,.6)"/>
-        <rect x="14" y="8" width="2" height="8" rx=".5" fill="rgba(255,255,255,.8)"/>
-        <rect x="17" y="9.5" width="2" height="6.5" rx=".5" fill="white"/>
-        <polyline points="12,10 15,7 18,8.5" stroke="rgba(255,255,255,.7)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+<nav id="nav">
+  <div class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="2" width="7" height="14" rx="1" fill="rgba(255,255,255,.25)"/>
+        <rect x="2" y="3" width="5" height="12" rx=".5" fill="white"/>
+        <line x1="3" y1="6" x2="6" y2="6" stroke="#1a5c35" stroke-width="1"/>
+        <line x1="3" y1="8.5" x2="6" y2="8.5" stroke="#1a5c35" stroke-width="1"/>
+        <rect x="10" y="10" width="1.8" height="5" rx=".4" fill="rgba(255,255,255,.6)"/>
+        <rect x="12.8" y="7.5" width="1.8" height="7.5" rx=".4" fill="rgba(255,255,255,.8)"/>
+        <rect x="15.6" y="9" width="1.8" height="6" rx=".4" fill="white"/>
+        <polyline points="10.9,9 13.7,6.5 16.5,8" stroke="rgba(255,255,255,.7)" stroke-width="1" fill="none" stroke-linecap="round"/>
       </svg>
     </div>
-    <div class="logo-text">Book<em>Smart</em>Tools</div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="/booksmart-tools/tools.html">Calculators</a></li>
-    <li><a href="/booksmart-tools/pdf-merge.html">PDF Tools</a></li>
-    <li><a href="/booksmart-tools/blog/index.html">Blog</a></li>
-    <li><a href="/booksmart-tools/about.html">About</a></li>
-    <li><a href="/booksmart-tools/contact.html">Contact</a></li>
-    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Free Tools →</a></li>
-  </ul>
+    <div class="logo-name">Book<em>Smart</em>Tools</div>
+  </div>
+  <div class="nav-links">
+    <a href="#payroll">Payroll</a>
+    <a href="#tax">Tax</a>
+    <a href="#loans">Loans</a>
+    <a href="#business">Business</a>
+    <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+    <a href="/booksmart-tools/blog/index.html">Blog</a>
+    <a href="/booksmart-tools/contact.html">Contact</a>
+    <a href="/booksmart-tools/tools.html" class="nav-cta">All Free Tools →</a>
+  </div>
 </nav>
 
-<!-- Hero -->
+<!-- ═══════ HERO ═══════ -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-grid"></div>
-    <div class="floating-shape fs1"></div>
-    <div class="floating-shape fs2"></div>
-    <div class="floating-shape fs3"></div>
-  </div>
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-tag">
-        <span class="tag-dot"></span>
-        35+ Free Professional Tools — 2026
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">35+ Free Professional Tools — 2026</div>
+    </div>
+    <h1>
+      Finance tools<br>
+      that <span class="italic">actually</span><br>
+      save you time.
+    </h1>
+    <p class="hero-sub">Professional calculators for payroll, taxes, loans, margins, and PDF tools. Built with real bookkeeping knowledge. Free forever — no signup, no limits.</p>
+    <div class="hero-actions">
+      <a href="#payroll" class="btn-hero btn-primary">Start Calculating →</a>
+      <a href="/booksmart-tools/tools.html" class="btn-hero btn-secondary">Browse All 35+ Tools</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hs-item">
+        <span class="hs-num"><span class="accent" id="counter">35</span>+</span>
+        <div class="hs-lbl">Free tools</div>
       </div>
-      <h1>
-        <span class="line">Finance tools</span>
-        <span class="line">that <em>actually</em></span>
-        <span class="line">save you time.</span>
-      </h1>
-      <p class="hero-sub">Professional calculators for payroll, taxes, loans, margins, and PDF tools. Built with real bookkeeping knowledge. Free, forever — no signup required.</p>
-      <div class="hero-btns">
-        <a href="/booksmart-tools/tools.html" class="btn-main">Browse All 35+ Tools →</a>
-        <a href="/booksmart-tools/payroll-tax-estimator.html" class="btn-alt">Try Payroll Calculator</a>
+      <div class="hs-item">
+        <span class="hs-num">50</span>
+        <div class="hs-lbl">States covered</div>
       </div>
-      <div class="trust-row">
-        <div class="trust-item"><div class="trust-check">✓</div>100% free, always</div>
-        <div class="trust-item"><div class="trust-check">✓</div>2026 IRS rates</div>
-        <div class="trust-item"><div class="trust-check">✓</div>No signup ever</div>
-        <div class="trust-item"><div class="trust-check">✓</div>Works offline</div>
+      <div class="hs-item">
+        <span class="hs-num">$0</span>
+        <div class="hs-lbl">Cost — always</div>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="calc-card">
-        <div class="calc-header">
-          <div class="calc-title">Payroll Tax Estimator — 2026</div>
-          <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+  </div>
+
+  <!-- Live calculator in hero -->
+  <div class="hero-right">
+    <div class="calc-stage">
+      <div class="cs-label">Live payroll preview</div>
+      <div class="calc-panel">
+        <div class="cp-header">
+          <span class="cp-title">Payroll Tax Estimator 2026</span>
+          <span class="cp-live"><span class="live-indicator"></span>Live</span>
         </div>
-        <div class="calc-row"><span class="cr-label">Gross Pay</span><span class="cr-val" id="gross-val">$4,800.00</span></div>
-        <div class="calc-row"><span class="cr-label">Federal Income Tax</span><span class="cr-val red" id="fed-val">−$576.00</span></div>
-        <div class="calc-row"><span class="cr-label">Social Security (6.2%)</span><span class="cr-val red">−$297.60</span></div>
-        <div class="calc-row"><span class="cr-label">Medicare (1.45%)</span><span class="cr-val red">−$69.60</span></div>
-        <div class="calc-row"><span class="cr-label">VA State Tax (5.75%)</span><span class="cr-val red">−$276.00</span></div>
-        <div class="calc-total">
-          <div>
-            <div class="ct-label">Net Take-Home</div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">Gross pay</span>
+            <span class="slider-value" id="h-gross">$4,800</span>
           </div>
-          <div class="ct-val" id="takehome-val">$3,580.80</div>
+          <input type="range" class="styled-slider" id="h-slider" min="1000" max="15000" step="100" value="4800" oninput="heroCalc()">
         </div>
-        <div class="calc-pills">
-          <a href="/booksmart-tools/profit-margin-calculator.html" class="pill">📊 Profit Margin</a>
-          <a href="/booksmart-tools/loan-amortization.html" class="pill">📋 Amortization</a>
-          <a href="/booksmart-tools/quarterly-tax-calculator.html" class="pill">📅 Quarterly Tax</a>
-          <a href="/booksmart-tools/mortgage-calculator.html" class="pill">🏠 Mortgage</a>
-          <a href="/booksmart-tools/pdf-merge.html" class="pill">📑 PDF Merge</a>
-          <a href="/booksmart-tools/tools.html" class="pill">+ All Tools →</a>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">State tax rate</span>
+            <span class="slider-value" id="h-rate">5.75%</span>
+          </div>
+          <input type="range" class="styled-slider" id="h-rate-slider" min="0" max="11" step="0.25" value="5.75" oninput="heroCalc()">
+        </div>
+
+        <div class="result-rows">
+          <div class="result-row"><span class="rr-label">Federal income tax</span><span class="rr-val minus" id="h-fed">−$576</span></div>
+          <div class="result-row"><span class="rr-label">Social Security (6.2%)</span><span class="rr-val minus" id="h-ss">−$298</span></div>
+          <div class="result-row"><span class="rr-label">Medicare (1.45%)</span><span class="rr-val minus" id="h-med">−$70</span></div>
+          <div class="result-row"><span class="rr-label">State tax</span><span class="rr-val minus" id="h-st">−$276</span></div>
+        </div>
+
+        <div class="takehome-row">
+          <span class="tr-label">Net take-home</span>
+          <span class="tr-val" id="h-net">$3,580</span>
         </div>
       </div>
+
+      <a href="/booksmart-tools/payroll-tax-estimator.html" class="calc-cta">
+        <div class="cta-left">
+          <strong>Open Full Calculator</strong>
+          All 50 states · W-4 deductions · Pre-tax benefits
+        </div>
+        <span class="cta-arrow">→</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- Stats Strip -->
-<div class="stats-strip">
-  <div class="stats-inner">
-    <div class="stat-item">
-      <span class="stat-num"><span class="accent" id="c-tools">35</span>+</span>
-      <div class="stat-lbl">Free Professional Tools</div>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num"><span class="accent">50</span></span>
-      <div class="stat-lbl">States Covered</div>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">2026</span>
-      <div class="stat-lbl">Tax Rates Updated</div>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num"><span class="accent">$0</span></span>
-      <div class="stat-lbl">Cost — Always Free</div>
-    </div>
-  </div>
+<!-- Category Jump Nav -->
+<div class="cat-nav" id="cat-nav">
+  <a href="#payroll" class="cat-btn" data-cat="payroll">
+    <span class="cat-dot" style="background:#2563eb"></span>Payroll &amp; HR
+  </a>
+  <a href="#tax" class="cat-btn" data-cat="tax">
+    <span class="cat-dot" style="background:#d97706"></span>Tax Tools
+  </a>
+  <a href="#loans" class="cat-btn" data-cat="loans">
+    <span class="cat-dot" style="background:#0891b2"></span>Loans &amp; Mortgage
+  </a>
+  <a href="#business" class="cat-btn" data-cat="business">
+    <span class="cat-dot" style="background:#7c3aed"></span>Business Finance
+  </a>
+  <a href="#pdf" class="cat-btn" data-cat="pdf">
+    <span class="cat-dot" style="background:#be185d"></span>PDF Tools
+  </a>
+  <a href="#ecommerce" class="cat-btn" data-cat="ecommerce">
+    <span class="cat-dot" style="background:#15803d"></span>E-Commerce Tax
+  </a>
 </div>
 
-<!-- Tools Section -->
-<div class="tools-section">
-  <div class="section-header">
+<!-- ═══════ PAYROLL SECTION ═══════ -->
+<section id="payroll">
+<div class="tool-section">
+  <div class="ts-header reveal">
     <div>
-      <div class="section-kicker">Professional Calculators</div>
-      <div class="section-title">Every tool a bookkeeper<br>actually needs</div>
-      <p class="section-sub">From payroll to EBITDA to PDF merging — practical tools built for real financial work.</p>
+      <div class="ts-kicker" style="color:#2563eb">Payroll &amp; HR</div>
+      <div class="ts-title">Calculate paychecks the<br>right way, every time.</div>
+      <p class="ts-desc">From gross to net, overtime to PTO — every payroll calculation you need, with 2026 IRS brackets and all 50 state rates built in.</p>
     </div>
-    <a href="/booksmart-tools/tools.html" class="view-all">View all 35+ tools →</a>
+    <a href="/booksmart-tools/tools.html" class="ts-viewall">View all payroll tools →</a>
   </div>
-  <div class="tools-grid">
-    <a href="/booksmart-tools/payroll-tax-estimator.html" class="tool-card featured fade-up">
-      <div class="tc-cat">⭐ Most Popular</div>
-      <div class="tc-icon">💼</div>
-      <div class="tc-name">Payroll Tax Estimator</div>
-      <div class="tc-desc">2026 IRS brackets, FICA, and all 50 state income tax rates. Full paycheck breakdown in seconds.</div>
-      <div class="tc-arrow">→</div>
+
+  <div class="feature-layout">
+    <!-- Big interactive payroll card -->
+    <div class="feature-card reveal">
+      <div class="fc-accent" style="background:linear-gradient(90deg,#2563eb,#60a5fa)"></div>
+      <div class="fc-badge" style="background:#eff6ff;color:#1d4ed8">⭐ Most Popular</div>
+      <div class="fc-title">Payroll Tax Estimator</div>
+      <p class="fc-desc">Full paycheck with federal withholding, Social Security, Medicare, and all 50 state rates. Handles pre-tax deductions, multiple filing statuses.</p>
+
+      <div class="fc-interactive">
+        <div style="margin-bottom:14px">
+          <div class="mini-slider" style="color:#2563eb">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+              <span style="color:var(--muted)">Gross Pay</span>
+              <span style="font-weight:600;font-family:'JetBrains Mono',monospace" id="p-gross-lbl">$5,500</span>
+            </div>
+            <input type="range" min="1000" max="20000" step="100" value="5500" style="width:100%;accent-color:#2563eb" oninput="payrollCalc(this.value)">
+          </div>
+        </div>
+        <div class="mini-row"><span class="mini-label">Federal Tax (12%)</span><span class="mini-val neg" id="p-fed">−$660</span></div>
+        <div class="mini-row"><span class="mini-label">FICA (Social Security)</span><span class="mini-val neg" id="p-ss">−$341</span></div>
+        <div class="mini-row"><span class="mini-label">Medicare (1.45%)</span><span class="mini-val neg" id="p-med">−$80</span></div>
+        <div class="mini-row"><span class="mini-label">VA State Tax (5.75%)</span><span class="mini-val neg" id="p-st">−$317</span></div>
+        <div class="mini-total" style="background:#eff6ff;margin-top:14px">
+          <span class="mt-label" style="color:#1d4ed8">Net Pay</span>
+          <span class="mt-val" style="color:#1d4ed8" id="p-net">$4,102</span>
+        </div>
+      </div>
+
+      <a href="/booksmart-tools/payroll-tax-estimator.html" class="fc-open-btn" style="color:#2563eb;margin-top:16px">
+        <div><div class="fob-text">Open Full Calculator</div><div class="fob-sub">All states · Deductions · W-4 support</div></div>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Small payroll tools -->
+    <div class="small-tools">
+      <a href="/booksmart-tools/overtime-calculator.html" class="small-card reveal reveal-d1" style="--accent:#2563eb">
+        <div class="sc-icon" style="background:#eff6ff;color:#2563eb">⏱</div>
+        <div class="sc-body">
+          <div class="sc-name">Overtime Calculator</div>
+          <div class="sc-desc">Regular, 1.5×, double time · FLSA + CA rules</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/hourly-salary-converter.html" class="small-card reveal reveal-d2" style="--accent:#2563eb">
+        <div class="sc-icon" style="background:#eff6ff;color:#2563eb">🔄</div>
+        <div class="sc-body">
+          <div class="sc-name">Hourly ↔ Salary Converter</div>
+          <div class="sc-desc">Weekly, bi-weekly, monthly, annual breakdowns</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/pto-calculator.html" class="small-card reveal reveal-d3" style="--accent:#2563eb">
+        <div class="sc-icon" style="background:#eff6ff;color:#2563eb">🏖</div>
+        <div class="sc-body">
+          <div class="sc-name">PTO Accrual Calculator</div>
+          <div class="sc-desc">Balance and payout value · any accrual method</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════ TAX SECTION ═══════ -->
+<section id="tax">
+<div class="tool-section">
+  <div class="ts-header reveal">
+    <div>
+      <div class="ts-kicker" style="color:#d97706">Tax Tools</div>
+      <div class="ts-title">Know what you owe<br>before the IRS does.</div>
+      <p class="ts-desc">Quarterly estimates, self-employment tax, sales tax returns — every tax calculation a small business or freelancer needs.</p>
+    </div>
+    <a href="/booksmart-tools/tools.html" class="ts-viewall">View all tax tools →</a>
+  </div>
+
+  <div class="feature-layout">
+    <div class="feature-card reveal">
+      <div class="fc-accent" style="background:linear-gradient(90deg,#d97706,#fcd34d)"></div>
+      <div class="fc-badge" style="background:#fffbeb;color:#92400e">Self-Employed</div>
+      <div class="fc-title">Quarterly Tax Calculator</div>
+      <p class="fc-desc">IRS Form 1040-ES estimated payments. Enter your annual income and the tool calculates what to pay each quarter — with exact 2026 due dates.</p>
+
+      <div class="fc-interactive">
+        <div class="mini-slider" style="color:#d97706;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--muted)">Annual Net Income</span>
+            <span style="font-weight:600;font-family:'JetBrains Mono',monospace" id="q-income-lbl">$75,000</span>
+          </div>
+          <input type="range" min="10000" max="300000" step="1000" value="75000" style="width:100%;accent-color:#d97706" oninput="quarterlyCalc(this.value)">
+        </div>
+        <div class="mini-row"><span class="mini-label">Self-Employment Tax (15.3%)</span><span class="mini-val neg" id="q-se">−$10,597</span></div>
+        <div class="mini-row"><span class="mini-label">Federal Income Tax (est.)</span><span class="mini-val neg" id="q-fed">−$9,000</span></div>
+        <div class="mini-row"><span class="mini-label">SE Deduction</span><span class="mini-val pos" id="q-ded">+$5,298</span></div>
+        <div class="mini-total" style="background:#fffbeb">
+          <div>
+            <span class="mt-label" style="color:#92400e">Per Quarter</span>
+            <div style="font-size:11px;color:#a16207;margin-top:2px">Next: June 16, 2026</div>
+          </div>
+          <span class="mt-val" style="color:#92400e" id="q-quarterly">$4,824</span>
+        </div>
+      </div>
+
+      <a href="/booksmart-tools/quarterly-tax-calculator.html" class="fc-open-btn" style="color:#d97706;margin-top:16px">
+        <div><div class="fob-text">Open Full Calculator</div><div class="fob-sub">All filing statuses · State tax · All due dates</div></div>
+        <span>→</span>
+      </a>
+    </div>
+
+    <div class="small-tools">
+      <a href="/booksmart-tools/self-employment-tax.html" class="small-card reveal reveal-d1" style="--accent:#d97706">
+        <div class="sc-icon" style="background:#fffbeb;color:#d97706">🧾</div>
+        <div class="sc-body">
+          <div class="sc-name">Self-Employment Tax</div>
+          <div class="sc-desc">15.3% SE tax, deductible half, full schedule</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/sales-tax-calculator.html" class="small-card reveal reveal-d2" style="--accent:#d97706">
+        <div class="sc-icon" style="background:#fffbeb;color:#d97706">🏪</div>
+        <div class="sc-body">
+          <div class="sc-name">Sales Tax Return Calculator</div>
+          <div class="sc-desc">Business sales tax with all state rates</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/1099-vs-w2-calculator.html" class="small-card reveal reveal-d3" style="--accent:#d97706">
+        <div class="sc-icon" style="background:#fffbeb;color:#d97706">⚖</div>
+        <div class="sc-body">
+          <div class="sc-name">1099 vs W-2 Calculator</div>
+          <div class="sc-desc">True employer cost comparison with all benefits</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════ LOANS SECTION ═══════ -->
+<section id="loans">
+<div class="tool-section">
+  <div class="ts-header reveal">
+    <div>
+      <div class="ts-kicker" style="color:#0891b2">Loans &amp; Mortgage</div>
+      <div class="ts-title">Every payment, broken<br>down to the dollar.</div>
+      <p class="ts-desc">Loan amortization schedules that match bank statements exactly. Odd-days interest, PITI breakdowns, and debt payoff strategy.</p>
+    </div>
+    <a href="/booksmart-tools/tools.html" class="ts-viewall">View all loan tools →</a>
+  </div>
+
+  <div class="feature-layout">
+    <div class="feature-card reveal">
+      <div class="fc-accent" style="background:linear-gradient(90deg,#0891b2,#67e8f9)"></div>
+      <div class="fc-badge" style="background:#ecfeff;color:#0e7490">Bank-Accurate</div>
+      <div class="fc-title">Loan Amortization Calculator</div>
+      <p class="fc-desc">Complete payment schedule with exact dates, odd-days interest calculation, and figures that match your TILA disclosure dollar for dollar.</p>
+
+      <div class="fc-interactive">
+        <div class="mini-input-row" style="color:#0891b2">
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Loan Amount</div>
+            <input class="mini-input" id="la-amt" type="number" value="250000" placeholder="250000" oninput="loanCalc()" style="border-color:var(--border)">
+          </div>
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Rate (%)</div>
+            <input class="mini-input" id="la-rate" type="number" value="7.25" step="0.25" placeholder="7.25" oninput="loanCalc()" style="border-color:var(--border)">
+          </div>
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Years</div>
+            <input class="mini-input" id="la-yrs" type="number" value="30" placeholder="30" oninput="loanCalc()" style="border-color:var(--border)">
+          </div>
+        </div>
+        <div class="mini-row"><span class="mini-label">Monthly Payment</span><span class="mini-val" style="color:#0891b2;font-size:16px;font-weight:700" id="la-pmt">$1,705</span></div>
+        <div class="mini-row"><span class="mini-label">Total Interest Paid</span><span class="mini-val neg" id="la-int">−$363,821</span></div>
+        <div class="mini-row"><span class="mini-label">Total Cost of Loan</span><span class="mini-val" id="la-total">$613,821</span></div>
+        <div style="background:#ecfeff;border-radius:8px;padding:12px 14px;margin-top:12px;display:flex;justify-content:space-between">
+          <span style="font-size:12px;color:#0e7490">Interest as % of loan</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:600;color:#0e7490" id="la-pct">145%</span>
+        </div>
+      </div>
+
+      <a href="/booksmart-tools/loan-amortization.html" class="fc-open-btn" style="color:#0891b2;margin-top:16px">
+        <div><div class="fob-text">Open Full Calculator</div><div class="fob-sub">Full schedule · Odd-days interest · CSV export</div></div>
+        <span>→</span>
+      </a>
+    </div>
+
+    <div class="small-tools">
+      <a href="/booksmart-tools/mortgage-calculator.html" class="small-card reveal reveal-d1" style="--accent:#0891b2">
+        <div class="sc-icon" style="background:#ecfeff;color:#0891b2">🏠</div>
+        <div class="sc-body">
+          <div class="sc-name">Mortgage Calculator</div>
+          <div class="sc-desc">Full PITI with PMI, property tax &amp; insurance</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/debt-payoff-calculator.html" class="small-card reveal reveal-d2" style="--accent:#0891b2">
+        <div class="sc-icon" style="background:#ecfeff;color:#0891b2">🎯</div>
+        <div class="sc-body">
+          <div class="sc-name">Debt Payoff Calculator</div>
+          <div class="sc-desc">Avalanche vs snowball · interest saved comparison</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/business-loan-calculator.html" class="small-card reveal reveal-d3" style="--accent:#0891b2">
+        <div class="sc-icon" style="background:#ecfeff;color:#0891b2">🏦</div>
+        <div class="sc-body">
+          <div class="sc-name">Business Loan Calculator</div>
+          <div class="sc-desc">Monthly payment &amp; total cost with amortization</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════ BUSINESS FINANCE ═══════ -->
+<section id="business">
+<div class="tool-section">
+  <div class="ts-header reveal">
+    <div>
+      <div class="ts-kicker" style="color:#7c3aed">Business Finance</div>
+      <div class="ts-title">The numbers that drive<br>real business decisions.</div>
+      <p class="ts-desc">EBITDA, break-even, margins, ROI — the metrics banks, investors, and smart owners use to evaluate a business.</p>
+    </div>
+    <a href="/booksmart-tools/tools.html" class="ts-viewall">View all business tools →</a>
+  </div>
+
+  <div class="feature-layout">
+    <div class="feature-card reveal">
+      <div class="fc-accent" style="background:linear-gradient(90deg,#7c3aed,#c084fc)"></div>
+      <div class="fc-badge" style="background:#f5f3ff;color:#5b21b6">Valuation Tool</div>
+      <div class="fc-title">EBITDA Calculator</div>
+      <p class="fc-desc">Calculate EBITDA two ways — bottom-up from net income, or top-down from revenue. Includes adjusted EBITDA and EV/EBITDA enterprise valuation.</p>
+
+      <div class="fc-interactive">
+        <div class="mini-input-row" style="color:#7c3aed">
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Revenue</div>
+            <input class="mini-input" id="eb-rev" type="number" value="1200000" oninput="ebitdaCalc()" style="border-color:var(--border)">
+          </div>
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Net Income</div>
+            <input class="mini-input" id="eb-net" type="number" value="146000" oninput="ebitdaCalc()" style="border-color:var(--border)">
+          </div>
+        </div>
+        <div class="mini-input-row">
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Interest</div>
+            <input class="mini-input" id="eb-int" type="number" value="45000" oninput="ebitdaCalc()" style="border-color:var(--border)">
+          </div>
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Tax</div>
+            <input class="mini-input" id="eb-tax" type="number" value="39000" oninput="ebitdaCalc()" style="border-color:var(--border)">
+          </div>
+          <div style="flex:1">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">D&amp;A</div>
+            <input class="mini-input" id="eb-da" type="number" value="60000" oninput="ebitdaCalc()" style="border-color:var(--border)">
+          </div>
+        </div>
+        <div class="mini-row"><span class="mini-label">EBITDA</span><span class="mini-val" style="color:#7c3aed;font-size:16px;font-weight:700" id="eb-ebitda">$290,000</span></div>
+        <div class="mini-row"><span class="mini-label">EBITDA Margin</span><span class="mini-val pos" id="eb-margin">24.2%</span></div>
+        <div class="mini-row"><span class="mini-label">Enterprise Value (6×)</span><span class="mini-val" id="eb-ev">$1,740,000</span></div>
+      </div>
+
+      <a href="/booksmart-tools/ebitda-calculator.html" class="fc-open-btn" style="color:#7c3aed;margin-top:16px">
+        <div><div class="fob-text">Open Full Calculator</div><div class="fob-sub">Adjusted EBITDA · Industry benchmarks · Multiples</div></div>
+        <span>→</span>
+      </a>
+    </div>
+
+    <div class="small-tools">
+      <a href="/booksmart-tools/profit-margin-calculator.html" class="small-card reveal reveal-d1" style="--accent:#7c3aed">
+        <div class="sc-icon" style="background:#f5f3ff;color:#7c3aed">📊</div>
+        <div class="sc-body">
+          <div class="sc-name">Profit Margin Calculator</div>
+          <div class="sc-desc">Gross, operating &amp; net margins with markup %</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/break-even-calculator.html" class="small-card reveal reveal-d2" style="--accent:#7c3aed">
+        <div class="sc-icon" style="background:#f5f3ff;color:#7c3aed">⚖</div>
+        <div class="sc-body">
+          <div class="sc-name">Break-Even Calculator</div>
+          <div class="sc-desc">Units &amp; revenue needed to cover all costs</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="/booksmart-tools/roi-calculator.html" class="small-card reveal reveal-d3" style="--accent:#7c3aed">
+        <div class="sc-icon" style="background:#f5f3ff;color:#7c3aed">📈</div>
+        <div class="sc-body">
+          <div class="sc-name">ROI Calculator</div>
+          <div class="sc-desc">Return on investment &amp; payback period</div>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════ PDF TOOLS ═══════ -->
+<section id="pdf">
+<div class="tool-section">
+  <div class="ts-header reveal">
+    <div>
+      <div class="ts-kicker" style="color:#be185d">PDF Tools</div>
+      <div class="ts-title">Convert, merge, extract.<br>No limits, no watermarks.</div>
+      <p class="ts-desc">All processing happens in your browser. Your files never leave your device — not for a second.</p>
+    </div>
+  </div>
+
+  <div class="pdf-visual-grid">
+    <a href="/booksmart-tools/pdf-merge.html" class="pdf-card reveal">
+      <span class="pdf-icon-big">📑</span>
+      <div class="pdf-title">PDF Merge — Unlimited</div>
+      <p class="pdf-desc">Combine any number of PDFs into one. Drag to reorder pages. No watermarks branded onto your documents. No subscriptions, no page caps.</p>
+      <div class="pdf-tags">
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">No watermarks</span>
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">No page limits</span>
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">Files stay local</span>
+      </div>
+      <div class="pdf-link">Merge PDFs free →</div>
     </a>
-    <a href="/booksmart-tools/loan-amortization.html" class="tool-card fade-up delay-1">
-      <div class="tc-cat">Loan & Mortgage</div>
-      <div class="tc-icon">📊</div>
-      <div class="tc-name">Loan Amortization</div>
-      <div class="tc-desc">Complete schedule with exact dates, odd-days interest, and bank-matching accuracy.</div>
-      <div class="tc-arrow">→</div>
+
+    <a href="/booksmart-tools/convert-to-pdf.html" class="pdf-card reveal reveal-d1">
+      <span class="pdf-icon-big">📂</span>
+      <div class="pdf-title">Files → PDF</div>
+      <p class="pdf-desc">Convert JPG, PNG, Word, Excel, and plain text into a single PDF. Combine multiple file types in the right order in one document.</p>
+      <div class="pdf-tags">
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">JPG/PNG</span>
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">Word/Excel</span>
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">100% Private</span>
+      </div>
+      <div class="pdf-link">Convert files free →</div>
     </a>
-    <a href="/booksmart-tools/quarterly-tax-calculator.html" class="tool-card fade-up delay-2">
-      <div class="tc-cat">Tax Tools</div>
-      <div class="tc-icon">📅</div>
-      <div class="tc-name">Quarterly Tax Calculator</div>
-      <div class="tc-desc">IRS Form 1040-ES estimated payments for freelancers and self-employed. 2026 due dates included.</div>
-      <div class="tc-arrow">→</div>
-    </a>
-    <a href="/booksmart-tools/ebitda-calculator.html" class="tool-card fade-up delay-1">
-      <div class="tc-cat">Business Finance</div>
-      <div class="tc-icon">📈</div>
-      <div class="tc-name">EBITDA Calculator</div>
-      <div class="tc-desc">Bottom-up and top-down methods, adjusted EBITDA, EV/EBITDA valuation, and industry benchmarks.</div>
-      <div class="tc-arrow">→</div>
-    </a>
-    <a href="/booksmart-tools/profit-margin-calculator.html" class="tool-card fade-up delay-2">
-      <div class="tc-cat">Bookkeeping</div>
-      <div class="tc-icon">📋</div>
-      <div class="tc-name">Profit Margin Calculator</div>
-      <div class="tc-desc">Gross, operating, and net margins with markup percentage. Understand your true profitability.</div>
-      <div class="tc-arrow">→</div>
-    </a>
-    <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html" class="tool-card fade-up delay-3">
-      <div class="tc-cat">🆕 E-Commerce</div>
-      <div class="tc-icon">🛒</div>
-      <div class="tc-name">E-Commerce Sales Tax Tool</div>
-      <div class="tc-desc">Upload Amazon, Shopify, or eBay reports. Auto-sorts by state & county, generates filing reports.</div>
-      <div class="tc-arrow">→</div>
+
+    <a href="/booksmart-tools/pdf-converter.html" class="pdf-card reveal reveal-d2">
+      <span class="pdf-icon-big">🔄</span>
+      <div class="pdf-title">PDF → Word / Excel / JPG</div>
+      <p class="pdf-desc">Extract text and images from any PDF. Convert to editable Word or Excel format, or save pages as high-quality JPG images.</p>
+      <div class="pdf-tags">
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">PDF → Word</span>
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">PDF → Excel</span>
+        <span class="pdf-tag" style="background:#fdf0f2;color:#9b1b30">PDF → JPG</span>
+      </div>
+      <div class="pdf-link">Convert PDF free →</div>
     </a>
   </div>
 </div>
+</section>
 
-<!-- About section -->
-<div class="about-section">
-  <div class="about-inner">
-    <div class="about-left fade-up">
-      <div class="section-kicker">About These Tools</div>
-      <div class="about-facts">
-        <div class="af"><span class="af-num">35+</span><div class="af-lbl">Free calculators & tools</div></div>
-        <div class="af"><span class="af-num">50</span><div class="af-lbl">States covered in all tools</div></div>
-        <div class="af"><span class="af-num">$0</span><div class="af-lbl">No cost, no account needed</div></div>
-        <div class="af"><span class="af-num">Local</span><div class="af-lbl">All processing in browser</div></div>
+<!-- ═══════ E-COMMERCE ═══════ -->
+<section id="ecommerce" style="background:var(--paper);padding:80px 40px">
+<div style="max-width:1200px;margin:0 auto">
+  <div class="ts-header reveal" style="margin-bottom:40px">
+    <div>
+      <div class="ts-kicker" style="color:#15803d">E-Commerce Tax</div>
+      <div class="ts-title">Your sales report → state-by-state<br>filing reports. Automatically.</div>
+    </div>
+  </div>
+
+  <div class="ecom-hero reveal">
+    <div class="eh-left">
+      <div class="eh-kicker">New — Sales Tax Report Tool</div>
+      <div class="eh-title">Upload once.<br>File everywhere.</div>
+      <p class="eh-desc">Upload your Amazon, Shopify, or eBay sales CSV. The tool reads every column automatically — no manual mapping. Sorts every sale by state and city, calculates tax owed, and generates a ready-to-file report for each of the 50 states.</p>
+      <div class="platform-pills">
+        <span class="pp ebay">eBay</span>
+        <span class="pp amz">Amazon</span>
+        <span class="pp sh">Shopify</span>
+        <span class="pp" style="color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2)">Any CSV</span>
+      </div>
+      <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html" class="eh-cta">Try the Sales Tax Tool →</a>
+    </div>
+    <div class="eh-right">
+      <div class="ecom-step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Upload your report</strong>
+          Drop your CSV or Excel file. eBay, Amazon, Shopify — all detected automatically from the filename.
+        </div>
+      </div>
+      <div class="ecom-step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Review the dashboard</strong>
+          Every state with its gross sales, tax collected, effective rate, and nexus threshold status — expanded by city and county.
+        </div>
+      </div>
+      <div class="ecom-step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Download &amp; file</strong>
+          Download a CSV or Excel report per state, or one summary file. "File Now" links open each state's official tax portal.
+        </div>
       </div>
     </div>
-    <div class="about-right fade-up delay-2">
-      <h2>Simple tools.<br><em>Straightforward answers.</em></h2>
-      <p>BookSmartTools is a free collection of calculators for small business owners, bookkeepers, freelancers, and anyone dealing with payroll, taxes, loans, or business finances.</p>
-      <p>Every tool runs entirely in your browser — nothing is sent to a server. Tax rates are pulled from IRS publications and updated each January. If you find an error, let us know and we'll fix it.</p>
-      <ul class="checklist">
-        <li><div class="check-icon">✓</div><div><strong>Rates sourced from the IRS</strong> — Federal brackets, FICA, SS wage base ($184,500 for 2026), and all state rates updated every January.</div></li>
-        <li><div class="check-icon">✓</div><div><strong>Your data stays on your device</strong> — All calculations happen locally in your browser. No account, no cloud, no tracking.</div></li>
-        <li><div class="check-icon">✓</div><div><strong>Always verify with a professional</strong> — These tools are for estimation and planning. For tax filing, consult a CPA or licensed advisor.</div></li>
+  </div>
+</div>
+</section>
+
+<!-- ═══════ ABOUT STRIP ═══════ -->
+<div class="about-strip">
+  <div style="max-width:1200px;margin:0 auto;margin-bottom:40px;text-align:center">
+    <div style="font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--ink);margin-bottom:10px">Simple tools. Straightforward answers.</div>
+    <p style="font-size:16px;color:var(--muted);font-weight:300">Free for small business owners, freelancers, and bookkeepers. No account, no cost, no catch.</p>
+  </div>
+  <div class="about-inner">
+    <div class="about-cell">
+      <span class="ac-icon">🔒</span>
+      <div class="ac-title">100% Browser-Based</div>
+      <p class="ac-text">All calculations happen locally on your device. Nothing is uploaded or stored anywhere — not your payroll numbers, not your PDF files.</p>
+    </div>
+    <div class="about-cell">
+      <span class="ac-icon">📅</span>
+      <div class="ac-title">2026 Rates, Always Current</div>
+      <p class="ac-text">Federal brackets, Social Security wage base ($184,500), and all 50 state rates updated from IRS publications every January.</p>
+    </div>
+    <div class="about-cell">
+      <span class="ac-icon">📱</span>
+      <div class="ac-title">Install on Any Device</div>
+      <p class="ac-text">Add to your home screen on Android or iPhone. The site works as a full app offline — all 35+ tools available without internet after first visit.</p>
+    </div>
+    <div class="about-cell">
+      <span class="ac-icon">🆓</span>
+      <div class="ac-title">Free to Use — No Catch</div>
+      <p class="ac-text">No freemium tier. No "upgrade to unlock." No credit card. All 35+ tools are available to everyone, at no cost, for as long as this site exists.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Book<em>Smart</em>Tools</div>
+      <p class="footer-tagline">Free bookkeeping, payroll, tax, and PDF tools for small business owners and freelancers. No account required.</p>
+    </div>
+    <div class="fcol">
+      <h4>Top Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+        <li><a href="/booksmart-tools/loan-amortization.html">Loan Amortization</a></li>
+        <li><a href="/booksmart-tools/quarterly-tax-calculator.html">Quarterly Tax</a></li>
+        <li><a href="/booksmart-tools/ebitda-calculator.html">EBITDA Calculator</a></li>
+        <li><a href="/booksmart-tools/ecommerce-sales-tax-calculator.html">E-Commerce Sales Tax</a></li>
+        <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>PDF Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge</a></li>
+        <li><a href="/booksmart-tools/convert-to-pdf.html">Files → PDF</a></li>
+        <li><a href="/booksmart-tools/pdf-converter.html">PDF → Word/Excel</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>More</h4>
+      <ul>
+        <li><a href="/booksmart-tools/blog/index.html">Blog &amp; Guides</a></li>
+        <li><a href="/booksmart-tools/about.html">About</a></li>
+        <li><a href="/booksmart-tools/contact.html">Contact</a></li>
+        <li><a href="/booksmart-tools/feedback.html">Feedback</a></li>
       </ul>
     </div>
   </div>
-</div>
-
-<!-- PDF Section -->
-<div class="pdf-section">
-  <div class="section-kicker">PDF Tools</div>
-  <div class="section-title">Convert, Merge & Extract PDFs<br>— free, no page limits</div>
-  <div class="pdf-grid">
-    <a href="/booksmart-tools/convert-to-pdf.html" class="pdf-card fade-up">
-      <span class="pc-icon">📂</span>
-      <div class="pc-title">Files → PDF</div>
-      <div class="pc-desc">Convert JPG, PNG, Word, Excel and text files into a single PDF document</div>
-      <div class="pc-tags"><span class="pct">Free</span><span class="pct">No limits</span><span class="pct">Private</span></div>
-    </a>
-    <a href="/booksmart-tools/pdf-merge.html" class="pdf-card fade-up delay-1">
-      <span class="pc-icon">📑</span>
-      <div class="pc-title">PDF Merge — Unlimited</div>
-      <div class="pc-desc">Combine unlimited PDFs into one. Drag to reorder. No watermarks, no signup, always free.</div>
-      <div class="pc-tags"><span class="pct">No watermarks</span><span class="pct">No signup</span></div>
-    </a>
-    <a href="/booksmart-tools/pdf-converter.html" class="pdf-card fade-up delay-2">
-      <span class="pc-icon">🔄</span>
-      <div class="pc-title">PDF → Word / Excel / JPG</div>
-      <div class="pc-desc">Extract text and images from any PDF. Convert to editable formats instantly.</div>
-      <div class="pc-tags"><span class="pct">Free</span><span class="pct">Files stay local</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- Testimonials -->
-<div class="testi-section">
-  <div class="testi-inner">
-    <div class="testi-kicker">From Real Users</div>
-    <div class="testi-title">Trusted by bookkeepers<br>& business owners</div>
-    <div class="testi-grid">
-      <div class="tc-wrap fade-up">
-        <div class="tc-stars">★★★★★</div>
-        <div class="tc-quote">"The payroll estimator saved me hours every single week. I used to do this in Excel — now it takes 30 seconds and I know it's accurate."</div>
-        <div class="tc-who">Sarah M.</div>
-        <div class="tc-role">Small Business Owner, Texas</div>
-      </div>
-      <div class="tc-wrap fade-up delay-1">
-        <div class="tc-stars">★★★★★</div>
-        <div class="tc-quote">"First loan amortization tool I've found that actually matches my bank's exact figures. The odd-days interest feature is something else."</div>
-        <div class="tc-who">James P.</div>
-        <div class="tc-role">Bookkeeper, Virginia</div>
-      </div>
-      <div class="tc-wrap fade-up delay-2">
-        <div class="tc-stars">★★★★★</div>
-        <div class="tc-quote">"PDF Merge alone is worth bookmarking. No watermarks, no ridiculous page limits, no subscription. Just works, every time."</div>
-        <div class="tc-who">Rachel K.</div>
-        <div class="tc-role">Accountant, California</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Blog teaser -->
-<div class="blog-section">
-  <div class="section-kicker">Guides & Articles</div>
-  <div class="section-title">Learn the numbers behind<br>your business</div>
-  <div class="blog-grid">
-    <a href="/booksmart-tools/blog/self-employment-tax-guide.html" class="blog-card fade-up">
-      <div class="bc-img" style="background:linear-gradient(135deg,#2a1400,#8a4c0a)">🧾</div>
-      <div class="bc-body">
-        <div class="bc-tag" style="color:#8a5a0a">TAX GUIDE</div>
-        <div class="bc-title">Self-Employment Tax 2026: What It Is & How to Reduce It</div>
-        <div class="bc-excerpt">The 15.3% SE tax explained, step-by-step calculation, and legal ways to reduce what you owe.</div>
-        <div class="bc-read">Read Guide →</div>
-      </div>
-    </a>
-    <a href="/booksmart-tools/blog/what-is-ebitda.html" class="blog-card fade-up delay-1">
-      <div class="bc-img" style="background:linear-gradient(135deg,#0e2818,#1a3d60)">📈</div>
-      <div class="bc-body">
-        <div class="bc-tag" style="color:#1a3d60">BUSINESS FINANCE</div>
-        <div class="bc-title">What is EBITDA and How Do You Calculate It?</div>
-        <div class="bc-excerpt">EBITDA explained simply with worked examples, industry benchmarks, and valuation multiples.</div>
-        <div class="bc-read">Read Guide →</div>
-      </div>
-    </a>
-    <a href="/booksmart-tools/blog/free-pdf-tools-guide.html" class="blog-card fade-up delay-2">
-      <div class="bc-img" style="background:linear-gradient(135deg,#1a1840,#3040a0)">📄</div>
-      <div class="bc-body">
-        <div class="bc-tag" style="color:#3040a0">PDF TOOLS</div>
-        <div class="bc-title">Free PDF Tools That Actually Work — No Watermarks, No Signup</div>
-        <div class="bc-excerpt">Merge, convert, and edit PDFs free without watermarks, limits, or uploading to a server.</div>
-        <div class="bc-read">Read Guide →</div>
-      </div>
-    </a>
-  </div>
-</div>
-
-<!-- CTA Band -->
-<div class="cta-band">
-  <div class="cta-inner">
-    <h2>Ready to save some time?</h2>
-    <p>Browse all 35+ free tools — payroll, taxes, loans, margins, PDF, and more. No account needed, no cost, no limits.</p>
-    <div class="cta-btns">
-      <a href="/booksmart-tools/tools.html" class="btn-white">Browse All Free Tools →</a>
-      <a href="/booksmart-tools/feedback.html" class="btn-ghost-white">Share Feedback</a>
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-logo-text">Book<em>Smart</em>Tools</div>
-        <p class="footer-desc">Free bookkeeping, payroll, tax, and PDF tools for small business owners and freelancers. No account required, no cost.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Top Tools</h4>
-        <ul>
-          <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
-          <li><a href="/booksmart-tools/loan-amortization.html">Loan Amortization</a></li>
-          <li><a href="/booksmart-tools/quarterly-tax-calculator.html">Quarterly Tax</a></li>
-          <li><a href="/booksmart-tools/ebitda-calculator.html">EBITDA Calculator</a></li>
-          <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>PDF Tools</h4>
-        <ul>
-          <li><a href="/booksmart-tools/convert-to-pdf.html">Files → PDF</a></li>
-          <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge</a></li>
-          <li><a href="/booksmart-tools/pdf-converter.html">PDF → Word/Excel</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="/booksmart-tools/about.html">About</a></li>
-          <li><a href="/booksmart-tools/blog/index.html">Blog & Guides</a></li>
-          <li><a href="/booksmart-tools/contact.html">Contact</a></li>
-          <li><a href="/booksmart-tools/feedback.html">Feedback</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div>© 2026 BookSmartTools — For estimation only. Verify with a CPA for tax filing.</div>
-      <div>No ads · No tracking · Files never leave your browser</div>
-    </div>
+  <div class="footer-bottom">
+    <div>© 2026 BookSmartTools — For estimation only. Verify with a CPA before filing.</div>
+    <div>No ads · No tracking · Files never leave your browser</div>
   </div>
 </footer>
 
 <script>
-// ── Hero entry animation on load ─────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  const heroEls = document.querySelectorAll('.hero-tag,.hero h1,.hero-sub,.hero-btns,.trust-row,.hero-right');
-  heroEls.forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(22px)';
-    el.style.transition = 'opacity .6s ease, transform .6s ease';
-    setTimeout(() => {
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    }, 80 + i * 100);
+// ── Nav scroll effect
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  highlightCat();
+},{passive:true});
+
+// ── Hero payroll calculator
+function heroCalc(){
+  const g=parseInt(document.getElementById('h-slider').value);
+  const r=parseFloat(document.getElementById('h-rate-slider').value);
+  document.getElementById('h-gross').textContent='$'+g.toLocaleString();
+  document.getElementById('h-rate').textContent=r.toFixed(2)+'%';
+  const fed=Math.round(g*0.12);
+  const ss=Math.round(g*0.062);
+  const med=Math.round(g*0.0145);
+  const st=Math.round(g*r/100);
+  const net=g-fed-ss-med-st;
+  const f=n=>'−$'+n.toLocaleString();
+  document.getElementById('h-fed').textContent=f(fed);
+  document.getElementById('h-ss').textContent=f(ss);
+  document.getElementById('h-med').textContent=f(med);
+  document.getElementById('h-st').textContent=f(st);
+  const nEl=document.getElementById('h-net');
+  nEl.style.opacity='.3';
+  setTimeout(()=>{nEl.textContent='$'+net.toLocaleString();nEl.style.transition='opacity .25s';nEl.style.opacity='1';},120);
+}
+
+// ── Payroll feature calculator
+function payrollCalc(v){
+  const g=parseInt(v);
+  document.getElementById('p-gross-lbl').textContent='$'+g.toLocaleString();
+  const fed=Math.round(g*0.12);
+  const ss=Math.round(g*0.062);
+  const med=Math.round(g*0.0145);
+  const st=Math.round(g*0.0575);
+  const net=g-fed-ss-med-st;
+  const f=n=>'−$'+n.toLocaleString();
+  document.getElementById('p-fed').textContent=f(fed);
+  document.getElementById('p-ss').textContent=f(ss);
+  document.getElementById('p-med').textContent=f(med);
+  document.getElementById('p-st').textContent=f(st);
+  document.getElementById('p-net').textContent='$'+net.toLocaleString();
+}
+
+// ── Quarterly tax calculator
+function quarterlyCalc(v){
+  const income=parseInt(v);
+  document.getElementById('q-income-lbl').textContent='$'+income.toLocaleString();
+  const seBase=income*0.9235;
+  const seTax=Math.round(seBase*0.153);
+  const ded=Math.round(seTax/2);
+  const taxableIncome=income-ded;
+  let fedTax=0;
+  if(taxableIncome>89075)fedTax=10294+(taxableIncome-89075)*0.22;
+  else if(taxableIncome>41775)fedTax=4807+(taxableIncome-41775)*0.22;
+  else if(taxableIncome>10275)fedTax=1027+(taxableIncome-10275)*0.12;
+  else fedTax=taxableIncome*0.10;
+  fedTax=Math.round(fedTax);
+  const total=seTax+fedTax;
+  const quarterly=Math.round(total/4);
+  document.getElementById('q-se').textContent='−$'+seTax.toLocaleString();
+  document.getElementById('q-fed').textContent='−$'+fedTax.toLocaleString();
+  document.getElementById('q-ded').textContent='+$'+ded.toLocaleString();
+  document.getElementById('q-quarterly').textContent='$'+quarterly.toLocaleString();
+}
+
+// ── Loan calculator
+function loanCalc(){
+  const P=parseFloat(document.getElementById('la-amt').value)||250000;
+  const r=(parseFloat(document.getElementById('la-rate').value)||7.25)/100/12;
+  const n=(parseInt(document.getElementById('la-yrs').value)||30)*12;
+  const pmt=r===0?P/n:P*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+  const total=pmt*n;
+  const interest=total-P;
+  const pct=Math.round(interest/P*100);
+  document.getElementById('la-pmt').textContent='$'+Math.round(pmt).toLocaleString();
+  document.getElementById('la-int').textContent='−$'+Math.round(interest).toLocaleString();
+  document.getElementById('la-total').textContent='$'+Math.round(total).toLocaleString();
+  document.getElementById('la-pct').textContent=pct+'%';
+}
+
+// ── EBITDA calculator
+function ebitdaCalc(){
+  const rev=parseFloat(document.getElementById('eb-rev').value)||1200000;
+  const net=parseFloat(document.getElementById('eb-net').value)||146000;
+  const int=parseFloat(document.getElementById('eb-int').value)||45000;
+  const tax=parseFloat(document.getElementById('eb-tax').value)||39000;
+  const da=parseFloat(document.getElementById('eb-da').value)||60000;
+  const ebitda=net+int+tax+da;
+  const margin=rev>0?((ebitda/rev)*100).toFixed(1):0;
+  const ev=ebitda*6;
+  const fmt=n=>'$'+Math.round(n).toLocaleString();
+  document.getElementById('eb-ebitda').textContent=fmt(ebitda);
+  document.getElementById('eb-margin').textContent=margin+'%';
+  document.getElementById('eb-ev').textContent=fmt(ev);
+}
+
+// ── Counter animation
+function animCount(el,target,dur){
+  const t0=performance.now();
+  (function tick(now){
+    const p=Math.min((now-t0)/dur,1);
+    el.textContent=Math.round(target*(1-Math.pow(1-p,3)));
+    if(p<1)requestAnimationFrame(tick);
+  })(t0);
+}
+setTimeout(()=>animCount(document.getElementById('counter'),35,1400),300);
+
+// ── Scroll reveal
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('shown');});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// ── Small card accent bars
+document.querySelectorAll('.small-card').forEach(card=>{
+  const accent=getComputedStyle(card).getPropertyValue('--accent').trim()||'#1a5c35';
+  card.style.setProperty('--accent',accent);
+  card.addEventListener('mouseenter',()=>card.style.setProperty('border-left-color',accent));
+  card.addEventListener('mouseleave',()=>card.style.removeProperty('border-left-color'));
+});
+
+// ── Category nav highlight on scroll
+function highlightCat(){
+  const sections=['payroll','tax','loans','business','pdf','ecommerce'];
+  let current='';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<160)current=id;
+  });
+  document.querySelectorAll('.cat-btn').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.cat===current);
+  });
+}
+
+// ── Category btn click smooth scroll
+document.querySelectorAll('.cat-btn[data-cat]').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    const target=document.getElementById(btn.dataset.cat);
+    if(target){e.preventDefault();window.scrollTo({top:target.getBoundingClientRect().top+scrollY-120,behavior:'smooth'});}
   });
 });
 
-// ── Sticky nav on scroll ──────────────────────────────────────
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
-
-// ── Scroll reveal ─────────────────────────────────────────────
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ── Live animated calculator preview ─────────────────────────
-// Cycles through different paycheck scenarios every 4 seconds
-const scenarios = [
-  { gross: 4800, fed: 576, ss: 297.60, medi: 69.60, state: 276.00, stateName: 'VA (5.75%)', net: 3580.80 },
-  { gross: 6500, fed: 877.50, ss: 403, medi: 94.25, state: 406.25, stateName: 'CA (6.25%)', net: 4718.00 },
-  { gross: 3200, fed: 384, ss: 198.40, medi: 46.40, state: 160.00, stateName: 'TX (0%)', net: 2411.20 },
-  { gross: 9000, fed: 1368, ss: 558, medi: 130.50, state: 504.00, stateName: 'NY (5.6%)', net: 6439.50 },
-  { gross: 5500, fed: 742.50, ss: 341, medi: 79.75, state: 330.00, stateName: 'FL (0%)', net: 4006.75 },
-];
-let scenIdx = 0;
-
-function animateValue(el, newVal, prefix='$', suffix='') {
-  const formatted = prefix + Math.abs(newVal).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + suffix;
-  el.style.opacity = '0.3';
-  setTimeout(() => {
-    el.textContent = formatted;
-    el.style.opacity = '1';
-    el.style.transition = 'opacity 0.4s ease';
-  }, 200);
-}
-
-function cycleScenario() {
-  scenIdx = (scenIdx + 1) % scenarios.length;
-  const s = scenarios[scenIdx];
-  const rows = document.querySelectorAll('.calc-row .cr-val');
-  if (rows.length >= 5) {
-    animateValue(rows[0], s.gross);
-    setTimeout(() => animateValue(rows[1], s.fed), 80);
-    setTimeout(() => animateValue(rows[2], s.ss), 140);
-    setTimeout(() => animateValue(rows[3], s.medi), 200);
-    setTimeout(() => animateValue(rows[4], s.state), 260);
-    // Update state label
-    const labels = document.querySelectorAll('.calc-row .cr-label');
-    if (labels[4]) labels[4].textContent = s.stateName + ' State Tax';
-    // Update take-home
-    setTimeout(() => {
-      const th = document.getElementById('takehome-val');
-      th.style.opacity = '0.3';
-      setTimeout(() => {
-        th.textContent = '$' + s.net.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        th.style.transition = 'opacity 0.4s ease';
-        th.style.opacity = '1';
-      }, 250);
-    }, 400);
-  }
-}
-setInterval(cycleScenario, 5000);
-
-// ── Counter animation for stats ───────────────────────────────
-function animateCounter(el, target, duration = 1500) {
-  const start = 0;
-  const startTime = performance.now();
-  const update = (currentTime) => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(start + (target - start) * eased);
-    if (progress < 1) requestAnimationFrame(update);
-  };
-  requestAnimationFrame(update);
-}
-
-// Trigger counter when stats strip is visible
-const statsObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      animateCounter(document.getElementById('c-tools'), 35, 1200);
-      statsObserver.disconnect();
-    }
-  });
-}, { threshold: 0.5 });
-const strip = document.querySelector('.stats-strip');
-if (strip) statsObserver.observe(strip);
-
-// ── Subtle parallax on hero ───────────────────────────────────
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const bg = document.querySelector('.hero-grid');
-  if (bg && scrollY < window.innerHeight) {
-    bg.style.transform = `translateY(${scrollY * 0.3}px)`;
-  }
-}, { passive: true });
-
-// ── Tool card magnetic hover effect ──────────────────────────
-document.querySelectorAll('.tool-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
-    card.style.transform = `translateY(-4px) rotateX(${-y}deg) rotateY(${x}deg)`;
-    card.style.transition = 'transform .1s ease';
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-    card.style.transition = 'transform .4s ease, box-shadow .4s ease, border-color .4s ease';
-  });
+// ── Hero btn smooth scroll
+document.querySelector('a[href="#payroll"]')?.addEventListener('click',e=>{
+  e.preventDefault();
+  const el=document.getElementById('payroll');
+  if(el)window.scrollTo({top:el.getBoundingClientRect().top+scrollY-120,behavior:'smooth'});
 });
+
+// Init all calculators
+payrollCalc(5500);
+quarterlyCalc(75000);
+loanCalc();
+ebitdaCalc();
 </script>
 </body>
 </html>
