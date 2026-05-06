@@ -1,241 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Free Finance & Bookkeeping Blog — Guides & How-To Articles | BookSmartTools</title>
-<meta name="description" content="Free bookkeeping and finance guides for small business owners. Payroll taxes, quarterly estimates, loan amortization, EBITDA, PDF tools — explained in plain English.">
-<meta name="keywords" content="bookkeeping blog, finance guides, payroll tax guide, quarterly tax guide, small business finance">
-<link rel="canonical" href="https://booksmartools.com/blog/index.html">
-<meta property="og:title" content="BookSmartTools Blog — Free Finance & Bookkeeping Guides">
-<meta property="og:description" content="Plain-English finance guides for small business owners and freelancers.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"BookSmartTools Blog","url":"https://booksmartools.com/blog/index.html","description":"Free bookkeeping and finance guides for small business owners."}</script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Finance, Payroll & Bookkeeping Guides 2026 | BookSmartTools Blog</title>
+<meta name="description" content="Free guides on payroll taxes, sales tax, bookkeeping software, QuickBooks, Xero, federal withholding, FICA, FUTA, SUTA, and more. Updated for 2026.">
+<link rel="canonical" href="https://booksmartools.com/blog/">
+<meta property="og:title" content="Finance, Payroll & Bookkeeping Guides 2026 | BookSmartTools Blog">
+<meta property="og:description" content="Free guides on payroll taxes, sales tax, bookkeeping software, QuickBooks, Xero, federal withholding, FICA, FUTA, SUTA, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:#f6f4ef;color:#1a1a18;-webkit-font-smoothing:antialiased}
+:root{
+  --ink:#0e0e0c;--muted:#5a5a56;--border:#e4e0d8;--paper:#fafaf7;--white:#fff;
+  --green:#1a5c35;--green2:#2a7a48;--green-lt:#e8f5ed;--green-mid:#c8e6d4;
+  --blue:#0d4a8a;--blue-lt:#e8f2fd;
+  --gold:#b5820a;--gold-lt:#fef8e7;
+  --purple:#4a1d96;--purple-lt:#f0ebff;
+  --rose:#9b1b30;--rose-lt:#fdf0f2;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 
+/* ANNOUNCEMENT */
+.bst-ann{background:var(--green);padding:9px 24px;text-align:center;font-size:13px;color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.bst-ann strong{color:#7dd4a0}
+.bst-ann a{color:white;font-weight:600;background:rgba(255,255,255,.18);padding:3px 11px;border-radius:4px;margin-left:4px;transition:background .15s}
+.bst-ann a:hover{background:rgba(255,255,255,.28)}
+
 /* NAV */
-.site-nav{background:#1a1a18;padding:0 32px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Playfair Display',serif;font-size:19px;color:white}
-.nav-logo em{color:#6db88a;font-style:normal}
-.nav-links{display:flex;align-items:center;gap:22px;list-style:none}
-.nav-links a{color:rgba(255,255,255,.7);font-size:14px;transition:color .15s}
-.nav-links a:hover{color:white}
-.nav-cta{color:white!important;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:3px}
+nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(250,250,247,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink)}
+.logo-name em{color:var(--green);font-style:italic}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:6px;transition:all .15s;text-decoration:none}
+.nav-links a:hover{color:var(--ink);background:var(--border)}
+.nav-cta{background:var(--ink)!important;color:white!important;border-radius:7px!important}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink)}
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:199;padding:16px 24px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.mob-nav a{display:block;padding:12px 0;font-size:15px;color:var(--ink);border-bottom:1px solid var(--border);text-decoration:none}
+.mob-nav a:last-child{border-bottom:none}
 
 /* HERO */
-.hero{background:linear-gradient(135deg,#1a1a18 0%,#2d2d2a 100%);padding:52px 24px 44px;text-align:center;color:white}
-.hero-tag{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:18px}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:700;margin-bottom:12px;line-height:1.15}
-.hero p{font-size:15px;color:rgba(255,255,255,.65);max-width:520px;margin:0 auto;line-height:1.7}
+.blog-hero{background:var(--ink);padding:72px 40px 64px;position:relative;overflow:hidden}
+.blog-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.04) 1px,transparent 0);background-size:28px 28px}
+.hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.hero-kicker{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#7dd4a0;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.hero-kicker::before{content:'';display:block;width:20px;height:2px;background:#7dd4a0;border-radius:1px}
+.blog-hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:white;line-height:1.1;margin-bottom:18px;letter-spacing:-2px}
+.blog-hero h1 em{color:#7dd4a0;font-style:italic}
+.blog-hero p{font-size:16px;color:rgba(255,255,255,.6);line-height:1.75;max-width:580px;font-weight:300}
+.hero-stats{display:flex;gap:36px;margin-top:32px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:4px}
+.stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:white}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;font-family:'JetBrains Mono',monospace}
+
+/* CATEGORY NAV */
+.cat-nav{background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:60px;z-index:100;overflow-x:auto;scrollbar-width:none}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-nav-inner{max-width:1100px;margin:0 auto;padding:0 40px;display:flex}
+.cat-btn{padding:14px 22px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;text-decoration:none;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:8px}
+.cat-btn:hover{color:var(--ink)}
+.cat-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
 /* MAIN */
-.wrap{max-width:1060px;margin:0 auto;padding:52px 24px 72px}
+.blog-main{max-width:1100px;margin:0 auto;padding:60px 40px 100px}
+
+/* CATEGORY SECTION */
+.cat-section{margin-bottom:72px;scroll-margin-top:130px}
+.cat-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.cat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.cat-info{flex:1}
+.cat-name{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.5px;line-height:1.1}
+.cat-desc{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.5}
+.cat-pill{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;background:var(--paper);border:1px solid var(--border);padding:4px 12px;border-radius:20px;white-space:nowrap;margin-top:4px;display:inline-block}
 
 /* ARTICLE GRID */
-.section-title{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;color:#1a1a18}
-.section-sub{font-size:14px;color:#7a7568;margin-bottom:32px}
-.article-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:48px}
-@media(max-width:860px){.article-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.article-grid{grid-template-columns:1fr}}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 
 /* ARTICLE CARD */
-.art-card{background:white;border:1px solid #d8d3c5;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:all .22s}
-.art-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.1);border-color:#c0b8a8}
-.art-banner{height:140px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
-.art-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(130deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);animation:shine 4s ease-in-out infinite}
-@keyframes shine{0%,100%{transform:translateX(-100%)}60%{transform:translateX(100%)}}
-.art-body{padding:20px;flex:1;display:flex;flex-direction:column}
-.art-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.art-tag{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:2px}
-.tag-g{background:#eef7f1;color:#1e5c33}
-.tag-a{background:#fef8ec;color:#8a5a0a}
-.tag-b{background:#f0f4ff;color:#3040a0}
-.tag-r{background:#fde8e6;color:#a83428}
-.tag-p{background:#f4eeff;color:#6030a0}
-.art-min{font-family:'DM Mono',monospace;font-size:10.5px;color:#9c9890}
-.art-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.38;margin-bottom:10px;color:#1a1a18}
-.art-excerpt{font-size:12.5px;color:#6a6a67;line-height:1.7;flex:1}
-.art-cta{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#1e5c33;margin-top:14px;transition:gap .15s}
-.art-card:hover .art-cta{gap:8px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s,border-color .25s;text-decoration:none;color:var(--ink)}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,0,0,.1);border-color:transparent}
+.card-bar{height:4px;flex-shrink:0}
+.card-body{padding:22px;flex:1;display:flex;flex-direction:column;gap:10px}
+.card-tag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.card-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);line-height:1.4}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.65;flex:1}
+.card-foot{display:flex;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--border);margin-top:auto}
+.card-mins{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.badge{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;border:1px solid}
+.badge-green{background:var(--green-lt);color:var(--green);border-color:var(--green-mid)}
+.badge-blue{background:var(--blue-lt);color:var(--blue);border-color:#b8d4f4}
 
-/* DIVIDER */
-.divider{height:1px;background:#d8d3c5;margin:8px 0 40px}
+/* FEATURED (spans 2 columns) */
+.card.span2{grid-column:span 2}
+.card.span2 .card-body{padding:28px}
+.card.span2 .card-title{font-size:20px}
+.card.span2 .card-desc{font-size:14px}
 
-footer{background:#1a1a18;color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:12px;font-family:'DM Mono',monospace}
-footer a{color:rgba(255,255,255,.6)}
+/* FOOTER */
+footer{background:var(--ink);padding:52px 40px 24px;margin-top:0}
+.ft-top{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.ft-brand{font-family:'Playfair Display',serif;font-size:20px;color:white;margin-bottom:10px}
+.ft-brand em{color:#7dd4a0;font-style:italic}
+.ft-tag{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300}
+.ft-col h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+.ft-col ul{list-style:none}
+.ft-col li{margin-bottom:8px}
+.ft-col a{font-size:13px;color:rgba(255,255,255,.48);font-weight:300;transition:color .15s;text-decoration:none}
+.ft-col a:hover{color:white}
+.ft-bot{max-width:1100px;margin:20px auto 0;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.22);font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:8px}
+
+@media(max-width:960px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .mob-btn{display:flex}
+  .blog-hero{padding:48px 20px 40px}
+  .cat-nav-inner{padding:0 20px}
+  .blog-main{padding:36px 20px 60px}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .grid-2{grid-template-columns:1fr}
+  .card.span2{grid-column:span 1}
+  .ft-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .grid-3,.grid-2{grid-template-columns:1fr}
+  .card.span2{grid-column:span 1}
+  .hero-stats{gap:20px}
+  .ft-top{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<nav class="site-nav">
-  <a href="/booksmart-tools/" class="nav-logo">Book<em>Smart</em>Tools</a>
-  <ul class="nav-links">
-    <li><a href="/booksmart-tools/tools.html">Tools</a></li>
-    <li><a href="/booksmart-tools/contact.html">Contact</a></li>
-    <li><a href="/booksmart-tools/feedback.html">Feedback</a></li>
-    <li><a href="/booksmart-tools/tools.html" class="nav-cta">All Free Tools</a></li>
-  </ul>
+<div class="bst-ann">
+  <strong>New:</strong> E-Commerce Sales Tax Tool — reads eBay, Amazon &amp; Shopify reports automatically
+  <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html">Try it free →</a>
+</div>
+
+<nav id="nav">
+  <a href="/booksmart-tools/" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 18 18" fill="none"><rect x="1" y="2" width="7" height="14" rx="1" fill="rgba(255,255,255,.25)"/><rect x="2" y="3" width="5" height="12" rx=".5" fill="white"/><line x1="3" y1="6" x2="6" y2="6" stroke="#1a5c35" stroke-width="1"/><line x1="3" y1="8.5" x2="6" y2="8.5" stroke="#1a5c35" stroke-width="1"/><rect x="10" y="10" width="1.8" height="5" rx=".4" fill="rgba(255,255,255,.6)"/><rect x="12.8" y="7.5" width="1.8" height="7.5" rx=".4" fill="rgba(255,255,255,.8)"/><rect x="15.6" y="9" width="1.8" height="6" rx=".4" fill="white"/><polyline points="10.9,9 13.7,6.5 16.5,8" stroke="rgba(255,255,255,.7)" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+    </div>
+    <div class="logo-name">Book<em>Smart</em>Tools</div>
+  </a>
+  <div class="nav-links">
+    <a href="/booksmart-tools/">Home</a>
+    <a href="/booksmart-tools/tools.html">Calculators</a>
+    <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+    <a href="/booksmart-tools/blog/index.html">Blog</a>
+    <a href="/booksmart-tools/contact.html">Contact</a>
+    <a href="/booksmart-tools/tools.html" class="nav-cta">All Free Tools →</a>
+  </div>
+  <button class="mob-btn" onclick="document.getElementById('mob-nav').style.display=document.getElementById('mob-nav').style.display==='block'?'none':'block'" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="3" y1="6" x2="19" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="16" x2="19" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
 </nav>
-
-<div class="hero">
-  <span class="hero-tag">Guides & How-To Articles</span>
-  <h1>Free Finance & Bookkeeping Guides</h1>
-  <p>Plain-English articles covering payroll, taxes, bookkeeping, loans, and business finance — with links to the free tools for every topic.</p>
-</div>
-
-<div class="wrap">
-
-  <!-- TAX GUIDES -->
-  <div class="section-title">Tax Guides</div>
-  <p class="section-sub">Self-employment tax, quarterly payments, payroll taxes, and 1099 vs W-2 — explained step by step with 2026 rates</p>
-  <div class="article-grid">
-
-    <a href="/booksmart-tools/blog/self-employment-tax-guide.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#2a1400 0%,#8a4c0a 100%)">🧾</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-a">TAX GUIDE</span><span class="art-min">11 min read</span></div>
-        <div class="art-title">Self-Employment Tax 2026: What It Is, How to Calculate It & Reduce It</div>
-        <div class="art-excerpt">The 15.3% SE tax explained, step-by-step calculation, the deductible half, 2026 quarterly due dates, and legal ways to reduce what you owe.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-    <a href="/booksmart-tools/blog/quarterly-tax-guide.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#1a2800 0%,#3a6010 100%)">📅</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-g">TAX GUIDE</span><span class="art-min">10 min read</span></div>
-        <div class="art-title">Quarterly Estimated Taxes 2026: The Self-Employed Person's Complete Guide</div>
-        <div class="art-excerpt">Who needs to pay, how to calculate, the 4 due dates, and how to avoid underpayment penalties — explained step by step.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-    <a href="/booksmart-tools/blog/1099-vs-w2.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#1a2040 0%,#1e4a8a 100%)">⚖️</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-b">PAYROLL</span><span class="art-min">7 min read</span></div>
-        <div class="art-title">1099 vs W-2: What It Really Costs to Hire an Employee vs Contractor</div>
-        <div class="art-excerpt">The true cost difference is often 25–35% more for W-2 employees. Here's exactly how to calculate it and make the right hiring decision.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-    <a href="/booksmart-tools/blog/how-to-calculate-payroll-taxes.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#0e2818 0%,#1c5430 100%)">💼</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-g">PAYROLL GUIDE</span><span class="art-min">12 min read</span></div>
-        <div class="art-title">How to Calculate Payroll Taxes in 2026 — Complete Step-by-Step Guide</div>
-        <div class="art-excerpt">FIT withholding, FICA, FUTA, state taxes — every component explained with a full worked example and 2026 brackets.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-  </div>
-  <div class="divider"></div>
-
-  <!-- BUSINESS FINANCE -->
-  <div class="section-title">Business Finance</div>
-  <p class="section-sub">EBITDA, profit margins, markup vs margin — the metrics banks and investors use to evaluate your business</p>
-  <div class="article-grid">
-
-    <a href="/booksmart-tools/blog/what-is-ebitda.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#0e2818 0%,#1a3d60 100%)">📈</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-b">BUSINESS FINANCE</span><span class="art-min">10 min read</span></div>
-        <div class="art-title">What is EBITDA and How Do You Calculate It? (2026 Guide)</div>
-        <div class="art-excerpt">EBITDA explained simply with two calculation methods, industry benchmarks, business valuation multiples, and a real worked example.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-    <a href="/booksmart-tools/blog/profit-margin-vs-markup.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#2a1400 0%,#8a4c0a 100%)">📊</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-a">BUSINESS FINANCE</span><span class="art-min">8 min read</span></div>
-        <div class="art-title">Profit Margin vs Markup: The Difference Explained with Real Examples</div>
-        <div class="art-excerpt">Most business owners confuse these two — and it costs them money. Formulas, a full conversion table, and when to use each metric.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-  </div>
-  <div class="divider"></div>
-
-  <!-- BOOKKEEPING -->
-  <div class="section-title">Bookkeeping & Accounting</div>
-  <p class="section-sub">Accounts receivable, late fees, bank reconciliation, and loan schedules — practical guides for daily bookkeeping</p>
-  <div class="article-grid">
-
-    <a href="/booksmart-tools/blog/ar-aging-guide.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#1a3022 0%,#3a8060 100%)">📋</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-g">BOOKKEEPING</span><span class="art-min">7 min read</span></div>
-        <div class="art-title">Understanding Your AR Aging Report: What Each Bucket Means</div>
-        <div class="art-excerpt">How to read accounts receivable aging, what the 30/60/90 day buckets mean for cash flow, and when to send invoices to collections.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-    <a href="/booksmart-tools/blog/how-to-calculate-invoice-late-fees.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#3a0808 0%,#a02020 100%)">📄</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-r">BOOKKEEPING</span><span class="art-min">6 min read</span></div>
-        <div class="art-title">How to Calculate Invoice Late Fees (And Actually Collect Them)</div>
-        <div class="art-excerpt">State-by-state rules for late payment interest, how to write your payment terms, and scripts for following up on overdue invoices.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-    <a href="/booksmart-tools/blog/how-to-use-loan-amortization.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#0e2818 0%,#1c5430 100%)">📊</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-g">LOAN & MORTGAGE</span><span class="art-min">8 min read</span></div>
-        <div class="art-title">How to Read a Loan Amortization Schedule — And Why It Matters</div>
-        <div class="art-excerpt">Learn how each payment splits between principal and interest, what odd-days interest means, and how extra payments can save thousands.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-    <a href="/booksmart-tools/blog/quickbooks-bank-reconciliation.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#1e1a40 0%,#4040a0 100%)">🏦</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-b">QUICKBOOKS</span><span class="art-min">9 min read</span></div>
-        <div class="art-title">QuickBooks Bank Reconciliation: Step-by-Step Guide for Small Business</div>
-        <div class="art-excerpt">How to reconcile your bank account in QuickBooks Online — common errors, what to do when it doesn't balance, and best practices.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-  </div>
-  <div class="divider"></div>
-
-  <!-- PDF TOOLS -->
-  <div class="section-title">PDF Tools & Productivity</div>
-  <p class="section-sub">Everything you need to know about working with PDFs — free, without watermarks or subscriptions</p>
-  <div class="article-grid">
-
-    <a href="/booksmart-tools/blog/free-pdf-tools-guide.html" class="art-card">
-      <div class="art-banner" style="background:linear-gradient(135deg,#1a1840 0%,#3040a0 100%)">📄</div>
-      <div class="art-body">
-        <div class="art-meta"><span class="art-tag tag-b">PDF TOOLS</span><span class="art-min">8 min read</span></div>
-        <div class="art-title">Free PDF Tools That Actually Work in 2026 — No Watermarks, No Signup</div>
-        <div class="art-excerpt">Merge, convert, and edit PDFs free without watermarks, page limits, or uploading to a server. All processing stays in your browser.</div>
-        <div class="art-cta">Read Guide →</div>
-      </div>
-    </a>
-
-  </div>
-
-</div>
-
-<footer>
-  BookSmartTools &nbsp;|&nbsp; <a href="/booksmart-tools/">Home</a> &nbsp;|&nbsp;
-  <a href="/booksmart-tools/tools.html">All Tools</a> &nbsp;|&nbsp;
-  <a href="/booksmart-tools/contact.html">Contact</a> &nbsp;|&nbsp;
+<div id="mob-nav" class="mob-nav">
+  <a href="/booksmart-tools/">Home</a>
+  <a href="/booksmart-tools/tools.html">All Calculators</a>
+  <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+  <a href="/booksmart-tools/blog/index.html">Blog</a>
+  <a href="/booksmart-tools/contact.html">Contact</a>
   <a href="/booksmart-tools/feedback.html">Feedback</a>
+</div>
+
+<!-- HERO -->
+<div class="blog-hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Free Guides &amp; Resources · 2026</div>
+    <h1>Finance guides for <em>real</em> businesses</h1>
+    <p>Practical, current guides on payroll taxes, sales tax compliance, bookkeeping software, and financial concepts — written for business owners, not accountants.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">27</span><span class="stat-lbl">Articles &amp; Guides</span></div>
+      <div class="stat"><span class="stat-num">5</span><span class="stat-lbl">Topic Categories</span></div>
+      <div class="stat"><span class="stat-num">2026</span><span class="stat-lbl">Rates &amp; Data</span></div>
+      <div class="stat"><span class="stat-num">Free</span><span class="stat-lbl">Always</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY CATEGORY NAV -->
+<div class="cat-nav">
+  <div class="cat-nav-inner">
+    <button class="cat-btn" onclick="scrollTo('payroll-taxes')"><span class="cat-dot" style="background:#1a5c35"></span>Payroll Taxes</button>
+    <button class="cat-btn" onclick="scrollTo('sales-tax')"><span class="cat-dot" style="background:#0d4a8a"></span>Sales Tax</button>
+    <button class="cat-btn" onclick="scrollTo('bookkeeping-software')"><span class="cat-dot" style="background:#4a1d96"></span>Bookkeeping Software</button>
+    <button class="cat-btn" onclick="scrollTo('bookkeeping-fundamentals')"><span class="cat-dot" style="background:#b5820a"></span>Bookkeeping Fundamentals</button>
+    <button class="cat-btn" onclick="scrollTo('business-finance')"><span class="cat-dot" style="background:#9b1b30"></span>Business Finance</button>
+  </div>
+</div>
+
+<div class="blog-main">
+
+  <!-- ══════════════════════════════════════════
+       1 · PAYROLL TAXES
+  ══════════════════════════════════════════ -->
+  <section class="cat-section" id="payroll-taxes">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:var(--green-lt)">💼</div>
+      <div class="cat-info">
+        <div class="cat-name">Payroll Taxes</div>
+        <div class="cat-desc">Federal withholding, FICA rates, unemployment taxes (FUTA &amp; SUTA), state payroll taxes, and compliance deadlines — all updated for 2026.</div>
+      </div>
+      <span class="cat-pill">8 guides</span>
+    </div>
+
+    <div class="grid-3">
+
+      <!-- FEATURED -->
+      <a href="how-to-calculate-payroll-taxes-step-by-step-2026.html" class="card span2">
+        <div class="card-bar" style="background:linear-gradient(90deg,#1a5c35,#7dd4a0)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">Complete Guide · Start Here</span>
+          <div class="card-title">How to Calculate Payroll Taxes Step by Step in 2026</div>
+          <div class="card-desc">A full worked example from gross wages to net pay — FICA, federal withholding, state income tax, SDI, employer costs, and year-end W-2 reconciliation. The single best starting point for understanding payroll taxes.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 15 min read</span><span class="badge badge-green">2026 Rates</span></div>
+        </div>
+      </a>
+
+      <a href="payroll-tax-deadlines-compliance-calendar-2026.html" class="card">
+        <div class="card-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">Compliance</span>
+          <div class="card-title">Payroll Tax Deadlines 2026: Complete Compliance Calendar</div>
+          <div class="card-desc">Form 941 quarterly dates, FUTA Form 940 deadline, W-2 &amp; 1099-NEC filing dates, full monthly deposit schedule, and late penalty rates to avoid.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 11 min read</span><span class="badge badge-green">Full Calendar</span></div>
+        </div>
+      </a>
+
+      <a href="federal-income-tax-withholding-guide.html" class="card">
+        <div class="card-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">Federal Withholding</span>
+          <div class="card-title">Federal Income Tax Withholding 2026: Complete Employer Guide</div>
+          <div class="card-desc">W-4 processing, Percentage Method tables from Pub. 15-T, OBBBA changes including the new tips &amp; overtime deductions, and deposit schedules.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 14 min read</span><span class="badge badge-green">OBBBA Update</span></div>
+        </div>
+      </a>
+
+      <a href="fica-social-security-medicare-guide.html" class="card">
+        <div class="card-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">FICA Taxes</span>
+          <div class="card-title">FICA 2026: Social Security, Medicare &amp; the $184,500 Wage Base</div>
+          <div class="card-desc">6.2% SS rate on the new $184,500 wage base, 1.45% Medicare, 0.9% additional surtax over $200K, SE tax, and wage-exempt categories.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 11 min read</span><span class="badge badge-green">New Wage Base</span></div>
+        </div>
+      </a>
+
+      <a href="suta-futa-unemployment-tax-guide.html" class="card">
+        <div class="card-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">Unemployment Tax</span>
+          <div class="card-title">FUTA &amp; SUTA 2026: Unemployment Tax Guide for Employers</div>
+          <div class="card-desc">FUTA at 0.6% effective rate, 2026 SUTA wage bases for all 50 states, California credit reduction, experience ratings, and multi-state employee rules.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 13 min read</span><span class="badge badge-green">All 50 States</span></div>
+        </div>
+      </a>
+
+      <a href="state-income-tax-withholding-2026.html" class="card">
+        <div class="card-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">State Payroll Tax</span>
+          <div class="card-title">State Income Tax Withholding 2026: 8 States Cut Rates</div>
+          <div class="card-desc">Indiana, Iowa, Kentucky, Ohio and more cut rates January 1, 2026. Rate table for all 41 taxable states, no-income-tax states, and remote worker rules.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 13 min read</span><span class="badge badge-green">2026 Changes</span></div>
+        </div>
+      </a>
+
+      <a href="self-employment-tax-guide.html" class="card">
+        <div class="card-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">Self-Employment</span>
+          <div class="card-title">Self-Employment Tax 2026: 15.3% Rate, Deductions &amp; Quarterly Payments</div>
+          <div class="card-desc">The 15.3% SE tax on 92.35% of net earnings, the deductible half, quarterly due dates, and legal ways to reduce your SE tax bill.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 10 min read</span></div>
+        </div>
+      </a>
+
+      <a href="quarterly-tax-guide.html" class="card">
+        <div class="card-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--green)">Quarterly Tax</span>
+          <div class="card-title">Quarterly Tax Payment Guide 2026: Who Pays, When &amp; How Much</div>
+          <div class="card-desc">2026 due dates, safe harbor calculation rules, how to estimate your quarterly amount, and what happens if you underpay estimated taxes.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 9 min read</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       2 · SALES TAX
+  ══════════════════════════════════════════ -->
+  <section class="cat-section" id="sales-tax">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:var(--blue-lt)">🛒</div>
+      <div class="cat-info">
+        <div class="cat-name">Sales Tax</div>
+        <div class="cat-desc">Economic nexus thresholds by state, 2026 rate changes, e-commerce compliance, marketplace facilitator rules, and exemptions.</div>
+      </div>
+      <span class="cat-pill">2 guides</span>
+    </div>
+
+    <div class="grid-2">
+
+      <a href="sales-tax-nexus-economic-nexus-guide-2026.html" class="card span2">
+        <div class="card-bar" style="background:linear-gradient(90deg,#0d4a8a,#6baed6)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--blue)">Economic Nexus · Start Here</span>
+          <div class="card-title">Sales Tax Nexus 2026: Economic Thresholds, Illinois Change &amp; How to Register</div>
+          <div class="card-desc">After South Dakota v. Wayfair, remote sellers owe sales tax where they exceed state thresholds. This guide covers every state's $100K rule, the major 2026 Illinois change, marketplace facilitator laws (Amazon, Etsy, Shopify), and step-by-step registration.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 14 min read</span><span class="badge badge-blue">Illinois 2026</span><span class="badge badge-blue">All 45 States</span></div>
+        </div>
+      </a>
+
+      <a href="sales-tax-rates-by-state-2026.html" class="card">
+        <div class="card-bar" style="background:var(--blue)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--blue)">State Rates Reference</span>
+          <div class="card-title">Sales Tax Rates by State 2026: Rates, Exemptions &amp; What Changed</div>
+          <div class="card-desc">Complete 2026 state-by-state rate reference. Covers combined rates including local, food and clothing exemptions, digital goods and SaaS taxability, Arkansas food tax removal, and sales tax holiday dates.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 13 min read</span><span class="badge badge-blue">2026 Changes</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       3 · BOOKKEEPING SOFTWARE
+  ══════════════════════════════════════════ -->
+  <section class="cat-section" id="bookkeeping-software">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:var(--purple-lt)">💻</div>
+      <div class="cat-info">
+        <div class="cat-name">Bookkeeping Software</div>
+        <div class="cat-desc">QuickBooks Online vs Desktop, Xero, FreshBooks, Wave, Zoho Books — compared, explained, and set up step by step.</div>
+      </div>
+      <span class="cat-pill">6 guides</span>
+    </div>
+
+    <div class="grid-3">
+
+      <a href="best-bookkeeping-software-small-business-2026.html" class="card span2">
+        <div class="card-bar" style="background:linear-gradient(90deg,#4a1d96,#9b59b6)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--purple)">Full Comparison · Start Here</span>
+          <div class="card-title">Best Bookkeeping Software for Small Business 2026: QBO, Xero, FreshBooks, Wave &amp; Zoho</div>
+          <div class="card-desc">The 5 platforms that matter for US small businesses compared side by side — pricing, payroll integration, user limits, inventory capabilities, and a clear recommendation for each business type. Includes Sage and Bench as honorable mentions.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 15 min read</span><span class="badge" style="background:var(--purple-lt);color:var(--purple);border-color:#c8b4f8">2026 Pricing</span></div>
+        </div>
+      </a>
+
+      <a href="xero-vs-quickbooks-online-2026.html" class="card">
+        <div class="card-bar" style="background:var(--purple)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--purple)">Xero vs QuickBooks</span>
+          <div class="card-title">Xero vs. QuickBooks Online 2026: The Honest Comparison</div>
+          <div class="card-desc">User count math ($636/yr savings example), payroll native vs. Gusto, bank feeds, industry fit, and a clear verdict on which platform genuinely wins for each business type.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 14 min read</span></div>
+        </div>
+      </a>
+
+      <a href="quickbooks-online-vs-desktop-2026.html" class="card">
+        <div class="card-bar" style="background:var(--purple)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--purple)">QuickBooks</span>
+          <div class="card-title">QuickBooks Online vs. Desktop 2026: Which Is Right for You?</div>
+          <div class="card-desc">All 5 QBO plans ($20–$275/mo), Desktop Enterprise pricing, feature table, the Desktop Pro/Premier phaseout timeline, and a migration guide from Desktop to Online.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 14 min read</span><span class="badge" style="background:var(--purple-lt);color:var(--purple);border-color:#c8b4f8">Desktop Phaseout</span></div>
+        </div>
+      </a>
+
+      <a href="quickbooks-online-setup-guide-2026.html" class="card">
+        <div class="card-bar" style="background:var(--purple)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--purple)">Setup Guide</span>
+          <div class="card-title">QuickBooks Online Setup Guide 2026: Get It Right from Day One</div>
+          <div class="card-desc">10-step setup from first login — company settings, chart of accounts, bank connections, opening balances, invoicing templates, payroll, and your first bank reconciliation.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 13 min read</span></div>
+        </div>
+      </a>
+
+      <a href="quickbooks-bank-reconciliation.html" class="card">
+        <div class="card-bar" style="background:var(--purple)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--purple)">QuickBooks</span>
+          <div class="card-title">QuickBooks Bank Reconciliation: Complete Walkthrough</div>
+          <div class="card-desc">Step-by-step reconciliation in QuickBooks, fixing common discrepancies, clearing outstanding checks, and managing timing differences month to month.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 9 min read</span></div>
+        </div>
+      </a>
+
+      <a href="best-bookkeeping-software-2026.html" class="card">
+        <div class="card-bar" style="background:var(--purple)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--purple)">Software Guide</span>
+          <div class="card-title">Best Bookkeeping Software 2026: Extended Guide Including Sage &amp; More</div>
+          <div class="card-desc">Deeper comparison covering all major platforms — QuickBooks, Xero, FreshBooks, Wave, Zoho, Sage, and Bench — with detailed use cases for each.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 12 min read</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       4 · BOOKKEEPING FUNDAMENTALS
+  ══════════════════════════════════════════ -->
+  <section class="cat-section" id="bookkeeping-fundamentals">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:var(--gold-lt)">📚</div>
+      <div class="cat-info">
+        <div class="cat-name">Bookkeeping Fundamentals</div>
+        <div class="cat-desc">Chart of accounts, bank reconciliation, accounts receivable aging, invoice late fees, and loan amortization — the core skills every business owner needs.</div>
+      </div>
+      <span class="cat-pill">5 guides</span>
+    </div>
+
+    <div class="grid-3">
+
+      <a href="chart-of-accounts-bookkeeping-guide.html" class="card span2">
+        <div class="card-bar" style="background:linear-gradient(90deg,#b5820a,#f0c040)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--gold)">Core Concept · Start Here</span>
+          <div class="card-title">Chart of Accounts: The Foundation of Good Bookkeeping</div>
+          <div class="card-desc">The five account types, proper 1000–9999 numbering system, full sample COA for both service and product businesses, when to use sub-accounts vs. classes, and a step-by-step cleanup guide for a bloated chart of accounts.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 12 min read</span></div>
+        </div>
+      </a>
+
+      <a href="bank-reconciliation-bookkeeping-guide.html" class="card">
+        <div class="card-bar" style="background:var(--gold)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--gold)">Core Skill</span>
+          <div class="card-title">Bank Reconciliation: How to Do It Right Every Month</div>
+          <div class="card-desc">How to reconcile in QuickBooks Online and Xero, fix discrepancies (duplicates, missing entries, wrong amounts), handle credit cards, and close books correctly.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 12 min read</span></div>
+        </div>
+      </a>
+
+      <a href="ar-aging-guide.html" class="card">
+        <div class="card-bar" style="background:var(--gold)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--gold)">Accounts Receivable</span>
+          <div class="card-title">AR Aging Report: How to Read, Use &amp; Act on It</div>
+          <div class="card-desc">Understanding the 30/60/90/120+ day buckets, calculating days sales outstanding, using aging to improve cash flow, and collection escalation strategies.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 9 min read</span></div>
+        </div>
+      </a>
+
+      <a href="how-to-calculate-invoice-late-fees.html" class="card">
+        <div class="card-bar" style="background:var(--gold)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--gold)">Invoicing</span>
+          <div class="card-title">Invoice Late Fees: How to Calculate &amp; Charge Them Correctly</div>
+          <div class="card-desc">State-by-state late fee limits, how to calculate interest on overdue invoices, proper invoice language, and when charging late fees actually helps collection.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 8 min read</span></div>
+        </div>
+      </a>
+
+      <a href="how-to-use-loan-amortization.html" class="card">
+        <div class="card-bar" style="background:var(--gold)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--gold)">Loans</span>
+          <div class="card-title">Loan Amortization Explained: How to Read &amp; Use a Schedule</div>
+          <div class="card-desc">How the principal/interest split changes over time, the impact of extra payments, odd-days interest for mid-month starts, and how amortization flows into your P&amp;L and balance sheet.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 8 min read</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       5 · BUSINESS FINANCE
+  ══════════════════════════════════════════ -->
+  <section class="cat-section" id="business-finance">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:var(--rose-lt)">📊</div>
+      <div class="cat-info">
+        <div class="cat-name">Business Finance</div>
+        <div class="cat-desc">EBITDA, profit margins, 1099 vs W-2, payroll concepts, and tools that help you understand and improve your business's financial performance.</div>
+      </div>
+      <span class="cat-pill">6 guides</span>
+    </div>
+
+    <div class="grid-3">
+
+      <a href="what-is-ebitda.html" class="card span2">
+        <div class="card-bar" style="background:linear-gradient(90deg,#9b1b30,#e87c8a)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--rose)">Financial Analysis · Start Here</span>
+          <div class="card-title">What Is EBITDA and How Do You Calculate It?</div>
+          <div class="card-desc">The metric every buyer, investor, and lender uses to evaluate business performance. Covers bottom-up and top-down calculation methods, industry valuation multiples, adjusted EBITDA, and what EBITDA intentionally doesn't tell you — explained clearly for business owners.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 11 min read</span></div>
+        </div>
+      </a>
+
+      <a href="profit-margin-vs-markup.html" class="card">
+        <div class="card-bar" style="background:var(--rose)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--rose)">Profit Margins</span>
+          <div class="card-title">Profit Margin vs. Markup: The Difference That Costs Businesses Money</div>
+          <div class="card-desc">Why confusing these two kills profitability — with exact formulas, conversion tables, and industry benchmark gross margins for retail, restaurants, and services.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 8 min read</span></div>
+        </div>
+      </a>
+
+      <a href="1099-vs-w2.html" class="card">
+        <div class="card-bar" style="background:var(--rose)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--rose)">Payroll</span>
+          <div class="card-title">1099 vs W-2: The Real Difference &amp; True Cost Comparison</div>
+          <div class="card-desc">Full employer cost comparison including FICA, unemployment taxes, and benefits — plus the IRS worker classification tests and misclassification penalties.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 10 min read</span></div>
+        </div>
+      </a>
+
+      <a href="how-to-calculate-payroll-taxes.html" class="card">
+        <div class="card-bar" style="background:var(--rose)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--rose)">Payroll Basics</span>
+          <div class="card-title">How to Calculate Payroll Taxes — Complete 2026 Guide</div>
+          <div class="card-desc">Federal income tax, FICA, FUTA, SUTA — every payroll tax explained with rates, worked examples, and a clear framework for small business owners.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 12 min read</span></div>
+        </div>
+      </a>
+
+      <a href="free-pdf-tools-guide.html" class="card">
+        <div class="card-bar" style="background:var(--rose)"></div>
+        <div class="card-body">
+          <span class="card-tag" style="color:var(--rose)">Tools Guide</span>
+          <div class="card-title">Free PDF Tools That Actually Work — No Watermarks, No Limits</div>
+          <div class="card-desc">How to merge, convert, and process PDFs free — BookSmartTools' PDF tools run entirely in your browser with no file uploads to servers, no sign-in, and no watermarks.</div>
+          <div class="card-foot"><span class="card-mins">⏱ 7 min read</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+</div><!-- end blog-main -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div>
+      <div class="ft-brand">Book<em>Smart</em>Tools</div>
+      <p class="ft-tag">Free bookkeeping, payroll, tax, and PDF tools. No account required, no cost, always free.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Top Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+        <li><a href="/booksmart-tools/loan-amortization.html">Loan Amortization</a></li>
+        <li><a href="/booksmart-tools/quarterly-tax-calculator.html">Quarterly Tax</a></li>
+        <li><a href="/booksmart-tools/ebitda-calculator.html">EBITDA Calculator</a></li>
+        <li><a href="/booksmart-tools/ecommerce-sales-tax-calculator.html">E-Commerce Tax</a></li>
+        <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>PDF Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge</a></li>
+        <li><a href="/booksmart-tools/convert-to-pdf.html">Files → PDF</a></li>
+        <li><a href="/booksmart-tools/pdf-converter.html">PDF → Word/Excel</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>More</h4>
+      <ul>
+        <li><a href="/booksmart-tools/blog/index.html">Blog &amp; Guides</a></li>
+        <li><a href="/booksmart-tools/about.html">About</a></li>
+        <li><a href="/booksmart-tools/contact.html">Contact</a></li>
+        <li><a href="/booksmart-tools/feedback.html">Feedback</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <div>© 2026 BookSmartTools — For estimation only. Verify with a CPA before filing.</div>
+    <div>No ads · No tracking · Files never leave your browser</div>
+  </div>
 </footer>
 
+<script>
+// Sticky nav shadow
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  // Update active category nav button
+  const ids=['payroll-taxes','sales-tax','bookkeeping-software','bookkeeping-fundamentals','business-finance'];
+  let cur='';
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<150)cur=id;
+  });
+  document.querySelectorAll('.cat-btn').forEach((btn,i)=>{
+    btn.classList.toggle('active',ids[i]===cur);
+  });
+},{passive:true});
+
+// Smooth scroll on category button click
+function scrollTo(id){
+  const el=document.getElementById(id);
+  if(el){
+    const top=el.getBoundingClientRect().top+window.scrollY-130;
+    window.scrollTo({top,behavior:'smooth'});
+  }
+}
+</script>
 </body>
 </html>

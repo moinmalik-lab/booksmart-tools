@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bank Reconciliation Guide 2026: How to Do It Right Every Month | BookSmartTools</title>
+<meta name="description" content="Complete bank reconciliation guide for small business owners. How to reconcile in QuickBooks Online and Xero, common discrepancies and how to fix them, credit card reconciliation, and best practices.">
+<link rel="canonical" href="https://booksmartools.com/blog/bank-reconciliation-bookkeeping-guide.html">
+<meta property="og:title" content="Bank Reconciliation Guide 2026: How to Do It Right Every Month | BookSmartTools">
+<meta property="og:description" content="Complete bank reconciliation guide for small business owners. How to reconcile in QuickBooks Online and Xero, common discrepancies and how to fix them, credit card reconciliation, and best practices.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0e0e0c;--muted:#5a5a56;--border:#e4e0d8;--paper:#fafaf7;--white:#fff;
+  --green:#1a5c35;--green2:#2a7a48;--green-lt:#e8f5ed;--green-mid:#c8e6d4;
+  --gold:#b5820a;--gold-lt:#fef8e7;--blue:#0d4a8a;--blue-lt:#e8f2fd;
+  --amber:#a85e08;--amber-lt:#fdf3e7;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Progress bar */
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--green);z-index:999;width:0;transition:width .1s}
+
+/* Nav */
+.bst-ann{background:var(--green);padding:9px 24px;text-align:center;font-size:13px;color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.bst-ann strong{color:#7dd4a0}
+.bst-ann a{color:white;font-weight:600;background:rgba(255,255,255,.18);padding:3px 11px;border-radius:4px;margin-left:4px}
+nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(250,250,247,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink)}
+.logo-name em{color:var(--green);font-style:italic}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:6px;transition:all .15s;text-decoration:none;color:var(--muted)}
+.nav-links a:hover{color:var(--ink);background:var(--border)}
+.nav-cta{background:var(--ink)!important;color:white!important;border-radius:7px!important}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink)}
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:199;padding:16px 24px}
+.mob-nav a{display:block;padding:12px 0;font-size:15px;color:var(--ink);border-bottom:1px solid var(--border);text-decoration:none}
+
+/* Hero */
+.art-hero{background:var(--ink);padding:64px 40px 52px;position:relative;overflow:hidden}
+.art-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.04) 1px,transparent 0);background-size:28px 28px}
+.art-hero-inner{max-width:820px;margin:0 auto;position:relative;z-index:1}
+.art-kicker{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#7dd4a0;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.art-kicker::before{content:'';display:block;width:20px;height:2px;background:#7dd4a0;border-radius:1px}
+.art-hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:700;color:white;line-height:1.1;margin-bottom:16px;letter-spacing:-1.5px}
+.art-sub{font-size:16px;color:rgba(255,255,255,.65);line-height:1.75;max-width:680px;font-weight:300}
+.art-meta{display:flex;gap:12px;align-items:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;flex-wrap:wrap}
+
+/* Layout */
+.art-layout{max-width:1100px;margin:0 auto;padding:48px 40px 80px;display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:start}
+.toc-box{position:sticky;top:80px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px}
+.toc-box h3{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+.toc-box ul{list-style:none}
+.toc-box li{margin-bottom:4px}
+.toc-link{font-size:13px;color:var(--muted);display:block;padding:6px 10px;border-radius:6px;transition:all .15s;text-decoration:none}
+.toc-link:hover,.toc-link.active{background:var(--green-lt);color:var(--green);text-decoration:none}
+
+/* Article body */
+.art-body h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);margin:44px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--border);letter-spacing:-.5px}
+.art-body h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin:28px 0 10px}
+.art-body p{font-size:16px;color:#3a3a36;line-height:1.9;margin-bottom:18px}
+.art-body ul,.art-body ol{font-size:16px;color:#3a3a36;line-height:1.9;margin:0 0 18px 24px}
+.art-body li{margin-bottom:8px}
+.art-body strong{color:var(--ink);font-weight:600}
+.art-body a{color:var(--green);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+
+/* Callout boxes */
+.callout{border-left:4px solid;border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;font-size:14.5px;line-height:1.75}
+.callout.green{background:var(--green-lt);border-color:var(--green);color:#1a3828}
+.callout.blue{background:var(--blue-lt);border-color:var(--blue);color:#1a2d50}
+.callout.amber{background:var(--amber-lt);border-color:var(--amber);color:#3d1e00}
+.callout strong{font-weight:700;color:inherit}
+
+/* Rate tables */
+.rate-table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:10px;overflow:hidden;border:1px solid var(--border);font-size:14px}
+.rate-table th{background:var(--ink);color:rgba(255,255,255,.85);padding:11px 16px;text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;font-weight:500}
+.rate-table td{padding:10px 16px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+.rate-table tr:last-child td{border-bottom:none}
+.rate-table tr:hover td{background:var(--paper)}
+.rate-table .hl{background:var(--green-lt);font-weight:600;color:var(--green)}
+
+/* Example boxes */
+.example{background:var(--white);border:2px solid var(--green-mid);border-radius:12px;padding:24px;margin:28px 0}
+.example-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.example-icon{font-size:22px}
+.example-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.example-body{font-size:14px;color:var(--ink);line-height:1.8}
+.example-result{background:var(--green-lt);border-radius:8px;padding:14px 18px;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#1a3828}
+
+/* Inline CTA */
+.inline-cta{background:linear-gradient(135deg,var(--green),var(--green2));border-radius:12px;padding:28px 32px;text-align:center;margin:40px 0}
+.inline-cta h3{font-family:'Playfair Display',serif;font-size:22px;color:white;margin-bottom:10px}
+.inline-cta p{font-size:14px;color:rgba(255,255,255,.75);margin-bottom:18px}
+.inline-cta a{background:white;color:var(--green);padding:12px 28px;border-radius:7px;font-size:14px;font-weight:700;display:inline-block;transition:all .2s;text-decoration:none}
+.inline-cta a:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+
+/* Related section */
+.related{background:var(--white);border-top:1px solid var(--border);padding:48px 40px}
+.related-inner{max-width:1100px;margin:0 auto}
+.related h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ink);margin-bottom:24px;letter-spacing:-.5px}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rel-card{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:20px;display:block;transition:all .2s;text-decoration:none;color:var(--ink)}
+.rel-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.06);text-decoration:none;color:var(--ink)}
+.rel-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:8px;display:block;font-family:'JetBrains Mono',monospace}
+.rel-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3}
+.rel-desc{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* Footer */
+.bst-footer{background:var(--ink);padding:52px 40px 24px;margin-top:0}
+.bst-ft-top{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.bst-ft-brand{font-family:'Playfair Display',serif;font-size:20px;color:white;margin-bottom:10px}
+.bst-ft-brand em{color:#7dd4a0;font-style:italic}
+.bst-ft-tag{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300}
+.bst-fc h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+.bst-fc ul{list-style:none}
+.bst-fc li{margin-bottom:8px}
+.bst-fc a{font-size:13px;color:rgba(255,255,255,.48);font-weight:300;transition:color .15s;text-decoration:none}
+.bst-fc a:hover{color:white}
+.bst-ft-bot{max-width:1100px;margin:20px auto 0;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.22);font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:8px}
+
+@media(max-width:960px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .mob-btn{display:flex}
+  .art-hero{padding:44px 20px 36px}
+  .art-layout{grid-template-columns:1fr;padding:24px 20px 60px;gap:32px}
+  .toc-box{position:static}
+  .rel-grid{grid-template-columns:1fr 1fr}
+  .bst-ft-top{grid-template-columns:1fr 1fr}
+  .related{padding:40px 20px}
+}
+@media(max-width:640px){
+  .rel-grid{grid-template-columns:1fr}
+  .bst-ft-top{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="bst-ann">
+  <strong>New:</strong> E-Commerce Sales Tax Tool — reads eBay, Amazon &amp; Shopify reports automatically
+  <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html">Try it free →</a>
+</div>
+
+<nav id="nav">
+  <a href="/booksmart-tools/" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="2" width="7" height="14" rx="1" fill="rgba(255,255,255,.25)"/>
+        <rect x="2" y="3" width="5" height="12" rx=".5" fill="white"/>
+        <line x1="3" y1="6" x2="6" y2="6" stroke="#1a5c35" stroke-width="1"/>
+        <line x1="3" y1="8.5" x2="6" y2="8.5" stroke="#1a5c35" stroke-width="1"/>
+        <rect x="10" y="10" width="1.8" height="5" rx=".4" fill="rgba(255,255,255,.6)"/>
+        <rect x="12.8" y="7.5" width="1.8" height="7.5" rx=".4" fill="rgba(255,255,255,.8)"/>
+        <rect x="15.6" y="9" width="1.8" height="6" rx=".4" fill="white"/>
+        <polyline points="10.9,9 13.7,6.5 16.5,8" stroke="rgba(255,255,255,.7)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="logo-name">Book<em>Smart</em>Tools</div>
+  </a>
+  <div class="nav-links">
+    <a href="/booksmart-tools/">Home</a>
+    <a href="/booksmart-tools/tools.html">Calculators</a>
+    <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+    <a href="/booksmart-tools/blog/index.html">Blog</a>
+    <a href="/booksmart-tools/contact.html">Contact</a>
+    <a href="/booksmart-tools/tools.html" class="nav-cta">All Free Tools →</a>
+  </div>
+  <button class="mob-btn" onclick="document.getElementById('mob-nav').style.display=document.getElementById('mob-nav').style.display==='block'?'none':'block'" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="3" y1="6" x2="19" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="16" x2="19" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</nav>
+<div id="mob-nav" class="mob-nav">
+  <a href="/booksmart-tools/">Home</a>
+  <a href="/booksmart-tools/tools.html">All Calculators</a>
+  <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+  <a href="/booksmart-tools/blog/index.html">Blog</a>
+  <a href="/booksmart-tools/contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+
+<div class="art-hero">
+  <div class="art-hero-inner">
+    <div class="art-kicker">Bookkeeping Guide · 2026</div>
+    <h1>Bank Reconciliation: How to Do It Right Every Month</h1>
+    <p class="art-sub">Bank reconciliation is the most important quality control step in bookkeeping — and the step most small businesses skip. This guide explains how to reconcile in QuickBooks Online and Xero, what to do when your books don't balance, and best practices that prevent problems from building up.</p>
+    <div class="art-meta"><span>Updated May 2026</span><span>·</span><span>12 min read</span></div>
+  </div>
+</div>
+<div class="art-layout">
+  <aside>
+    <div class="toc-box">
+      <h3>Contents</h3>
+      <ul>
+        <li><a href="#what-is-recon" class="toc-link">What Is Bank Reconciliation?</a></li>
+        <li><a href="#why-matters" class="toc-link">Why Reconciliation Matters</a></li>
+        <li><a href="#how-often" class="toc-link">How Often to Reconcile</a></li>
+        <li><a href="#in-qbo" class="toc-link">Reconciling in QuickBooks Online</a></li>
+        <li><a href="#in-xero" class="toc-link">Reconciling in Xero</a></li>
+        <li><a href="#troubleshooting" class="toc-link">Troubleshooting Discrepancies</a></li>
+        <li><a href="#credit-cards" class="toc-link">Credit Card Reconciliation</a></li>
+        <li><a href="#best-practices" class="toc-link">Best Practices</a></li>
+      </ul>
+    </div>
+  </aside>
+  <article class="art-body">
+
+    <h2 id="what-is-recon">What Is Bank Reconciliation?</h2>
+    <p>Bank reconciliation is the monthly process of confirming that every transaction in your accounting software matches what your bank statement shows — and explaining any differences. It's the single most important quality control step in bookkeeping.</p>
+    <p>A reconciled set of books means you can trust your reports. An unreconciled set means your P&amp;L and balance sheet are likely wrong in ways you don't know about. Most small businesses that "do bookkeeping" but never reconcile are flying blind — they have numbers, but not reliable ones.</p>
+
+    <div class="callout green">
+      <strong>The core principle:</strong> Your accounting software and your bank are two separate systems that should agree. Reconciliation is the monthly proof that they do. If they don't agree, something is wrong — either a transaction is missing, duplicated, or entered with the wrong amount.
+    </div>
+
+    <h2 id="why-matters">Why Reconciliation Matters (And What Happens Without It)</h2>
+    <p>Business owners who skip reconciliation commonly discover problems at the worst moments — during a loan application, an IRS audit, or end-of-year tax preparation. Common issues that only surface during reconciliation:</p>
+    <ul>
+      <li><strong>Duplicate transactions:</strong> A payment was imported from the bank feed AND manually entered, causing an expense to be counted twice</li>
+      <li><strong>Missing transactions:</strong> A check was written but never entered; the bank cleared it but your books don't show it</li>
+      <li><strong>Bank errors:</strong> Rare, but banks do make errors. Reconciliation is how you catch them within the 30–60 day dispute window</li>
+      <li><strong>Fraud:</strong> Unauthorized transactions show up on your statement but not in your entered transactions — reconciliation is when you'd notice</li>
+      <li><strong>Timing differences:</strong> Outstanding checks (written but not yet cleared) that need to be tracked</li>
+    </ul>
+
+    <h2 id="how-often">How Often Should You Reconcile?</h2>
+    <p>The standard is <strong>monthly</strong>, reconciling to each month's bank statement. Some businesses reconcile weekly for tighter control. Never go more than one month between reconciliations — catching up on three or four months of unreconciled transactions is extremely time-consuming and prone to errors.</p>
+    <p>For businesses that process high transaction volumes (e.g., restaurants with 200+ daily transactions, e-commerce businesses), daily or weekly reconciliation is more practical than monthly.</p>
+
+    <h2 id="in-qbo">How to Reconcile in QuickBooks Online</h2>
+    <p>QBO's reconciliation tool is under <strong>Accounting → Reconcile</strong>. Here's the step-by-step process:</p>
+    <ol>
+      <li><strong>Select the account</strong> to reconcile (checking, savings, or credit card).</li>
+      <li><strong>Enter the statement ending date</strong> from your bank or credit card statement (usually the last day of the month).</li>
+      <li><strong>Enter the ending balance</strong> from your statement. This is the closing balance shown on the official statement from your bank.</li>
+      <li><strong>Match transactions.</strong> QBO shows a list of all transactions in its records for that account. Check off each transaction that appears on your statement. The "Difference" counter at the top updates as you check items.</li>
+      <li><strong>Investigate discrepancies.</strong> If you've checked off every statement item and the difference isn't zero, something is wrong. See the troubleshooting section below.</li>
+      <li><strong>Finish when Difference = $0.00.</strong> Click Finish Now. QBO records a reconciliation report you can access later.</li>
+    </ol>
+
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🏦</span><span class="example-title">Simple Reconciliation Example</span></div>
+      <div class="example-body">
+        <p><strong>Bank Statement:</strong> Opening balance $10,000 | Deposits: $25,000 | Withdrawals: ($18,500) | Ending balance: $16,500</p>
+        <p><strong>QuickBooks:</strong> Starting balance in QBO should match last month's ending balance ($10,000). You check off all matched transactions. All 23 deposits and 41 expense items matched cleanly.</p>
+        <p>After checking all items: Difference = $0.00. Reconciliation complete.</p>
+        <p><strong>Outstanding check:</strong> One check for $340 was written on the last day of the month and hasn't cleared yet. This is normal — leave it unchecked. It will appear on next month's statement.</p>
+      </div>
+      <div class="example-result">Cleared balance in QBO: $16,840 (includes outstanding $340 check deducted). Statement balance: $16,500. After subtracting outstanding check: matches perfectly.</div>
+    </div>
+
+    <h2 id="in-xero">How to Reconcile in Xero</h2>
+    <p>Xero's reconciliation works differently than QBO — it's more transaction-by-transaction rather than matching against a statement total. In Xero:</p>
+    <ol>
+      <li>Go to <strong>Accounting → Bank Accounts</strong>. Imported transactions show in the feed as "1 item to reconcile."</li>
+      <li>For each imported bank transaction, Xero suggests a match from your entered transactions. Click <strong>OK</strong> to confirm the match, or <strong>New Transaction</strong> to create the matching entry.</li>
+      <li>The "Find &amp; Match" feature handles complex situations where one bank deposit matches multiple invoices (e.g., a client paid three invoices in one ACH payment).</li>
+      <li>When all imported transactions are cleared, the bank account balance in Xero equals your actual bank balance.</li>
+    </ol>
+    <p>Xero's approach is actually more intuitive for day-to-day reconciliation — you're clearing transactions as they come in rather than doing a big monthly batch. Many bookkeepers who use both platforms prefer Xero's bank feed workflow.</p>
+
+    <h2 id="troubleshooting">Troubleshooting: When Your Books Don't Balance</h2>
+    <p>If your reconciliation shows a difference that isn't zero, work through these common causes in order:</p>
+    <h3>1. Check the Opening Balance</h3>
+    <p>If last month's reconciliation was correct, this month's opening balance in QBO should match last month's ending balance. If it doesn't, a transaction was modified or deleted in a closed period.</p>
+    <h3>2. Look for Duplicates</h3>
+    <p>A transaction that appears twice in QBO but only once on the statement is a duplicate. This happens when a transaction is imported from the bank feed AND entered manually. Run a report filtered by date range to spot duplicates.</p>
+    <h3>3. Look for Deleted Transactions</h3>
+    <p>In QBO: Reports → Audit Log shows every deleted transaction. If a transaction was deleted after the statement period, it creates an unexplained difference.</p>
+    <h3>4. Check for Wrong Amounts</h3>
+    <p>A transaction entered for $1,234.00 when the bank shows $1,243.00 creates a $9.00 difference. Sort unmatched items by amount to find near-matches.</p>
+    <h3>5. Manually-Entered Transfers</h3>
+    <p>A transfer between two accounts can create phantom transactions if entered incorrectly. A $5,000 transfer might show as both a $5,000 debit and a $5,000 credit — if only one side is reconciled, you'll have a $5,000 difference.</p>
+
+    <h2 id="credit-cards">Credit Card Reconciliation</h2>
+    <p>Credit card reconciliation works the same way as bank reconciliation but has one important difference: <strong>the ending balance is a liability (you owe it) rather than an asset (you own it)</strong>. In QBO, the ending balance for a credit card reconciliation is the amount you owe as of the statement date — this is the credit card statement's closing balance.</p>
+    <p>Common credit card reconciliation issues:</p>
+    <ul>
+      <li><strong>Payments recorded twice:</strong> A credit card payment was recorded as an expense AND as a liability reduction. Result: overstated expenses.</li>
+      <li><strong>Rewards/cashback not recorded:</strong> Credit card rewards reduce your balance but need to be entered in QBO as income or an expense reduction.</li>
+      <li><strong>Foreign transaction fees:</strong> May import as separate line items from the original charge — need to be matched or recorded separately.</li>
+    </ul>
+
+    <div class="inline-cta">
+      <h3>Make Sure Your P&amp;L Numbers Are Right</h3>
+      <p>After reconciling, use our profit margin and EBITDA calculators to verify your business's financial metrics match what you're seeing in your reports.</p>
+      <a href="/booksmart-tools/profit-margin-calculator.html">Calculate Profit Margins Free →</a>
+    </div>
+
+    <h2 id="best-practices">Bank Reconciliation Best Practices</h2>
+    <ul>
+      <li><strong>Reconcile every month, on the same schedule.</strong> The first week of the following month is standard practice. Reconciling within 7 days of month-end while the details are fresh reduces troubleshooting time.</li>
+      <li><strong>Save reconciliation reports.</strong> QBO generates a reconciliation report after each reconciliation. Save these as PDFs. They're the proof that your books were correct as of that date — valuable for audits and disputes.</li>
+      <li><strong>Don't edit closed periods.</strong> After reconciling a period, lock it in QBO (Account and Settings → Advanced → Close the books). This prevents accidental changes to reconciled transactions.</li>
+      <li><strong>Reconcile all accounts, not just checking.</strong> Savings accounts, money market accounts, credit cards, lines of credit, and PayPal/Stripe merchant accounts all need monthly reconciliation.</li>
+      <li><strong>Investigate every difference.</strong> "Close enough" isn't reconciliation. A $0.01 difference might be a rounding error; it might be the tip of a $10,000 fraud. Reconcile to zero every time.</li>
+    </ul>
+
+  </article>
+</div>
+<!-- FOOTER -->
+<footer class="bst-footer">
+  <div class="bst-ft-top">
+    <div>
+      <div class="bst-ft-brand">Book<em>Smart</em>Tools</div>
+      <p class="bst-ft-tag">Free bookkeeping, payroll, tax, and PDF tools. No account required, no cost, always free.</p>
+    </div>
+    <div class="bst-fc">
+      <h4>Top Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+        <li><a href="/booksmart-tools/loan-amortization.html">Loan Amortization</a></li>
+        <li><a href="/booksmart-tools/quarterly-tax-calculator.html">Quarterly Tax</a></li>
+        <li><a href="/booksmart-tools/ebitda-calculator.html">EBITDA Calculator</a></li>
+        <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
+      </ul>
+    </div>
+    <div class="bst-fc">
+      <h4>PDF Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge</a></li>
+        <li><a href="/booksmart-tools/convert-to-pdf.html">Files → PDF</a></li>
+        <li><a href="/booksmart-tools/pdf-converter.html">PDF → Word/Excel</a></li>
+      </ul>
+    </div>
+    <div class="bst-fc">
+      <h4>More</h4>
+      <ul>
+        <li><a href="/booksmart-tools/blog/index.html">Blog &amp; Guides</a></li>
+        <li><a href="/booksmart-tools/about.html">About</a></li>
+        <li><a href="/booksmart-tools/contact.html">Contact</a></li>
+        <li><a href="/booksmart-tools/feedback.html">Feedback</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bst-ft-bot">
+    <div>© 2026 BookSmartTools — For estimation only. Verify with a CPA before filing.</div>
+    <div>No ads · No tracking · Files never leave your browser</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const pb=document.getElementById('progress-bar');
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  if(docH>0)pb.style.width=Math.round(scrollY/docH*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  // TOC active
+  const ids=['overview','obbba','w4','percentage-method','brackets','supplemental','tips-overtime','deposits','example','common-mistakes'];
+  let cur='';
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<140)cur=id;});
+  document.querySelectorAll('.toc-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const pb=document.getElementById('progress-bar');
+  const dH=document.documentElement.scrollHeight-window.innerHeight;
+  if(dH>0)pb.style.width=Math.round(scrollY/dH*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  const ids=['what-is-recon', 'why-matters', 'how-often', 'in-qbo', 'in-xero', 'troubleshooting', 'credit-cards', 'best-practices'];let c='';
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<140)c=id;});
+  document.querySelectorAll('.toc-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+c));
+},{passive:true});
+</script>
+</body>
+</html>

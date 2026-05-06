@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>How to Calculate Payroll Taxes Step by Step 2026 | BookSmartTools</title>
+<meta name="description" content="Step-by-step payroll tax calculation guide for 2026. Covers gross wages, pre-tax deductions, FICA, federal and state withholding, net pay, employer costs, and W-2 reconciliation with worked examples.">
+<link rel="canonical" href="https://booksmartools.com/blog/how-to-calculate-payroll-taxes-step-by-step-2026.html">
+<meta property="og:title" content="How to Calculate Payroll Taxes Step by Step 2026 | BookSmartTools">
+<meta property="og:description" content="Step-by-step payroll tax calculation guide for 2026. Covers gross wages, pre-tax deductions, FICA, federal and state withholding, net pay, employer costs, and W-2 reconciliation with worked examples.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0e0e0c;--muted:#5a5a56;--border:#e4e0d8;--paper:#fafaf7;--white:#fff;
+  --green:#1a5c35;--green2:#2a7a48;--green-lt:#e8f5ed;--green-mid:#c8e6d4;
+  --gold:#b5820a;--gold-lt:#fef8e7;--blue:#0d4a8a;--blue-lt:#e8f2fd;
+  --amber:#a85e08;--amber-lt:#fdf3e7;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Progress bar */
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--green);z-index:999;width:0;transition:width .1s}
+
+/* Nav */
+.bst-ann{background:var(--green);padding:9px 24px;text-align:center;font-size:13px;color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.bst-ann strong{color:#7dd4a0}
+.bst-ann a{color:white;font-weight:600;background:rgba(255,255,255,.18);padding:3px 11px;border-radius:4px;margin-left:4px}
+nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(250,250,247,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink)}
+.logo-name em{color:var(--green);font-style:italic}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:6px;transition:all .15s;text-decoration:none;color:var(--muted)}
+.nav-links a:hover{color:var(--ink);background:var(--border)}
+.nav-cta{background:var(--ink)!important;color:white!important;border-radius:7px!important}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink)}
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:199;padding:16px 24px}
+.mob-nav a{display:block;padding:12px 0;font-size:15px;color:var(--ink);border-bottom:1px solid var(--border);text-decoration:none}
+
+/* Hero */
+.art-hero{background:var(--ink);padding:64px 40px 52px;position:relative;overflow:hidden}
+.art-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.04) 1px,transparent 0);background-size:28px 28px}
+.art-hero-inner{max-width:820px;margin:0 auto;position:relative;z-index:1}
+.art-kicker{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#7dd4a0;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.art-kicker::before{content:'';display:block;width:20px;height:2px;background:#7dd4a0;border-radius:1px}
+.art-hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:700;color:white;line-height:1.1;margin-bottom:16px;letter-spacing:-1.5px}
+.art-sub{font-size:16px;color:rgba(255,255,255,.65);line-height:1.75;max-width:680px;font-weight:300}
+.art-meta{display:flex;gap:12px;align-items:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;flex-wrap:wrap}
+
+/* Layout */
+.art-layout{max-width:1100px;margin:0 auto;padding:48px 40px 80px;display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:start}
+.toc-box{position:sticky;top:80px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px}
+.toc-box h3{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+.toc-box ul{list-style:none}
+.toc-box li{margin-bottom:4px}
+.toc-link{font-size:13px;color:var(--muted);display:block;padding:6px 10px;border-radius:6px;transition:all .15s;text-decoration:none}
+.toc-link:hover,.toc-link.active{background:var(--green-lt);color:var(--green);text-decoration:none}
+
+/* Article body */
+.art-body h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);margin:44px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--border);letter-spacing:-.5px}
+.art-body h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin:28px 0 10px}
+.art-body p{font-size:16px;color:#3a3a36;line-height:1.9;margin-bottom:18px}
+.art-body ul,.art-body ol{font-size:16px;color:#3a3a36;line-height:1.9;margin:0 0 18px 24px}
+.art-body li{margin-bottom:8px}
+.art-body strong{color:var(--ink);font-weight:600}
+.art-body a{color:var(--green);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+
+/* Callout boxes */
+.callout{border-left:4px solid;border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;font-size:14.5px;line-height:1.75}
+.callout.green{background:var(--green-lt);border-color:var(--green);color:#1a3828}
+.callout.blue{background:var(--blue-lt);border-color:var(--blue);color:#1a2d50}
+.callout.amber{background:var(--amber-lt);border-color:var(--amber);color:#3d1e00}
+.callout strong{font-weight:700;color:inherit}
+
+/* Rate tables */
+.rate-table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:10px;overflow:hidden;border:1px solid var(--border);font-size:14px}
+.rate-table th{background:var(--ink);color:rgba(255,255,255,.85);padding:11px 16px;text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;font-weight:500}
+.rate-table td{padding:10px 16px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+.rate-table tr:last-child td{border-bottom:none}
+.rate-table tr:hover td{background:var(--paper)}
+.rate-table .hl{background:var(--green-lt);font-weight:600;color:var(--green)}
+
+/* Example boxes */
+.example{background:var(--white);border:2px solid var(--green-mid);border-radius:12px;padding:24px;margin:28px 0}
+.example-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.example-icon{font-size:22px}
+.example-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.example-body{font-size:14px;color:var(--ink);line-height:1.8}
+.example-result{background:var(--green-lt);border-radius:8px;padding:14px 18px;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#1a3828}
+
+/* Inline CTA */
+.inline-cta{background:linear-gradient(135deg,var(--green),var(--green2));border-radius:12px;padding:28px 32px;text-align:center;margin:40px 0}
+.inline-cta h3{font-family:'Playfair Display',serif;font-size:22px;color:white;margin-bottom:10px}
+.inline-cta p{font-size:14px;color:rgba(255,255,255,.75);margin-bottom:18px}
+.inline-cta a{background:white;color:var(--green);padding:12px 28px;border-radius:7px;font-size:14px;font-weight:700;display:inline-block;transition:all .2s;text-decoration:none}
+.inline-cta a:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+
+/* Related section */
+.related{background:var(--white);border-top:1px solid var(--border);padding:48px 40px}
+.related-inner{max-width:1100px;margin:0 auto}
+.related h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ink);margin-bottom:24px;letter-spacing:-.5px}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rel-card{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:20px;display:block;transition:all .2s;text-decoration:none;color:var(--ink)}
+.rel-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.06);text-decoration:none;color:var(--ink)}
+.rel-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:8px;display:block;font-family:'JetBrains Mono',monospace}
+.rel-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3}
+.rel-desc{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* Footer */
+.bst-footer{background:var(--ink);padding:52px 40px 24px;margin-top:0}
+.bst-ft-top{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.bst-ft-brand{font-family:'Playfair Display',serif;font-size:20px;color:white;margin-bottom:10px}
+.bst-ft-brand em{color:#7dd4a0;font-style:italic}
+.bst-ft-tag{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300}
+.bst-fc h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+.bst-fc ul{list-style:none}
+.bst-fc li{margin-bottom:8px}
+.bst-fc a{font-size:13px;color:rgba(255,255,255,.48);font-weight:300;transition:color .15s;text-decoration:none}
+.bst-fc a:hover{color:white}
+.bst-ft-bot{max-width:1100px;margin:20px auto 0;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.22);font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:8px}
+
+@media(max-width:960px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .mob-btn{display:flex}
+  .art-hero{padding:44px 20px 36px}
+  .art-layout{grid-template-columns:1fr;padding:24px 20px 60px;gap:32px}
+  .toc-box{position:static}
+  .rel-grid{grid-template-columns:1fr 1fr}
+  .bst-ft-top{grid-template-columns:1fr 1fr}
+  .related{padding:40px 20px}
+}
+@media(max-width:640px){
+  .rel-grid{grid-template-columns:1fr}
+  .bst-ft-top{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="bst-ann">
+  <strong>New:</strong> E-Commerce Sales Tax Tool — reads eBay, Amazon &amp; Shopify reports automatically
+  <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html">Try it free →</a>
+</div>
+
+<nav id="nav">
+  <a href="/booksmart-tools/" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="2" width="7" height="14" rx="1" fill="rgba(255,255,255,.25)"/>
+        <rect x="2" y="3" width="5" height="12" rx=".5" fill="white"/>
+        <line x1="3" y1="6" x2="6" y2="6" stroke="#1a5c35" stroke-width="1"/>
+        <line x1="3" y1="8.5" x2="6" y2="8.5" stroke="#1a5c35" stroke-width="1"/>
+        <rect x="10" y="10" width="1.8" height="5" rx=".4" fill="rgba(255,255,255,.6)"/>
+        <rect x="12.8" y="7.5" width="1.8" height="7.5" rx=".4" fill="rgba(255,255,255,.8)"/>
+        <rect x="15.6" y="9" width="1.8" height="6" rx=".4" fill="white"/>
+        <polyline points="10.9,9 13.7,6.5 16.5,8" stroke="rgba(255,255,255,.7)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="logo-name">Book<em>Smart</em>Tools</div>
+  </a>
+  <div class="nav-links">
+    <a href="/booksmart-tools/">Home</a>
+    <a href="/booksmart-tools/tools.html">Calculators</a>
+    <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+    <a href="/booksmart-tools/blog/index.html">Blog</a>
+    <a href="/booksmart-tools/contact.html">Contact</a>
+    <a href="/booksmart-tools/tools.html" class="nav-cta">All Free Tools →</a>
+  </div>
+  <button class="mob-btn" onclick="document.getElementById('mob-nav').style.display=document.getElementById('mob-nav').style.display==='block'?'none':'block'" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="3" y1="6" x2="19" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="16" x2="19" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</nav>
+<div id="mob-nav" class="mob-nav">
+  <a href="/booksmart-tools/">Home</a>
+  <a href="/booksmart-tools/tools.html">All Calculators</a>
+  <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+  <a href="/booksmart-tools/blog/index.html">Blog</a>
+  <a href="/booksmart-tools/contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+
+<div class="art-hero">
+  <div class="art-hero-inner">
+    <div class="art-kicker">Payroll Tax Guide · 2026</div>
+    <h1>How to Calculate Payroll Taxes Step by Step in 2026</h1>
+    <p class="art-sub">A complete worked example showing every step of a payroll tax calculation — from gross wages through FICA, federal withholding, state taxes, and net pay. Includes employer-side costs and W-2 reconciliation.</p>
+    <div class="art-meta"><span>Updated May 2026</span><span>·</span><span>15 min read</span></div>
+  </div>
+</div>
+<div class="art-layout">
+  <aside><div class="toc-box"><h3>Contents</h3><ul><li><a href="#overview" class="toc-link">Why Payroll Is Complex</a></li>
+<li><a href="#step1" class="toc-link">Step 1: Gross Wages</a></li>
+<li><a href="#step2" class="toc-link">Step 2: Pre-Tax Deductions</a></li>
+<li><a href="#step3" class="toc-link">Step 3: Social Security</a></li>
+<li><a href="#step4" class="toc-link">Step 4: Medicare</a></li>
+<li><a href="#step5" class="toc-link">Step 5: Federal Income Tax</a></li>
+<li><a href="#step6" class="toc-link">Step 6: State Income Tax</a></li>
+<li><a href="#step7" class="toc-link">Step 7: CA SDI (State Example)</a></li>
+<li><a href="#step8" class="toc-link">Step 8: Post-Tax Deductions</a></li>
+<li><a href="#step9" class="toc-link">Step 9: Net Pay</a></li>
+<li><a href="#employer-costs" class="toc-link">Step 10: Employer Tax Cost</a></li>
+<li><a href="#w2-reconciliation" class="toc-link">Year-End W-2 Reconciliation</a></li></ul></div></aside>
+  <article class="art-body">
+    <h2 id="overview">Why Payroll Tax Calculation Is So Complex</h2>
+    <p>A single paycheck might involve federal income tax withholding, Social Security, Medicare, additional Medicare, state income tax, local income tax, FUTA (for the employer), SUTA (for the employer), and sometimes employee SUTA contributions. Each component has different rates, wage caps, and calculation rules.</p>
+    <p>This guide walks through every component in the order they appear on a paycheck, using a consistent example employee throughout. All rates are current for 2026.</p>
+
+    <div class="callout green">
+      <strong>Our example employee:</strong> David Kim, married filing jointly, W-4 with Step 2 box unchecked, no dependents, no extra withholding. Annual salary $85,000, paid monthly ($7,083.33/check). California employer. January through December 2026.
+    </div>
+
+    <h2 id="step1">Step 1: Determine Gross Wages</h2>
+    <p>Gross wages are what you've agreed to pay before any deductions. For salaried employees, divide the annual salary by pay periods. For hourly employees, multiply hours worked by the wage rate, then add overtime at 1.5× for hours over 40 per week.</p>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">💼</span><span class="example-title">David's Gross Wages</span></div>
+      <div class="example-body">Annual salary: $85,000 ÷ 12 monthly periods = <strong>$7,083.33 gross wages per month</strong></div>
+      <div class="example-result">Gross pay this period: $7,083.33</div>
+    </div>
+
+    <h2 id="step2">Step 2: Pre-Tax Deductions (Reduce Taxable Wages)</h2>
+    <p>Before calculating any taxes, subtract pre-tax deductions — amounts that reduce the wages subject to federal income tax (and often FICA). Common pre-tax deductions include:</p>
+    <ul>
+      <li><strong>401(k) / 403(b) contributions</strong> — reduce federal and state taxable wages (not FICA)</li>
+      <li><strong>Health insurance premiums</strong> (employer-sponsored Section 125 cafeteria plan) — reduce both income tax and FICA wages</li>
+      <li><strong>FSA / HSA contributions</strong> — reduce both income tax and FICA wages</li>
+      <li><strong>Pre-tax commuter benefits</strong> — reduce income tax wages</li>
+    </ul>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">➖</span><span class="example-title">David's Pre-Tax Deductions</span></div>
+      <div class="example-body">
+        <p>401(k) contribution: 6% of gross = $7,083.33 × 6% = <strong>$425.00</strong> (reduces income tax wages but not Social Security)</p>
+        <p>Health insurance: $250/month Section 125 (reduces income tax AND Social Security wages)</p>
+      </div>
+      <div class="example-result">Federal income tax wages: $7,083.33 − $425 − $250 = $6,408.33 | FICA wages: $7,083.33 − $250 = $6,833.33</div>
+    </div>
+
+    <h2 id="step3">Step 3: Social Security Tax (Employee)</h2>
+    <p>Rate: <strong>6.2%</strong> on wages up to <strong>$184,500</strong> per year (2026 wage base). Once cumulative wages hit $184,500, Social Security withholding stops for the rest of the year.</p>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🛡️</span><span class="example-title">Social Security Calculation</span></div>
+      <div class="example-body">FICA wages: $6,833.33 × 6.2% = <strong>$423.67</strong><br>David earns $85,000/year, well under $184,500, so SS applies all year.</div>
+      <div class="example-result">Employee Social Security withheld: $423.67</div>
+    </div>
+
+    <h2 id="step4">Step 4: Medicare Tax (Employee)</h2>
+    <p>Rate: <strong>1.45%</strong> on all FICA wages — no wage cap. The additional 0.9% kicks in only after cumulative wages exceed $200,000 in the year, so David won't hit that threshold at $85,000/year.</p>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🏥</span><span class="example-title">Medicare Calculation</span></div>
+      <div class="example-body">FICA wages: $6,833.33 × 1.45% = <strong>$99.08</strong></div>
+      <div class="example-result">Employee Medicare withheld: $99.08</div>
+    </div>
+
+    <h2 id="step5">Step 5: Federal Income Tax Withholding</h2>
+    <p>This is the most complex piece. Using the <strong>Percentage Method</strong> from Publication 15-T (2026), with David's 2020 W-4 (MFJ, Step 2 unchecked):</p>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🏛️</span><span class="example-title">Federal Income Tax Withholding</span></div>
+      <div class="example-body">
+        <p>Federal income tax wages: $6,408.33 per month</p>
+        <p><strong>Step 1:</strong> Annualize: $6,408.33 × 12 = $76,900</p>
+        <p><strong>Step 2:</strong> No Step 4 adjustments on W-4, so adjusted annual wages = $76,900</p>
+        <p><strong>Step 3:</strong> MFJ Standard Withholding table (Step 2 unchecked). $76,900 falls in 12% bracket ($23,850–$96,950). Tax = $2,385 + 12% × ($76,900 − $23,850) = $2,385 + $6,366 = $8,751 annual</p>
+        <p><strong>Step 4:</strong> Per month: $8,751 ÷ 12 = <strong>$729.25</strong></p>
+      </div>
+      <div class="example-result">Federal income tax withheld: $729.25 | Effective annual rate: ~10.3% of wages</div>
+    </div>
+
+    <h2 id="step6">Step 6: State Income Tax (California Example)</h2>
+    <p>California uses progressive rates from 1% to 13.3%. David earns $6,408.33 in CA taxable wages this period. Using California's 2026 withholding tables (Form DE-4, MFJ):</p>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🌴</span><span class="example-title">California State Tax (Example)</span></div>
+      <div class="example-body">
+        <p>Annual CA taxable wages: $76,900. For MFJ, California 2026 withholding table:</p>
+        <p>2% on $0–$20,824 = $416.48 | 4% on $20,824–$49,368 = $1,141.76 | 6% on $49,368–$63,836 = $868.08 | 8% on $63,836–$76,900 = $1,045.12</p>
+        <p>Total annual CA withholding ≈ $3,471 ÷ 12 = <strong>~$289.25/month</strong></p>
+      </div>
+      <div class="example-result">CA state income tax withheld: ~$289.25/month</div>
+    </div>
+
+    <h2 id="step7">Step 7: California SDI (State Disability Insurance)</h2>
+    <p>California requires employees to contribute to the State Disability Insurance (SDI) program. In 2026, the SDI rate is <strong>1.1%</strong> with no wage cap (CA removed the wage cap in 2024).</p>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🩺</span><span class="example-title">California SDI</span></div>
+      <div class="example-body">FICA wages (CA SDI uses same base): $6,833.33 × 1.1% = <strong>$75.17</strong></div>
+      <div class="example-result">CA SDI withheld: $75.17/month</div>
+    </div>
+
+    <h2 id="step8">Step 8: Post-Tax Deductions</h2>
+    <p>Post-tax deductions are taken from net pay after all taxes are calculated. They don't reduce taxable wages. Examples: Roth 401(k) contributions, garnishments, union dues, after-tax insurance premiums.</p>
+
+    <h2 id="step9">Step 9: Net Pay</h2>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">💰</span><span class="example-title">David's Full Monthly Paycheck Summary</span></div>
+      <div class="example-body">
+        <p>Gross wages: $7,083.33</p>
+        <p>− Pre-tax 401(k): $425.00</p>
+        <p>− Pre-tax health insurance: $250.00</p>
+        <p>− Social Security (6.2%): $423.67</p>
+        <p>− Medicare (1.45%): $99.08</p>
+        <p>− Federal income tax: $729.25</p>
+        <p>− CA state income tax: $289.25</p>
+        <p>− CA SDI (1.1%): $75.17</p>
+      </div>
+      <div class="example-result">Net take-home pay: $7,083.33 − $2,291.42 = <strong>$4,791.91/month</strong> | Effective total withholding rate: ~32.3%</div>
+    </div>
+
+    <h2 id="employer-costs">Step 10: Employer Tax Cost</h2>
+    <p>Beyond withholding employee taxes, the employer also pays its own share of FICA plus unemployment taxes. These are <em>additional</em> costs on top of the gross wage:</p>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🏢</span><span class="example-title">Employer-Side Taxes (Monthly)</span></div>
+      <div class="example-body">
+        <p>Employer Social Security (6.2% × $6,833.33): $423.67</p>
+        <p>Employer Medicare (1.45% × $6,833.33): $99.08</p>
+        <p>FUTA (0.6% × $7,000/12 per month, first 7 months approx.): ~$3.50 avg.</p>
+        <p>CA SUTA (new employer 3.4%, first $7,000/year): ~$19.83 avg. (first 7 months)</p>
+      </div>
+      <div class="example-result">Total monthly employer tax cost beyond gross wages: ~$546 | True annual labor cost for David: $85,000 + ~$6,550 in employer taxes = ~$91,550</div>
+    </div>
+
+    <div class="inline-cta">
+      <h3>Run This Calculation for Your Employee</h3>
+      <p>Our free payroll calculator handles all 2026 rates — federal withholding, FICA, and all 50 state taxes — with the 2025/2026 year switcher.</p>
+      <a href="/booksmart-tools/payroll-tax-estimator.html">Calculate Payroll Taxes Free →</a>
+    </div>
+
+    <h2 id="w2-reconciliation">Year-End W-2 Reconciliation</h2>
+    <p>At year end, the sum of all David's monthly calculations flows into his W-2:</p>
+    <ul>
+      <li><strong>Box 1:</strong> Federal wages = Annual gross − pre-tax 401(k) − health insurance = $85,000 − $5,100 − $3,000 = $76,900</li>
+      <li><strong>Box 2:</strong> Federal income tax withheld = $729.25 × 12 = $8,751</li>
+      <li><strong>Box 3:</strong> Social Security wages = Annual gross − health insurance = $85,000 − $3,000 = $82,000</li>
+      <li><strong>Box 4:</strong> Social Security tax withheld = $82,000 × 6.2% = $5,084</li>
+      <li><strong>Box 5:</strong> Medicare wages = $82,000 (same as SS wages)</li>
+      <li><strong>Box 6:</strong> Medicare tax withheld = $82,000 × 1.45% = $1,189</li>
+      <li><strong>Box 12, Code D:</strong> 401(k) contributions = $5,100</li>
+      <li><strong>Boxes 16/17:</strong> State wages and state income tax withheld</li>
+    </ul>
+</article>
+</div>
+<!-- FOOTER -->
+<footer class="bst-footer">
+  <div class="bst-ft-top">
+    <div>
+      <div class="bst-ft-brand">Book<em>Smart</em>Tools</div>
+      <p class="bst-ft-tag">Free bookkeeping, payroll, tax, and PDF tools. No account required, no cost, always free.</p>
+    </div>
+    <div class="bst-fc">
+      <h4>Top Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+        <li><a href="/booksmart-tools/loan-amortization.html">Loan Amortization</a></li>
+        <li><a href="/booksmart-tools/quarterly-tax-calculator.html">Quarterly Tax</a></li>
+        <li><a href="/booksmart-tools/ebitda-calculator.html">EBITDA Calculator</a></li>
+        <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
+      </ul>
+    </div>
+    <div class="bst-fc">
+      <h4>PDF Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge</a></li>
+        <li><a href="/booksmart-tools/convert-to-pdf.html">Files → PDF</a></li>
+        <li><a href="/booksmart-tools/pdf-converter.html">PDF → Word/Excel</a></li>
+      </ul>
+    </div>
+    <div class="bst-fc">
+      <h4>More</h4>
+      <ul>
+        <li><a href="/booksmart-tools/blog/index.html">Blog &amp; Guides</a></li>
+        <li><a href="/booksmart-tools/about.html">About</a></li>
+        <li><a href="/booksmart-tools/contact.html">Contact</a></li>
+        <li><a href="/booksmart-tools/feedback.html">Feedback</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bst-ft-bot">
+    <div>© 2026 BookSmartTools — For estimation only. Verify with a CPA before filing.</div>
+    <div>No ads · No tracking · Files never leave your browser</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const pb=document.getElementById('progress-bar');
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  if(docH>0)pb.style.width=Math.round(scrollY/docH*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  // TOC active
+  const ids=['overview','obbba','w4','percentage-method','brackets','supplemental','tips-overtime','deposits','example','common-mistakes'];
+  let cur='';
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<140)cur=id;});
+  document.querySelectorAll('.toc-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const pb=document.getElementById('progress-bar');
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  if(docH>0)pb.style.width=Math.round(scrollY/docH*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  const ids=['overview', 'step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'step8', 'step9', 'employer-costs', 'w2-reconciliation'];
+  let cur='';
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<140)cur=id;});
+  document.querySelectorAll('.toc-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+</body>
+</html>

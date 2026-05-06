@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FICA Taxes 2026: Social Security, Medicare & Wage Base Explained | BookSmartTools</title>
+<meta name="description" content="2026 FICA tax guide for employers. Social Security rate 6.2% on $184,500 wage base, Medicare 1.45% unlimited, additional 0.9% surtax over $200,000. Includes worked examples.">
+<link rel="canonical" href="https://booksmartools.com/blog/fica-social-security-medicare-guide.html">
+<meta property="og:title" content="FICA Taxes 2026: Social Security, Medicare & Wage Base Explained | BookSmartTools">
+<meta property="og:description" content="2026 FICA tax guide for employers. Social Security rate 6.2% on $184,500 wage base, Medicare 1.45% unlimited, additional 0.9% surtax over $200,000. Includes worked examples.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0e0e0c;--muted:#5a5a56;--border:#e4e0d8;--paper:#fafaf7;--white:#fff;
+  --green:#1a5c35;--green2:#2a7a48;--green-lt:#e8f5ed;--green-mid:#c8e6d4;
+  --gold:#b5820a;--gold-lt:#fef8e7;--blue:#0d4a8a;--blue-lt:#e8f2fd;
+  --amber:#a85e08;--amber-lt:#fdf3e7;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Progress bar */
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--green);z-index:999;width:0;transition:width .1s}
+
+/* Nav */
+.bst-ann{background:var(--green);padding:9px 24px;text-align:center;font-size:13px;color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.bst-ann strong{color:#7dd4a0}
+.bst-ann a{color:white;font-weight:600;background:rgba(255,255,255,.18);padding:3px 11px;border-radius:4px;margin-left:4px}
+nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(250,250,247,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink)}
+.logo-name em{color:var(--green);font-style:italic}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:6px;transition:all .15s;text-decoration:none;color:var(--muted)}
+.nav-links a:hover{color:var(--ink);background:var(--border)}
+.nav-cta{background:var(--ink)!important;color:white!important;border-radius:7px!important}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink)}
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:199;padding:16px 24px}
+.mob-nav a{display:block;padding:12px 0;font-size:15px;color:var(--ink);border-bottom:1px solid var(--border);text-decoration:none}
+
+/* Hero */
+.art-hero{background:var(--ink);padding:64px 40px 52px;position:relative;overflow:hidden}
+.art-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.04) 1px,transparent 0);background-size:28px 28px}
+.art-hero-inner{max-width:820px;margin:0 auto;position:relative;z-index:1}
+.art-kicker{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#7dd4a0;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.art-kicker::before{content:'';display:block;width:20px;height:2px;background:#7dd4a0;border-radius:1px}
+.art-hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:700;color:white;line-height:1.1;margin-bottom:16px;letter-spacing:-1.5px}
+.art-sub{font-size:16px;color:rgba(255,255,255,.65);line-height:1.75;max-width:680px;font-weight:300}
+.art-meta{display:flex;gap:12px;align-items:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;flex-wrap:wrap}
+
+/* Layout */
+.art-layout{max-width:1100px;margin:0 auto;padding:48px 40px 80px;display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:start}
+.toc-box{position:sticky;top:80px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px}
+.toc-box h3{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+.toc-box ul{list-style:none}
+.toc-box li{margin-bottom:4px}
+.toc-link{font-size:13px;color:var(--muted);display:block;padding:6px 10px;border-radius:6px;transition:all .15s;text-decoration:none}
+.toc-link:hover,.toc-link.active{background:var(--green-lt);color:var(--green);text-decoration:none}
+
+/* Article body */
+.art-body h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);margin:44px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--border);letter-spacing:-.5px}
+.art-body h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin:28px 0 10px}
+.art-body p{font-size:16px;color:#3a3a36;line-height:1.9;margin-bottom:18px}
+.art-body ul,.art-body ol{font-size:16px;color:#3a3a36;line-height:1.9;margin:0 0 18px 24px}
+.art-body li{margin-bottom:8px}
+.art-body strong{color:var(--ink);font-weight:600}
+.art-body a{color:var(--green);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+
+/* Callout boxes */
+.callout{border-left:4px solid;border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;font-size:14.5px;line-height:1.75}
+.callout.green{background:var(--green-lt);border-color:var(--green);color:#1a3828}
+.callout.blue{background:var(--blue-lt);border-color:var(--blue);color:#1a2d50}
+.callout.amber{background:var(--amber-lt);border-color:var(--amber);color:#3d1e00}
+.callout strong{font-weight:700;color:inherit}
+
+/* Rate tables */
+.rate-table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:10px;overflow:hidden;border:1px solid var(--border);font-size:14px}
+.rate-table th{background:var(--ink);color:rgba(255,255,255,.85);padding:11px 16px;text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;font-weight:500}
+.rate-table td{padding:10px 16px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+.rate-table tr:last-child td{border-bottom:none}
+.rate-table tr:hover td{background:var(--paper)}
+.rate-table .hl{background:var(--green-lt);font-weight:600;color:var(--green)}
+
+/* Example boxes */
+.example{background:var(--white);border:2px solid var(--green-mid);border-radius:12px;padding:24px;margin:28px 0}
+.example-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.example-icon{font-size:22px}
+.example-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.example-body{font-size:14px;color:var(--ink);line-height:1.8}
+.example-result{background:var(--green-lt);border-radius:8px;padding:14px 18px;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#1a3828}
+
+/* Inline CTA */
+.inline-cta{background:linear-gradient(135deg,var(--green),var(--green2));border-radius:12px;padding:28px 32px;text-align:center;margin:40px 0}
+.inline-cta h3{font-family:'Playfair Display',serif;font-size:22px;color:white;margin-bottom:10px}
+.inline-cta p{font-size:14px;color:rgba(255,255,255,.75);margin-bottom:18px}
+.inline-cta a{background:white;color:var(--green);padding:12px 28px;border-radius:7px;font-size:14px;font-weight:700;display:inline-block;transition:all .2s;text-decoration:none}
+.inline-cta a:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+
+/* Related section */
+.related{background:var(--white);border-top:1px solid var(--border);padding:48px 40px}
+.related-inner{max-width:1100px;margin:0 auto}
+.related h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ink);margin-bottom:24px;letter-spacing:-.5px}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rel-card{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:20px;display:block;transition:all .2s;text-decoration:none;color:var(--ink)}
+.rel-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.06);text-decoration:none;color:var(--ink)}
+.rel-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:8px;display:block;font-family:'JetBrains Mono',monospace}
+.rel-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3}
+.rel-desc{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* Footer */
+.bst-footer{background:var(--ink);padding:52px 40px 24px;margin-top:0}
+.bst-ft-top{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.bst-ft-brand{font-family:'Playfair Display',serif;font-size:20px;color:white;margin-bottom:10px}
+.bst-ft-brand em{color:#7dd4a0;font-style:italic}
+.bst-ft-tag{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300}
+.bst-fc h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+.bst-fc ul{list-style:none}
+.bst-fc li{margin-bottom:8px}
+.bst-fc a{font-size:13px;color:rgba(255,255,255,.48);font-weight:300;transition:color .15s;text-decoration:none}
+.bst-fc a:hover{color:white}
+.bst-ft-bot{max-width:1100px;margin:20px auto 0;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.22);font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:8px}
+
+@media(max-width:960px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .mob-btn{display:flex}
+  .art-hero{padding:44px 20px 36px}
+  .art-layout{grid-template-columns:1fr;padding:24px 20px 60px;gap:32px}
+  .toc-box{position:static}
+  .rel-grid{grid-template-columns:1fr 1fr}
+  .bst-ft-top{grid-template-columns:1fr 1fr}
+  .related{padding:40px 20px}
+}
+@media(max-width:640px){
+  .rel-grid{grid-template-columns:1fr}
+  .bst-ft-top{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="bst-ann">
+  <strong>New:</strong> E-Commerce Sales Tax Tool — reads eBay, Amazon &amp; Shopify reports automatically
+  <a href="/booksmart-tools/ecommerce-sales-tax-calculator.html">Try it free →</a>
+</div>
+
+<nav id="nav">
+  <a href="/booksmart-tools/" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="2" width="7" height="14" rx="1" fill="rgba(255,255,255,.25)"/>
+        <rect x="2" y="3" width="5" height="12" rx=".5" fill="white"/>
+        <line x1="3" y1="6" x2="6" y2="6" stroke="#1a5c35" stroke-width="1"/>
+        <line x1="3" y1="8.5" x2="6" y2="8.5" stroke="#1a5c35" stroke-width="1"/>
+        <rect x="10" y="10" width="1.8" height="5" rx=".4" fill="rgba(255,255,255,.6)"/>
+        <rect x="12.8" y="7.5" width="1.8" height="7.5" rx=".4" fill="rgba(255,255,255,.8)"/>
+        <rect x="15.6" y="9" width="1.8" height="6" rx=".4" fill="white"/>
+        <polyline points="10.9,9 13.7,6.5 16.5,8" stroke="rgba(255,255,255,.7)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="logo-name">Book<em>Smart</em>Tools</div>
+  </a>
+  <div class="nav-links">
+    <a href="/booksmart-tools/">Home</a>
+    <a href="/booksmart-tools/tools.html">Calculators</a>
+    <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+    <a href="/booksmart-tools/blog/index.html">Blog</a>
+    <a href="/booksmart-tools/contact.html">Contact</a>
+    <a href="/booksmart-tools/tools.html" class="nav-cta">All Free Tools →</a>
+  </div>
+  <button class="mob-btn" onclick="document.getElementById('mob-nav').style.display=document.getElementById('mob-nav').style.display==='block'?'none':'block'" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="3" y1="6" x2="19" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="16" x2="19" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</nav>
+<div id="mob-nav" class="mob-nav">
+  <a href="/booksmart-tools/">Home</a>
+  <a href="/booksmart-tools/tools.html">All Calculators</a>
+  <a href="/booksmart-tools/pdf-merge.html">PDF Tools</a>
+  <a href="/booksmart-tools/blog/index.html">Blog</a>
+  <a href="/booksmart-tools/contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+
+<div class="art-hero">
+  <div class="art-hero-inner">
+    <div class="art-kicker">FICA Tax Guide · 2026</div>
+    <h1>FICA Taxes 2026: Social Security, Medicare &amp; the New $184,500 Wage Base</h1>
+    <p class="art-sub">Complete employer and employee guide to FICA taxes in 2026. Covers the Social Security wage base increase to $184,500, Medicare rates, the additional Medicare surtax, and how to calculate FICA every pay period.</p>
+    <div class="art-meta">
+      <span>Updated May 2026</span>
+      <span>·</span>
+      <span>11 min read</span>
+    </div>
+  </div>
+</div>
+
+<div class="art-layout">
+  <aside>
+    <div class="toc-box">
+      <h3>Contents</h3>
+      <ul><li><a href="#what-is-fica" class="toc-link">What Is FICA Tax?</a></li>
+<li><a href="#2026-rates" class="toc-link">2026 Rates at a Glance</a></li>
+<li><a href="#social-security" class="toc-link">Social Security Tax</a></li>
+<li><a href="#medicare" class="toc-link">Medicare Tax</a></li>
+<li><a href="#additional-medicare" class="toc-link">Additional Medicare Tax</a></li>
+<li><a href="#calculating" class="toc-link">How to Calculate FICA</a></li>
+<li><a href="#self-employed" class="toc-link">FICA for Self-Employed</a></li>
+<li><a href="#exempt-wages" class="toc-link">Exempt Wages</a></li>
+<li><a href="#reporting" class="toc-link">FICA Reporting & Deposits</a></li>
+<li><a href="#related-tools" class="toc-link">Free Calculators</a></li></ul>
+    </div>
+  </aside>
+  <article class="art-body">
+
+    <h2 id="what-is-fica">What Is FICA Tax?</h2>
+    <p>FICA — the <strong>Federal Insurance Contributions Act</strong> — is the law that requires employers and employees to each contribute to two federal programs: Social Security and Medicare. Unlike federal income tax, which varies based on filing status and deductions, FICA rates are flat percentages of wages with no withholding elections possible.</p>
+    <p>Every employee and employer in the U.S. pays FICA taxes on covered wages. Self-employed individuals pay both sides through the <strong>Self-Employment (SECA) tax</strong> of 15.3%.</p>
+
+    <div class="callout green">
+      <strong>2026 Key Numbers:</strong> Social Security wage base: <strong>$184,500</strong> (up from $176,100 in 2025). Combined FICA rate: <strong>15.3%</strong> split equally — 7.65% each for employer and employee.
+    </div>
+
+    <h2 id="2026-rates">2026 FICA Rates at a Glance</h2>
+    <table class="rate-table">
+      <thead><tr><th>Tax</th><th>Employee Rate</th><th>Employer Rate</th><th>Wage Limit</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Social Security</strong></td><td>6.2%</td><td>6.2%</td><td>First $184,500</td></tr>
+        <tr><td><strong>Medicare</strong></td><td>1.45%</td><td>1.45%</td><td>No limit</td></tr>
+        <tr><td><strong>Additional Medicare</strong></td><td>0.9%</td><td>None</td><td>Wages over $200,000</td></tr>
+        <tr class="hl"><td><strong>Total (combined)</strong></td><td>7.65% + 0.9% if applicable</td><td>7.65%</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="social-security">Social Security Tax: The $184,500 Wage Base</h2>
+    <p>Social Security tax funds the federal retirement and disability insurance programs. In 2026, both the employee and employer each pay <strong>6.2%</strong> on the first <strong>$184,500</strong> of the employee's wages — a $8,400 increase from the 2025 base of $176,100.</p>
+    <p>Once an employee's cumulative wages for the year reach $184,500, <strong>Social Security withholding stops entirely</strong> for the remainder of the calendar year. The maximum Social Security tax each side pays in 2026 is <strong>$11,439</strong> (6.2% × $184,500).</p>
+    <p>Employers must track cumulative wages carefully. If an employee works for two employers simultaneously, each employer independently applies the wage base — the employee may over-pay Social Security and claim a credit on their tax return, but employers have no obligation to coordinate.</p>
+
+    <h3>Why Does the Wage Base Change Every Year?</h3>
+    <p>The SSA adjusts the wage base annually based on changes in the national average wage index (NAWI). When wages across the economy rise, the wage base increases proportionally. This ensures Social Security benefits (which are also tied to average wages) remain funded. For 2026, the 4.8% increase reflects strong wage growth through mid-2025.</p>
+
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">📊</span><span class="example-title">Example: High Earner Hits the Wage Base Mid-Year</span></div>
+      <div class="example-body">
+        <p>Marcus earns $200,000 annually paid on a semi-monthly basis ($8,333.33 per paycheck). His employer deducts 6.2% ($516.67) for Social Security on each check.</p>
+        <p>After 22 paychecks (cumulative wages: $183,333), the 23rd paycheck ($8,333.33 in wages) would push total wages to $191,667 — <strong>over the $184,500 limit</strong>. Only the first $1,167 of that 23rd paycheck is subject to Social Security tax (6.2% × $1,167 = $72.35). After paycheck 23, Social Security withholding stops.</p>
+      </div>
+      <div class="example-result">Maximum Social Security tax per employee in 2026: $11,439 employee | $11,439 employer | $22,878 combined</div>
+    </div>
+
+    <h2 id="medicare">Medicare Tax: No Wage Cap</h2>
+    <p>Medicare tax funds the federal health insurance program for people 65 and older (and qualifying younger people with disabilities). The rate is <strong>1.45% each</strong> for employer and employee, with <strong>no wage cap</strong> — every dollar of wages is subject to Medicare tax.</p>
+    <p>Unlike Social Security, Medicare tax never stops during the year regardless of how much the employee earns. An executive earning $5 million pays 1.45% Medicare tax on all $5 million.</p>
+
+    <h2 id="additional-medicare">Additional Medicare Tax: 0.9% Over $200,000</h2>
+    <p>The Affordable Care Act added an <strong>Additional Medicare Tax of 0.9%</strong> on employee wages exceeding $200,000 in a calendar year. This is an employee-only tax — there is no employer match for the additional Medicare tax.</p>
+    <p>Employers must begin withholding the additional 0.9% <strong>in the pay period when cumulative wages to that employee exceed $200,000</strong> and continue for the rest of the calendar year. The employer is required to withhold this even if the employee's household income (combined with a spouse) would not actually trigger the tax — the employee reconciles on their return.</p>
+
+    <table class="rate-table">
+      <thead><tr><th>Filing Status</th><th>Additional Medicare Threshold</th></tr></thead>
+      <tbody>
+        <tr><td>Single / MFS / Head of Household</td><td>$200,000</td></tr>
+        <tr><td>Married Filing Jointly</td><td>$250,000 combined</td></tr>
+        <tr class="hl"><td>Married Filing Separately</td><td>$125,000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout amber">
+      <strong>Key distinction:</strong> Employer withholding is triggered at $200,000 per employee (regardless of filing status). The actual tax liability is calculated on the employee's return using the household thresholds above. If the employer over-withholds (e.g., a married couple where only one spouse hits $200,000 but joint income is under $250,000), the employee gets a credit on their return.
+    </div>
+
+    <h2 id="calculating">How to Calculate FICA Each Pay Period</h2>
+    <div class="example">
+      <div class="example-hd"><span class="example-icon">🧮</span><span class="example-title">FICA Calculation: Bi-weekly Payroll</span></div>
+      <div class="example-body">
+        <p><strong>Employee:</strong> Jennifer. Bi-weekly gross wages: $4,500. YTD wages through this payroll (before this check): $180,000.</p>
+        <p><strong>Social Security:</strong> Remaining SS base = $184,500 − $180,000 = $4,500. Full paycheck is under the remaining base, so: $4,500 × 6.2% = <strong>$279.00</strong></p>
+        <p><strong>Medicare:</strong> $4,500 × 1.45% = <strong>$65.25</strong></p>
+        <p><strong>Additional Medicare:</strong> YTD after this check = $184,500. Under $200,000 threshold. <strong>$0</strong></p>
+        <p>Two paychecks later (YTD: $193,500 and then $198,000): additional Medicare kicks in at $200,000 threshold.</p>
+      </div>
+      <div class="example-result">Employee FICA this pay period: $344.25 | Employer match: $344.25 | Total FICA deposit: $688.50</div>
+    </div>
+
+    <h2 id="self-employed">FICA for Self-Employed: SECA Tax</h2>
+    <p>Self-employed individuals pay both the employee and employer portions of FICA through the <strong>Self-Employment Tax (SECA)</strong>. The rate is <strong>15.3%</strong> on net self-employment income — 12.4% for Social Security (on the first $184,500) and 2.9% for Medicare (on all income).</p>
+    <p>However, self-employed individuals calculate SE tax on <strong>92.35%</strong> of net earnings (not 100%) to account for the fact that employees only pay FICA on wages while employers also contribute. This reduces the effective SE tax base slightly.</p>
+    <p>Self-employed individuals can deduct <strong>half of the SE tax</strong> as an above-the-line deduction on Schedule 1 of Form 1040. This deduction reduces federal income tax (and adjusted gross income) but not SE tax itself.</p>
+
+    <h2 id="exempt-wages">Wages Exempt from FICA</h2>
+    <p>Most compensation is subject to FICA, but several categories are exempt:</p>
+    <ul>
+      <li><strong>Tips under $20/month:</strong> Individual tips totaling less than $20 in a calendar month from a single employer are not subject to FICA. Tips of $20 or more must be reported by the employee and are subject to FICA.</li>
+      <li><strong>Student FICA exception:</strong> Students employed by the school they attend may be exempt from FICA while enrolled at least half-time.</li>
+      <li><strong>Railroad workers:</strong> Covered by the Railroad Retirement Tax Act (RRTA) instead of FICA.</li>
+      <li><strong>Certain government employees:</strong> State and local government employees in some states participate in alternative retirement systems and may be exempt from Social Security (but not Medicare since 1986).</li>
+      <li><strong>Religious order members:</strong> Members who take vows of poverty may be exempt.</li>
+      <li><strong>Nonresident alien students:</strong> F-1, J-1, M-1 visa holders for the first five calendar years may be exempt.</li>
+    </ul>
+
+    <h2 id="reporting">FICA Reporting and Deposits</h2>
+    <p>FICA taxes — both employee and employer portions — are deposited together with federal income tax withholding using the same monthly or semi-weekly schedule. All three components (income tax withheld, employee FICA, employer FICA) flow into the same EFTPS deposit and are reported on <strong>Form 941</strong> quarterly.</p>
+    <p>At year-end, Social Security wages and Social Security tax withheld appear in <strong>W-2 Boxes 3 and 4</strong>; Medicare wages and Medicare tax withheld appear in <strong>Boxes 5 and 6</strong>.</p>
+
+    <div class="inline-cta">
+      <h3>Calculate FICA for Any Employee</h3>
+      <p>Our payroll calculator shows the exact Social Security and Medicare deduction for any wage amount, including the 2026 wage base of $184,500.</p>
+      <a href="/booksmart-tools/payroll-tax-estimator.html">Try the Free Payroll Calculator →</a>
+    </div>
+
+    <div class="callout blue">
+      <strong>Key 2026 numbers to bookmark:</strong> SS wage base: $184,500 · Max SS per employee: $11,439 each side · Medicare rate: 1.45% (no cap) · Additional Medicare: 0.9% over $200,000 employee wages · SE tax rate: 15.3% on 92.35% of net earnings up to $184,500, then 2.9% above.
+    </div>
+
+    <h2 id="related-tools">Use These Free Calculators</h2>
+    <p>BookSmartTools offers free calculators that handle all 2026 FICA rates automatically:</p>
+    <ul>
+      <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a> — calculates FICA, federal withholding, and all 50 state taxes per paycheck.</li>
+      <li><a href="/booksmart-tools/self-employment-tax.html">Self-Employment Tax Calculator</a> — computes SECA tax and the deductible half for freelancers and business owners.</li>
+      <li><a href="/booksmart-tools/1099-vs-w2-calculator.html">1099 vs W-2 Calculator</a> — compares the true cost of an employee vs. contractor including FICA.</li>
+    </ul>
+
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="bst-footer">
+  <div class="bst-ft-top">
+    <div>
+      <div class="bst-ft-brand">Book<em>Smart</em>Tools</div>
+      <p class="bst-ft-tag">Free bookkeeping, payroll, tax, and PDF tools. No account required, no cost, always free.</p>
+    </div>
+    <div class="bst-fc">
+      <h4>Top Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/payroll-tax-estimator.html">Payroll Tax Estimator</a></li>
+        <li><a href="/booksmart-tools/loan-amortization.html">Loan Amortization</a></li>
+        <li><a href="/booksmart-tools/quarterly-tax-calculator.html">Quarterly Tax</a></li>
+        <li><a href="/booksmart-tools/ebitda-calculator.html">EBITDA Calculator</a></li>
+        <li><a href="/booksmart-tools/tools.html">All 35+ Tools →</a></li>
+      </ul>
+    </div>
+    <div class="bst-fc">
+      <h4>PDF Tools</h4>
+      <ul>
+        <li><a href="/booksmart-tools/pdf-merge.html">PDF Merge</a></li>
+        <li><a href="/booksmart-tools/convert-to-pdf.html">Files → PDF</a></li>
+        <li><a href="/booksmart-tools/pdf-converter.html">PDF → Word/Excel</a></li>
+      </ul>
+    </div>
+    <div class="bst-fc">
+      <h4>More</h4>
+      <ul>
+        <li><a href="/booksmart-tools/blog/index.html">Blog &amp; Guides</a></li>
+        <li><a href="/booksmart-tools/about.html">About</a></li>
+        <li><a href="/booksmart-tools/contact.html">Contact</a></li>
+        <li><a href="/booksmart-tools/feedback.html">Feedback</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bst-ft-bot">
+    <div>© 2026 BookSmartTools — For estimation only. Verify with a CPA before filing.</div>
+    <div>No ads · No tracking · Files never leave your browser</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const pb=document.getElementById('progress-bar');
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  if(docH>0)pb.style.width=Math.round(scrollY/docH*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  // TOC active
+  const ids=['overview','obbba','w4','percentage-method','brackets','supplemental','tips-overtime','deposits','example','common-mistakes'];
+  let cur='';
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<140)cur=id;});
+  document.querySelectorAll('.toc-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+
+
+<script>
+window.addEventListener('scroll',()=>{
+  const pb=document.getElementById('progress-bar');
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  if(docH>0)pb.style.width=Math.round(scrollY/docH*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+  const ids=['what-is-fica', '2026-rates', 'social-security', 'medicare', 'additional-medicare', 'calculating', 'self-employed', 'exempt-wages', 'reporting', 'related-tools'];
+  let cur='';
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<140)cur=id;});
+  document.querySelectorAll('.toc-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+</body>
+</html>
